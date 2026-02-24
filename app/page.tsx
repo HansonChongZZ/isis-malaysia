@@ -12,7 +12,7 @@ import OccupationPanel from "@/components/panel/OccupationPanel"
 const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
   ssr: false,
   loading: () => (
-    <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
+    <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">
       Loading graph…
     </div>
   ),
@@ -67,7 +67,7 @@ export default function HomePage() {
   const selectedDetail = selectedNodeId ? occupations[selectedNodeId] ?? null : null
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 bg-gray-950 text-white overflow-hidden">
+    <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
       {/* Graph controls */}
       <GraphControls
         searchQuery={searchQuery}
@@ -84,16 +84,16 @@ export default function HomePage() {
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center space-y-3">
-              <div className="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-gray-400 text-sm">Loading occupational data…</p>
+              <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
+              <p className="text-muted-foreground text-sm">Loading occupational data…</p>
             </div>
           </div>
         )}
         {error && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-red-950 border border-red-700 rounded-lg p-6 max-w-sm text-center">
-              <p className="text-red-300 font-semibold mb-1">Failed to load data</p>
-              <p className="text-red-400 text-sm">{error}</p>
+            <div className="bg-destructive/10 border border-destructive rounded-lg p-6 max-w-sm text-center">
+              <p className="text-destructive font-semibold mb-1">Failed to load data</p>
+              <p className="text-destructive/80 text-sm">{error}</p>
             </div>
           </div>
         )}
@@ -111,7 +111,7 @@ export default function HomePage() {
 
         {/* Node count badge */}
         {!loading && !error && (
-          <div className="absolute bottom-4 left-4 text-xs text-gray-500 bg-gray-900/70 px-2 py-1 rounded">
+          <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded">
             {nodes.length} occupations · {edges.length} skill edges
           </div>
         )}
