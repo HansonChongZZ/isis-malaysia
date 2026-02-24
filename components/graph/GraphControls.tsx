@@ -44,7 +44,7 @@ export default function GraphControls({
         )}
       </div>
 
-      {/* Filter row — wraps below search on mobile */}
+      {/* Filter row */}
       <div className="flex gap-2 flex-1 flex-wrap sm:flex-nowrap items-center min-w-0">
         {/* MASCO Group filter */}
         <select
