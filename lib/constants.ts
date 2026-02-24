@@ -31,7 +31,7 @@ export const QUARTILE_LABELS: Record<string, string> = {
 }
 
 export const QUARTILE_COLORS: Record<string, string> = {
-  "Medium low": "#59A14F",
+  "Medium low": "#E15759",
   "Medium high": "#F28E2B",
-  High: "#E15759",
+  High: "#59A14F",
 }
