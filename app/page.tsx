@@ -1,65 +1,131 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+import { useEffect, useState, useMemo } from "react"
+import dynamic from "next/dynamic"
+import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
+import type { GraphNode, GraphEdge, OccupationDetail } from "@/lib/types"
+import GraphControls from "@/components/graph/GraphControls"
+import GraphLegend from "@/components/graph/GraphLegend"
+import OccupationPanel from "@/components/panel/OccupationPanel"
+
+// Dynamic import to avoid SSR issues with D3 and ResizeObserver
+const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
+      Loading graph…
     </div>
-  );
+  ),
+})
+
+export default function HomePage() {
+  const [nodes, setNodes] = useState<GraphNode[]>([])
+  const [edges, setEdges] = useState<GraphEdge[]>([])
+  const [occupations, setOccupations] = useState<Record<string, OccupationDetail>>({})
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filterGroup, setFilterGroup] = useState<number | null>(null)
+  const [filterSkill, setFilterSkill] = useState("")
+
+  useEffect(() => {
+    Promise.all([loadNodes(), loadEdges(), loadOccupations()])
+      .then(([n, e, o]) => {
+        setNodes(n)
+        setEdges(e)
+        setOccupations(o)
+        setLoading(false)
+      })
+      .catch((err) => {
+        setError(err.message)
+        setLoading(false)
+      })
+  }, [])
+
+  // Build skills map: nodeId -> Set of all skills
+  const allSkills = useMemo<Map<string, Set<string>>>(() => {
+    const map = new Map<string, Set<string>>()
+    for (const [id, occ] of Object.entries(occupations)) {
+      const skills = new Set([...occ.basicSkills, ...occ.specificSkills])
+      map.set(id, skills)
+    }
+    return map
+  }, [occupations])
+
+  // Unique sorted skills list for autocomplete
+  const uniqueSkills = useMemo<string[]>(() => {
+    const all = new Set<string>()
+    for (const occ of Object.values(occupations)) {
+      occ.basicSkills.forEach((s) => all.add(s))
+      occ.specificSkills.forEach((s) => all.add(s))
+    }
+    return [...all].sort()
+  }, [occupations])
+
+  const selectedDetail = selectedNodeId ? occupations[selectedNodeId] ?? null : null
+
+  return (
+    <div className="flex flex-col flex-1 min-h-0 bg-gray-950 text-white overflow-hidden">
+      {/* Graph controls */}
+      <GraphControls
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        filterGroup={filterGroup}
+        setFilterGroup={setFilterGroup}
+        filterSkill={filterSkill}
+        setFilterSkill={setFilterSkill}
+        uniqueSkills={uniqueSkills}
+      />
+
+      {/* Main graph area */}
+      <div className="flex-1 relative min-h-0">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center space-y-3">
+              <div className="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto" />
+              <p className="text-gray-400 text-sm">Loading occupational data…</p>
+            </div>
+          </div>
+        )}
+        {error && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-red-950 border border-red-700 rounded-lg p-6 max-w-sm text-center">
+              <p className="text-red-300 font-semibold mb-1">Failed to load data</p>
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          </div>
+        )}
+        {!loading && !error && nodes.length > 0 && (
+          <OccupationGraph
+            nodes={nodes}
+            edges={edges}
+            onNodeSelect={setSelectedNodeId}
+            filterGroup={filterGroup}
+            searchQuery={searchQuery}
+            filterSkill={filterSkill}
+            allSkills={allSkills}
+          />
+        )}
+
+        {/* Node count badge */}
+        {!loading && !error && (
+          <div className="absolute bottom-4 left-4 text-xs text-gray-500 bg-gray-900/70 px-2 py-1 rounded">
+            {nodes.length} occupations · {edges.length} skill edges
+          </div>
+        )}
+      </div>
+
+      {/* Legend */}
+      <GraphLegend activeGroup={filterGroup} onGroupClick={setFilterGroup} />
+
+      {/* Side panel */}
+      <OccupationPanel
+        nodeId={selectedNodeId}
+        detail={selectedDetail}
+        onClose={() => setSelectedNodeId(null)}
+      />
+    </div>
+  )
 }

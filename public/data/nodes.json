@@ -1,0 +1,3650 @@
+[
+  {
+    "id": "1111",
+    "label": "Legislators",
+    "group": 1,
+    "aiExposure": 0.111111111111111,
+    "quartile": "Medium low",
+    "wage": 30453
+  },
+  {
+    "id": "1112",
+    "label": "Senior Government Officials",
+    "group": 1,
+    "aiExposure": 0.285714285714286,
+    "quartile": "Medium low",
+    "wage": 6282
+  },
+  {
+    "id": "1113",
+    "label": "Traditional Chiefs And Heads Of Village",
+    "group": 1,
+    "aiExposure": 0.285714285714286,
+    "quartile": "Medium low",
+    "wage": 3532
+  },
+  {
+    "id": "1114",
+    "label": "Senior Officials Of Special-Interest Organisations",
+    "group": 1,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": null
+  },
+  {
+    "id": "1121",
+    "label": "Managing Directors And Chief Executives",
+    "group": 1,
+    "aiExposure": 0.0909090909090909,
+    "quartile": "Medium low",
+    "wage": 5574
+  },
+  {
+    "id": "1211",
+    "label": "Finance Managers",
+    "group": 1,
+    "aiExposure": 0.555555555555556,
+    "quartile": "Medium high",
+    "wage": 5440
+  },
+  {
+    "id": "1212",
+    "label": "Human Resource Managers",
+    "group": 1,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 6094
+  },
+  {
+    "id": "1213",
+    "label": "Policy And Planning Managers",
+    "group": 1,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 6734
+  },
+  {
+    "id": "1214",
+    "label": "Business Services Managers",
+    "group": 1,
+    "aiExposure": 0.833333333333333,
+    "quartile": "High",
+    "wage": 5899
+  },
+  {
+    "id": "1215",
+    "label": "Administrative Managers",
+    "group": 1,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 5332
+  },
+  {
+    "id": "1216",
+    "label": "Quality Managers",
+    "group": 1,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": null
+  },
+  {
+    "id": "1221",
+    "label": "Sales And Marketing Managers",
+    "group": 1,
+    "aiExposure": 0.818181818181818,
+    "quartile": "Medium high",
+    "wage": 4976
+  },
+  {
+    "id": "1222",
+    "label": "Advertising And Public Relations Managers",
+    "group": 1,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 5338
+  },
+  {
+    "id": "1223",
+    "label": "Research And Development Managers",
+    "group": 1,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium low",
+    "wage": 5227
+  },
+  {
+    "id": "1311",
+    "label": "Agricultural, Forestry And Livestock Production Managers",
+    "group": 1,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 4614
+  },
+  {
+    "id": "1312",
+    "label": "Aquaculture And Fisheries Production Managers",
+    "group": 1,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 4516
+  },
+  {
+    "id": "1321",
+    "label": "Manufacturing Managers",
+    "group": 1,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 5227
+  },
+  {
+    "id": "1322",
+    "label": "Mining Managers",
+    "group": 1,
+    "aiExposure": 0.6,
+    "quartile": "Medium high",
+    "wage": 4968
+  },
+  {
+    "id": "1323",
+    "label": "Construction Managers",
+    "group": 1,
+    "aiExposure": 0.7,
+    "quartile": "Medium high",
+    "wage": 5091
+  },
+  {
+    "id": "1324",
+    "label": "Supply, Distribution And Related Managers",
+    "group": 1,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4580
+  },
+  {
+    "id": "1411",
+    "label": "Hotel And Homestay Managers",
+    "group": 1,
+    "aiExposure": 0.733333333333333,
+    "quartile": "Medium high",
+    "wage": 5545
+  },
+  {
+    "id": "1412",
+    "label": "Restaurant Managers",
+    "group": 1,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 3475
+  },
+  {
+    "id": "1421",
+    "label": "Retail And Wholesale Trade Managers",
+    "group": 1,
+    "aiExposure": 0.8,
+    "quartile": "Medium high",
+    "wage": 4761
+  },
+  {
+    "id": "1511",
+    "label": "Information And Communications Technology Managers",
+    "group": 1,
+    "aiExposure": 0.454545454545455,
+    "quartile": "Medium high",
+    "wage": 7137
+  },
+  {
+    "id": "1611",
+    "label": "Child Care Services Managers",
+    "group": 1,
+    "aiExposure": 0.555555555555556,
+    "quartile": "Medium high",
+    "wage": 11923
+  },
+  {
+    "id": "1612",
+    "label": "Health Services Managers",
+    "group": 1,
+    "aiExposure": 0.625,
+    "quartile": "Medium high",
+    "wage": 4930
+  },
+  {
+    "id": "1613",
+    "label": "Aged Care Services Managers",
+    "group": 1,
+    "aiExposure": 0.6,
+    "quartile": "Medium high",
+    "wage": null
+  },
+  {
+    "id": "1614",
+    "label": "Social Welfare Managers",
+    "group": 1,
+    "aiExposure": 0.714285714285714,
+    "quartile": "Medium high",
+    "wage": 14959
+  },
+  {
+    "id": "1615",
+    "label": "Education Managers",
+    "group": 1,
+    "aiExposure": 0.727272727272727,
+    "quartile": "Medium high",
+    "wage": 8596
+  },
+  {
+    "id": "1616",
+    "label": "Financial And Insurance Services Branch Managers",
+    "group": 1,
+    "aiExposure": 0.833333333333333,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "1617",
+    "label": "Legal Managers",
+    "group": 1,
+    "aiExposure": 0.642857142857143,
+    "quartile": "Medium high",
+    "wage": 6696
+  },
+  {
+    "id": "1618",
+    "label": "Property Managers",
+    "group": 1,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "1621",
+    "label": "Sports And Recreation Centre Managers",
+    "group": 1,
+    "aiExposure": 0.727272727272727,
+    "quartile": "Medium high",
+    "wage": 1136
+  },
+  {
+    "id": "1622",
+    "label": "Personal Care, Cleaning And Related Services Managers",
+    "group": 1,
+    "aiExposure": 0.714285714285714,
+    "quartile": "Medium high",
+    "wage": 7062
+  },
+  {
+    "id": "1623",
+    "label": "Security Managers",
+    "group": 1,
+    "aiExposure": 0.545454545454546,
+    "quartile": "Medium high",
+    "wage": 4602
+  },
+  {
+    "id": "1624",
+    "label": "Cultural Centre, Museum And Library Managers",
+    "group": 1,
+    "aiExposure": 0.727272727272727,
+    "quartile": "Medium high",
+    "wage": 4116
+  },
+  {
+    "id": "2111",
+    "label": "Physicists And Astronomers",
+    "group": 2,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 6918
+  },
+  {
+    "id": "2112",
+    "label": "Meteorologists And Seismologists",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4631
+  },
+  {
+    "id": "2113",
+    "label": "Chemists",
+    "group": 2,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 4911
+  },
+  {
+    "id": "2114",
+    "label": "Geologists And Geophysicists",
+    "group": 2,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 9718
+  },
+  {
+    "id": "2121",
+    "label": "Mathematicians, Actuaries And Statisticians",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 6295
+  },
+  {
+    "id": "2131",
+    "label": "Biologists, Botanists, Zoologists And Related Professionals",
+    "group": 2,
+    "aiExposure": 0.6,
+    "quartile": "Medium high",
+    "wage": 8705
+  },
+  {
+    "id": "2132",
+    "label": "Farming, Forestry, Plantation, And Fisheries Advisers",
+    "group": 2,
+    "aiExposure": 0.909090909090909,
+    "quartile": "High",
+    "wage": 4857
+  },
+  {
+    "id": "2133",
+    "label": "Environmental Protection Professionals",
+    "group": 2,
+    "aiExposure": 0.769230769230769,
+    "quartile": "Medium high",
+    "wage": 5753
+  },
+  {
+    "id": "2134",
+    "label": "Pharmacologists, Pathologists And Related Professionals",
+    "group": 2,
+    "aiExposure": 0.444444444444444,
+    "quartile": "Medium high",
+    "wage": 5608
+  },
+  {
+    "id": "2141",
+    "label": "Industrial And Production Engineers",
+    "group": 2,
+    "aiExposure": 0.857142857142857,
+    "quartile": "High",
+    "wage": 4664
+  },
+  {
+    "id": "2142",
+    "label": "Civil Engineers",
+    "group": 2,
+    "aiExposure": 0.7,
+    "quartile": "Medium high",
+    "wage": 4822
+  },
+  {
+    "id": "2143",
+    "label": "Environmental Engineers",
+    "group": 2,
+    "aiExposure": 0.888888888888889,
+    "quartile": "High",
+    "wage": 5515
+  },
+  {
+    "id": "2144",
+    "label": "Mechanical Engineers",
+    "group": 2,
+    "aiExposure": 0.818181818181818,
+    "quartile": "Medium high",
+    "wage": 4983
+  },
+  {
+    "id": "2145",
+    "label": "Chemical Engineers",
+    "group": 2,
+    "aiExposure": 0.9,
+    "quartile": "High",
+    "wage": 6346
+  },
+  {
+    "id": "2146",
+    "label": "Mining Engineers, Metallurgists And Related Professionals",
+    "group": 2,
+    "aiExposure": 0.909090909090909,
+    "quartile": "High",
+    "wage": 7808
+  },
+  {
+    "id": "2149",
+    "label": "Engineering Professionals (Excluding Electrotechnology) Not Elsewhere Classified",
+    "group": 2,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 4361
+  },
+  {
+    "id": "2151",
+    "label": "Electrical Engineers",
+    "group": 2,
+    "aiExposure": 0.8,
+    "quartile": "Medium high",
+    "wage": 4984
+  },
+  {
+    "id": "2152",
+    "label": "Electronic Engineers",
+    "group": 2,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 6014
+  },
+  {
+    "id": "2153",
+    "label": "Telecommunications Engineers",
+    "group": 2,
+    "aiExposure": 0.857142857142857,
+    "quartile": "High",
+    "wage": 4851
+  },
+  {
+    "id": "2161",
+    "label": "Building Architects",
+    "group": 2,
+    "aiExposure": 0.727272727272727,
+    "quartile": "Medium high",
+    "wage": 4894
+  },
+  {
+    "id": "2162",
+    "label": "Landscape Architects",
+    "group": 2,
+    "aiExposure": 0.714285714285714,
+    "quartile": "Medium high",
+    "wage": 5857
+  },
+  {
+    "id": "2163",
+    "label": "Product And Garment Designers",
+    "group": 2,
+    "aiExposure": 0.875,
+    "quartile": "High",
+    "wage": 4030
+  },
+  {
+    "id": "2164",
+    "label": "Town And Traffic Planners",
+    "group": 2,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 5977
+  },
+  {
+    "id": "2165",
+    "label": "Cartographers And Surveyors",
+    "group": 2,
+    "aiExposure": 0.625,
+    "quartile": "Medium high",
+    "wage": 4556
+  },
+  {
+    "id": "2166",
+    "label": "Graphic And Multimedia Designers",
+    "group": 2,
+    "aiExposure": 0.9,
+    "quartile": "High",
+    "wage": 4455
+  },
+  {
+    "id": "2171",
+    "label": "Ship Engineers",
+    "group": 2,
+    "aiExposure": 0.375,
+    "quartile": "Medium low",
+    "wage": 5462
+  },
+  {
+    "id": "2172",
+    "label": "Ship Deck Officers And Pilots",
+    "group": 2,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 6716
+  },
+  {
+    "id": "2173",
+    "label": "Aircraft Pilots And Related Professionals",
+    "group": 2,
+    "aiExposure": 0.181818181818182,
+    "quartile": "Medium low",
+    "wage": 17836
+  },
+  {
+    "id": "2174",
+    "label": "Air Traffic Controllers",
+    "group": 2,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 6734
+  },
+  {
+    "id": "2175",
+    "label": "Train/ Locomotive Controllers",
+    "group": 2,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 4971
+  },
+  {
+    "id": "2181",
+    "label": "Mining Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "2182",
+    "label": "Manufacturing Professionals",
+    "group": 2,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 5366
+  },
+  {
+    "id": "2183",
+    "label": "Construction Professionals",
+    "group": 2,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 5690
+  },
+  {
+    "id": "2211",
+    "label": "Generalist Medical Practitioners",
+    "group": 2,
+    "aiExposure": 0.222222222222222,
+    "quartile": "Medium low",
+    "wage": 5911
+  },
+  {
+    "id": "2212",
+    "label": "Specialist Medical Practitioners",
+    "group": 2,
+    "aiExposure": 0.0714285714285714,
+    "quartile": "Medium low",
+    "wage": 7800
+  },
+  {
+    "id": "2221",
+    "label": "Nursing Professionals",
+    "group": 2,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 3809
+  },
+  {
+    "id": "2222",
+    "label": "Midwifery Professionals",
+    "group": 2,
+    "aiExposure": 0.285714285714286,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "2231",
+    "label": "Traditional And Complementary Medicine Professionals",
+    "group": 2,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 3162
+  },
+  {
+    "id": "2241",
+    "label": "Paramedical Practitioners",
+    "group": 2,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 5463
+  },
+  {
+    "id": "2251",
+    "label": "Veterinarians",
+    "group": 2,
+    "aiExposure": 0.272727272727273,
+    "quartile": "Medium low",
+    "wage": 5496
+  },
+  {
+    "id": "2261",
+    "label": "Dentists",
+    "group": 2,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 5744
+  },
+  {
+    "id": "2262",
+    "label": "Pharmacists",
+    "group": 2,
+    "aiExposure": 0.875,
+    "quartile": "High",
+    "wage": 5234
+  },
+  {
+    "id": "2263",
+    "label": "Environmental And Occupational Health And Hygiene Professionals",
+    "group": 2,
+    "aiExposure": 0.833333333333333,
+    "quartile": "High",
+    "wage": 5851
+  },
+  {
+    "id": "2264",
+    "label": "Physiotherapists",
+    "group": 2,
+    "aiExposure": 0.230769230769231,
+    "quartile": "Medium low",
+    "wage": 5000
+  },
+  {
+    "id": "2265",
+    "label": "Dieticians And Nutritionists",
+    "group": 2,
+    "aiExposure": 0.923076923076923,
+    "quartile": "High",
+    "wage": 5538
+  },
+  {
+    "id": "2266",
+    "label": "Audiologists And Speech Therapists",
+    "group": 2,
+    "aiExposure": 0.307692307692308,
+    "quartile": "Medium low",
+    "wage": 2869
+  },
+  {
+    "id": "2267",
+    "label": "Optometrists And Ophthalmic Opticians",
+    "group": 2,
+    "aiExposure": 0.375,
+    "quartile": "Medium low",
+    "wage": 5960
+  },
+  {
+    "id": "2268",
+    "label": "Occupational Therapists",
+    "group": 2,
+    "aiExposure": 0.0833333333333333,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "2269",
+    "label": "Health Professionals Not Elsewhere Classified",
+    "group": 2,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 4852
+  },
+  {
+    "id": "2311",
+    "label": "University And Higher Education Teaching Professionals",
+    "group": 2,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 7834
+  },
+  {
+    "id": "2321",
+    "label": "Vocational Education Teachers",
+    "group": 2,
+    "aiExposure": 0.714285714285714,
+    "quartile": "Medium high",
+    "wage": 5480
+  },
+  {
+    "id": "2331",
+    "label": "Secondary School Teachers",
+    "group": 2,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 5966
+  },
+  {
+    "id": "2341",
+    "label": "Primary School Teachers",
+    "group": 2,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium low",
+    "wage": 5607
+  },
+  {
+    "id": "2342",
+    "label": "Early Childhood Educators",
+    "group": 2,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 3323
+  },
+  {
+    "id": "2351",
+    "label": "Music Teachers",
+    "group": 2,
+    "aiExposure": 0.555555555555556,
+    "quartile": "Medium high",
+    "wage": 3750
+  },
+  {
+    "id": "2352",
+    "label": "Arts Teachers",
+    "group": 2,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 4035
+  },
+  {
+    "id": "2353",
+    "label": "Performing Arts Teachers",
+    "group": 2,
+    "aiExposure": 0.555555555555556,
+    "quartile": "Medium high",
+    "wage": 4080
+  },
+  {
+    "id": "2361",
+    "label": "Language Teachers",
+    "group": 2,
+    "aiExposure": 0.875,
+    "quartile": "High",
+    "wage": 6105
+  },
+  {
+    "id": "2371",
+    "label": "Religious Teachers",
+    "group": 2,
+    "aiExposure": 0.375,
+    "quartile": "Medium low",
+    "wage": 2435
+  },
+  {
+    "id": "2381",
+    "label": "Vocational Training Officers",
+    "group": 2,
+    "aiExposure": 0.916666666666667,
+    "quartile": "High",
+    "wage": 5371
+  },
+  {
+    "id": "2391",
+    "label": "Education Method Specialists",
+    "group": 2,
+    "aiExposure": 0.818181818181818,
+    "quartile": "Medium high",
+    "wage": 8024
+  },
+  {
+    "id": "2392",
+    "label": "Special Needs Teachers",
+    "group": 2,
+    "aiExposure": 0.142857142857143,
+    "quartile": "Medium low",
+    "wage": 4466
+  },
+  {
+    "id": "2393",
+    "label": "Information Technology Trainers",
+    "group": 2,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": null
+  },
+  {
+    "id": "2399",
+    "label": "Teaching Professionals Not Elsewhere Classified",
+    "group": 2,
+    "aiExposure": 0.636363636363636,
+    "quartile": "Medium high",
+    "wage": 4776
+  },
+  {
+    "id": "2411",
+    "label": "Accountants And Auditors",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4452
+  },
+  {
+    "id": "2412",
+    "label": "Financial And Investment Advisers",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5166
+  },
+  {
+    "id": "2413",
+    "label": "Financial Analysts",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 6787
+  },
+  {
+    "id": "2421",
+    "label": "Management And Organisation Analysts",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5234
+  },
+  {
+    "id": "2422",
+    "label": "Policy Administration Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 7212
+  },
+  {
+    "id": "2423",
+    "label": "Personnel And Career Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4562
+  },
+  {
+    "id": "2424",
+    "label": "Training And Staff Development Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4490
+  },
+  {
+    "id": "2425",
+    "label": "Administrative Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4750
+  },
+  {
+    "id": "2426",
+    "label": "Research And Development Professionals",
+    "group": 2,
+    "aiExposure": 0.888888888888889,
+    "quartile": "High",
+    "wage": 5732
+  },
+  {
+    "id": "2431",
+    "label": "Advertising And Marketing Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5041
+  },
+  {
+    "id": "2432",
+    "label": "Public Relations Professionals",
+    "group": 2,
+    "aiExposure": 0.916666666666667,
+    "quartile": "High",
+    "wage": 3901
+  },
+  {
+    "id": "2433",
+    "label": "Technical And Medical Sales Professionals (Excluding ICT)",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5983
+  },
+  {
+    "id": "2434",
+    "label": "Information And Communications Technology (ICT) Sales Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5773
+  },
+  {
+    "id": "2511",
+    "label": "Computer Systems Analysts",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5871
+  },
+  {
+    "id": "2512",
+    "label": "Software Developers",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 6387
+  },
+  {
+    "id": "2513",
+    "label": "Web And Multimedia Developers",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3664
+  },
+  {
+    "id": "2514",
+    "label": "Application Programmers",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4904
+  },
+  {
+    "id": "2519",
+    "label": "Software And Application Developers And Analysts Not Elsewhere Classified",
+    "group": 2,
+    "aiExposure": 0.833333333333333,
+    "quartile": "Medium high",
+    "wage": 4492
+  },
+  {
+    "id": "2521",
+    "label": "Database Designers And Administrators",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4953
+  },
+  {
+    "id": "2522",
+    "label": "Information Technology System Administrators",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5447
+  },
+  {
+    "id": "2523",
+    "label": "Computer Network Professionals",
+    "group": 2,
+    "aiExposure": 0.875,
+    "quartile": "High",
+    "wage": 4844
+  },
+  {
+    "id": "2524",
+    "label": "Data Professionals",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "2531",
+    "label": "Cyber Security Professionals",
+    "group": 2,
+    "aiExposure": 0.714285714285714,
+    "quartile": "Medium high",
+    "wage": null
+  },
+  {
+    "id": "2541",
+    "label": "Animation And Visual Effects Professionals",
+    "group": 2,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": null
+  },
+  {
+    "id": "2542",
+    "label": "Digital Games And E-Sport Professionals",
+    "group": 2,
+    "aiExposure": 0.888888888888889,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "2543",
+    "label": "Creative Contents Designer Professionals",
+    "group": 2,
+    "aiExposure": 0.888888888888889,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "2611",
+    "label": "Lawyers",
+    "group": 2,
+    "aiExposure": 0.25,
+    "quartile": "Medium low",
+    "wage": 6029
+  },
+  {
+    "id": "2612",
+    "label": "Judges",
+    "group": 2,
+    "aiExposure": 0.142857142857143,
+    "quartile": "Medium low",
+    "wage": 14663
+  },
+  {
+    "id": "2619",
+    "label": "Legal Professionals Not Elsewhere Classified",
+    "group": 2,
+    "aiExposure": 0.857142857142857,
+    "quartile": "High",
+    "wage": 5587
+  },
+  {
+    "id": "2711",
+    "label": "Hotel Professionals",
+    "group": 2,
+    "aiExposure": 0.8,
+    "quartile": "Medium high",
+    "wage": 4907
+  },
+  {
+    "id": "2712",
+    "label": "Restaurant Professionals",
+    "group": 2,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 3110
+  },
+  {
+    "id": "2811",
+    "label": "Archivists And Curators",
+    "group": 2,
+    "aiExposure": 0.888888888888889,
+    "quartile": "High",
+    "wage": 4613
+  },
+  {
+    "id": "2812",
+    "label": "Librarians And Related Information Professionals",
+    "group": 2,
+    "aiExposure": 0.875,
+    "quartile": "High",
+    "wage": 5138
+  },
+  {
+    "id": "2821",
+    "label": "Economists",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5477
+  },
+  {
+    "id": "2822",
+    "label": "Sociologists, Anthropologists And Related Professionals",
+    "group": 2,
+    "aiExposure": 0.8,
+    "quartile": "Medium high",
+    "wage": 6158
+  },
+  {
+    "id": "2823",
+    "label": "Philosophers, Historians And Political Scientists",
+    "group": 2,
+    "aiExposure": 0.857142857142857,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "2824",
+    "label": "Psychologists",
+    "group": 2,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium low",
+    "wage": 6120
+  },
+  {
+    "id": "2825",
+    "label": "Social Work And Counselling Professionals",
+    "group": 2,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 5106
+  },
+  {
+    "id": "2826",
+    "label": "Religious Professionals",
+    "group": 2,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 4263
+  },
+  {
+    "id": "2831",
+    "label": "Authors And Related Writers",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4748
+  },
+  {
+    "id": "2832",
+    "label": "Journalists",
+    "group": 2,
+    "aiExposure": 0.888888888888889,
+    "quartile": "High",
+    "wage": 5003
+  },
+  {
+    "id": "2833",
+    "label": "Translators, Interpreters And Other Linguists",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4095
+  },
+  {
+    "id": "2841",
+    "label": "Visual Artists",
+    "group": 2,
+    "aiExposure": 0.636363636363636,
+    "quartile": "Medium high",
+    "wage": 1922
+  },
+  {
+    "id": "2842",
+    "label": "Musicians, Singers And Composers",
+    "group": 2,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 3011
+  },
+  {
+    "id": "2843",
+    "label": "Dancers And Choreographers",
+    "group": 2,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 7071
+  },
+  {
+    "id": "2844",
+    "label": "Film, Stage And Related Directors And Producers",
+    "group": 2,
+    "aiExposure": 0.625,
+    "quartile": "Medium high",
+    "wage": 6550
+  },
+  {
+    "id": "2845",
+    "label": "Actors",
+    "group": 2,
+    "aiExposure": 0.4,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "2846",
+    "label": "Announcers On Radio, Television And Other Media",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4595
+  },
+  {
+    "id": "2847",
+    "label": "Clowns, Magicians, Acrobats And Related Professionals",
+    "group": 2,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "2849",
+    "label": "Creative And Performing Artists Not Elsewhere Classified",
+    "group": 2,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 6245
+  },
+  {
+    "id": "2911",
+    "label": "Professional Customs And Border Inspectors",
+    "group": 2,
+    "aiExposure": 0.7,
+    "quartile": "Medium high",
+    "wage": 5109
+  },
+  {
+    "id": "2912",
+    "label": "Profesional Taxation And Excise Officials",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5277
+  },
+  {
+    "id": "2913",
+    "label": "Professional Government Social Benefit Officials",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 7315
+  },
+  {
+    "id": "2914",
+    "label": "Professional Government Licensing Officials",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4959
+  },
+  {
+    "id": "2915",
+    "label": "Professional Police Inspectors And Detectives",
+    "group": 2,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 6201
+  },
+  {
+    "id": "2916",
+    "label": "Professional Civil Officials",
+    "group": 2,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 5253
+  },
+  {
+    "id": "2919",
+    "label": "Regulatory Government Professionals Not Elsewhere Classified",
+    "group": 2,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5218
+  },
+  {
+    "id": "3111",
+    "label": "Chemical And Physical Science Technicians",
+    "group": 3,
+    "aiExposure": 0.636363636363636,
+    "quartile": "Medium high",
+    "wage": 3436
+  },
+  {
+    "id": "3112",
+    "label": "Civil Engineering Technicians",
+    "group": 3,
+    "aiExposure": 0.875,
+    "quartile": "High",
+    "wage": 2924
+  },
+  {
+    "id": "3113",
+    "label": "Electrical Engineering Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3061
+  },
+  {
+    "id": "3114",
+    "label": "Electronics Engineering Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2947
+  },
+  {
+    "id": "3115",
+    "label": "Mechanical Engineering Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2694
+  },
+  {
+    "id": "3116",
+    "label": "Chemical Engineering Technicians",
+    "group": 3,
+    "aiExposure": 0.857142857142857,
+    "quartile": "High",
+    "wage": 4821
+  },
+  {
+    "id": "3117",
+    "label": "Mining And Metallurgical Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3079
+  },
+  {
+    "id": "3118",
+    "label": "Draughtspersons And Surveying Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3347
+  },
+  {
+    "id": "3119",
+    "label": "Industrial And Production Technicians",
+    "group": 3,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 2820
+  },
+  {
+    "id": "3121",
+    "label": "Mining Supervisors",
+    "group": 3,
+    "aiExposure": 0.833333333333333,
+    "quartile": "Medium high",
+    "wage": 4337
+  },
+  {
+    "id": "3122",
+    "label": "Manufacturing Supervisors",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2912
+  },
+  {
+    "id": "3123",
+    "label": "Construction Supervisors",
+    "group": 3,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 2852
+  },
+  {
+    "id": "3129",
+    "label": "Other Supervisors Not Elsewhere Classified",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2802
+  },
+  {
+    "id": "3131",
+    "label": "Power Production Plant Operators",
+    "group": 3,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium low",
+    "wage": 1847
+  },
+  {
+    "id": "3132",
+    "label": "Incinerator And Water Treatment Plant Operators",
+    "group": 3,
+    "aiExposure": 0.25,
+    "quartile": "Medium low",
+    "wage": 1764
+  },
+  {
+    "id": "3133",
+    "label": "Chemical Processing Plant Controllers",
+    "group": 3,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium low",
+    "wage": 2613
+  },
+  {
+    "id": "3134",
+    "label": "Petroleum And Natural Gas Refining Plant Operators",
+    "group": 3,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 1663
+  },
+  {
+    "id": "3135",
+    "label": "Metal Production Process Controllers",
+    "group": 3,
+    "aiExposure": 0.222222222222222,
+    "quartile": "Medium low",
+    "wage": 2916
+  },
+  {
+    "id": "3141",
+    "label": "Life Science Technicians (Excluding Medical)",
+    "group": 3,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 2956
+  },
+  {
+    "id": "3142",
+    "label": "Agricultural And Livestock Technicians",
+    "group": 3,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 3695
+  },
+  {
+    "id": "3143",
+    "label": "Forestry Technicians",
+    "group": 3,
+    "aiExposure": 0.545454545454546,
+    "quartile": "Medium high",
+    "wage": 4146
+  },
+  {
+    "id": "3144",
+    "label": "Fishery Technicians",
+    "group": 3,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 3499
+  },
+  {
+    "id": "3151",
+    "label": "Aircraft Technicians",
+    "group": 3,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 3638
+  },
+  {
+    "id": "3152",
+    "label": "Ship/ Marine Technicians",
+    "group": 3,
+    "aiExposure": 0.272727272727273,
+    "quartile": "Medium low",
+    "wage": 4296
+  },
+  {
+    "id": "3153",
+    "label": "Train/ Locomotive Technicians",
+    "group": 3,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 2462
+  },
+  {
+    "id": "3154",
+    "label": "Motor Vehicle Technicians",
+    "group": 3,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2773
+  },
+  {
+    "id": "3159",
+    "label": "Transport Technicians Not Elsewhere Classified",
+    "group": 3,
+    "aiExposure": 0.75,
+    "quartile": "Medium high",
+    "wage": 3367
+  },
+  {
+    "id": "3161",
+    "label": "Nuclear Research And Development Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": null
+  },
+  {
+    "id": "3211",
+    "label": "Medical Imaging And Therapeutic Equipment Technicians",
+    "group": 3,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 4061
+  },
+  {
+    "id": "3212",
+    "label": "Medical And Pathology Laboratory Technicians",
+    "group": 3,
+    "aiExposure": 0.25,
+    "quartile": "Medium low",
+    "wage": 3970
+  },
+  {
+    "id": "3213",
+    "label": "Pharmaceutical Technicians And Assistants",
+    "group": 3,
+    "aiExposure": 0.4,
+    "quartile": "Medium low",
+    "wage": 3012
+  },
+  {
+    "id": "3214",
+    "label": "Medical And Dental Prosthetic Technicians",
+    "group": 3,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 2236
+  },
+  {
+    "id": "3215",
+    "label": "Orthotic And Prosthetic Technicians",
+    "group": 3,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 2845
+  },
+  {
+    "id": "3221",
+    "label": "Nursing Associate Professionals (Except Dental)",
+    "group": 3,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 4335
+  },
+  {
+    "id": "3222",
+    "label": "Midwifery Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium high",
+    "wage": 3812
+  },
+  {
+    "id": "3231",
+    "label": "Traditional And Complementary Medicine Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 3265
+  },
+  {
+    "id": "3241",
+    "label": "Veterinary Technicians And Assistants",
+    "group": 3,
+    "aiExposure": 0.25,
+    "quartile": "Medium low",
+    "wage": 3437
+  },
+  {
+    "id": "3251",
+    "label": "Dental Assistants And Therapists",
+    "group": 3,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium high",
+    "wage": 3769
+  },
+  {
+    "id": "3252",
+    "label": "Medical Record And Health Information Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2601
+  },
+  {
+    "id": "3253",
+    "label": "Community Health Workers",
+    "group": 3,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 5963
+  },
+  {
+    "id": "3254",
+    "label": "Dispensing Opticians",
+    "group": 3,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 4115
+  },
+  {
+    "id": "3255",
+    "label": "Physiotherapy Technicians And Assistants",
+    "group": 3,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 2893
+  },
+  {
+    "id": "3256",
+    "label": "Medical Assistants",
+    "group": 3,
+    "aiExposure": 0.4,
+    "quartile": "Medium low",
+    "wage": 4193
+  },
+  {
+    "id": "3257",
+    "label": "Environmental And Occupational Health Inspectors And Associates",
+    "group": 3,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 2003
+  },
+  {
+    "id": "3258",
+    "label": "Ambulance Assistants",
+    "group": 3,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 1736
+  },
+  {
+    "id": "3259",
+    "label": "Health Associate Professionals Not Elsewhere Classified",
+    "group": 3,
+    "aiExposure": 0.8,
+    "quartile": "Medium high",
+    "wage": 6695
+  },
+  {
+    "id": "3311",
+    "label": "Securities And Finance Dealers And Brokers",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4389
+  },
+  {
+    "id": "3312",
+    "label": "Credit And Loan Officers",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4442
+  },
+  {
+    "id": "3313",
+    "label": "Accounting And Auditing Associate Professionals",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3248
+  },
+  {
+    "id": "3314",
+    "label": "Statistical, Mathematical And Actuarial Associate Professionals",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3680
+  },
+  {
+    "id": "3315",
+    "label": "Valuers And Loss Assessors",
+    "group": 3,
+    "aiExposure": 0.8,
+    "quartile": "Medium high",
+    "wage": 3544
+  },
+  {
+    "id": "3321",
+    "label": "Insurance Representatives",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4295
+  },
+  {
+    "id": "3322",
+    "label": "Commercial Sales Representatives",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2714
+  },
+  {
+    "id": "3323",
+    "label": "Buyers",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3372
+  },
+  {
+    "id": "3324",
+    "label": "Trade Brokers",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 6529
+  },
+  {
+    "id": "3331",
+    "label": "Clearing And Forwarding Agents",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 4649
+  },
+  {
+    "id": "3332",
+    "label": "Conference And Event Agents",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1813
+  },
+  {
+    "id": "3333",
+    "label": "Employment Agents And Contractors",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2500
+  },
+  {
+    "id": "3334",
+    "label": "Real Estate And Property Agents",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3646
+  },
+  {
+    "id": "3339",
+    "label": "Business Services Agents Not Elsewhere Classified",
+    "group": 3,
+    "aiExposure": 0.833333333333333,
+    "quartile": "Medium high",
+    "wage": 1813
+  },
+  {
+    "id": "3341",
+    "label": "Administrative Associate Professionals",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3138
+  },
+  {
+    "id": "3342",
+    "label": "Legal Secretaries",
+    "group": 3,
+    "aiExposure": 0.9,
+    "quartile": "High",
+    "wage": 3503
+  },
+  {
+    "id": "3343",
+    "label": "Administrative And Executive Secretaries",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2906
+  },
+  {
+    "id": "3344",
+    "label": "Medical Secretaries",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1461
+  },
+  {
+    "id": "3411",
+    "label": "Legal And Related Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.833333333333333,
+    "quartile": "High",
+    "wage": 3262
+  },
+  {
+    "id": "3511",
+    "label": "Information And Communications Technology Operation Technicians",
+    "group": 3,
+    "aiExposure": 0.714285714285714,
+    "quartile": "Medium high",
+    "wage": 3170
+  },
+  {
+    "id": "3512",
+    "label": "Information And Communications Technology User Support Technicians",
+    "group": 3,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 2831
+  },
+  {
+    "id": "3513",
+    "label": "Computer Network And Systems Technicians",
+    "group": 3,
+    "aiExposure": 0.714285714285714,
+    "quartile": "Medium high",
+    "wage": 3296
+  },
+  {
+    "id": "3514",
+    "label": "Web Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 6491
+  },
+  {
+    "id": "3521",
+    "label": "Broadcasting And Audio-Visual Technicians",
+    "group": 3,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 3435
+  },
+  {
+    "id": "3522",
+    "label": "Telecommunications Engineering Technicians",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2891
+  },
+  {
+    "id": "3611",
+    "label": "Social Work Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.555555555555556,
+    "quartile": "Medium high",
+    "wage": 3679
+  },
+  {
+    "id": "3621",
+    "label": "Athletes And Sports Players",
+    "group": 3,
+    "aiExposure": 0.222222222222222,
+    "quartile": "Medium low",
+    "wage": 1865
+  },
+  {
+    "id": "3622",
+    "label": "Sports Coaches, Instructors And Officials",
+    "group": 3,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 3228
+  },
+  {
+    "id": "3623",
+    "label": "Fitness And Recreation Instructors And Programme Leaders",
+    "group": 3,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 2908
+  },
+  {
+    "id": "3631",
+    "label": "Photographers",
+    "group": 3,
+    "aiExposure": 0.454545454545455,
+    "quartile": "Medium high",
+    "wage": 2722
+  },
+  {
+    "id": "3632",
+    "label": "Interior Designers And Decorators",
+    "group": 3,
+    "aiExposure": 0.875,
+    "quartile": "High",
+    "wage": 3771
+  },
+  {
+    "id": "3633",
+    "label": "Gallery, Museum And Library Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 3299
+  },
+  {
+    "id": "3634",
+    "label": "Cultural And Artistic Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 4136
+  },
+  {
+    "id": "3641",
+    "label": "Chefs",
+    "group": 3,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 3154
+  },
+  {
+    "id": "3711",
+    "label": "Customs And Border Inspector Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 2437
+  },
+  {
+    "id": "3712",
+    "label": "Taxation And Excise Official Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.9,
+    "quartile": "High",
+    "wage": 4596
+  },
+  {
+    "id": "3713",
+    "label": "Government Social Benefit Official Associate Professionals",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 5070
+  },
+  {
+    "id": "3714",
+    "label": "Government Licensing Official Associate Professionals",
+    "group": 3,
+    "aiExposure": 0.857142857142857,
+    "quartile": "High",
+    "wage": 3567
+  },
+  {
+    "id": "3715",
+    "label": "Police Officers",
+    "group": 3,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 4474
+  },
+  {
+    "id": "3716",
+    "label": "Civil Defence Associate Professionals",
+    "group": 3,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2757
+  },
+  {
+    "id": "3719",
+    "label": "Regulatory Government Associate Professionals Not Elsewhere Classified",
+    "group": 3,
+    "aiExposure": 0.8,
+    "quartile": "Medium high",
+    "wage": 3696
+  },
+  {
+    "id": "4111",
+    "label": "General Office Clerks",
+    "group": 4,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 2042
+  },
+  {
+    "id": "4121",
+    "label": "Secretaries (General)",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 3046
+  },
+  {
+    "id": "4131",
+    "label": "Typist",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1763
+  },
+  {
+    "id": "4132",
+    "label": "Data Entry Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1833
+  },
+  {
+    "id": "4211",
+    "label": "Bank Tellers And Related Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2800
+  },
+  {
+    "id": "4212",
+    "label": "Bookmakers, Croupiers And Related Gaming Workers",
+    "group": 4,
+    "aiExposure": 0.833333333333333,
+    "quartile": "Medium high",
+    "wage": 1453
+  },
+  {
+    "id": "4213",
+    "label": "Pawnbrokers And Money-Lenders",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2372
+  },
+  {
+    "id": "4214",
+    "label": "Debt And Rent Collectors And Related Workers",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1797
+  },
+  {
+    "id": "4221",
+    "label": "Travel Consultants And Related Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2312
+  },
+  {
+    "id": "4222",
+    "label": "Contact Centre Information Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1813
+  },
+  {
+    "id": "4223",
+    "label": "Telephone Operators",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2630
+  },
+  {
+    "id": "4224",
+    "label": "Receptionists",
+    "group": 4,
+    "aiExposure": 0.916666666666667,
+    "quartile": "High",
+    "wage": 1519
+  },
+  {
+    "id": "4225",
+    "label": "Enquiry Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2316
+  },
+  {
+    "id": "4226",
+    "label": "Survey And Market Research Interviewers",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2374
+  },
+  {
+    "id": "4229",
+    "label": "Client Information Workers Not Elsewhere Classified",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2931
+  },
+  {
+    "id": "4311",
+    "label": "Accounting And Book-Keeping Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1933
+  },
+  {
+    "id": "4312",
+    "label": "Statistical, Finance And Insurance Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2339
+  },
+  {
+    "id": "4313",
+    "label": "Payroll Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 1645
+  },
+  {
+    "id": "4321",
+    "label": "Stock Clerks",
+    "group": 4,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 1861
+  },
+  {
+    "id": "4322",
+    "label": "Production Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2492
+  },
+  {
+    "id": "4323",
+    "label": "Transport Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2744
+  },
+  {
+    "id": "4411",
+    "label": "Library Clerks",
+    "group": 4,
+    "aiExposure": 0.857142857142857,
+    "quartile": "High",
+    "wage": 3854
+  },
+  {
+    "id": "4412",
+    "label": "Mail Carriers And Sorting Clerks",
+    "group": 4,
+    "aiExposure": 0.4,
+    "quartile": "Medium low",
+    "wage": 2147
+  },
+  {
+    "id": "4413",
+    "label": "Coding, Proof-Reading And Related Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2110
+  },
+  {
+    "id": "4414",
+    "label": "Scribes And Related Workers",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2424
+  },
+  {
+    "id": "4415",
+    "label": "Filing And Copying Clerks",
+    "group": 4,
+    "aiExposure": 0.833333333333333,
+    "quartile": "High",
+    "wage": 2636
+  },
+  {
+    "id": "4416",
+    "label": "Personnel Clerks",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2519
+  },
+  {
+    "id": "4419",
+    "label": "Clerical Support Workers Not Elsewhere Classified",
+    "group": 4,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2316
+  },
+  {
+    "id": "5111",
+    "label": "Travel Attendants And Travel Stewards",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2011
+  },
+  {
+    "id": "5112",
+    "label": "Transport Conductors",
+    "group": 5,
+    "aiExposure": 0.25,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "5113",
+    "label": "Travel Guides",
+    "group": 5,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 1730
+  },
+  {
+    "id": "5121",
+    "label": "Cooks",
+    "group": 5,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 1622
+  },
+  {
+    "id": "5131",
+    "label": "Waiters",
+    "group": 5,
+    "aiExposure": 0.142857142857143,
+    "quartile": "Medium low",
+    "wage": 1211
+  },
+  {
+    "id": "5132",
+    "label": "Bartenders",
+    "group": 5,
+    "aiExposure": 0.222222222222222,
+    "quartile": "Medium low",
+    "wage": 1140
+  },
+  {
+    "id": "5141",
+    "label": "Hairdressers",
+    "group": 5,
+    "aiExposure": 0.142857142857143,
+    "quartile": "Medium low",
+    "wage": 1679
+  },
+  {
+    "id": "5142",
+    "label": "Beauticians And Related Workers",
+    "group": 5,
+    "aiExposure": 0.0769230769230769,
+    "quartile": "Medium low",
+    "wage": 1812
+  },
+  {
+    "id": "5151",
+    "label": "Cleaning And Housekeeping Supervisors In Offices, Hotels And Other Establishments",
+    "group": 5,
+    "aiExposure": 0.111111111111111,
+    "quartile": "Medium low",
+    "wage": 1618
+  },
+  {
+    "id": "5152",
+    "label": "Domestic Housekeepers",
+    "group": 5,
+    "aiExposure": 0.1,
+    "quartile": "Medium low",
+    "wage": 2101
+  },
+  {
+    "id": "5153",
+    "label": "Building Caretakers",
+    "group": 5,
+    "aiExposure": 0.375,
+    "quartile": "Medium low",
+    "wage": 2331
+  },
+  {
+    "id": "5161",
+    "label": "Astrologers, Fortune-Tellers And Related Workers",
+    "group": 5,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": null
+  },
+  {
+    "id": "5162",
+    "label": "Companions And Valets",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "5163",
+    "label": "Undertakers And Embalmers",
+    "group": 5,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "5164",
+    "label": "Pet Groomers And Animal Care Workers",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "5165",
+    "label": "Driving Instructors",
+    "group": 5,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 1769
+  },
+  {
+    "id": "5169",
+    "label": "Personal Services Workers Not Elsewhere Classified",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2133
+  },
+  {
+    "id": "5211",
+    "label": "Stall And Market Salespersons",
+    "group": 5,
+    "aiExposure": 0.666666666666667,
+    "quartile": "Medium high",
+    "wage": 1692
+  },
+  {
+    "id": "5212",
+    "label": "Street Food Salespersons",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1613
+  },
+  {
+    "id": "5221",
+    "label": "Shopkeepers",
+    "group": 5,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium high",
+    "wage": 1845
+  },
+  {
+    "id": "5222",
+    "label": "Shop Supervisors",
+    "group": 5,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 1995
+  },
+  {
+    "id": "5223",
+    "label": "Shop Sales Assistants",
+    "group": 5,
+    "aiExposure": 0.777777777777778,
+    "quartile": "Medium high",
+    "wage": 1317
+  },
+  {
+    "id": "5231",
+    "label": "Cashiers And Ticket Clerks",
+    "group": 5,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": 1338
+  },
+  {
+    "id": "5241",
+    "label": "Fashion And Other Models",
+    "group": 5,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 1733
+  },
+  {
+    "id": "5242",
+    "label": "Sales Demonstrators",
+    "group": 5,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 1592
+  },
+  {
+    "id": "5243",
+    "label": "Door-To-Door Salespersons",
+    "group": 5,
+    "aiExposure": 0.428571428571429,
+    "quartile": "Medium high",
+    "wage": 1800
+  },
+  {
+    "id": "5244",
+    "label": "Contact Centre Salespersons",
+    "group": 5,
+    "aiExposure": 1,
+    "quartile": "High",
+    "wage": 2065
+  },
+  {
+    "id": "5245",
+    "label": "Service Station And Pump Attendants",
+    "group": 5,
+    "aiExposure": 0.111111111111111,
+    "quartile": "Medium low",
+    "wage": 1226
+  },
+  {
+    "id": "5246",
+    "label": "Food Counter Attendants",
+    "group": 5,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 1163
+  },
+  {
+    "id": "5249",
+    "label": "Sales Workers Not Elsewhere Classified",
+    "group": 5,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 2484
+  },
+  {
+    "id": "5311",
+    "label": "Child Care Workers",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1491
+  },
+  {
+    "id": "5312",
+    "label": "Teachers Aides",
+    "group": 5,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 2765
+  },
+  {
+    "id": "5321",
+    "label": "Health Care Assistants",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2695
+  },
+  {
+    "id": "5322",
+    "label": "Home-Based Personal Care Workers",
+    "group": 5,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 1060
+  },
+  {
+    "id": "5411",
+    "label": "Fire Fighters",
+    "group": 5,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 3506
+  },
+  {
+    "id": "5412",
+    "label": "Low Rank Police Officers",
+    "group": 5,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 3854
+  },
+  {
+    "id": "5413",
+    "label": "Prison Guards",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 3523
+  },
+  {
+    "id": "5414",
+    "label": "Security Guards",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1642
+  },
+  {
+    "id": "5415",
+    "label": "Immigration/ Customs Officers And Assistants",
+    "group": 5,
+    "aiExposure": 0.6,
+    "quartile": "Medium high",
+    "wage": 3376
+  },
+  {
+    "id": "5419",
+    "label": "Protective Services Workers Not Elsewhere Classified",
+    "group": 5,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1739
+  },
+  {
+    "id": "6111",
+    "label": "Field Crop Growers",
+    "group": 6,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 1901
+  },
+  {
+    "id": "6112",
+    "label": "Shrub Crop Growers",
+    "group": 6,
+    "aiExposure": 0.571428571428571,
+    "quartile": "Medium high",
+    "wage": 1527
+  },
+  {
+    "id": "6113",
+    "label": "Gardeners, Horticultural And Nursery Growers",
+    "group": 6,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 2918
+  },
+  {
+    "id": "6114",
+    "label": "Mixed Crop Growers",
+    "group": 6,
+    "aiExposure": 0.4,
+    "quartile": "Medium low",
+    "wage": 2784
+  },
+  {
+    "id": "6115",
+    "label": "Vegetable Growers",
+    "group": 6,
+    "aiExposure": 0.333333333333333,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "6121",
+    "label": "Livestock And Dairy Producers",
+    "group": 6,
+    "aiExposure": 0.3,
+    "quartile": "Medium low",
+    "wage": 1250
+  },
+  {
+    "id": "6122",
+    "label": "Poultry Producers",
+    "group": 6,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 2739
+  },
+  {
+    "id": "6123",
+    "label": "Apiarists And Sericulturists",
+    "group": 6,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 1928
+  },
+  {
+    "id": "6129",
+    "label": "Animal Producers And Related Workers Not Elsewhere Classified",
+    "group": 6,
+    "aiExposure": 0.25,
+    "quartile": "Medium low",
+    "wage": 2122
+  },
+  {
+    "id": "6131",
+    "label": "Mixed Crop And Animal Producers",
+    "group": 6,
+    "aiExposure": 0.444444444444444,
+    "quartile": "Medium high",
+    "wage": 2188
+  },
+  {
+    "id": "6211",
+    "label": "Skilled Forestry And Related Workers",
+    "group": 6,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2522
+  },
+  {
+    "id": "6221",
+    "label": "Fishery And Aquaculture Producers",
+    "group": 6,
+    "aiExposure": 0.111111111111111,
+    "quartile": "Medium low",
+    "wage": 1570
+  },
+  {
+    "id": "6222",
+    "label": "Skilled Inland And Coastal Waters Fishery Workers",
+    "group": 6,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1430
+  },
+  {
+    "id": "6223",
+    "label": "Skilled Deep-Sea Fishery Workers",
+    "group": 6,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1120
+  },
+  {
+    "id": "6224",
+    "label": "Hunters And Trappers",
+    "group": 6,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2092
+  },
+  {
+    "id": "6311",
+    "label": "Subsistence Crop Farmers",
+    "group": 6,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 2092
+  },
+  {
+    "id": "6321",
+    "label": "Subsistence Livestock Farmers",
+    "group": 6,
+    "aiExposure": 0.5,
+    "quartile": "Medium high",
+    "wage": 1487
+  },
+  {
+    "id": "6331",
+    "label": "Subsistence Mixed Crop And Livestock Farmers",
+    "group": 6,
+    "aiExposure": 0.444444444444444,
+    "quartile": "Medium high",
+    "wage": 1947
+  },
+  {
+    "id": "7111",
+    "label": "House Builders And Construction Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "7112",
+    "label": "Bricklayers And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1312
+  },
+  {
+    "id": "7113",
+    "label": "Stonemasons, Stone Cutters, Splitters And Carvers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "7114",
+    "label": "Concrete Placers, Concrete Finishers And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1442
+  },
+  {
+    "id": "7115",
+    "label": "Carpenters And Joiners",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1676
+  },
+  {
+    "id": "7119",
+    "label": "Building Frame And Related Trades Workers Not Elsewhere Classified",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1724
+  },
+  {
+    "id": "7121",
+    "label": "Roofers",
+    "group": 7,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 1296
+  },
+  {
+    "id": "7122",
+    "label": "Floor Layers And Tile Setters",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1733
+  },
+  {
+    "id": "7123",
+    "label": "Plasterers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1664
+  },
+  {
+    "id": "7124",
+    "label": "Insulation Workers",
+    "group": 7,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 1469
+  },
+  {
+    "id": "7125",
+    "label": "Glaziers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1595
+  },
+  {
+    "id": "7126",
+    "label": "Plumbers And Pipe Fitters",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2183
+  },
+  {
+    "id": "7127",
+    "label": "Air Conditioning And Refrigeration Mechanics",
+    "group": 7,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 1833
+  },
+  {
+    "id": "7131",
+    "label": "Painters And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1442
+  },
+  {
+    "id": "7132",
+    "label": "Spray Painters And Varnishers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1730
+  },
+  {
+    "id": "7133",
+    "label": "Building Structure Cleaners",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2297
+  },
+  {
+    "id": "7211",
+    "label": "Metal Moulders And Coremakers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2910
+  },
+  {
+    "id": "7212",
+    "label": "Welders And Flame Cutters",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1797
+  },
+  {
+    "id": "7213",
+    "label": "Sheet-Metal Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2083
+  },
+  {
+    "id": "7214",
+    "label": "Structural-Metal Preparers And Erectors",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "7215",
+    "label": "Riggers And Cable Splicers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "7221",
+    "label": "Blacksmiths, Hammersmiths And Forging-Press Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2794
+  },
+  {
+    "id": "7222",
+    "label": "Toolmakers And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1821
+  },
+  {
+    "id": "7223",
+    "label": "Metal Working Machine Tool Setters And Operators",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "7224",
+    "label": "Metal Polishers, Wheel Grinders And Tool Sharpeners",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "7231",
+    "label": "Motor Vehicle Mechanics And Repairers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "7232",
+    "label": "Aircraft Engine Mechanics And Repairers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2891
+  },
+  {
+    "id": "7233",
+    "label": "Agricultural And Industrial Machinery Mechanics And Repairers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1816
+  },
+  {
+    "id": "7234",
+    "label": "Bicycle And Related Repairers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "7239",
+    "label": "Machinery Mechanics And Repairers Not Elsewhere Classified",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1918
+  },
+  {
+    "id": "7311",
+    "label": "Precision Instrument Makers And Repairers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2045
+  },
+  {
+    "id": "7312",
+    "label": "Musical Instrument Makers And Tuners",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1130
+  },
+  {
+    "id": "7313",
+    "label": "Jewellery And Precious Metal Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2549
+  },
+  {
+    "id": "7314",
+    "label": "Potters And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "7315",
+    "label": "Glass Makers, Cutters, Grinders And Finishers",
+    "group": 7,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 1272
+  },
+  {
+    "id": "7316",
+    "label": "Sign Writers, Decorative Painters, Engravers And Etchers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1678
+  },
+  {
+    "id": "7317",
+    "label": "Handicraft Workers In Wood, Basketry And Related Materials",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1667
+  },
+  {
+    "id": "7318",
+    "label": "Handicraft Workers In Textile, Leather And Related Materials",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "7319",
+    "label": "Handicraft Workers Not Elsewhere Classified",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1833
+  },
+  {
+    "id": "7321",
+    "label": "Pre-Press Workers",
+    "group": 7,
+    "aiExposure": 0.833333333333333,
+    "quartile": "High",
+    "wage": 1924
+  },
+  {
+    "id": "7322",
+    "label": "Printers",
+    "group": 7,
+    "aiExposure": 0.25,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "7323",
+    "label": "Print Finishing And Binding Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1505
+  },
+  {
+    "id": "7324",
+    "label": "Printing And Photo Engravers And Etchers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "7411",
+    "label": "Building And Related Electricians",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1847
+  },
+  {
+    "id": "7412",
+    "label": "Electrical Mechanics And Fitters",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "7413",
+    "label": "Electrical Line Installers And Repairers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1674
+  },
+  {
+    "id": "7421",
+    "label": "Electronics Mechanics And Services",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2349
+  },
+  {
+    "id": "7422",
+    "label": "Information And Communications Technology Installers And Services",
+    "group": 7,
+    "aiExposure": 0.142857142857143,
+    "quartile": "Medium low",
+    "wage": 1930
+  },
+  {
+    "id": "7511",
+    "label": "Meat And Fish Processing Workers And Related Food Preparers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1199
+  },
+  {
+    "id": "7512",
+    "label": "Bakers, Pastry And Pasta-Cooks, And Confectionery Makers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2475
+  },
+  {
+    "id": "7513",
+    "label": "Dairy-Product Makers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "7514",
+    "label": "Fruit, Vegetable And Related Preservers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 3934
+  },
+  {
+    "id": "7515",
+    "label": "Food And Beverage Tasters And Graders",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1336
+  },
+  {
+    "id": "7516",
+    "label": "Tobacco Preparers And Tobacco Product Makers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2513
+  },
+  {
+    "id": "7611",
+    "label": "Wood Treaters",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "7612",
+    "label": "Cabinet-Makers And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1492
+  },
+  {
+    "id": "7613",
+    "label": "Woodworking-Machine Tool Setters And Operators",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1612
+  },
+  {
+    "id": "7621",
+    "label": "Tailors, Dressmakers, Furriers And Hatters",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "7622",
+    "label": "Garment And Related Pattern-Makers And Cutters",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1930
+  },
+  {
+    "id": "7623",
+    "label": "Shoemakers And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2728
+  },
+  {
+    "id": "7624",
+    "label": "Upholsterers And Related Workers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1212
+  },
+  {
+    "id": "7625",
+    "label": "Pelt Dressers, Tanners And Fellmongers",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "7631",
+    "label": "Underwater Divers",
+    "group": 7,
+    "aiExposure": 0.1,
+    "quartile": "Medium low",
+    "wage": 1938
+  },
+  {
+    "id": "7632",
+    "label": "Shotfirers And Blasters",
+    "group": 7,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 1263
+  },
+  {
+    "id": "7633",
+    "label": "Product Graders And Testers (Excluding Foods And Beverages)",
+    "group": 7,
+    "aiExposure": 0.285714285714286,
+    "quartile": "Medium low",
+    "wage": 1204
+  },
+  {
+    "id": "7634",
+    "label": "Fumigators And Pest And Weed Controllers",
+    "group": 7,
+    "aiExposure": 0.444444444444444,
+    "quartile": "Medium high",
+    "wage": 1514
+  },
+  {
+    "id": "7639",
+    "label": "Other Related Craft Workers Not Elsewhere Classified",
+    "group": 7,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2556
+  },
+  {
+    "id": "8111",
+    "label": "Miners And Quarry Workers",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2290
+  },
+  {
+    "id": "8112",
+    "label": "Mineral And Stone Processing Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2618
+  },
+  {
+    "id": "8113",
+    "label": "Well Drillers And Borers And Related Workers",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2680
+  },
+  {
+    "id": "8114",
+    "label": "Cement, Stone And Other Mineral Products Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1869
+  },
+  {
+    "id": "8121",
+    "label": "Metal Processing Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1840
+  },
+  {
+    "id": "8122",
+    "label": "Metal Finishing, Plating And Coating Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2800
+  },
+  {
+    "id": "8131",
+    "label": "Chemical Products Plant And Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2280
+  },
+  {
+    "id": "8132",
+    "label": "Photographic Products Machine Operators",
+    "group": 8,
+    "aiExposure": 0.142857142857143,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "8141",
+    "label": "Rubber Products Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1730
+  },
+  {
+    "id": "8142",
+    "label": "Plastic Products Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1480
+  },
+  {
+    "id": "8143",
+    "label": "Paper Products Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1632
+  },
+  {
+    "id": "8151",
+    "label": "Fibre Preparing, Spinning And Winding Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1726
+  },
+  {
+    "id": "8152",
+    "label": "Weaving And Knitting Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "8153",
+    "label": "Sewing Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1017
+  },
+  {
+    "id": "8154",
+    "label": "Bleaching, Dyeing And Fabric Cleaning Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "8155",
+    "label": "Fur And Leather Preparing Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": null
+  },
+  {
+    "id": "8156",
+    "label": "Shoemaking And Related Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1730
+  },
+  {
+    "id": "8157",
+    "label": "Laundry Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1095
+  },
+  {
+    "id": "8159",
+    "label": "Textile, Fur And Leather Products Machine Operators Not Elesewhere Classified",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1263
+  },
+  {
+    "id": "8161",
+    "label": "Food And Related Products Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1542
+  },
+  {
+    "id": "8171",
+    "label": "Pulp And Papermaking Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "8172",
+    "label": "Wood Processing Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1412
+  },
+  {
+    "id": "8173",
+    "label": "Wood Products Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1318
+  },
+  {
+    "id": "8181",
+    "label": "Glass And Ceramics Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1516
+  },
+  {
+    "id": "8182",
+    "label": "Steam Engine And Boiler Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1730
+  },
+  {
+    "id": "8183",
+    "label": "Packing, Bottling And Labelling Machine Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1603
+  },
+  {
+    "id": "8189",
+    "label": "Stationary Plant And Machine Operators Not Elsewhere Classified",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1747
+  },
+  {
+    "id": "8211",
+    "label": "Mechanical Machinery Assemblers",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1861
+  },
+  {
+    "id": "8212",
+    "label": "Electrical And Electronic Equipment Assemblers",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1776
+  },
+  {
+    "id": "8213",
+    "label": "Leather, Metal, Rubber And Plastic Products Assemblers",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1500
+  },
+  {
+    "id": "8219",
+    "label": "Assemblers Not Elsewhere Classified",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1501
+  },
+  {
+    "id": "8221",
+    "label": "Machine-Tool Setter-Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1730
+  },
+  {
+    "id": "8311",
+    "label": "Locomotive Engine Drivers",
+    "group": 8,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 2307
+  },
+  {
+    "id": "8312",
+    "label": "Railway Brake, Signal And Switch Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1874
+  },
+  {
+    "id": "8321",
+    "label": "Motorcycle Riders (Drivers)",
+    "group": 8,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 1814
+  },
+  {
+    "id": "8322",
+    "label": "Car, Taxi And Van Drivers",
+    "group": 8,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 2504
+  },
+  {
+    "id": "8331",
+    "label": "Bus And Tram Drivers",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 2029
+  },
+  {
+    "id": "8332",
+    "label": "Heavy Truck And Lorry Drivers",
+    "group": 8,
+    "aiExposure": 0.166666666666667,
+    "quartile": "Medium low",
+    "wage": 1692
+  },
+  {
+    "id": "8341",
+    "label": "Mobile Farm And Forestry Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1513
+  },
+  {
+    "id": "8342",
+    "label": "Earth-Moving And Related Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1527
+  },
+  {
+    "id": "8343",
+    "label": "Crane, Hoist And Related Plant Operators",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1830
+  },
+  {
+    "id": "8344",
+    "label": "Lifting Truck Operators",
+    "group": 8,
+    "aiExposure": 0.2,
+    "quartile": "Medium low",
+    "wage": 1845
+  },
+  {
+    "id": "8351",
+    "label": "Ships Deck Crews And Related Workers",
+    "group": 8,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1644
+  },
+  {
+    "id": "9112",
+    "label": "Cleaners And Helpers In Offices, Hotels And Other Establishments",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1414
+  },
+  {
+    "id": "9121",
+    "label": "Hand Launderers And Ironers",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1674
+  },
+  {
+    "id": "9312",
+    "label": "Civil Engineering Labourers",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1153
+  },
+  {
+    "id": "9313",
+    "label": "Building Construction Labourers",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1240
+  },
+  {
+    "id": "9333",
+    "label": "Transport And Storage Labourers",
+    "group": 9,
+    "aiExposure": 0.111111111111111,
+    "quartile": "Medium low",
+    "wage": 1512
+  },
+  {
+    "id": "9334",
+    "label": "Shelf Fillers",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1601
+  },
+  {
+    "id": "9411",
+    "label": "Fast Food Preparers",
+    "group": 9,
+    "aiExposure": 0.125,
+    "quartile": "Medium low",
+    "wage": 1302
+  },
+  {
+    "id": "9412",
+    "label": "Kitchen Helpers",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1211
+  },
+  {
+    "id": "9511",
+    "label": "Street And Related Service Workers",
+    "group": 9,
+    "aiExposure": 0.111111111111111,
+    "quartile": "Medium low",
+    "wage": 1220
+  },
+  {
+    "id": "9521",
+    "label": "Street Vendors (Excluding Food)",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1757
+  },
+  {
+    "id": "9611",
+    "label": "Garbage Collectors",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1211
+  },
+  {
+    "id": "9613",
+    "label": "Sweepers And Related Labourers",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1315
+  },
+  {
+    "id": "9621",
+    "label": "Messengers, Package Deliverers And Luggage Porters",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1882
+  },
+  {
+    "id": "9622",
+    "label": "Odd-Job Persons",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1857
+  },
+  {
+    "id": "9623",
+    "label": "Meter Readers And Vending-Machine Collectors",
+    "group": 9,
+    "aiExposure": 0,
+    "quartile": "Medium low",
+    "wage": 1657
+  },
+  {
+    "id": "9625",
+    "label": "Attendants",
+    "group": 9,
+    "aiExposure": 0.222222222222222,
+    "quartile": "Medium low",
+    "wage": 2157
+  }
+]
