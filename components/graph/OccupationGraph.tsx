@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react"
 import * as d3 from "d3"
-import type { GraphNode, GraphEdge, SimNode, SimEdge } from "@/lib/types"
+import type { GraphNode, GraphEdge, SimNode } from "@/lib/types"
 import { MASCO_GROUPS } from "@/lib/constants"
 import { useForceSimulation } from "@/hooks/useForceSimulation"
 import { useGraphInteraction } from "@/hooks/useGraphInteraction"
@@ -37,13 +37,17 @@ export default function OccupationGraph({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   const [tooltip, setTooltip] = useState<TooltipState | null>(null)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
-  const [, setTick] = useState(0)
+  const nodeById = useRef<Map<string, SimNode>>(new Map())
 
   const simNodes = useMemo<SimNode[]>(
     () => nodes.map((n) => ({ ...n })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [nodes.length]
   )
+
+  useEffect(() => {
+    nodeById.current = new Map(simNodes.map(n => [n.id, n]))
+  }, [simNodes])
 
   // Compute visible IDs based on filters
   const visibleIds = useMemo<Set<string> | null>(() => {
@@ -93,25 +97,40 @@ export default function OccupationGraph({
     [visibleIds, selectedNodeId, connectedIds]
   )
 
-  const getEdgeOpacity = useCallback(
-    (edge: SimEdge) => {
-      const src = typeof edge.source === "object" ? (edge.source as SimNode).id : edge.source
-      const tgt = typeof edge.target === "object" ? (edge.target as SimNode).id : edge.target
-
-      if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt))) return 0
-
-      const baseOpacity = 0.05 + (edge.weight / 7) * 0.3
-      if (selectedNodeId && connectedIds) {
-        if (connectedIds.has(src) && connectedIds.has(tgt)) return Math.min(baseOpacity + 0.25, 0.8)
-        return 0.01
-      }
-      return baseOpacity
-    },
-    [visibleIds, selectedNodeId, connectedIds]
-  )
+  const visibleEdges = useMemo(() => {
+    if (!selectedNodeId || !connectedIds) return []
+    return edges.filter(e => {
+      const src = typeof e.source === "string" ? e.source : (e.source as SimNode).id
+      const tgt = typeof e.target === "string" ? e.target : (e.target as SimNode).id
+      if (!connectedIds.has(src) || !connectedIds.has(tgt)) return false
+      if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt))) return false
+      return true
+    })
+  }, [selectedNodeId, connectedIds, edges, visibleIds])
 
   const handleTick = useCallback(() => {
-    setTick((t) => t + 1)
+    if (!svgRef.current) return
+    d3.select(svgRef.current)
+      .selectAll<SVGCircleElement, unknown>("circle.node")
+      .each(function () {
+        const node = nodeById.current.get(this.getAttribute("data-id")!)
+        if (node) {
+          this.setAttribute("cx", String(node.x ?? 0))
+          this.setAttribute("cy", String(node.y ?? 0))
+        }
+      })
+    d3.select(svgRef.current)
+      .selectAll<SVGLineElement, never>("line.edge-line")
+      .each(function () {
+        const src = nodeById.current.get(this.getAttribute("data-src")!)
+        const tgt = nodeById.current.get(this.getAttribute("data-tgt")!)
+        if (src && tgt) {
+          this.setAttribute("x1", String(src.x ?? 0))
+          this.setAttribute("y1", String(src.y ?? 0))
+          this.setAttribute("x2", String(tgt.x ?? 0))
+          this.setAttribute("y2", String(tgt.y ?? 0))
+        }
+      })
   }, [])
 
   const { simulationRef } = useForceSimulation({
@@ -168,13 +187,6 @@ export default function OccupationGraph({
       )
   })
 
-  // Render SVG
-  const simEdges = useMemo<SimEdge[]>(
-    () => edges.map((e) => ({ ...e })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [edges.length]
-  )
-
   return (
     <div ref={containerRef} className="w-full h-full relative overflow-hidden">
       {dimensions.width > 0 && (
@@ -189,20 +201,26 @@ export default function OccupationGraph({
           }}
         >
           <g className="edges">
-            {simEdges.map((edge, i) => {
-              const src = edge.source as SimNode
-              const tgt = edge.target as SimNode
-              if (!src.x || !src.y || !tgt.x || !tgt.y) return null
+            {visibleEdges.map((edge) => {
+              const srcId = typeof edge.source === "string" ? edge.source : (edge.source as SimNode).id
+              const tgtId = typeof edge.target === "string" ? edge.target : (edge.target as SimNode).id
+              const srcNode = nodeById.current.get(srcId)
+              const tgtNode = nodeById.current.get(tgtId)
+              if (!srcNode || !tgtNode) return null
+              const targetOpacity = Math.min(0.05 + (edge.weight / 7) * 0.3 + 0.25, 0.8)
               return (
                 <line
-                  key={i}
-                  x1={src.x}
-                  y1={src.y}
-                  x2={tgt.x}
-                  y2={tgt.y}
+                  key={`${srcId}-${tgtId}`}
+                  className="edge-line"
+                  data-src={srcId}
+                  data-tgt={tgtId}
+                  x1={srcNode.x ?? 0}
+                  y1={srcNode.y ?? 0}
+                  x2={tgtNode.x ?? 0}
+                  y2={tgtNode.y ?? 0}
                   stroke="#888"
                   strokeWidth={0.5}
-                  strokeOpacity={getEdgeOpacity(edge)}
+                  style={{ opacity: targetOpacity, animation: "edgeFadeIn 250ms ease" }}
                 />
               )
             })}
