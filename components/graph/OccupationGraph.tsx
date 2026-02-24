@@ -126,7 +126,6 @@ export default function OccupationGraph({
     ctx.strokeStyle = "#888"
     ctx.lineWidth = 0.5 / k
 
-    // Batch strokes by weight tier — max 7 draw calls regardless of edge count
     const byWeight = new Map<number, typeof visibleEdges>()
     for (const edge of visibleEdges) {
       const w = edge.weight
@@ -150,7 +149,6 @@ export default function OccupationGraph({
     ctx.restore()
   }, [visibleEdges])
 
-  // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges)
   useEffect(() => {
     drawEdgesRef.current = drawEdges
