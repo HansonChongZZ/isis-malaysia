@@ -156,7 +156,7 @@ export default function OccupationPanel({ nodeId, detail, onClose }: OccupationP
                         value={`task-${i}`}
                         className="border border-border rounded-md overflow-hidden"
                       >
-                        <AccordionTrigger className="px-3 py-2 text-xs text-foreground/70 hover:text-foreground hover:no-underline text-left leading-snug [&[data-state=open]]:text-foreground">
+                        <AccordionTrigger className="px-3 py-2 text-xs text-foreground/70 hover:text-foreground hover:no-underline text-left leading-snug data-[state=open]:text-foreground">
                           <span className="pr-2 line-clamp-2">{task.description}</span>
                         </AccordionTrigger>
                         <AccordionContent className="px-3 pb-2 pt-0">

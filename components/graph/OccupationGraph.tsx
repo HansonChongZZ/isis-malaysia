@@ -110,7 +110,6 @@ export default function OccupationGraph({
       return true
     })
   }, [selectedNodeId, connectedIds, edges, visibleIds])
-
   const drawEdges = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return

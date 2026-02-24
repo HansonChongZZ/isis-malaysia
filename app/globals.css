@@ -149,7 +149,6 @@
     @apply bg-background text-foreground;
   }
 }
-
 @keyframes edgeFadeIn {
   from { opacity: 0; }
 }

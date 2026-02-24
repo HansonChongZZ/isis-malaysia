@@ -24,7 +24,7 @@ export default function GraphControls({
 }: GraphControlsProps) {
   return (
     <div className="flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
-      {/* Search */}
+      {/* Search - full row on mobile, constrained on desktop */}
       <div className="relative flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
         <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground w-3.5 h-3.5" />
         <input
@@ -44,7 +44,7 @@ export default function GraphControls({
         )}
       </div>
 
-      {/* Filter row */}
+      {/* Filter row - wraps below search on mobile */}
       <div className="flex gap-2 flex-1 flex-wrap sm:flex-nowrap items-center min-w-0">
         {/* MASCO Group filter */}
         <select
