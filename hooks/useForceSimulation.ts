@@ -16,12 +16,6 @@ interface UseForceSimulationProps {
 export function useForceSimulation({ nodes, edges, width, height, onTick }: UseForceSimulationProps) {
   const simulationRef = useRef<d3.Simulation<SimNode, SimEdge> | null>(null)
 
-  const reheat = useCallback(() => {
-    if (simulationRef.current) {
-      simulationRef.current.alpha(0.3).restart()
-    }
-  }, [])
-
   useEffect(() => {
     if (!nodes.length || !width || !height) return
 
@@ -62,10 +56,9 @@ export function useForceSimulation({ nodes, edges, width, height, onTick }: UseF
           .strength(0.05)
       )
 
-    simulation.on("tick", onTick)
-    simulation.on("end", () => {
-      simulation.stop()
-    })
+    simulation.stop()
+    for (let i = 0; i < 300; i++) simulation.tick()
+    onTick()
 
     simulationRef.current = simulation
 
@@ -73,6 +66,14 @@ export function useForceSimulation({ nodes, edges, width, height, onTick }: UseF
       simulation.stop()
     }
   }, [nodes, edges, width, height, onTick])
+
+  const reheat = useCallback(() => {
+    const sim = simulationRef.current
+    if (sim) {
+      for (let i = 0; i < 300; i++) sim.tick()
+      onTick()
+    }
+  }, [onTick])
 
   return { simulationRef, reheat }
 }

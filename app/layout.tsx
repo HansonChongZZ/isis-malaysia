@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <body className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} font-sans antialiased flex flex-col h-screen overflow-hidden`}>
         {/* Header */}
-        <header className="flex items-center gap-3 px-4 py-3 bg-card border-b border-border shrink-0">
+        <header className="flex items-center gap-3 px-3 py-2 sm:px-4 sm:py-3 bg-card border-b border-border shrink-0">
           <div className="w-8 h-8 rounded-md bg-linear-to-br from-primary/60 to-primary flex items-center justify-center text-primary-foreground text-xs font-bold shrink-0">
             IS
           </div>

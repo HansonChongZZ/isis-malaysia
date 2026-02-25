@@ -34,6 +34,9 @@ export default function OccupationGraph({
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
+  const gRef = useRef<SVGGElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   const [tooltip, setTooltip] = useState<TooltipState | null>(null)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
@@ -108,6 +111,51 @@ export default function OccupationGraph({
     })
   }, [selectedNodeId, connectedIds, edges, visibleIds])
 
+  const drawEdges = useCallback(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")!
+    const dpr = window.devicePixelRatio || 1
+    const { k, x, y } = transformRef.current
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    if (visibleEdges.length === 0) return
+
+    ctx.save()
+    ctx.setTransform(k * dpr, 0, 0, k * dpr, x * dpr, y * dpr)
+    ctx.strokeStyle = "#888"
+    ctx.lineWidth = 0.5 / k
+
+    // Batch strokes by weight tier — max 7 draw calls regardless of edge count
+    const byWeight = new Map<number, typeof visibleEdges>()
+    for (const edge of visibleEdges) {
+      const w = edge.weight
+      if (!byWeight.has(w)) byWeight.set(w, [])
+      byWeight.get(w)!.push(edge)
+    }
+
+    for (const [weight, group] of byWeight) {
+      ctx.globalAlpha = Math.min(0.05 + (weight / 7) * 0.3 + 0.25, 0.8)
+      ctx.beginPath()
+      for (const edge of group) {
+        const src = nodeById.current.get(typeof edge.source === "string" ? edge.source : (edge.source as SimNode).id)
+        const tgt = nodeById.current.get(typeof edge.target === "string" ? edge.target : (edge.target as SimNode).id)
+        if (!src || !tgt) continue
+        ctx.moveTo(src.x ?? 0, src.y ?? 0)
+        ctx.lineTo(tgt.x ?? 0, tgt.y ?? 0)
+      }
+      ctx.stroke()
+    }
+
+    ctx.restore()
+  }, [visibleEdges])
+
+  // Stable ref so zoom/drag handlers always call the latest drawEdges
+  const drawEdgesRef = useRef(drawEdges)
+  useEffect(() => {
+    drawEdgesRef.current = drawEdges
+  }, [drawEdges])
+
   const handleTick = useCallback(() => {
     if (!svgRef.current) return
     d3.select(svgRef.current)
@@ -119,18 +167,7 @@ export default function OccupationGraph({
           this.setAttribute("cy", String(node.y ?? 0))
         }
       })
-    d3.select(svgRef.current)
-      .selectAll<SVGLineElement, never>("line.edge-line")
-      .each(function () {
-        const src = nodeById.current.get(this.getAttribute("data-src")!)
-        const tgt = nodeById.current.get(this.getAttribute("data-tgt")!)
-        if (src && tgt) {
-          this.setAttribute("x1", String(src.x ?? 0))
-          this.setAttribute("y1", String(src.y ?? 0))
-          this.setAttribute("x2", String(tgt.x ?? 0))
-          this.setAttribute("y2", String(tgt.y ?? 0))
-        }
-      })
+    drawEdgesRef.current()
   }, [])
 
   const { simulationRef } = useForceSimulation({
@@ -140,6 +177,23 @@ export default function OccupationGraph({
     height: dimensions.height,
     onTick: handleTick,
   })
+
+  // Resize canvas to match container with HiDPI support
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas || !dimensions.width || !dimensions.height) return
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = dimensions.width * dpr
+    canvas.height = dimensions.height * dpr
+    canvas.style.width = `${dimensions.width}px`
+    canvas.style.height = `${dimensions.height}px`
+    drawEdgesRef.current()
+  }, [dimensions])
+
+  // Redraw edges whenever selection changes
+  useEffect(() => {
+    drawEdges()
+  }, [drawEdges])
 
   // Resize observer
   useEffect(() => {
@@ -153,25 +207,46 @@ export default function OccupationGraph({
     return () => obs.disconnect()
   }, [])
 
+  // Zoom + pan behavior
+  useEffect(() => {
+    if (!svgRef.current || !gRef.current) return
+    const svg = d3.select(svgRef.current)
+    const g = d3.select(gRef.current)
+
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
+      .scaleExtent([0.1, 8])
+      .on("zoom", (event) => {
+        transformRef.current = event.transform
+        g.attr("transform", event.transform.toString())
+        setTooltip(null)
+        drawEdgesRef.current()
+      })
+
+    svg.call(zoom)
+    return () => { svg.on(".zoom", null) }
+  }, [dimensions.width, dimensions.height])
+
   // Drag behavior
   useEffect(() => {
     const sim = simulationRef.current
     if (!sim || !svgRef.current) return
 
     const svg = d3.select(svgRef.current)
-    const simRef = sim
 
     function dragStarted(event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>) {
-      if (!event.active) simRef.alphaTarget(0.3).restart()
+      event.sourceEvent.stopPropagation()
       event.subject.fx = event.subject.x
       event.subject.fy = event.subject.y
     }
     function dragged(event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>) {
-      event.subject.fx = event.x
-      event.subject.fy = event.y
+      const [gx, gy] = transformRef.current.invert([event.x, event.y])
+      event.subject.x = gx
+      event.subject.y = gy
+      event.subject.fx = gx
+      event.subject.fy = gy
+      handleTick()
     }
     function dragEnded(event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>) {
-      if (!event.active) simRef.alphaTarget(0)
       event.subject.fx = null
       event.subject.fy = null
     }
@@ -189,81 +264,62 @@ export default function OccupationGraph({
 
   return (
     <div ref={containerRef} className="w-full h-full relative overflow-hidden">
+      {/* Canvas renders edges — behind SVG, no pointer events */}
+      <canvas
+        ref={canvasRef}
+        style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
+      />
       {dimensions.width > 0 && (
         <svg
           ref={svgRef}
           width={dimensions.width}
           height={dimensions.height}
-          className="w-full h-full"
+          style={{ position: "absolute", top: 0, left: 0, cursor: "grab" }}
           onClick={() => {
             setSelectedNodeId(null)
             onNodeSelect(null)
           }}
         >
-          <g className="edges">
-            {visibleEdges.map((edge) => {
-              const srcId = typeof edge.source === "string" ? edge.source : (edge.source as SimNode).id
-              const tgtId = typeof edge.target === "string" ? edge.target : (edge.target as SimNode).id
-              const srcNode = nodeById.current.get(srcId)
-              const tgtNode = nodeById.current.get(tgtId)
-              if (!srcNode || !tgtNode) return null
-              const targetOpacity = Math.min(0.05 + (edge.weight / 7) * 0.3 + 0.25, 0.8)
-              return (
-                <line
-                  key={`${srcId}-${tgtId}`}
-                  className="edge-line"
-                  data-src={srcId}
-                  data-tgt={tgtId}
-                  x1={srcNode.x ?? 0}
-                  y1={srcNode.y ?? 0}
-                  x2={tgtNode.x ?? 0}
-                  y2={tgtNode.y ?? 0}
-                  stroke="#888"
-                  strokeWidth={0.5}
-                  style={{ opacity: targetOpacity, animation: "edgeFadeIn 250ms ease" }}
-                />
-              )
-            })}
-          </g>
-          <g className="nodes">
-            {simNodes.map((node) => {
-              const r = 4 + node.aiExposure * 12
-              const color = MASCO_GROUPS[node.group]?.color ?? "#888"
-              const opacity = getNodeOpacity(node)
-              const isSelected = node.id === selectedNodeId
-              return (
-                <circle
-                  key={node.id}
-                  className="node"
-                  data-id={node.id}
-                  cx={node.x ?? 0}
-                  cy={node.y ?? 0}
-                  r={r}
-                  fill={color}
-                  fillOpacity={opacity}
-                  stroke={isSelected ? "#ffffff" : "#ffffff"}
-                  strokeWidth={isSelected ? 2.5 : 0.8}
-                  strokeOpacity={opacity}
-                  style={{ cursor: "pointer" }}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    const newId = selectedNodeId === node.id ? null : node.id
-                    setSelectedNodeId(newId)
-                    onNodeSelect(newId)
-                  }}
-                  onMouseEnter={(e) => {
-                    const rect = containerRef.current?.getBoundingClientRect()
-                    if (!rect) return
-                    setTooltip({
-                      x: (node.x ?? 0),
-                      y: (node.y ?? 0),
-                      node,
-                    })
-                  }}
-                  onMouseLeave={() => setTooltip(null)}
-                />
-              )
-            })}
+          <g ref={gRef}>
+            <g className="nodes">
+              {simNodes.map((node) => {
+                const r = 4 + node.aiExposure * 12
+                const color = MASCO_GROUPS[node.group]?.color ?? "#888"
+                const opacity = getNodeOpacity(node)
+                const isSelected = node.id === selectedNodeId
+                return (
+                  <circle
+                    key={node.id}
+                    className="node"
+                    data-id={node.id}
+                    cx={node.x ?? 0}
+                    cy={node.y ?? 0}
+                    r={r}
+                    fill={color}
+                    fillOpacity={opacity}
+                    stroke={isSelected ? "#ffffff" : "#ffffff"}
+                    strokeWidth={isSelected ? 2.5 : 0.8}
+                    strokeOpacity={opacity}
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      const newId = selectedNodeId === node.id ? null : node.id
+                      setSelectedNodeId(newId)
+                      onNodeSelect(newId)
+                    }}
+                    onMouseEnter={() => {
+                      const t = transformRef.current
+                      setTooltip({
+                        x: t.applyX(node.x ?? 0),
+                        y: t.applyY(node.y ?? 0),
+                        node,
+                      })
+                    }}
+                    onMouseLeave={() => setTooltip(null)}
+                  />
+                )
+              })}
+            </g>
           </g>
         </svg>
       )}
