@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/accordion"
 import type { OccupationDetail } from "@/lib/types"
 import { MASCO_GROUPS, QUARTILE_COLORS } from "@/lib/constants"
+import { useIsMobile } from "@/hooks/useIsMobile"
+import { cn } from "@/lib/utils"
 
 interface OccupationPanelProps {
   nodeId: string | null
@@ -19,16 +21,22 @@ interface OccupationPanelProps {
 
 export default function OccupationPanel({ nodeId, detail, onClose }: OccupationPanelProps) {
   const isOpen = !!nodeId && !!detail
+  const isMobile = useIsMobile()
 
   const group = nodeId ? parseInt(nodeId[0], 10) : null
   const groupInfo = group ? MASCO_GROUPS[group] : null
   const quartileColor = detail ? QUARTILE_COLORS[detail.quartile] ?? "#888" : "#888"
 
   return (
-    <Sheet open={isOpen} onOpenChange={(open) => { if (!open) onClose() }}>
+    <Sheet open={isOpen} onOpenChange={(open) => { if (!open) onClose() }} modal={false}>
       <SheetContent
-        side="right"
-        className="w-[400px] max-w-[95vw] bg-gray-900 border-gray-700 text-white overflow-y-auto p-0"
+        side={isMobile ? "bottom" : "right"}
+        className={cn(
+          "bg-gray-900 border-gray-700 text-white overflow-y-auto p-0",
+          isMobile
+            ? "h-[75vh] w-full rounded-t-2xl"
+            : "w-[400px] max-w-[95vw]"
+        )}
       >
         {detail && nodeId && (
           <>

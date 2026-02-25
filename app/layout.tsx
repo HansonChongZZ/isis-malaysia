@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <body className={`${inter.variable} font-sans antialiased bg-gray-950 text-white flex flex-col h-screen overflow-hidden`}>
         {/* Header */}
-        <header className="flex items-center gap-3 px-4 py-3 bg-gray-900 border-b border-gray-700/60 flex-shrink-0">
+        <header className="flex items-center gap-3 px-3 py-2 sm:px-4 sm:py-3 bg-gray-900 border-b border-gray-700/60 flex-shrink-0">
           {/* Logo placeholder */}
           <div className="w-8 h-8 rounded-md bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
             IS
