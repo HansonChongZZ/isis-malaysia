@@ -319,6 +319,7 @@ export default function OccupationGraph({
                 )
               })}
             </g>
+          </g>
         </svg>
       )}
 
