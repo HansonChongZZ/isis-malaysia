@@ -23,21 +23,21 @@ export default function GraphControls({
   uniqueSkills,
 }: GraphControlsProps) {
   return (
-    <div className="flex flex-wrap gap-2 px-4 py-2.5 bg-gray-900/80 backdrop-blur border-b border-gray-700/60 flex-shrink-0">
+    <div className="flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
       {/* Search — full row on mobile, constrained on desktop */}
       <div className="relative flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
-        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 w-3.5 h-3.5" />
+        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground w-3.5 h-3.5" />
         <input
           type="text"
           placeholder="Search occupation or code…"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-gray-800 text-white text-sm pl-8 pr-8 py-1.5 rounded-md border border-gray-600 focus:outline-none focus:border-blue-500 placeholder:text-gray-500"
+          className="w-full bg-input text-foreground text-sm pl-8 pr-8 py-1.5 rounded-md border border-border focus:outline-none focus:border-ring placeholder:text-muted-foreground"
         />
         {searchQuery && (
           <button
             onClick={() => setSearchQuery("")}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -50,7 +50,7 @@ export default function GraphControls({
         <select
           value={filterGroup ?? ""}
           onChange={(e) => setFilterGroup(e.target.value ? Number(e.target.value) : null)}
-          className="flex-1 sm:flex-none min-w-0 bg-gray-800 text-white text-sm px-3 py-1.5 rounded-md border border-gray-600 focus:outline-none focus:border-blue-500 cursor-pointer"
+          className="flex-1 sm:flex-none min-w-0 bg-input text-foreground text-sm px-3 py-1.5 rounded-md border border-border focus:outline-none focus:border-ring cursor-pointer"
         >
           <option value="">All MASCO Groups</option>
           {Object.entries(MASCO_GROUPS).map(([g, { label }]) => (
@@ -68,12 +68,12 @@ export default function GraphControls({
             placeholder="Filter by skill…"
             value={filterSkill}
             onChange={(e) => setFilterSkill(e.target.value)}
-            className="w-full bg-gray-800 text-white text-sm px-3 py-1.5 rounded-md border border-gray-600 focus:outline-none focus:border-blue-500 placeholder:text-gray-500"
+            className="w-full bg-input text-foreground text-sm px-3 py-1.5 rounded-md border border-border focus:outline-none focus:border-ring placeholder:text-muted-foreground"
           />
           {filterSkill && (
             <button
               onClick={() => setFilterSkill("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -92,7 +92,7 @@ export default function GraphControls({
               setFilterGroup(null)
               setFilterSkill("")
             }}
-            className="text-xs text-gray-400 hover:text-white flex items-center gap-1 flex-shrink-0"
+            className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 shrink-0"
           >
             <X className="w-3 h-3" />
             Clear filters
