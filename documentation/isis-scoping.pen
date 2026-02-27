@@ -1,0 +1,1933 @@
+{
+  "version": "2.8",
+  "children": [
+    {
+      "type": "group",
+      "id": "U7rDp",
+      "x": -490,
+      "y": -224,
+      "children": [
+        {
+          "type": "note",
+          "id": "3szkZ",
+          "x": 0,
+          "y": 262,
+          "width": 310,
+          "height": 219,
+          "content": "- labour, jobs, workers\n\t\t\t\t- visualise occupations as a networks connected by skills\n\t\t\t\t\t- understand their place in the market, occupational transition"
+        },
+        {
+          "type": "note",
+          "id": "lxh68",
+          "x": 1280,
+          "y": 0,
+          "width": 250,
+          "height": 219,
+          "content": "how to use tutorial"
+        },
+        {
+          "type": "frame",
+          "id": "bi8Au",
+          "x": 310,
+          "y": 219,
+          "name": "Frame",
+          "clip": true,
+          "width": 1800,
+          "height": 920,
+          "fill": "#F8F9FA",
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "FiMxq",
+              "x": 0,
+              "y": 0,
+              "name": "titleBar",
+              "width": 1800,
+              "height": 60,
+              "fill": "#1E293B",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZEHQE",
+                  "name": "titleTxt",
+                  "fill": "#FFFFFF",
+                  "content": "ISIS Malaysia — Occupational Space · Client Scoping Session",
+                  "fontFamily": "Inter",
+                  "fontSize": 18,
+                  "fontWeight": "semibold"
+                },
+                {
+                  "type": "text",
+                  "id": "2Xy1Z",
+                  "name": "dateTxt",
+                  "fill": "#94A3B8",
+                  "content": "2026.02.27",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "q8q80",
+              "x": 300,
+              "y": 80,
+              "name": "appHeader",
+              "width": 980,
+              "height": 56,
+              "fill": "#FFFFFF",
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "YFncc",
+                  "x": 12,
+                  "y": 20,
+                  "name": "ahLabel",
+                  "fill": "#64748B",
+                  "content": "HEADER — logo + title + subtitle + link back to CERT",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "semibold"
+                },
+                {
+                  "type": "frame",
+                  "id": "z8ze6",
+                  "x": 828,
+                  "y": 16,
+                  "name": "tagAH",
+                  "width": 144,
+                  "height": 24,
+                  "fill": "#8B5CF6",
+                  "cornerRadius": 6,
+                  "padding": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rPOr1",
+                      "name": "tagAHTxt",
+                      "fill": "#FFFFFF",
+                      "content": "2.1 Theme & Colours",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "asoR5",
+              "x": 300,
+              "y": 140,
+              "name": "graphControls",
+              "width": 980,
+              "height": 48,
+              "fill": "#FFFFFF",
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CvxLD",
+                  "x": 12,
+                  "y": 16,
+                  "name": "gcLabel",
+                  "fill": "#64748B",
+                  "content": "GRAPH CONTROLS — search · group filter · skill filter",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "semibold"
+                },
+                {
+                  "type": "frame",
+                  "id": "FgjWA",
+                  "x": 874,
+                  "y": 12,
+                  "name": "tagGC",
+                  "width": 98,
+                  "height": 24,
+                  "fill": "#10B981",
+                  "cornerRadius": 6,
+                  "padding": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "6jMSC",
+                      "name": "tagGCTxt",
+                      "fill": "#FFFFFF",
+                      "content": "4.1 Filtering",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jcHVA",
+              "x": 300,
+              "y": 192,
+              "name": "graphCanvas",
+              "width": 590,
+              "height": 524,
+              "fill": "#e9edf7ff",
+              "layout": "none",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "HzQeg",
+                  "x": 432,
+                  "y": 8,
+                  "name": "tagGCNV1",
+                  "width": 150,
+                  "height": 24,
+                  "fill": "#3B82F6",
+                  "cornerRadius": 6,
+                  "padding": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "l3Ymq",
+                      "name": "tagGCNV1Txt",
+                      "fill": "#FFFFFF",
+                      "content": "1. Research Focus",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nRYcm",
+                  "x": 432,
+                  "y": 38,
+                  "name": "tagGCNV2",
+                  "width": 148,
+                  "height": 24,
+                  "fill": "#10B981",
+                  "cornerRadius": 6,
+                  "padding": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rtTkq",
+                      "name": "tagGCNV2Txt",
+                      "fill": "#FFFFFF",
+                      "content": "4.2 Viz Settings",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                },
+                {
+                  "type": "line",
+                  "id": "aZ7Af",
+                  "x": 180,
+                  "y": 180,
+                  "name": "e1",
+                  "opacity": 0.08,
+                  "width": 90,
+                  "height": 60,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "9AHWS",
+                  "x": 270,
+                  "y": 240,
+                  "name": "e2",
+                  "opacity": 0.08,
+                  "width": 80,
+                  "height": 40,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "CeTPc",
+                  "x": 310,
+                  "y": 200,
+                  "name": "e3",
+                  "opacity": 0.08,
+                  "width": 100,
+                  "height": 70,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "EuCp7",
+                  "x": 240,
+                  "y": 260,
+                  "name": "e4",
+                  "opacity": 0.08,
+                  "width": 120,
+                  "height": 30,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "oMiAs",
+                  "x": 200,
+                  "y": 300,
+                  "name": "e5",
+                  "opacity": 0.08,
+                  "width": 70,
+                  "height": 80,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "fG46Y",
+                  "x": 350,
+                  "y": 280,
+                  "name": "e6",
+                  "opacity": 0.08,
+                  "width": 90,
+                  "height": 50,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "hbRqY",
+                  "x": 160,
+                  "y": 220,
+                  "name": "e7",
+                  "opacity": 0.08,
+                  "width": 110,
+                  "height": 90,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "1HU3i",
+                  "x": 290,
+                  "y": 320,
+                  "name": "e8",
+                  "opacity": 0.08,
+                  "width": 80,
+                  "height": 60,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "PDW4N",
+                  "x": 400,
+                  "y": 240,
+                  "name": "e9",
+                  "opacity": 0.08,
+                  "width": 70,
+                  "height": 80,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "wjWkT",
+                  "x": 320,
+                  "y": 340,
+                  "name": "e10",
+                  "opacity": 0.08,
+                  "width": 100,
+                  "height": 40,
+                  "stroke": {
+                    "thickness": 1,
+                    "fill": "#FFFFFF"
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CilJj",
+                  "x": 210,
+                  "y": 160,
+                  "name": "n1",
+                  "fill": "#F97316",
+                  "width": 52,
+                  "height": 52
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Bbxzk",
+                  "x": 268,
+                  "y": 148,
+                  "name": "n2",
+                  "fill": "#F97316",
+                  "width": 44,
+                  "height": 44
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VGG3x",
+                  "x": 316,
+                  "y": 155,
+                  "name": "n3",
+                  "fill": "#F43F5E",
+                  "width": 48,
+                  "height": 48
+                },
+                {
+                  "type": "ellipse",
+                  "id": "L7cil",
+                  "x": 248,
+                  "y": 196,
+                  "name": "n4",
+                  "fill": "#F97316",
+                  "width": 56,
+                  "height": 56
+                },
+                {
+                  "type": "ellipse",
+                  "id": "LdcBu",
+                  "x": 308,
+                  "y": 200,
+                  "name": "n5",
+                  "fill": "#38BDF8",
+                  "width": 40,
+                  "height": 40
+                },
+                {
+                  "type": "ellipse",
+                  "id": "RzWiy",
+                  "x": 350,
+                  "y": 188,
+                  "name": "n6",
+                  "fill": "#38BDF8",
+                  "width": 50,
+                  "height": 50
+                },
+                {
+                  "type": "ellipse",
+                  "id": "vcGfj",
+                  "x": 196,
+                  "y": 208,
+                  "name": "n7",
+                  "fill": "#F43F5E",
+                  "width": 36,
+                  "height": 36
+                },
+                {
+                  "type": "ellipse",
+                  "id": "yyKz0",
+                  "x": 228,
+                  "y": 252,
+                  "name": "n8",
+                  "fill": "#F97316",
+                  "width": 50,
+                  "height": 50
+                },
+                {
+                  "type": "ellipse",
+                  "id": "p3zMw",
+                  "x": 282,
+                  "y": 248,
+                  "name": "n9",
+                  "fill": "#3B82F6",
+                  "width": 44,
+                  "height": 44
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Xc3PJ",
+                  "x": 330,
+                  "y": 242,
+                  "name": "n10",
+                  "fill": "#F97316",
+                  "width": 48,
+                  "height": 48
+                },
+                {
+                  "type": "ellipse",
+                  "id": "IFg8x",
+                  "x": 384,
+                  "y": 220,
+                  "name": "n11",
+                  "fill": "#38BDF8",
+                  "width": 42,
+                  "height": 42
+                },
+                {
+                  "type": "ellipse",
+                  "id": "uhlZb",
+                  "x": 178,
+                  "y": 256,
+                  "name": "n12",
+                  "fill": "#F97316",
+                  "width": 32,
+                  "height": 32
+                },
+                {
+                  "type": "ellipse",
+                  "id": "1JzGi",
+                  "x": 260,
+                  "y": 300,
+                  "name": "n13",
+                  "fill": "#F97316",
+                  "width": 46,
+                  "height": 46
+                },
+                {
+                  "type": "ellipse",
+                  "id": "A01Zq",
+                  "x": 312,
+                  "y": 292,
+                  "name": "n14",
+                  "fill": "#F43F5E",
+                  "width": 40,
+                  "height": 40
+                },
+                {
+                  "type": "ellipse",
+                  "id": "DtNVs",
+                  "x": 358,
+                  "y": 272,
+                  "name": "n15",
+                  "fill": "#22D3EE",
+                  "width": 36,
+                  "height": 36
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CFSmi",
+                  "x": 404,
+                  "y": 260,
+                  "name": "n16",
+                  "fill": "#F97316",
+                  "width": 44,
+                  "height": 44
+                },
+                {
+                  "type": "ellipse",
+                  "id": "a4Su0",
+                  "x": 200,
+                  "y": 302,
+                  "name": "n17",
+                  "fill": "#F43F5E",
+                  "width": 38,
+                  "height": 38
+                },
+                {
+                  "type": "ellipse",
+                  "id": "AJglR",
+                  "x": 240,
+                  "y": 346,
+                  "name": "n18",
+                  "fill": "#F97316",
+                  "width": 42,
+                  "height": 42
+                },
+                {
+                  "type": "ellipse",
+                  "id": "qushi",
+                  "x": 290,
+                  "y": 340,
+                  "name": "n19",
+                  "fill": "#3B82F6",
+                  "width": 34,
+                  "height": 34
+                },
+                {
+                  "type": "ellipse",
+                  "id": "IEQV8",
+                  "x": 336,
+                  "y": 330,
+                  "name": "n20",
+                  "fill": "#22D3EE",
+                  "width": 46,
+                  "height": 46
+                },
+                {
+                  "type": "ellipse",
+                  "id": "yDM6e",
+                  "x": 382,
+                  "y": 310,
+                  "name": "n21",
+                  "fill": "#4ADE80",
+                  "width": 38,
+                  "height": 38
+                },
+                {
+                  "type": "ellipse",
+                  "id": "G0FHn",
+                  "x": 430,
+                  "y": 290,
+                  "name": "n22",
+                  "fill": "#38BDF8",
+                  "width": 32,
+                  "height": 32
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BxpiB",
+                  "x": 170,
+                  "y": 346,
+                  "name": "n23",
+                  "fill": "#F97316",
+                  "width": 28,
+                  "height": 28
+                },
+                {
+                  "type": "ellipse",
+                  "id": "e8OKQ",
+                  "x": 216,
+                  "y": 388,
+                  "name": "n24",
+                  "fill": "#F43F5E",
+                  "width": 36,
+                  "height": 36
+                },
+                {
+                  "type": "ellipse",
+                  "id": "pbhn4",
+                  "x": 260,
+                  "y": 384,
+                  "name": "n25",
+                  "fill": "#A78BFA",
+                  "width": 30,
+                  "height": 30
+                },
+                {
+                  "type": "ellipse",
+                  "id": "e82IF",
+                  "x": 80,
+                  "y": 200,
+                  "name": "s1",
+                  "fill": "#F43F5E",
+                  "width": 18,
+                  "height": 18
+                },
+                {
+                  "type": "ellipse",
+                  "id": "c7LRT",
+                  "x": 60,
+                  "y": 240,
+                  "name": "s2",
+                  "fill": "#F97316",
+                  "width": 12,
+                  "height": 12
+                },
+                {
+                  "type": "ellipse",
+                  "id": "HZs2d",
+                  "x": 100,
+                  "y": 280,
+                  "name": "s3",
+                  "fill": "#F43F5E",
+                  "width": 22,
+                  "height": 22
+                },
+                {
+                  "type": "ellipse",
+                  "id": "fzEsI",
+                  "x": 70,
+                  "y": 320,
+                  "name": "s4",
+                  "fill": "#A78BFA",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CnqlO",
+                  "x": 110,
+                  "y": 350,
+                  "name": "s5",
+                  "fill": "#F97316",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BoZYr",
+                  "x": 130,
+                  "y": 390,
+                  "name": "s6",
+                  "fill": "#A78BFA",
+                  "width": 16,
+                  "height": 16
+                },
+                {
+                  "type": "ellipse",
+                  "id": "a5XTG",
+                  "x": 160,
+                  "y": 420,
+                  "name": "s7",
+                  "fill": "#F43F5E",
+                  "width": 12,
+                  "height": 12
+                },
+                {
+                  "type": "ellipse",
+                  "id": "AsdhL",
+                  "x": 200,
+                  "y": 440,
+                  "name": "s8",
+                  "fill": "#F97316",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "xKPJG",
+                  "x": 240,
+                  "y": 450,
+                  "name": "s9",
+                  "fill": "#F43F5E",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "zHCyh",
+                  "x": 280,
+                  "y": 440,
+                  "name": "s10",
+                  "fill": "#A78BFA",
+                  "width": 8,
+                  "height": 8
+                },
+                {
+                  "type": "ellipse",
+                  "id": "JxDcR",
+                  "x": 310,
+                  "y": 420,
+                  "name": "s11",
+                  "fill": "#F97316",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "W6oho",
+                  "x": 460,
+                  "y": 200,
+                  "name": "s12",
+                  "fill": "#38BDF8",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "ellipse",
+                  "id": "NyUPN",
+                  "x": 490,
+                  "y": 240,
+                  "name": "s13",
+                  "fill": "#4ADE80",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "c1yfu",
+                  "x": 470,
+                  "y": 310,
+                  "name": "s14",
+                  "fill": "#F97316",
+                  "width": 16,
+                  "height": 16
+                },
+                {
+                  "type": "ellipse",
+                  "id": "c3h72",
+                  "x": 500,
+                  "y": 350,
+                  "name": "s15",
+                  "fill": "#38BDF8",
+                  "width": 12,
+                  "height": 12
+                },
+                {
+                  "type": "ellipse",
+                  "id": "quWMV",
+                  "x": 440,
+                  "y": 380,
+                  "name": "s16",
+                  "fill": "#F43F5E",
+                  "width": 18,
+                  "height": 18
+                },
+                {
+                  "type": "ellipse",
+                  "id": "SD8wY",
+                  "x": 350,
+                  "y": 400,
+                  "name": "s17",
+                  "fill": "#4ADE80",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CdYeJ",
+                  "x": 400,
+                  "y": 420,
+                  "name": "s18",
+                  "fill": "#F97316",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "97TBm",
+                  "x": 140,
+                  "y": 160,
+                  "name": "s19",
+                  "fill": "#F97316",
+                  "width": 16,
+                  "height": 16
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tMIEa",
+                  "x": 380,
+                  "y": 130,
+                  "name": "s20",
+                  "fill": "#3B82F6",
+                  "width": 20,
+                  "height": 20
+                },
+                {
+                  "type": "ellipse",
+                  "id": "jaeVJ",
+                  "x": 430,
+                  "y": 150,
+                  "name": "s21",
+                  "fill": "#F43F5E",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "ellipse",
+                  "id": "vIUWe",
+                  "x": 510,
+                  "y": 180,
+                  "name": "s22",
+                  "fill": "#22D3EE",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "ellipse",
+                  "id": "046qv",
+                  "x": 290,
+                  "y": 110,
+                  "name": "s23",
+                  "fill": "#3B82F6",
+                  "width": 16,
+                  "height": 16
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Sf2NZ",
+                  "x": 250,
+                  "y": 80,
+                  "name": "s24",
+                  "fill": "#F97316",
+                  "width": 12,
+                  "height": 12
+                },
+                {
+                  "type": "ellipse",
+                  "id": "8fMbf",
+                  "x": 340,
+                  "y": 90,
+                  "name": "s25",
+                  "fill": "#F43F5E",
+                  "width": 10,
+                  "height": 10
+                },
+                {
+                  "type": "note",
+                  "id": "R02FR",
+                  "x": 332,
+                  "y": 180,
+                  "width": 116,
+                  "height": 144,
+                  "content": "how to read\n\non hover:\nname\nai exposure\n(also names + ai exposure of other neighbor nodes)\n\nfirst degree neighbors only"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EcpUr",
+              "x": 894,
+              "y": 192,
+              "name": "detailPanel",
+              "width": 386,
+              "height": 524,
+              "fill": "#FFFFFF",
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nZmmV",
+                  "x": 42,
+                  "y": 50,
+                  "name": "dpLabel",
+                  "fill": "#94A3B8",
+                  "content": "OCCUPATION PANEL\nright sidebar (desktop)",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "semibold"
+                },
+                {
+                  "type": "frame",
+                  "id": "NtBhu",
+                  "x": 274,
+                  "y": 8,
+                  "name": "tagDP",
+                  "width": 104,
+                  "height": 24,
+                  "fill": "#8B5CF6",
+                  "cornerRadius": 6,
+                  "padding": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "HBuKd",
+                      "name": "tagDPTxt",
+                      "fill": "#FFFFFF",
+                      "content": "2.2 Per Node",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "VoqLJ",
+                  "x": 42,
+                  "y": 112,
+                  "fill": "#919191ff",
+                  "textGrowth": "fixed-width-height",
+                  "width": 344,
+                  "height": 209,
+                  "content": "i.e. \nAI Exposure Index\nWage\nSkills (basic, specific skills)\nList of tasks\nList of connected jobs/nodes\nJustification (more visualised)\n-table list of potential employment transitions\n- sorted by similarity - shared skills (weight in edge list), lower exposure, higher wage",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Vg18E",
+                  "x": 31,
+                  "y": 367,
+                  "fill": "#000000",
+                  "textGrowth": "fixed-width-height",
+                  "width": 340,
+                  "height": 170,
+                  "content": "- popup modal instead\n- which other occupations you should try to move into, and why? \n- justification on why: Ai exposure is lower? wage is better?\n- edge list given",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cebyM",
+              "x": 300,
+              "y": 720,
+              "name": "legendBar",
+              "width": 980,
+              "height": 44,
+              "fill": "#FFFFFF",
+              "layout": "none",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "l7H0D",
+                  "x": 12,
+                  "y": 14,
+                  "name": "lbLabel",
+                  "fill": "#64748B",
+                  "content": "LEGEND BAR — 9 MASCO group colour buttons",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "semibold"
+                },
+                {
+                  "type": "frame",
+                  "id": "ygo4r",
+                  "x": 878,
+                  "y": 10,
+                  "name": "tagLB1",
+                  "width": 90,
+                  "height": 24,
+                  "fill": "#10B981",
+                  "cornerRadius": 6,
+                  "padding": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "EYlrx",
+                      "name": "tagLB1Txt",
+                      "fill": "#FFFFFF",
+                      "content": "4.3 Links",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "8IvE8",
+                  "x": 750,
+                  "y": 10,
+                  "name": "tagLB2",
+                  "width": 120,
+                  "height": 24,
+                  "fill": "#8B5CF6",
+                  "cornerRadius": 6,
+                  "padding": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Dc1iC",
+                      "name": "tagLB2Txt",
+                      "fill": "#FFFFFF",
+                      "content": "2.3 Per Group",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "semibold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UQ9yG",
+              "x": 20,
+              "y": 80,
+              "name": "blockA",
+              "clip": true,
+              "width": 260,
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "2Qbig",
+                  "name": "headerA",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "#3B82F6",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dtYUL",
+                      "name": "headerATxt",
+                      "fill": "#FFFFFF",
+                      "content": "1. Research Objectives",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Erdy9",
+                  "name": "bodyA",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "R4Sqn",
+                      "name": "bodyA1",
+                      "fill": "#1E293B",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "· Primary focus: skills overlap / AI exposure / both 50-50?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "pC7em",
+                      "name": "bodyA2",
+                      "fill": "#1E293B",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "· Research paper requested? (scope of deliverable)",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xBwyk",
+                      "name": "bodyA3",
+                      "fill": "#1E293B",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "· Target audience: policymakers / researchers / public?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GkyEm",
+              "x": 20,
+              "y": 370,
+              "name": "blockB",
+              "clip": true,
+              "width": 260,
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "V8y4M",
+                  "name": "headerB",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "#8B5CF6",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "P2T9g",
+                      "name": "headerBTxt",
+                      "fill": "#FFFFFF",
+                      "content": "2.3 (per group) Representing Neighbours",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "t4DUH",
+                  "name": "bodyB",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "RZgJN",
+                      "name": "bodyB1",
+                      "fill": "#1E293B",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "· How to represent neighbours beyond edges? (overlap in skills, average wage, etc.) — can keep it simple",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Ftzcg",
+                      "name": "bodyB2",
+                      "fill": "#1E293B",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "2.4 (all nodes) How should nodes be grouped and organised?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "43rtZ",
+                      "name": "bodyB3",
+                      "fill": "#1E293B",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "· Summary / insights of all nodes?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "zwN2i",
+              "x": 1300,
+              "y": 80,
+              "name": "blockC",
+              "clip": true,
+              "width": 480,
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "7OC8z",
+                  "name": "headerC",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "#8B5CF6",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "jhibm",
+                      "name": "headerCTxt",
+                      "fill": "#FFFFFF",
+                      "content": "2.1 Theme & Colours",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SZquI",
+                  "name": "bodyC",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DKg6e",
+                      "name": "bodyC1",
+                      "fill": "#1E293B",
+                      "content": "· Light / dark / neutral theme?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "S8myS",
+                      "name": "bodyC2",
+                      "fill": "#1E293B",
+                      "content": "· Brand colours to use? Any colour to avoid?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bjdsb",
+                  "name": "noteC",
+                  "width": "fill_container",
+                  "height": 60,
+                  "fill": "#FEF9C3",
+                  "padding": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "AiHGk",
+                      "name": "noteCTxt",
+                      "fill": "#92400E",
+                      "content": "Notes →",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Dmm76",
+                      "fill": "#000000",
+                      "content": "hexcodes to be shared with branding guidelines",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "7HLQq",
+              "x": 1300,
+              "y": 477,
+              "name": "blockD",
+              "clip": true,
+              "width": 480,
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "yRiGn",
+                  "name": "headerD",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "#10B981",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ut9Nl",
+                      "name": "headerDTxt",
+                      "fill": "#FFFFFF",
+                      "content": "4.1 Filtering",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FtGu0",
+                  "name": "bodyD",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "6ZeB1",
+                      "name": "bodyD1",
+                      "fill": "#1E293B",
+                      "content": "· Search by occupation name? by MASCO code?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hyhMf",
+                      "name": "bodyD3",
+                      "fill": "#1E293B",
+                      "content": "· Filter by skill keyword?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UR7YF",
+                      "name": "bodyD4",
+                      "fill": "#1E293B",
+                      "content": "· Any other filters needed?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "m3Rcc",
+                  "name": "noteD",
+                  "width": "fill_container",
+                  "height": 60,
+                  "fill": "#FEF9C3",
+                  "padding": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "D5Ktb",
+                      "name": "noteDTxt",
+                      "fill": "#92400E",
+                      "content": "Notes →",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "XDGER",
+              "x": 1300,
+              "y": 667,
+              "name": "blockE",
+              "clip": true,
+              "width": 480,
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "R8ceZ",
+                  "name": "headerE",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "#10B981",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Ue4Kw",
+                      "name": "headerETxt",
+                      "fill": "#FFFFFF",
+                      "content": "4.2 Visualisation Settings",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "zFRMb",
+                  "name": "bodyE",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "hs2m6",
+                      "name": "bodyE1",
+                      "fill": "#1E293B",
+                      "content": "COLOUR BY: sector (MASCO group) · AI quartile · continuous AI scale · wage bracket",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "RUyt8",
+                      "name": "bodyE2",
+                      "fill": "#1E293B",
+                      "content": "NODE SIZE: AI exposure · wage · degree (# connections) · uniform",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "qbez5",
+                      "name": "bodyE3",
+                      "fill": "#1E293B",
+                      "content": "EDGES: show all · weight threshold · colour by weight",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "CP29D",
+                      "name": "bodyE4",
+                      "fill": "#1E293B",
+                      "content": "LAYOUT / FORCE: cluster tightness · attraction by skill overlap weight",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rhWPp",
+                  "name": "noteE",
+                  "width": "fill_container",
+                  "height": 80,
+                  "fill": "#FEF9C3",
+                  "padding": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "qo1ji",
+                      "name": "noteETxt",
+                      "fill": "#92400E",
+                      "content": "Notes →",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EYURv",
+              "x": 300,
+              "y": 768,
+              "name": "legendExample",
+              "width": 980,
+              "height": 36,
+              "fill": "#e6e6e6ff",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1
+              },
+              "padding": [
+                0,
+                16
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "3qlwD",
+                  "name": "items",
+                  "height": "fill_container",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1
+                  },
+                  "gap": 20,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "1MTzr",
+                      "name": "mg",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "nT1dF",
+                          "name": "mgDot",
+                          "fill": "#3B82F6",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "4UnYp",
+                          "name": "mgTxt",
+                          "fill": "#000000ff",
+                          "content": "Managers",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "cII1q",
+                      "name": "pr",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "t6Gby",
+                          "name": "prDot",
+                          "fill": "#F97316",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "CLklk",
+                          "name": "prTxt",
+                          "fill": "#000000ff",
+                          "content": "Professionals",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "HUldQ",
+                      "name": "te",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "EusCo",
+                          "name": "teDot",
+                          "fill": "#F43F5E",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "bYm6w",
+                          "name": "teTxt",
+                          "fill": "#000000ff",
+                          "content": "Technicians",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "U1KGV",
+                      "name": "cl",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "rFwX6",
+                          "name": "clDot",
+                          "fill": "#22D3EE",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "9RDMR",
+                          "name": "clTxt",
+                          "fill": "#000000ff",
+                          "content": "Clerical",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JrHr7",
+                      "name": "ss",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "83rIO",
+                          "name": "ssDot",
+                          "fill": "#4ADE80",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "Yq8zX",
+                          "name": "ssTxt",
+                          "fill": "#000000ff",
+                          "content": "Services & Sales",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AhJCU",
+                      "name": "sa",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "UHQ1T",
+                          "name": "saDot",
+                          "fill": "#EAB308",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "wqOqE",
+                          "name": "saTxt",
+                          "fill": "#000000ff",
+                          "content": "Skilled Agricultural",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SlfCD",
+                      "name": "ct",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "0X8qZ",
+                          "name": "ctDot",
+                          "fill": "#A78BFA",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "QLzOu",
+                          "name": "ctTxt",
+                          "fill": "#000000ff",
+                          "content": "Craft & Trades",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Iy7JS",
+                      "name": "pm",
+                      "height": "fill_container",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1
+                      },
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "dp60r",
+                          "name": "pmDot",
+                          "fill": "#F43F5E",
+                          "width": 10,
+                          "height": 10
+                        },
+                        {
+                          "type": "text",
+                          "id": "ggsVI",
+                          "name": "pmTxt",
+                          "fill": "#000000ff",
+                          "content": "Plant & Machine Operators",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "z5CDj",
+              "x": 1300,
+              "y": 253,
+              "name": "blockF",
+              "clip": true,
+              "width": 480,
+              "fill": "#FFFFFF",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "wWJCL",
+                  "name": "headerF",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "#8B5CF6",
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "3E5ex",
+                      "name": "headerFTxt",
+                      "fill": "#FFFFFF",
+                      "content": "2.2 Per Node + 4.3 Links",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "bold"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "GmMML",
+                  "name": "bodyF",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LI9qn",
+                      "name": "bodyF1",
+                      "fill": "#1E293B",
+                      "content": "· Key fields to show: wage · AI % · quartile · skills · tasks?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "oVGkL",
+                      "name": "bodyF2",
+                      "fill": "#1E293B",
+                      "content": "· Format: plain text · progress bars · charts · tables?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "zEHGt",
+                      "name": "bodyF3",
+                      "fill": "#1E293B",
+                      "content": "· Link to research paper?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Pwpt2",
+                      "name": "bodyF4",
+                      "fill": "#1E293B",
+                      "content": "· Back-link to CERT website?",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SQyQn",
+                  "name": "noteF",
+                  "width": "fill_container",
+                  "height": 60,
+                  "fill": "#FEF9C3",
+                  "padding": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "3KDIL",
+                      "name": "noteFTxt",
+                      "fill": "#92400E",
+                      "content": "Notes →",
+                      "fontFamily": "Inter",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "id": "1vQc1",
+              "x": 65,
+              "y": 676,
+              "width": 250,
+              "height": 219,
+              "content": "(KIV) credits to source"
+            }
+          ]
+        },
+        {
+          "type": "note",
+          "id": "0TrDC",
+          "x": 2131,
+          "y": 918,
+          "width": 409,
+          "height": 410,
+          "content": "node size:\n- slider that shows nodes that meet AI exposure or wages threshold. default shows all nodes\n- more exposed the bigger node side, highlight which one is most exposed\n- toggle between wage, ai exposure, and number of workers\nedges:\n- filter by weight (# of shared skills)\n- show edges on hover, none on default\n- one colour for edges\n- show all edges by default\nlayout/force:\n- occupations greater weight, more similar in shared skills requirements, closer the nodes (look for conventional algo)\n- position of nodes are fixed\nnumber of workers in the occupations:\n- "
+        },
+        {
+          "type": "note",
+          "id": "4QOG9",
+          "x": 2146,
+          "y": 569,
+          "width": 250,
+          "height": 219,
+          "content": "filter by skills - tag multiple skills\nskill keyword search (KIV)\n"
+        }
+      ]
+    }
+  ]
+}

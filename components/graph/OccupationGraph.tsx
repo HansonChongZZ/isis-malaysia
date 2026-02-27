@@ -297,7 +297,7 @@ export default function OccupationGraph({
                     r={r}
                     fill={color}
                     fillOpacity={opacity}
-                    stroke={isSelected ? "#ffffff" : "#ffffff"}
+                    stroke={isSelected ? "var(--foreground)" : "var(--background)"}
                     strokeWidth={isSelected ? 2.5 : 0.8}
                     strokeOpacity={opacity}
                     style={{ cursor: "pointer" }}
@@ -327,7 +327,7 @@ export default function OccupationGraph({
       {/* Hover tooltip */}
       {tooltip && (
         <div
-          className="absolute z-20 pointer-events-none bg-gray-900 text-white text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
+          className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
           style={{
             left: tooltip.x + 14,
             top: tooltip.y - 10,
@@ -336,16 +336,16 @@ export default function OccupationGraph({
           }}
         >
           <p className="font-semibold leading-tight">{tooltip.node.label}</p>
-          <p className="text-gray-300 mt-0.5">Code: {tooltip.node.id}</p>
-          <p className="text-gray-300">
+          <p className="text-muted-foreground mt-0.5">Code: {tooltip.node.id}</p>
+          <p className="text-muted-foreground">
             AI Exposure:{" "}
-            <span className="text-white font-medium">
+            <span className="text-popover-foreground font-medium">
               {(tooltip.node.aiExposure * 100).toFixed(1)}%
             </span>
           </p>
-          <p className="text-gray-300">
+          <p className="text-muted-foreground">
             Quartile:{" "}
-            <span className="text-white">{tooltip.node.quartile}</span>
+            <span className="text-popover-foreground">{tooltip.node.quartile}</span>
           </p>
         </div>
       )}
