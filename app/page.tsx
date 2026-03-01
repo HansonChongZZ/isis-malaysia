@@ -124,7 +124,10 @@ export default function HomePage() {
       <OccupationPanel
         nodeId={selectedNodeId}
         detail={selectedDetail}
+        nodes={nodes}
+        edges={edges}
         onClose={() => setSelectedNodeId(null)}
+        onNodeSelect={setSelectedNodeId}
       />
     </div>
   )
