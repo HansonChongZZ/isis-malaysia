@@ -10,7 +10,8 @@ import {
   type ColumnDef,
   type FilterFn,
 } from "@tanstack/react-table"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { XIcon } from "lucide-react"
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import {
   Accordion,
@@ -181,26 +182,34 @@ export default function OccupationPanel({
 
   return (
     <Dialog open={!!nodeId && !!detail} onOpenChange={(open) => { if (!open) onClose() }}>
-      <DialogContent className="bg-card border-border text-foreground sm:max-w-6xl max-h-[90vh] overflow-hidden p-0 flex flex-col">
+      <DialogContent className="bg-card border-border text-foreground sm:max-w-6xl max-h-[90vh] overflow-hidden p-0 flex flex-col" showCloseButton={false}>
         {detail && nodeId && (
           <>
             {/* Full-width sticky header */}
-            <DialogHeader className="p-5 pb-4 border-b border-border flex-shrink-0">
-              <div className="flex items-center gap-2 mb-1">
-                {groupInfo && (
-                  <span
-                    className="inline-block w-3 h-3 rounded-full shrink-0"
-                    style={{ backgroundColor: groupInfo.color }}
-                  />
-                )}
-                <span className="text-xs text-muted-foreground font-mono">{nodeId}</span>
-                {groupInfo && (
-                  <span className="text-xs text-muted-foreground">· {groupInfo.label}</span>
-                )}
+            <DialogHeader className="p-5 pb-4 border-b border-border shrink-0">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    {groupInfo && (
+                      <span
+                        className="inline-block w-3 h-3 rounded-full shrink-0"
+                        style={{ backgroundColor: groupInfo.color }}
+                      />
+                    )}
+                    <span className="text-xs text-muted-foreground font-mono">{nodeId}</span>
+                    {groupInfo && (
+                      <span className="text-xs text-muted-foreground">· {groupInfo.label}</span>
+                    )}
+                  </div>
+                  <DialogTitle className="text-foreground text-lg leading-tight font-semibold">
+                    {detail.occupation}
+                  </DialogTitle>
+                </div>
+                <DialogClose className="shrink-0 rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors mt-0.5">
+                  <XIcon className="size-4" />
+                  <span className="sr-only">Close</span>
+                </DialogClose>
               </div>
-              <DialogTitle className="text-foreground text-lg leading-tight font-semibold">
-                {detail.occupation}
-              </DialogTitle>
             </DialogHeader>
 
             {/* Two-column body */}
