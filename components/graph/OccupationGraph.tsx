@@ -21,6 +21,8 @@ interface OccupationGraphProps {
   searchQuery: string
   filterSkill: string
   allSkills: Map<string, Set<string>> // nodeId -> skills set
+  /** Optional ref the graph will set to { animateToPositions(ms) } for layout animation. */
+  layoutAnimationRef?: React.MutableRefObject<((ms: number) => void) | null>
 }
 
 export default function OccupationGraph({
@@ -31,6 +33,7 @@ export default function OccupationGraph({
   searchQuery,
   filterSkill,
   allSkills,
+  layoutAnimationRef,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
@@ -170,13 +173,20 @@ export default function OccupationGraph({
     drawEdgesRef.current()
   }, [])
 
-  const { simulationRef } = useForceSimulation({
+  const { simulationRef, animateToPositions } = useForceSimulation({
     nodes: simNodes,
     edges,
     width: dimensions.width,
     height: dimensions.height,
     onTick: handleTick,
   })
+
+  useEffect(() => {
+    if (layoutAnimationRef) layoutAnimationRef.current = animateToPositions
+    return () => {
+      if (layoutAnimationRef) layoutAnimationRef.current = null
+    }
+  }, [layoutAnimationRef, animateToPositions])
 
   // Resize canvas to match container with HiDPI support
   useEffect(() => {

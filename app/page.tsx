@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail } from "@/lib/types"
@@ -29,6 +29,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkill, setFilterSkill] = useState("")
+  const layoutAnimationRef = useRef<((ms: number) => void) | null>(null)
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -77,6 +78,7 @@ export default function HomePage() {
         filterSkill={filterSkill}
         setFilterSkill={setFilterSkill}
         uniqueSkills={uniqueSkills}
+        onAnimateLayout={() => layoutAnimationRef.current?.(10000)}
       />
 
       {/* Main graph area */}
@@ -106,6 +108,7 @@ export default function HomePage() {
             searchQuery={searchQuery}
             filterSkill={filterSkill}
             allSkills={allSkills}
+            layoutAnimationRef={layoutAnimationRef}
           />
         )}
 

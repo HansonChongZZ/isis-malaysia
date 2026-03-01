@@ -13,8 +13,11 @@ interface UseForceSimulationProps {
   onTick: () => void
 }
 
+const TARGET_FPS = 60
+
 export function useForceSimulation({ nodes, edges, width, height, onTick }: UseForceSimulationProps) {
   const simulationRef = useRef<d3.Simulation<SimNode, SimEdge> | null>(null)
+  const centerRef = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
     if (!nodes.length || !width || !height) return
@@ -23,6 +26,7 @@ export function useForceSimulation({ nodes, edges, width, height, onTick }: UseF
 
     const cx = width / 2
     const cy = height / 2
+    centerRef.current = { x: cx, y: cy }
 
     const simulation = d3
       .forceSimulation<SimNode>(nodes)
@@ -57,23 +61,56 @@ export function useForceSimulation({ nodes, edges, width, height, onTick }: UseF
       )
 
     simulation.stop()
-    for (let i = 0; i < 300; i++) simulation.tick()
+    const alphaMin = simulation.alphaMin()
+    const maxTicks = 2000
+    let ticks = 0
+    while (simulation.alpha() > alphaMin && ticks < maxTicks) {
+      simulation.tick()
+      ticks++
+    }
     onTick()
 
     simulationRef.current = simulation
 
     return () => {
+      simulation.on("tick", null)
       simulation.stop()
     }
   }, [nodes, edges, width, height, onTick])
 
   const reheat = useCallback(() => {
     const sim = simulationRef.current
-    if (sim) {
-      for (let i = 0; i < 300; i++) sim.tick()
-      onTick()
+    if (!sim) return
+    sim.alpha(1)
+    const alphaMin = sim.alphaMin()
+    const maxTicks = 2000
+    let ticks = 0
+    while (sim.alpha() > alphaMin && ticks < maxTicks) {
+      sim.tick()
+      ticks++
     }
+    onTick()
   }, [onTick])
 
-  return { simulationRef, reheat }
+  const animateToPositions = useCallback(
+    (durationMs: number) => {
+      const sim = simulationRef.current
+      if (!sim || durationMs <= 0) return
+      const { x: cx, y: cy } = centerRef.current
+      for (const node of nodes) {
+        node.x = cx
+        node.y = cy
+        node.vx = 0
+        node.vy = 0
+      }
+      const alphaMin = sim.alphaMin()
+      const totalTicks = (durationMs / 1000) * TARGET_FPS
+      sim.alphaDecay(1 - Math.pow(alphaMin, 1 / totalTicks))
+      sim.on("tick", onTick)
+      sim.alpha(1).restart()
+    },
+    [onTick, nodes]
+  )
+
+  return { simulationRef, reheat, animateToPositions }
 }

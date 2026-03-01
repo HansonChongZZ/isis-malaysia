@@ -1,7 +1,7 @@
 "use client"
 
 import { MASCO_GROUPS } from "@/lib/constants"
-import { Search, X } from "lucide-react"
+import { Search, X, Play } from "lucide-react"
 
 interface GraphControlsProps {
   searchQuery: string
@@ -11,6 +11,8 @@ interface GraphControlsProps {
   filterSkill: string
   setFilterSkill: (v: string) => void
   uniqueSkills: string[]
+  /** Called when user clicks "Animate layout" to run the force simulation over 10s. */
+  onAnimateLayout?: () => void
 }
 
 export default function GraphControls({
@@ -21,6 +23,7 @@ export default function GraphControls({
   filterSkill,
   setFilterSkill,
   uniqueSkills,
+  onAnimateLayout,
 }: GraphControlsProps) {
   return (
     <div className="flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
@@ -84,6 +87,18 @@ export default function GraphControls({
             ))}
           </datalist>
         </div>
+
+        {/* Animate layout */}
+        {onAnimateLayout && (
+          <button
+            type="button"
+            onClick={onAnimateLayout}
+            className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-md border border-border bg-input text-foreground hover:bg-accent hover:text-accent-foreground shrink-0"
+          >
+            <Play className="w-3.5 h-3.5" />
+            Animate layout
+          </button>
+        )}
 
         {/* Active filters indicator */}
         {(filterGroup !== null || filterSkill) && (
