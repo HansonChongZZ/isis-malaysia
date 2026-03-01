@@ -105,7 +105,7 @@ export default function OccupationGraph({
     return edges.filter(e => {
       const src = typeof e.source === "string" ? e.source : (e.source as SimNode).id
       const tgt = typeof e.target === "string" ? e.target : (e.target as SimNode).id
-      if (!connectedIds.has(src) || !connectedIds.has(tgt)) return false
+      if (src !== selectedNodeId && tgt !== selectedNodeId) return false
       if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt))) return false
       return true
     })
