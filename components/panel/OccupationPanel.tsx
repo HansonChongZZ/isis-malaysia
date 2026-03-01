@@ -1,6 +1,6 @@
 "use client"
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import {
   Accordion,
@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/accordion"
 import type { OccupationDetail } from "@/lib/types"
 import { MASCO_GROUPS, QUARTILE_COLORS } from "@/lib/constants"
-import { useIsMobile } from "@/hooks/useIsMobile"
-import { cn } from "@/lib/utils"
 
 interface OccupationPanelProps {
   nodeId: string | null
@@ -20,28 +18,17 @@ interface OccupationPanelProps {
 }
 
 export default function OccupationPanel({ nodeId, detail, onClose }: OccupationPanelProps) {
-  const isOpen = !!nodeId && !!detail
-  const isMobile = useIsMobile()
-
   const group = nodeId ? parseInt(nodeId[0], 10) : null
   const groupInfo = group ? MASCO_GROUPS[group] : null
   const quartileColor = detail ? QUARTILE_COLORS[detail.quartile] ?? "#888" : "#888"
 
   return (
-    <Sheet open={isOpen} onOpenChange={(open) => { if (!open) onClose() }} modal={false}>
-      <SheetContent
-        side={isMobile ? "bottom" : "right"}
-        className={cn(
-          "bg-card border-border text-foreground overflow-y-auto p-0",
-          isMobile
-            ? "h-[75vh] w-full rounded-t-2xl"
-            : "w-[400px] max-w-[95vw]"
-        )}
-      >
+    <Dialog open={!!nodeId && !!detail} onOpenChange={(open) => { if (!open) onClose() }}>
+      <DialogContent className="bg-card border-border text-foreground">
         {detail && nodeId && (
           <>
             {/* Header */}
-            <SheetHeader className="p-5 pb-4 border-b border-border">
+            <DialogHeader className="p-5 pb-4 border-b border-border">
               <div className="flex items-center gap-2 mb-1">
                 {groupInfo && (
                   <span
@@ -54,10 +41,10 @@ export default function OccupationPanel({ nodeId, detail, onClose }: OccupationP
                   <span className="text-xs text-muted-foreground">· {groupInfo.label}</span>
                 )}
               </div>
-              <SheetTitle className="text-foreground text-lg leading-tight font-semibold">
+              <DialogTitle className="text-foreground text-lg leading-tight font-semibold">
                 {detail.occupation}
-              </SheetTitle>
-            </SheetHeader>
+              </DialogTitle>
+            </DialogHeader>
 
             <div className="p-5 space-y-6">
               {/* AI Exposure */}
@@ -181,7 +168,7 @@ export default function OccupationPanel({ nodeId, detail, onClose }: OccupationP
             </div>
           </>
         )}
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   )
 }
