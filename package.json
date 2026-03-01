@@ -10,6 +10,7 @@
     "process-data": "npx tsx scripts/process-csv.ts"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.21.3",
     "@types/d3": "^7.4.3",
     "@types/papaparse": "^5.5.2",
     "class-variance-authority": "^0.7.1",
