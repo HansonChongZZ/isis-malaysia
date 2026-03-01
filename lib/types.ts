@@ -5,7 +5,7 @@ export const NodeSchema = z.object({
   label: z.string(),
   group: z.number().int().min(1).max(9),
   aiExposure: z.number().min(0).max(1),
-  quartile: z.enum(["Medium low", "Medium high", "High"]),
+  quartile: z.enum(["Low", "Medium low", "Medium high", "High"]),
   wage: z.number().nullable(),
 })
 
@@ -18,7 +18,7 @@ export const EdgeSchema = z.object({
 export const OccupationDetailSchema = z.object({
   occupation: z.string(),
   aiExposure: z.number(),
-  quartile: z.enum(["Medium low", "Medium high", "High"]),
+  quartile: z.enum(["Low", "Medium low", "Medium high", "High"]),
   wage: z.number().nullable(),
   basicSkills: z.array(z.string()),
   specificSkills: z.array(z.string()),

@@ -38,19 +38,19 @@ interface TaskRow {
   score: number | string
 }
 
-type Quartile = "Medium low" | "Medium high" | "High"
+type Quartile = "Low" | "Medium low" | "Medium high" | "High"
 
 function isValidQuartile(v: string): v is Quartile {
-  return ["Medium low", "Medium high", "High"].includes(v)
+  return ["Low", "Medium low", "Medium high", "High"].includes(v)
 }
 
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true })
 
-  const nodeRows = readCsv<NodeRow>("occupations_nodelist (4-digits).csv")
-  const edgeRows = readCsv<EdgeRow>("occupations_edgelist (4-digits specific skils only).csv")
-  const skillRows = readCsv<SkillRow>("masco-4d with skills.csv")
-  const taskRows = readCsv<TaskRow>("masco-4d with tasks and scores [GPT4o].csv")
+  const nodeRows = readCsv<NodeRow>("nodelist.csv")
+  const edgeRows = readCsv<EdgeRow>("edgelist_conditional.csv")
+  const skillRows = readCsv<SkillRow>("masco-4d_with_skills.csv")
+  const taskRows = readCsv<TaskRow>("masco-4d_with_tasks_and_scores__GPT4o_.csv")
 
   // Build nodes.json
   const nodes = nodeRows.map((row) => {

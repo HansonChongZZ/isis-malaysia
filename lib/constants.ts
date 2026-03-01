@@ -25,12 +25,14 @@ export const CLUSTER_OFFSETS: Record<number, { x: number; y: number }> = {
 }
 
 export const QUARTILE_LABELS: Record<string, string> = {
+  Low: "Low",
   "Medium low": "Medium Low",
   "Medium high": "Medium High",
   High: "High",
 }
 
 export const QUARTILE_COLORS: Record<string, string> = {
+  Low: "#9C755F",
   "Medium low": "#E15759",
   "Medium high": "#F28E2B",
   High: "#59A14F",

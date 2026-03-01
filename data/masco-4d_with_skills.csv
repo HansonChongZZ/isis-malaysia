@@ -1,0 +1,3660 @@
+code,skills,skill_type
+1111,Complex Problem Solving,basic_skills
+1111,Critical Thinking,basic_skills
+1111,Decision Making,basic_skills
+1111,Management Of Financial Resources,basic_skills
+1111,Monitoring,basic_skills
+1111,Analysis,specific_skills
+1111,Contract Drafting,specific_skills
+1111,Legal Analysis,specific_skills
+1111,Administration Management,specific_skills
+1111,Data Governance,specific_skills
+1111,Legal Writing,specific_skills
+1111,Crisis Management,specific_skills
+1112,Complex Problem Solving,basic_skills
+1112,Critical Thinking,basic_skills
+1112,Decision Making,basic_skills
+1112,Management Of Financial Resources,basic_skills
+1112,Monitoring,basic_skills
+1112,Analysis,specific_skills
+1112,Contract Drafting,specific_skills
+1112,Legal Analysis,specific_skills
+1112,Administration Management,specific_skills
+1112,Data Governance,specific_skills
+1112,Legal Writing,specific_skills
+1112,Crisis Management,specific_skills
+1112,Negotiation,basic_skills
+1112,Active Listening,basic_skills
+1112,Reading Comprehension,basic_skills
+1112,Mathematics,basic_skills
+1112,Problem Solving,basic_skills
+1112,Account Management,specific_skills
+1112,Leadership,basic_skills
+1112,Communication,basic_skills
+1112,Management Of Personnel Resources,basic_skills
+1112,Community Service,basic_skills
+1113,Complex Problem Solving,basic_skills
+1113,Critical Thinking,basic_skills
+1113,Decision Making,basic_skills
+1113,Administration Management,specific_skills
+1113,Crisis Management,specific_skills
+1113,Problem Analysis,basic_skills
+1113,Active Listening,basic_skills
+1114,Complex Problem Solving,basic_skills
+1114,Critical Thinking,basic_skills
+1114,Decision Making,basic_skills
+1114,Management Of Financial Resources,basic_skills
+1114,Monitoring,basic_skills
+1114,Communication,basic_skills
+1114,Customer Services,basic_skills
+1114,Public Relations,basic_skills
+1114,Analysis,specific_skills
+1114,Contract Drafting,specific_skills
+1114,Legal Analysis,specific_skills
+1114,Administration Management,specific_skills
+1114,Data Governance,specific_skills
+1114,Legal Writing,specific_skills
+1114,Crisis Management,specific_skills
+1121,Decision Making,basic_skills
+1121,Complex Problem Solving,basic_skills
+1121,Critical Thinking,basic_skills
+1121,Speaking,basic_skills
+1121,Coordination,basic_skills
+1121,Administration Management,specific_skills
+1121,Analytical,specific_skills
+1121,Business Analysis,specific_skills
+1121,Cash Management,specific_skills
+1121,Risk Management,specific_skills
+1121,Hiring,specific_skills
+1121,Active Listening,basic_skills
+1211,Active Listening,basic_skills
+1211,Critical Thinking,basic_skills
+1211,Monitoring,basic_skills
+1211,Reading Comprehension,basic_skills
+1211,Speaking,basic_skills
+1211,Calculation,basic_skills
+1211,Financial Reporting,specific_skills
+1211,Forecasting,specific_skills
+1211,Account Management,specific_skills
+1211,Factor Analysis,specific_skills
+1211,Financial Auditing,specific_skills
+1211,Revenue Analysis,specific_skills
+1211,Risk Assessment,specific_skills
+1212,Active Listening,basic_skills
+1212,Management Of Personnel Resources,basic_skills
+1212,Speaking,basic_skills
+1212,Decision Making,basic_skills
+1212,Reading Comprehension,basic_skills
+1212,Payroll Administration,specific_skills
+1212,Organizational Analysis,specific_skills
+1212,Personnel Management,specific_skills
+1212,Performance Analysis,specific_skills
+1212,Hiring,specific_skills
+1213,Reading Comprehension,basic_skills
+1213,Speaking,basic_skills
+1213,Writing,basic_skills
+1213,Active Listening,basic_skills
+1213,Coordination,basic_skills
+1213,Business Analysis,specific_skills
+1213,Market Analysis,specific_skills
+1213,Conflict Management,specific_skills
+1213,Calculation,basic_skills
+1213,Business Continuity Management,specific_skills
+1213,Strategic Management,specific_skills
+1214,Critical Thinking,basic_skills
+1214,Reading Comprehension,basic_skills
+1214,Active Listening,basic_skills
+1214,Speaking,basic_skills
+1214,Coordination,basic_skills
+1214,Monitoring,basic_skills
+1214,Decision Making,basic_skills
+1214,Administration Management,specific_skills
+1214,Strategic Analysis,specific_skills
+1214,Production And Processing,specific_skills
+1214,Iso Standards Knowledge,specific_skills
+1214,Social Perceptivenesss,basic_skills
+1214,Food Hygiene And Safety Standard,specific_skills
+1214,Halal Compliance,specific_skills
+1214,Halal Integrity System,specific_skills
+1214,Working With Computers,specific_skills
+1214,Internet Literacy,specific_skills
+1215,Active Listening,basic_skills
+1215,Reading Comprehension,basic_skills
+1215,Time Management,basic_skills
+1215,Speaking,basic_skills
+1215,Coordination,basic_skills
+1215,Performance Management,specific_skills
+1215,Budget Management,specific_skills
+1215,Business Analysis,specific_skills
+1215,Document Management,specific_skills
+1215,Iso Standards Knowledge,specific_skills
+1215,Quality Management,specific_skills
+1215,Management Of Personnel Resources,basic_skills
+1216,Reading Comprehension,basic_skills
+1216,Decision Making,basic_skills
+1216,Active Listening,basic_skills
+1216,Monitoring,basic_skills
+1216,Quality Management,specific_skills
+1216,Analysis,specific_skills
+1216,Business Management,specific_skills
+1216,Administration Management,specific_skills
+1216,Quality Control Analysis,specific_skills
+1221,Active Learning,basic_skills
+1221,Active Listening,basic_skills
+1221,Critical Thinking,basic_skills
+1221,Reading Comprehension,basic_skills
+1221,Social Perceptivenesss,basic_skills
+1221,Analysis,specific_skills
+1221,Sales Management,specific_skills
+1221,Forecasting,specific_skills
+1221,Trend Analysis,specific_skills
+1221,Strategic Analysis,specific_skills
+1221,Campaign Performance Analysis,specific_skills
+1221,Persuasion,basic_skills
+1221,Speaking,basic_skills
+1221,Coordination,basic_skills
+1222,Active Listening,basic_skills
+1222,Critical Thinking,basic_skills
+1222,Social Perceptivenesss,basic_skills
+1222,Speaking,basic_skills
+1222,Decision Making,basic_skills
+1222,Digital Advertising,specific_skills
+1222,Business Management,specific_skills
+1222,Budget Management,specific_skills
+1222,Sales Management,specific_skills
+1222,Online Advertising,specific_skills
+1222,Internet Literacy,specific_skills
+1222,Portfolio Management,specific_skills
+1223,Active Learning,basic_skills
+1223,Active Listening,basic_skills
+1223,Critical Thinking,basic_skills
+1223,Reading Comprehension,basic_skills
+1223,Social Perceptivenesss,basic_skills
+1223,Analysis,specific_skills
+1223,Product Management,specific_skills
+1223,Analytical Testing,specific_skills
+1223,Failure Analysis,specific_skills
+1223,Quality Management,specific_skills
+1223,Business Analysis,specific_skills
+1223,Risk Assessment,specific_skills
+1223,Halal Compliance,specific_skills
+1223,Halal Integrity System,specific_skills
+1311,Critical Thinking,basic_skills
+1311,Speaking,basic_skills
+1311,Monitoring,basic_skills
+1311,Decision Making,basic_skills
+1311,Time Management,basic_skills
+1311,Administration Management,specific_skills
+1311,Budgeting,specific_skills
+1311,Inventory Management,specific_skills
+1311,Horticulturist,specific_skills
+1311,Farming Skills,specific_skills
+1311,Halal Compliance,specific_skills
+1311,Halal Integrity System,specific_skills
+1312,Critical Thinking,basic_skills
+1312,Speaking,basic_skills
+1312,Monitoring,basic_skills
+1312,Decision Making,basic_skills
+1312,Time Management,basic_skills
+1312,Administration Management,specific_skills
+1312,Budgeting,specific_skills
+1312,Farming Skills,specific_skills
+1321,Critical Thinking,basic_skills
+1321,Speaking,basic_skills
+1321,Monitoring,basic_skills
+1321,Decision Making,basic_skills
+1321,Time Management,basic_skills
+1321,Crisis Management,specific_skills
+1321,Hazardous Waste Management,specific_skills
+1321,Budgeting,specific_skills
+1321,Production And Processing,specific_skills
+1321,Quality Management,specific_skills
+1321,Workplace Safety And Health,specific_skills
+1321,Coordination,basic_skills
+1321,Halal Compliance,specific_skills
+1321,Halal Integrity System,specific_skills
+1321,Begp Production Activities,specific_skills
+1322,Complex Problem Solving,basic_skills
+1322,Critical Thinking,basic_skills
+1322,Decision Making,basic_skills
+1322,Reading Comprehension,basic_skills
+1322,Speaking,basic_skills
+1322,Monitoring,basic_skills
+1322,Teaching,basic_skills
+1322,Facility Management,specific_skills
+1322,Risk Assessment,specific_skills
+1322,Workplace Safety And Health,specific_skills
+1323,Coordination,basic_skills
+1323,Management Of Personnel Resources,basic_skills
+1323,Active Listening,basic_skills
+1323,Monitoring,basic_skills
+1323,Speaking,basic_skills
+1323,Complex Problem Solving,basic_skills
+1323,Decision Making,basic_skills
+1323,Food Hygiene And Safety Standard,specific_skills
+1323,Costing Skills,specific_skills
+1323,Property Management,specific_skills
+1323,Construction Management,specific_skills
+1323,Facility Management,specific_skills
+1323,Workplace Safety And Health,specific_skills
+1323,Architectural Drafting,specific_skills
+1323,Green Skills,specific_skills
+1323,Equipment Installation,specific_skills
+1324,Active Listening,basic_skills
+1324,Coordination,basic_skills
+1324,Decision Making,basic_skills
+1324,Monitoring,basic_skills
+1324,Reading Comprehension,basic_skills
+1324,Warehousing,specific_skills
+1324,Warehouse Management,specific_skills
+1324,Inventory Management,specific_skills
+1324,Supply Chain Management,specific_skills
+1324,Operation Analysis,specific_skills
+1324,Halal Integrity System,specific_skills
+1324,Halal Compliance,specific_skills
+1411,Active Listening,basic_skills
+1411,Service Orientation,basic_skills
+1411,Management Of Personnel Resources,basic_skills
+1411,Social Perceptivenesss,basic_skills
+1411,Speaking,basic_skills
+1411,Administration Management,specific_skills
+1411,Food Hygiene And Safety Standard,specific_skills
+1411,Landscaping,specific_skills
+1411,Leasing,specific_skills
+1412,Service Orientation,basic_skills
+1412,Active Listening,basic_skills
+1412,Management Of Personnel Resources,basic_skills
+1412,Monitoring,basic_skills
+1412,Speaking,basic_skills
+1412,Restaurant Management,specific_skills
+1412,Food Preparation,specific_skills
+1412,Costing Skills,specific_skills
+1412,Inventory Management,specific_skills
+1421,Negotiation,basic_skills
+1421,Active Listening,basic_skills
+1421,Critical Thinking,basic_skills
+1421,Persuasion,basic_skills
+1421,Speaking,basic_skills
+1421,Costing Skills,specific_skills
+1421,Portfolio Management,specific_skills
+1421,Forecasting,specific_skills
+1421,Sales Management,specific_skills
+1421,Business Writing,basic_skills
+1421,Calculation,basic_skills
+1421,Communication,basic_skills
+1421,Complex Problem Solving,basic_skills
+1421,Public Relations,basic_skills
+1421,Management,basic_skills
+1421,Trend Analysis,specific_skills
+1421,Marketing Analytics,specific_skills
+1511,Basic Ict,basic_skills
+1511,Critical Thinking,basic_skills
+1511,Reading Comprehension,basic_skills
+1511,Decision Making,basic_skills
+1511,Monitoring,basic_skills
+1511,Database Administration,specific_skills
+1511,Ict Literacy,specific_skills
+1511,Machine Learning,specific_skills
+1511,Data Design And Migration,specific_skills
+1511,Cybersecurity Assessment,specific_skills
+1511,Network Security,specific_skills
+1511,Penetration Testing,specific_skills
+1511,Data Management Protection,specific_skills
+1511,Coding,specific_skills
+1511,Computer Forensics,specific_skills
+1511,Food Hygiene And Safety Standard,specific_skills
+1511,Risk Assessment,specific_skills
+1511,Internet Literacy,specific_skills
+1511,Data Analysis,specific_skills
+1511,Data Governance,specific_skills
+1511,Network Administration,specific_skills
+1511,Animation,specific_skills
+1511,Sprite Animation,specific_skills
+1511,3d Animation,specific_skills
+1511,Computer Animation,specific_skills
+1511,Database Management System Software,specific_skills
+1511,Demandware Script,specific_skills
+1511,Javascript,specific_skills
+1511,Jquery,specific_skills
+1511,Mysql,specific_skills
+1611,Active Listening,basic_skills
+1611,Coordination,basic_skills
+1611,Critical Thinking,basic_skills
+1611,Monitoring,basic_skills
+1611,Reading Comprehension,basic_skills
+1611,Social Perceptivenesss,basic_skills
+1611,Management Of Personnel Resources,basic_skills
+1611,Child Care,specific_skills
+1611,Financial Management,specific_skills
+1612,Speaking,basic_skills
+1612,Critical Thinking,basic_skills
+1612,Active Listening,basic_skills
+1612,Coordination,basic_skills
+1612,Decision Making,basic_skills
+1612,Infection Control,specific_skills
+1612,Patient Care,specific_skills
+1612,Budgeting,specific_skills
+1612,Clinical Research,specific_skills
+1612,Clinical Management,specific_skills
+1612,Crisis Management,specific_skills
+1612,Supportive Care,specific_skills
+1613,Active Listening,basic_skills
+1613,Community Service,basic_skills
+1613,Critical Thinking,basic_skills
+1613,Monitoring,basic_skills
+1613,Community Management,basic_skills
+1613,Social Perceptivenesss,basic_skills
+1613,Management Of Personnel Resources,basic_skills
+1613,Elder Care,specific_skills
+1613,Financial Management,specific_skills
+1613,Crisis Management,specific_skills
+1614,Service Orientation,basic_skills
+1614,Social Perceptivenesss,basic_skills
+1614,Active Learning,basic_skills
+1614,Active Listening,basic_skills
+1614,Complex Problem Solving,basic_skills
+1614,Community Management,basic_skills
+1614,Community Service,basic_skills
+1614,Crisis Management,specific_skills
+1614,Financial Management,specific_skills
+1614,Home Care,specific_skills
+1615,Active Listening,basic_skills
+1615,Speaking,basic_skills
+1615,Critical Thinking,basic_skills
+1615,Learning Strategies,basic_skills
+1615,Reading Comprehension,basic_skills
+1615,Program Management,specific_skills
+1615,Psychology,specific_skills
+1615,Knowledge Management,specific_skills
+1615,Crisis Intervention,specific_skills
+1616,Active Listening,basic_skills
+1616,Critical Thinking,basic_skills
+1616,Monitoring,basic_skills
+1616,Reading Comprehension,basic_skills
+1616,Speaking,basic_skills
+1616,Event Management,specific_skills
+1616,Sales Management,specific_skills
+1616,Financial Management,specific_skills
+1617,Critical Thinking,basic_skills
+1617,Reading Comprehension,basic_skills
+1617,Active Listening,basic_skills
+1617,Speaking,basic_skills
+1617,Writing,basic_skills
+1617,Legal Analysis,specific_skills
+1617,Food Hygiene And Safety Standard,specific_skills
+1617,Compliance Management,specific_skills
+1617,Contract Drafting,specific_skills
+1618,Speaking,basic_skills
+1618,Reading Comprehension,basic_skills
+1618,Active Listening,basic_skills
+1618,Coordination,basic_skills
+1618,Writing,basic_skills
+1618,Property Management,specific_skills
+1618,Leasing,specific_skills
+1618,Food Hygiene And Safety Standard,specific_skills
+1618,Construction Management,specific_skills
+1621,Active Listening,basic_skills
+1621,Coordination,basic_skills
+1621,Service Orientation,basic_skills
+1621,Social Perceptivenesss,basic_skills
+1621,Speaking,basic_skills
+1621,Budget Management,specific_skills
+1621,Staff Management,specific_skills
+1621,Campaign Performance Analysis,specific_skills
+1621,Forecasting,specific_skills
+1621,Property Management,specific_skills
+1622,Management Of Personnel Resources,basic_skills
+1622,Coordination,basic_skills
+1622,Monitoring,basic_skills
+1622,Speaking,basic_skills
+1622,Time Management,basic_skills
+1622,Budget Management,specific_skills
+1622,Staff Management,specific_skills
+1622,Campaign Performance Analysis,specific_skills
+1622,Forecasting,specific_skills
+1622,Property Management,specific_skills
+1622,Environmental Impact Assessment,specific_skills
+1623,Active Listening,basic_skills
+1623,Monitoring,basic_skills
+1623,Speaking,basic_skills
+1623,Coordination,basic_skills
+1623,Critical Thinking,basic_skills
+1623,Risk Assessment,specific_skills
+1623,Security Assessment,specific_skills
+1623,Supervisory Skills,specific_skills
+1624,Active Listening,basic_skills
+1624,Reading Comprehension,basic_skills
+1624,Speaking,basic_skills
+1624,Critical Thinking,basic_skills
+1624,Writing,basic_skills
+1624,Knowledge Management,specific_skills
+2111,Mathematics,basic_skills
+2111,Reading Comprehension,basic_skills
+2111,Critical Thinking,basic_skills
+2111,Speaking,basic_skills
+2111,Problem Analysis,basic_skills
+2111,Analysis,specific_skills
+2111,Statistical Analysis,specific_skills
+2111,Root Cause Analysis,specific_skills
+2111,Instrumental Analysis,specific_skills
+2111,Testing Skills,specific_skills
+2111,Scientific,specific_skills
+2111,Research And Development,specific_skills
+2111,Problem Solving,basic_skills
+2111,Time Management,basic_skills
+2111,Research,basic_skills
+2112,Reading Comprehension,basic_skills
+2112,Active Listening,basic_skills
+2112,Critical Thinking,basic_skills
+2112,Speaking,basic_skills
+2112,Complex Problem Solving,basic_skills
+2112,Analysis,specific_skills
+2112,Statistical Analysis,specific_skills
+2112,Root Cause Analysis,specific_skills
+2112,Instrumental Analysis,specific_skills
+2112,Testing Skills,specific_skills
+2112,Scientific,specific_skills
+2112,Research And Development,specific_skills
+2112,Equipment Maintenance,specific_skills
+2113,Critical Thinking,basic_skills
+2113,Reading Comprehension,basic_skills
+2113,Active Listening,basic_skills
+2113,Mathematics,basic_skills
+2113,Problem Analysis,basic_skills
+2113,Statistical Analysis,specific_skills
+2113,Root Cause Analysis,specific_skills
+2113,Instrumental Analysis,specific_skills
+2113,Testing Skills,specific_skills
+2113,Scientific,specific_skills
+2113,Research And Development,specific_skills
+2114,Reading Comprehension,basic_skills
+2114,Critical Thinking,basic_skills
+2114,Speaking,basic_skills
+2114,Active Listening,basic_skills
+2114,Analysis,specific_skills
+2114,Statistical Analysis,specific_skills
+2114,Tableau,specific_skills
+2114,Scientific,specific_skills
+2114,Research And Development,specific_skills
+2114,Complex Problem Solving,basic_skills
+2121,Mathematics,basic_skills
+2121,Complex Problem Solving,basic_skills
+2121,Critical Thinking,basic_skills
+2121,Reading Comprehension,basic_skills
+2121,Active Learning,basic_skills
+2121,Analytics,specific_skills
+2121,Data Mining,specific_skills
+2121,Data Analysis,specific_skills
+2121,Data Entry,specific_skills
+2121,Data Visualization,specific_skills
+2121,Statistical Analysis,specific_skills
+2121,Internet Literacy,specific_skills
+2121,Crisis Intervention,specific_skills
+2121,Decision Making,basic_skills
+2121,Active Listening,basic_skills
+2131,Reading Comprehension,basic_skills
+2131,Speaking,basic_skills
+2131,Active Listening,basic_skills
+2131,Critical Thinking,basic_skills
+2131,Analysis,specific_skills
+2131,Microsoft Office,specific_skills
+2131,Data Analysis,specific_skills
+2131,Food Hygiene And Safety Standard,specific_skills
+2131,Parasitology,specific_skills
+2131,Scientific,specific_skills
+2131,Research And Development,specific_skills
+2131,Decision Making,basic_skills
+2131,Writing,basic_skills
+2132,Active Listening,basic_skills
+2132,Decision Making,basic_skills
+2132,Monitoring,basic_skills
+2132,Critical Thinking,basic_skills
+2132,Management Of Personnel Resources,basic_skills
+2132,Analysis,specific_skills
+2132,Microsoft Office,specific_skills
+2132,Food Hygiene And Safety Standard,specific_skills
+2132,Scientific,specific_skills
+2132,Research And Development,specific_skills
+2133,Reading Comprehension,basic_skills
+2133,Complex Problem Solving,basic_skills
+2133,Critical Thinking,basic_skills
+2133,Analysis,specific_skills
+2133,Landscaping,specific_skills
+2133,Food Hygiene And Safety Standard,specific_skills
+2133,Analytics,specific_skills
+2133,Statistical Analysis,specific_skills
+2133,Environmental Impact Assessment,specific_skills
+2133,Scientific,specific_skills
+2133,Research And Development,specific_skills
+2134,Critical Thinking,basic_skills
+2134,Reading Comprehension,basic_skills
+2134,Writing,basic_skills
+2134,Record Keeping,specific_skills
+2134,Quality Management,specific_skills
+2134,Scientific,specific_skills
+2134,Research And Development,specific_skills
+2134,Active Listening,basic_skills
+2134,Teaching,basic_skills
+2134,Speaking,basic_skills
+2134,Decision Making,basic_skills
+2141,Decision Making,basic_skills
+2141,Active Listening,basic_skills
+2141,Complex Problem Solving,basic_skills
+2141,Critical Thinking,basic_skills
+2141,Reading Comprehension,basic_skills
+2141,Cad/Cam Software,specific_skills
+2141,Rapid Prototyping,specific_skills
+2141,Automation Skills,specific_skills
+2141,Technical Engineering,specific_skills
+2141,Mechanical,specific_skills
+2141,Workplace Safety And Health,specific_skills
+2141,Monitoring,basic_skills
+2141,Speaking,basic_skills
+2141,Systems Analysis,specific_skills
+2141,Mathematics,basic_skills
+2141,Writing,basic_skills
+2142,Critical Thinking,basic_skills
+2142,Reading Comprehension,basic_skills
+2142,Active Listening,basic_skills
+2142,Complex Problem Solving,basic_skills
+2142,Mathematics,basic_skills
+2142,Autocad,specific_skills
+2142,Food Hygiene And Safety Standard,specific_skills
+2142,Construction Management,specific_skills
+2142,Technical Engineering,specific_skills
+2142,Workplace Safety And Health,specific_skills
+2142,Speaking,basic_skills
+2143,Critical Thinking,basic_skills
+2143,Reading Comprehension,basic_skills
+2143,Active Listening,basic_skills
+2143,Complex Problem Solving,basic_skills
+2143,Writing,basic_skills
+2143,Analysis,specific_skills
+2143,Technical Engineering,specific_skills
+2143,Root Cause Analysis,specific_skills
+2143,Hazardous Waste Management,specific_skills
+2143,Environmental Impact Assessment,specific_skills
+2143,Green Skills,specific_skills
+2144,Critical Thinking,basic_skills
+2144,Reading Comprehension,basic_skills
+2144,Active Listening,basic_skills
+2144,Complex Problem Solving,basic_skills
+2144,Robotic Engineering,specific_skills
+2144,Workplace Safety And Health,specific_skills
+2144,Mechanical,specific_skills
+2144,Mechanical & Electrical,specific_skills
+2144,Technical Engineering,specific_skills
+2144,Automation Skills,specific_skills
+2144,Mathematics,basic_skills
+2144,Communication,basic_skills
+2145,Complex Problem Solving,basic_skills
+2145,Critical Thinking,basic_skills
+2145,Decision Making,basic_skills
+2145,Mathematics,basic_skills
+2145,Analysis,specific_skills
+2145,Scada,specific_skills
+2145,Workplace Safety And Health,specific_skills
+2145,Mechanical & Electrical,specific_skills
+2145,Technical Engineering,specific_skills
+2145,Automation Skills,specific_skills
+2146,Complex Problem Solving,basic_skills
+2146,Critical Thinking,basic_skills
+2146,Decision Making,basic_skills
+2146,Reading Comprehension,basic_skills
+2146,Speaking,basic_skills
+2146,Workplace Safety And Health,specific_skills
+2146,Mechanical & Electrical,specific_skills
+2146,Technical Engineering,specific_skills
+2146,Automation Skills,specific_skills
+2146,Construction Management,specific_skills
+2146,Food Hygiene And Safety Standard,specific_skills
+2146,Active Listening,basic_skills
+2149,Active Listening,basic_skills
+2149,Monitoring,basic_skills
+2149,Critical Thinking,basic_skills
+2149,Decision Making,basic_skills
+2149,Workplace Safety And Health,specific_skills
+2149,Mechanical & Electrical,specific_skills
+2149,Technical Engineering,specific_skills
+2149,Reading Comprehension,basic_skills
+2149,Speaking,basic_skills
+2149,Complex Problem Solving,basic_skills
+2149,Writing,basic_skills
+2149,Automation Skills,specific_skills
+2149,Osh Management System,specific_skills
+2149,Mathematics,basic_skills
+2149,Quality Management,specific_skills
+2149,Quality Control,specific_skills
+2149,Research And Development,specific_skills
+2149,Analysis,specific_skills
+2149,Failure Analysis,specific_skills
+2149,Autocad,specific_skills
+2149,Statistical Analysis,specific_skills
+2149,Testing Skills,specific_skills
+2149,Communication,basic_skills
+2149,Leadership,basic_skills
+2149,Interpersonal,basic_skills
+2149,Research,basic_skills
+2149,Time Management,basic_skills
+2149,Analytical,specific_skills
+2151,Writing,basic_skills
+2151,Critical Thinking,basic_skills
+2151,Active Listening,basic_skills
+2151,Reading Comprehension,basic_skills
+2151,Complex Problem Solving,basic_skills
+2151,Analysis,specific_skills
+2151,Autocad,specific_skills
+2151,Electrical Wiring,specific_skills
+2151,Analog Circuit Design,specific_skills
+2151,Process Validation,specific_skills
+2151,Workplace Safety And Health,specific_skills
+2151,Mechanical & Electrical,specific_skills
+2151,Technical Engineering,specific_skills
+2152,Complex Problem Solving,basic_skills
+2152,Critical Thinking,basic_skills
+2152,Reading Comprehension,basic_skills
+2152,Speaking,basic_skills
+2152,Analysis,specific_skills
+2152,Debugging,specific_skills
+2152,Analog Circuit Design,specific_skills
+2152,Electronic Design,specific_skills
+2152,Workplace Safety And Health,specific_skills
+2152,Technical Engineering,specific_skills
+2153,Active Listening,basic_skills
+2153,Critical Thinking,basic_skills
+2153,Reading Comprehension,basic_skills
+2153,Speaking,basic_skills
+2153,Active Learning,basic_skills
+2153,Analysis,specific_skills
+2153,Wireless Security Network,specific_skills
+2153,Technology Design,specific_skills
+2153,Mongo Db,specific_skills
+2161,Active Listening,basic_skills
+2161,Critical Thinking,basic_skills
+2161,Complex Problem Solving,basic_skills
+2161,Speaking,basic_skills
+2161,Decision Making,basic_skills
+2161,Food Hygiene And Safety Standard,specific_skills
+2161,Costing Skills,specific_skills
+2161,Construction Management,specific_skills
+2161,Architectural Drafting,specific_skills
+2161,Facility Management,specific_skills
+2161,Workplace Safety And Health,specific_skills
+2161,Green Skills,specific_skills
+2162,Active Listening,basic_skills
+2162,Reading Comprehension,basic_skills
+2162,Coordination,basic_skills
+2162,Speaking,basic_skills
+2162,Complex Problem Solving,basic_skills
+2162,Food Hygiene And Safety Standard,specific_skills
+2162,Costing Skills,specific_skills
+2162,Construction Management,specific_skills
+2162,Architectural Drafting,specific_skills
+2162,Facility Management,specific_skills
+2162,Workplace Safety And Health,specific_skills
+2162,Green Skills,specific_skills
+2163,Active Listening,basic_skills
+2163,Reading Comprehension,basic_skills
+2163,Critical Thinking,basic_skills
+2163,Speaking,basic_skills
+2163,Complex Problem Solving,basic_skills
+2163,Trend Analysis,specific_skills
+2163,Visual Design,specific_skills
+2163,Adobe Photoshop,specific_skills
+2163,Creative Design,specific_skills
+2163,Digital Design,specific_skills
+2164,Active Listening,basic_skills
+2164,Reading Comprehension,basic_skills
+2164,Critical Thinking,basic_skills
+2164,Speaking,basic_skills
+2164,Decision Making,basic_skills
+2164,Adobe Illustrator,specific_skills
+2164,Traffic Management,specific_skills
+2164,Autocad,specific_skills
+2165,Mathematics,basic_skills
+2165,Critical Thinking,basic_skills
+2165,Reading Comprehension,basic_skills
+2165,Active Listening,basic_skills
+2165,Complex Problem Solving,basic_skills
+2165,Autocad,specific_skills
+2165,Food Hygiene And Safety Standard,specific_skills
+2165,Analysis,specific_skills
+2165,Geographic Information System,specific_skills
+2165,Quantity Surveying Skills,specific_skills
+2165,Writing,basic_skills
+2165,Active Learning,basic_skills
+2166,Critical Thinking,basic_skills
+2166,Reading Comprehension,basic_skills
+2166,Active Listening,basic_skills
+2166,Speaking,basic_skills
+2166,Javascript,specific_skills
+2166,Css,specific_skills
+2166,Adobe Photoshop,specific_skills
+2166,Graphic Design,specific_skills
+2166,Illustration,specific_skills
+2171,Critical Thinking,basic_skills
+2171,Teamwork,basic_skills
+2171,Geographic Information System,specific_skills
+2171,Reading Comprehension,basic_skills
+2171,Active Listening,basic_skills
+2171,Decision Making,basic_skills
+2171,Speaking,basic_skills
+2172,Critical Thinking,basic_skills
+2172,Reading Comprehension,basic_skills
+2172,Active Listening,basic_skills
+2172,Decision Making,basic_skills
+2172,Speaking,basic_skills
+2172,Geographic Information System,specific_skills
+2172,Route Navigation Software,specific_skills
+2173,Active Listening,basic_skills
+2173,Critical Thinking,basic_skills
+2173,Monitoring,basic_skills
+2173,Communication,basic_skills
+2173,Analysis,specific_skills
+2173,Electrical Wiring,specific_skills
+2174,Active Listening,basic_skills
+2174,Critical Thinking,basic_skills
+2174,Speaking,basic_skills
+2174,Decision Making,basic_skills
+2174,Complex Problem Solving,basic_skills
+2174,Network Operation Centre,specific_skills
+2175,Active Listening,basic_skills
+2175,Critical Thinking,basic_skills
+2175,Monitoring,basic_skills
+2175,Route Navigation Software,specific_skills
+2181,Complex Problem Solving,basic_skills
+2181,Critical Thinking,basic_skills
+2181,Decision Making,basic_skills
+2181,Reading Comprehension,basic_skills
+2181,Speaking,basic_skills
+2181,Analysis,specific_skills
+2181,Food Hygiene And Safety Standard,specific_skills
+2181,Autocad,specific_skills
+2181,Analytics,specific_skills
+2181,Construction Management,specific_skills
+2182,Reading Comprehension,basic_skills
+2182,Decision Making,basic_skills
+2182,Teamwork,basic_skills
+2182,Active Listening,basic_skills
+2182,Monitoring,basic_skills
+2182,Quality Management,specific_skills
+2182,Supply Chain Management,specific_skills
+2182,Material Testing,specific_skills
+2182,Testing Skills,specific_skills
+2182,Halal Integrity System,specific_skills
+2182,Halal Compliance,specific_skills
+2182,Critical Thinking,basic_skills
+2182,Speaking,basic_skills
+2182,Coordination,basic_skills
+2182,Time Management,basic_skills
+2183,Coordination,basic_skills
+2183,Management Of Personnel Resources,basic_skills
+2183,Active Listening,basic_skills
+2183,Monitoring,basic_skills
+2183,Speaking,basic_skills
+2183,Costing Skills,specific_skills
+2183,Analytics,specific_skills
+2183,Facility Management,specific_skills
+2211,Complex Problem Solving,basic_skills
+2211,Critical Thinking,basic_skills
+2211,Decision Making,basic_skills
+2211,Speaking,basic_skills
+2211,Clinical Management,specific_skills
+2211,Internal Medicine,specific_skills
+2211,Patient Care,specific_skills
+2211,Medical Consultant,specific_skills
+2211,Supportive Care,specific_skills
+2211,Active Listening,basic_skills
+2211,Reading Comprehension,basic_skills
+2211,Social Perceptivenesss,basic_skills
+2211,Writing,basic_skills
+2212,Complex Problem Solving,basic_skills
+2212,Critical Thinking,basic_skills
+2212,Decision Making,basic_skills
+2212,Speaking,basic_skills
+2212,Clinical Management,specific_skills
+2212,Internal Medicine,specific_skills
+2212,Patient Care,specific_skills
+2212,Medical Consultant,specific_skills
+2212,Supportive Care,specific_skills
+2212,Active Listening,basic_skills
+2212,Reading Comprehension,basic_skills
+2212,Family Medicine,specific_skills
+2212,First Aid,specific_skills
+2212,Medical Imaging,specific_skills
+2221,Active Listening,basic_skills
+2221,Social Perceptivenesss,basic_skills
+2221,Service Orientation,basic_skills
+2221,Speaking,basic_skills
+2221,Coordination,basic_skills
+2221,Nursing,specific_skills
+2221,Patient Care,specific_skills
+2221,First Aid,specific_skills
+2221,Emergency Care,specific_skills
+2221,Medication Administration,specific_skills
+2221,Neonatal Resuscitation,specific_skills
+2221,Supportive Care,specific_skills
+2222,Active Listening,basic_skills
+2222,Social Perceptivenesss,basic_skills
+2222,Critical Thinking,basic_skills
+2222,Speaking,basic_skills
+2222,Active Learning,basic_skills
+2222,Nursing,specific_skills
+2222,Patient Care,specific_skills
+2222,First Aid,specific_skills
+2222,Emergency Care,specific_skills
+2222,Medication Administration,specific_skills
+2222,Neonatal Resuscitation,specific_skills
+2222,Supportive Care,specific_skills
+2231,Active Listening,basic_skills
+2231,Social Perceptivenesss,basic_skills
+2231,Critical Thinking,basic_skills
+2231,Service Orientation,basic_skills
+2231,Decision Making,basic_skills
+2231,Patient Care,specific_skills
+2231,Medication Administration,specific_skills
+2231,Supportive Care,specific_skills
+2241,Active Listening,basic_skills
+2241,Social Perceptivenesss,basic_skills
+2241,Monitoring,basic_skills
+2241,Speaking,basic_skills
+2241,Reading Comprehension,basic_skills
+2241,First Aid,specific_skills
+2241,Nursing,specific_skills
+2241,Clinical Research,specific_skills
+2241,Clinical Management,specific_skills
+2241,Supportive Care,specific_skills
+2251,Active Listening,basic_skills
+2251,Reading Comprehension,basic_skills
+2251,Critical Thinking,basic_skills
+2251,Complex Problem Solving,basic_skills
+2251,Active Learning,basic_skills
+2251,Analysis,specific_skills
+2251,Patient Examination,specific_skills
+2261,Active Listening,basic_skills
+2261,Complex Problem Solving,basic_skills
+2261,Critical Thinking,basic_skills
+2261,Decision Making,basic_skills
+2261,Monitoring,basic_skills
+2261,Oral Surgery,specific_skills
+2261,Orthodontic Treatment,specific_skills
+2261,Patient Care,specific_skills
+2261,Root Canal,specific_skills
+2261,Reading Comprehension,basic_skills
+2261,Writing,basic_skills
+2262,Active Listening,basic_skills
+2262,Critical Thinking,basic_skills
+2262,Reading Comprehension,basic_skills
+2262,Teaching,basic_skills
+2262,Monitoring,basic_skills
+2262,Analysis,specific_skills
+2262,Microsoft Office,specific_skills
+2262,Inventory Management,specific_skills
+2262,Patient Care,specific_skills
+2262,Data Analysis,specific_skills
+2263,Speaking,basic_skills
+2263,Active Listening,basic_skills
+2263,Complex Problem Solving,basic_skills
+2263,Critical Thinking,basic_skills
+2263,Reading Comprehension,basic_skills
+2263,Risk Assessment,specific_skills
+2263,Microsoft Office,specific_skills
+2263,Safety Audit,specific_skills
+2263,Quality Management,specific_skills
+2263,Compliance Management,specific_skills
+2263,Environmental Impact Assessment,specific_skills
+2263,Halal Integrity System,specific_skills
+2263,Halal Compliance,specific_skills
+2264,Critical Thinking,basic_skills
+2264,Active Listening,basic_skills
+2264,Reading Comprehension,basic_skills
+2264,Social Perceptivenesss,basic_skills
+2264,Speaking,basic_skills
+2264,Reflexology,specific_skills
+2264,Physical Therapy,specific_skills
+2264,Massage Therapy,specific_skills
+2264,Patient Care,specific_skills
+2264,Patient Examination,specific_skills
+2264,Service Orientation,basic_skills
+2265,Active Listening,basic_skills
+2265,Critical Thinking,basic_skills
+2265,Reading Comprehension,basic_skills
+2265,Speaking,basic_skills
+2265,Monitoring,basic_skills
+2265,Microsoft Office,specific_skills
+2265,Record Keeping,specific_skills
+2265,Data Entry,specific_skills
+2265,Dna Technology,specific_skills
+2265,Healthcare Management,specific_skills
+2265,Health Research,specific_skills
+2266,Active Listening,basic_skills
+2266,Critical Thinking,basic_skills
+2266,Reading Comprehension,basic_skills
+2266,Speaking,basic_skills
+2266,Active Learning,basic_skills
+2266,Speech Therapy,specific_skills
+2266,Physical Therapy,specific_skills
+2266,Speech Language Pathology,specific_skills
+2266,Social Perceptivenesss,basic_skills
+2266,Learning Strategies,basic_skills
+2267,Active Listening,basic_skills
+2267,Critical Thinking,basic_skills
+2267,Reading Comprehension,basic_skills
+2267,Speaking,basic_skills
+2267,Vision Therapy,specific_skills
+2267,Patient Care,specific_skills
+2267,Tonometry,specific_skills
+2267,Service Orientation,basic_skills
+2268,Active Listening,basic_skills
+2268,Critical Thinking,basic_skills
+2268,Monitoring,basic_skills
+2268,Service Orientation,basic_skills
+2268,Decision Making,basic_skills
+2268,Patient Care,specific_skills
+2268,Patient Evaluation,specific_skills
+2268,Patient Examination,specific_skills
+2269,Active Listening,basic_skills
+2269,Critical Thinking,basic_skills
+2269,Reading Comprehension,basic_skills
+2269,Speaking,basic_skills
+2269,Social Perceptivenesss,basic_skills
+2269,Analysis,specific_skills
+2269,Patient Care,specific_skills
+2269,Data Management,specific_skills
+2269,Medical Imaging,specific_skills
+2269,Learning Strategies,basic_skills
+2269,Writing,basic_skills
+2269,Active Learning,basic_skills
+2269,Monitoring,basic_skills
+2311,Speaking,basic_skills
+2311,Reading Comprehension,basic_skills
+2311,Active Listening,basic_skills
+2311,Teaching,basic_skills
+2311,Learning Strategies,basic_skills
+2311,Active Learning,basic_skills
+2311,Decision Making,basic_skills
+2311,Tutoring,specific_skills
+2311,Academic Management,specific_skills
+2311,Analysis,specific_skills
+2311,Failure Analysis,specific_skills
+2311,Administration Management,specific_skills
+2311,Microsoft Office,specific_skills
+2321,Active Listening,basic_skills
+2321,Teaching,basic_skills
+2321,Learning Strategies,basic_skills
+2321,Active Learning,basic_skills
+2321,Illustration,specific_skills
+2321,Graphic Design,specific_skills
+2331,Active Listening,basic_skills
+2331,Teaching,basic_skills
+2331,Learning Strategies,basic_skills
+2331,Active Learning,basic_skills
+2331,Microsoft Office,specific_skills
+2331,Tutoring,specific_skills
+2341,Active Listening,basic_skills
+2341,Teaching,basic_skills
+2341,Learning Strategies,basic_skills
+2341,Active Learning,basic_skills
+2341,Microsoft Office,specific_skills
+2341,Nursing,specific_skills
+2342,Active Listening,basic_skills
+2342,Teaching,basic_skills
+2342,Learning Strategies,basic_skills
+2342,Active Learning,basic_skills
+2342,Caregiving,specific_skills
+2342,Child Care,specific_skills
+2342,Infant Care,specific_skills
+2342,Microsoft Office,specific_skills
+2351,Speaking,basic_skills
+2351,Teaching,basic_skills
+2351,Learning Strategies,basic_skills
+2351,Active Listening,basic_skills
+2351,Active Learning,basic_skills
+2351,Performance Management,specific_skills
+2352,Speaking,basic_skills
+2352,Teaching,basic_skills
+2352,Learning Strategies,basic_skills
+2352,Active Listening,basic_skills
+2352,Active Learning,basic_skills
+2352,Art Fundamentals,specific_skills
+2353,Speaking,basic_skills
+2353,Teaching,basic_skills
+2353,Learning Strategies,basic_skills
+2353,Active Listening,basic_skills
+2353,Active Learning,basic_skills
+2353,Microsoft Office,specific_skills
+2353,Performance Management,specific_skills
+2361,Speaking,basic_skills
+2361,Teaching,basic_skills
+2361,Reading Comprehension,basic_skills
+2361,Active Listening,basic_skills
+2361,Writing,basic_skills
+2361,Active Learning,basic_skills
+2361,Microsoft Office,specific_skills
+2371,Speaking,basic_skills
+2371,Teaching,basic_skills
+2371,Reading Comprehension,basic_skills
+2371,Active Listening,basic_skills
+2371,Critical Thinking,basic_skills
+2371,Active Learning,basic_skills
+2371,Microsoft Office,specific_skills
+2371,Crisis Management,specific_skills
+2371,Crisis Intervention,specific_skills
+2381,Teaching,basic_skills
+2381,Reading Comprehension,basic_skills
+2381,Active Listening,basic_skills
+2381,Learning Strategies,basic_skills
+2381,Active Learning,basic_skills
+2381,Cloud Computing,specific_skills
+2381,Instructional Design,specific_skills
+2381,Welding,specific_skills
+2381,Mechanical,specific_skills
+2381,Electrical Troubleshooting,specific_skills
+2381,Workplace Safety And Health,specific_skills
+2381,Technical Engineering,specific_skills
+2391,Speaking,basic_skills
+2391,Teaching,basic_skills
+2391,Writing,basic_skills
+2391,Active Listening,basic_skills
+2391,Learning Strategies,basic_skills
+2391,Active Learning,basic_skills
+2391,Marketing Analytics,specific_skills
+2391,Food Hygiene And Safety Standard,specific_skills
+2391,Crisis Intervention,specific_skills
+2391,Crisis Management,specific_skills
+2391,Academic Management,specific_skills
+2392,Speaking,basic_skills
+2392,Teaching,basic_skills
+2392,Active Listening,basic_skills
+2392,Learning Strategies,basic_skills
+2392,Active Learning,basic_skills
+2392,Microsoft Office,specific_skills
+2392,Academic Management,specific_skills
+2392,Child Care,specific_skills
+2392,Speech Therapy,specific_skills
+2392,Crisis Intervention,specific_skills
+2392,Crisis Management,specific_skills
+2393,Speaking,basic_skills
+2393,Teaching,basic_skills
+2393,Monitoring,basic_skills
+2393,Active Listening,basic_skills
+2393,Learning Strategies,basic_skills
+2393,Active Learning,basic_skills
+2393,Food Safety,specific_skills
+2393,Python,specific_skills
+2393,.Net,specific_skills
+2393,Javascript,specific_skills
+2393,Cloud Computing,specific_skills
+2393,Cobol,specific_skills
+2393,Computer Forensics,specific_skills
+2399,Active Listening,basic_skills
+2399,Teaching,basic_skills
+2399,Learning Strategies,basic_skills
+2399,Speaking,basic_skills
+2399,Critical Thinking,basic_skills
+2399,Active Learning,basic_skills
+2399,Microsoft Office,specific_skills
+2399,Tutoring,specific_skills
+2399,Analysis,specific_skills
+2399,Academic Management,specific_skills
+2399,Crisis Management,specific_skills
+2411,Active Listening,basic_skills
+2411,Reading Comprehension,basic_skills
+2411,Critical Thinking,basic_skills
+2411,Speaking,basic_skills
+2411,Writing,basic_skills
+2411,Mathematics,basic_skills
+2411,Complex Problem Solving,basic_skills
+2411,Financial Reporting,specific_skills
+2411,Costing Skills,specific_skills
+2411,Budgeting,specific_skills
+2411,Account Management,specific_skills
+2411,Financial Management,specific_skills
+2411,Internal Auditing,specific_skills
+2411,Tax Preparation,specific_skills
+2411,Payroll Administration,specific_skills
+2411,Halal Integrity System,specific_skills
+2411,Halal Compliance,specific_skills
+2412,Active Listening,basic_skills
+2412,Reading Comprehension,basic_skills
+2412,Speaking,basic_skills
+2412,Writing,basic_skills
+2412,Critical Thinking,basic_skills
+2412,Analysis,specific_skills
+2412,Forecasting,specific_skills
+2412,Wealth Management,specific_skills
+2412,Financial Management,specific_skills
+2412,Business Analysis,specific_skills
+2413,Mathematics,basic_skills
+2413,Critical Thinking,basic_skills
+2413,Reading Comprehension,basic_skills
+2413,Complex Problem Solving,basic_skills
+2413,Active Listening,basic_skills
+2413,Financial Reporting,specific_skills
+2413,Forecasting,specific_skills
+2413,Data Analysis,specific_skills
+2413,Business Analysis,specific_skills
+2413,Corporate Accounting,specific_skills
+2413,Performance Analysis,specific_skills
+2421,Mathematics,basic_skills
+2421,Complex Problem Solving,basic_skills
+2421,Critical Thinking,basic_skills
+2421,Active Listening,basic_skills
+2421,Decision Making,basic_skills
+2421,Business Analysis,specific_skills
+2421,Data Analysis,specific_skills
+2421,Business Management,specific_skills
+2421,Administration Management,specific_skills
+2421,Trend Analysis,specific_skills
+2421,Performance Analysis,specific_skills
+2422,Active Listening,basic_skills
+2422,Reading Comprehension,basic_skills
+2422,Critical Thinking,basic_skills
+2422,Speaking,basic_skills
+2422,Writing,basic_skills
+2422,Analysis,specific_skills
+2422,Analytics,specific_skills
+2422,Microsoft Office,specific_skills
+2422,Administration Management,specific_skills
+2423,Speaking,basic_skills
+2423,Active Listening,basic_skills
+2423,Reading Comprehension,basic_skills
+2423,Critical Thinking,basic_skills
+2423,Writing,basic_skills
+2423,Administration Management,specific_skills
+2423,Performance Management,specific_skills
+2423,Talent Acquisition,specific_skills
+2423,Business Management,specific_skills
+2423,Personnel Management,specific_skills
+2423,Halal Integrity System,specific_skills
+2423,Halal Compliance,specific_skills
+2424,Teaching,basic_skills
+2424,Learning Strategies,basic_skills
+2424,Active Listening,basic_skills
+2424,Speaking,basic_skills
+2424,Monitoring,basic_skills
+2424,Analysis,specific_skills
+2424,Microsoft Office,specific_skills
+2424,Budgeting,specific_skills
+2424,Talent Acquisition,specific_skills
+2425,Active Listening,basic_skills
+2425,Reading Comprehension,basic_skills
+2425,Time Management,basic_skills
+2425,Speaking,basic_skills
+2425,Coordination,basic_skills
+2425,Microsoft Office,specific_skills
+2425,Administration Management,specific_skills
+2425,Costing Skills,specific_skills
+2425,Budgeting,specific_skills
+2425,Payroll Administration,specific_skills
+2425,Corporate Reporting,specific_skills
+2426,Critical Thinking,basic_skills
+2426,Active Listening,basic_skills
+2426,Reading Comprehension,basic_skills
+2426,Speaking,basic_skills
+2426,Writing,basic_skills
+2426,Analysis,specific_skills
+2426,Process Validation,specific_skills
+2426,Analytical Testing,specific_skills
+2426,Data Visualization,specific_skills
+2426,Performance Analysis,specific_skills
+2426,Clinical Research,specific_skills
+2426,Laboratory Research,specific_skills
+2426,Quantitative Research,specific_skills
+2431,Active Listening,basic_skills
+2431,Critical Thinking,basic_skills
+2431,Social Perceptivenesss,basic_skills
+2431,Speaking,basic_skills
+2431,Decision Making,basic_skills
+2431,Sales Management,specific_skills
+2431,Market Analysis,specific_skills
+2431,Business Management,specific_skills
+2431,Digital Advertising,specific_skills
+2431,Business Analysis,specific_skills
+2432,Active Listening,basic_skills
+2432,Speaking,basic_skills
+2432,Coordination,basic_skills
+2432,Social Perceptivenesss,basic_skills
+2432,Time Management,basic_skills
+2432,Program Management,specific_skills
+2432,Corporate Reporting,specific_skills
+2432,Strategic Management,specific_skills
+2432,Team Management,specific_skills
+2432,Compliance Management,specific_skills
+2432,Cost Analysis,specific_skills
+2433,Persuasion,basic_skills
+2433,Speaking,basic_skills
+2433,Active Listening,basic_skills
+2433,Negotiation,basic_skills
+2433,Social Perceptivenesss,basic_skills
+2433,Market Research,specific_skills
+2433,Sales Management,specific_skills
+2433,Healthcare Management,specific_skills
+2433,Workplace Safety And Health,specific_skills
+2434,Persuasion,basic_skills
+2434,Active Listening,basic_skills
+2434,Speaking,basic_skills
+2434,Coordination,basic_skills
+2434,Critical Thinking,basic_skills
+2434,Analysis,specific_skills
+2434,Food Hygiene And Safety Standard,specific_skills
+2434,Analytics,specific_skills
+2434,Administration Management,specific_skills
+2434,Order Processing,specific_skills
+2434,Product Management,specific_skills
+2511,Active Listening,basic_skills
+2511,Critical Thinking,basic_skills
+2511,Reading Comprehension,basic_skills
+2511,Speaking,basic_skills
+2511,Sql,specific_skills
+2511,Oracle,specific_skills
+2511,Java,specific_skills
+2511,System Design,specific_skills
+2511,Mongo Db,specific_skills
+2511,Cloud Computing,specific_skills
+2511,Jquery,specific_skills
+2511,Apache Tomcat,specific_skills
+2511,Internet Literacy,specific_skills
+2511,Machine Learning,specific_skills
+2511,Systems Analysis,specific_skills
+2511,.Net,specific_skills
+2512,Active Listening,basic_skills
+2512,Complex Problem Solving,basic_skills
+2512,Critical Thinking,basic_skills
+2512,Javascript,specific_skills
+2512,Sql,specific_skills
+2512,Food Safety,specific_skills
+2512,Analysis,specific_skills
+2512,Css,specific_skills
+2512,.Net,specific_skills
+2512,Debugging,specific_skills
+2512,Troubleshooting,specific_skills
+2512,Cloud Computing,specific_skills
+2512,Machine Learning,specific_skills
+2512,Jquery,specific_skills
+2512,Apache Tomcat,specific_skills
+2512,Development Environment Software,specific_skills
+2513,Critical Thinking,basic_skills
+2513,Complex Problem Solving,basic_skills
+2513,Reading Comprehension,basic_skills
+2513,Web Design,specific_skills
+2513,Food Safety,specific_skills
+2513,Sql,specific_skills
+2513,Debugging,specific_skills
+2513,Web Platform Development Software,specific_skills
+2513,Website Management,specific_skills
+2513,Troubleshooting,specific_skills
+2513,Cloud Computing,specific_skills
+2513,Machine Learning,specific_skills
+2513,Business Intelligence (Bi),specific_skills
+2513,Internet Literacy,specific_skills
+2513,Wireless Security Network,specific_skills
+2513,Network Security,specific_skills
+2514,Critical Thinking,basic_skills
+2514,Complex Problem Solving,basic_skills
+2514,Active Listening,basic_skills
+2514,Javascript,specific_skills
+2514,Food Safety,specific_skills
+2514,Java,specific_skills
+2514,Css,specific_skills
+2514,Sql,specific_skills
+2514,Mysql,specific_skills
+2514,Html5,specific_skills
+2514,.Net,specific_skills
+2514,Troubleshooting,specific_skills
+2514,Cloud Computing,specific_skills
+2514,Machine Learning,specific_skills
+2514,Development Environment Software,specific_skills
+2519,Critical Thinking,basic_skills
+2519,Reading Comprehension,basic_skills
+2519,Speaking,basic_skills
+2519,Active Listening,basic_skills
+2519,Analysis,specific_skills
+2519,Debugging,specific_skills
+2519,.Net,specific_skills
+2519,Testing Skills,specific_skills
+2519,Data Validation,specific_skills
+2519,Failure Analysis,specific_skills
+2519,Security Assessment,specific_skills
+2519,Troubleshooting,specific_skills
+2519,Cloud Computing,specific_skills
+2519,Computer Forensics,specific_skills
+2521,Critical Thinking,basic_skills
+2521,Decision Making,basic_skills
+2521,Reading Comprehension,basic_skills
+2521,Active Listening,basic_skills
+2521,Complex Problem Solving,basic_skills
+2521,Analysis,specific_skills
+2521,Sql,specific_skills
+2521,Mysql,specific_skills
+2521,Oracle,specific_skills
+2521,Database Administration,specific_skills
+2521,Analytics,specific_skills
+2521,Database Design,specific_skills
+2521,Database Management,specific_skills
+2521,Data Warehousing,specific_skills
+2521,Data Migration,specific_skills
+2521,Data Management Protection,specific_skills
+2521,Cloud Computing,specific_skills
+2522,Critical Thinking,basic_skills
+2522,Active Listening,basic_skills
+2522,Reading Comprehension,basic_skills
+2522,Decision Making,basic_skills
+2522,Monitoring,basic_skills
+2522,Food Safety,specific_skills
+2522,System Administration,specific_skills
+2522,System Design,specific_skills
+2522,Network Administration,specific_skills
+2522,Database Administration,specific_skills
+2522,Security Assessment,specific_skills
+2522,Troubleshooting,specific_skills
+2522,Cloud Computing,specific_skills
+2522,Computer Forensics,specific_skills
+2523,Critical Thinking,basic_skills
+2523,Active Listening,basic_skills
+2523,Decision Making,basic_skills
+2523,Reading Comprehension,basic_skills
+2523,Active Learning,basic_skills
+2523,Analysis,specific_skills
+2523,Intrusion Detection,specific_skills
+2523,Network Administration,specific_skills
+2523,Database Management,specific_skills
+2523,Cisco Routing,specific_skills
+2523,Debugging,specific_skills
+2523,Network Security,specific_skills
+2524,Critical Thinking,basic_skills
+2524,Reading Comprehension,basic_skills
+2524,Active Listening,basic_skills
+2524,Speaking,basic_skills
+2524,Active Learning,basic_skills
+2524,Sql,specific_skills
+2524,Analytics,specific_skills
+2524,Analysis,specific_skills
+2524,Python,specific_skills
+2524,Data Analysis,specific_skills
+2524,Machine Learning,specific_skills
+2524,Data Mining,specific_skills
+2524,Data Management,specific_skills
+2524,Data Visualization,specific_skills
+2531,Reading Comprehension,basic_skills
+2531,Critical Thinking,basic_skills
+2531,Active Listening,basic_skills
+2531,Complex Problem Solving,basic_skills
+2531,Speaking,basic_skills
+2531,Analysis,specific_skills
+2531,Penetration Testing,specific_skills
+2531,Vulnerability Assessment,specific_skills
+2531,Javascript,specific_skills
+2531,Malware Analysis,specific_skills
+2531,Intrusion Detection,specific_skills
+2531,Security Assessment,specific_skills
+2531,Cybersecurity Assessment,specific_skills
+2541,Active Listening,basic_skills
+2541,Critical Thinking,basic_skills
+2541,Reading Comprehension,basic_skills
+2541,Speaking,basic_skills
+2541,Active Learning,basic_skills
+2541,Animation,specific_skills
+2541,Adobe Photoshop,specific_skills
+2541,Video Editing,specific_skills
+2541,Graphic Design,specific_skills
+2541,3d Modelling,specific_skills
+2541,Autocad,specific_skills
+2542,Active Listening,basic_skills
+2542,Complex Problem Solving,basic_skills
+2542,Critical Thinking,basic_skills
+2542,Reading Comprehension,basic_skills
+2542,Adobe Illustrator,specific_skills
+2542,Animation,specific_skills
+2542,2d Software,specific_skills
+2542,Graphic Design,specific_skills
+2542,Analysis,specific_skills
+2542,Mobile Games,specific_skills
+2542,Video Editing,specific_skills
+2542,Computer Animation,specific_skills
+2543,Active Listening,basic_skills
+2543,Critical Thinking,basic_skills
+2543,Speaking,basic_skills
+2543,Reading Comprehension,basic_skills
+2543,Active Learning,basic_skills
+2543,Graphic Design,specific_skills
+2543,Adobe Photoshop,specific_skills
+2543,Adobe Illustrator,specific_skills
+2543,Video Editing,specific_skills
+2543,Animation,specific_skills
+2543,Css,specific_skills
+2543,Motion Graphic,specific_skills
+2543,Web Design,specific_skills
+2611,Active Listening,basic_skills
+2611,Speaking,basic_skills
+2611,Reading Comprehension,basic_skills
+2611,Critical Thinking,basic_skills
+2611,Complex Problem Solving,basic_skills
+2611,Analysis,specific_skills
+2611,Contract Drafting,specific_skills
+2611,Legal Analysis,specific_skills
+2611,Leasing,specific_skills
+2611,Administration Management,specific_skills
+2611,Legal Writing,specific_skills
+2611,Crisis Management,specific_skills
+2612,Active Listening,basic_skills
+2612,Critical Thinking,basic_skills
+2612,Decision Making,basic_skills
+2612,Reading Comprehension,basic_skills
+2612,Complex Problem Solving,basic_skills
+2612,Legal Analysis,specific_skills
+2612,Contract Analysis,specific_skills
+2619,Critical Thinking,basic_skills
+2619,Reading Comprehension,basic_skills
+2619,Speaking,basic_skills
+2619,Active Listening,basic_skills
+2619,Writing,basic_skills
+2619,Analysis,specific_skills
+2619,Administration Management,specific_skills
+2619,Microsoft Office,specific_skills
+2711,Active Listening,basic_skills
+2711,Service Orientation,basic_skills
+2711,Management Of Personnel Resources,basic_skills
+2711,Social Perceptivenesss,basic_skills
+2711,Speaking,basic_skills
+2711,Housekeeping,specific_skills
+2711,Microsoft Office,specific_skills
+2711,Order Management,specific_skills
+2711,Administration Management,specific_skills
+2712,Service Orientation,basic_skills
+2712,Active Listening,basic_skills
+2712,Management Of Personnel Resources,basic_skills
+2712,Monitoring,basic_skills
+2712,Speaking,basic_skills
+2712,Cooking,specific_skills
+2712,Costing Skills,specific_skills
+2712,Food Preparation,specific_skills
+2712,Cash Management,specific_skills
+2712,Program Management,specific_skills
+2712,Team Management,specific_skills
+2712,Administration Management,specific_skills
+2712,Testing Skills,specific_skills
+2811,Reading Comprehension,basic_skills
+2811,Active Listening,basic_skills
+2811,Writing,basic_skills
+2811,Critical Thinking,basic_skills
+2811,Microsoft Office,specific_skills
+2811,Speaking,basic_skills
+2811,Data Entry,specific_skills
+2812,Active Listening,basic_skills
+2812,Reading Comprehension,basic_skills
+2812,Speaking,basic_skills
+2812,Critical Thinking,basic_skills
+2812,Writing,basic_skills
+2812,Collection Development,specific_skills
+2821,Critical Thinking,basic_skills
+2821,Mathematics,basic_skills
+2821,Reading Comprehension,basic_skills
+2821,Active Listening,basic_skills
+2821,Decision Making,basic_skills
+2821,Analysis,specific_skills
+2821,Forecasting,specific_skills
+2822,Reading Comprehension,basic_skills
+2822,Active Listening,basic_skills
+2822,Social Perceptivenesss,basic_skills
+2822,Writing,basic_skills
+2822,Active Learning,basic_skills
+2822,Analysis,specific_skills
+2822,Research And Development,specific_skills
+2822,Scientific,specific_skills
+2822,Speaking,basic_skills
+2822,Critical Thinking,basic_skills
+2823,Reading Comprehension,basic_skills
+2823,Speaking,basic_skills
+2823,Active Listening,basic_skills
+2823,Critical Thinking,basic_skills
+2823,Writing,basic_skills
+2823,Analysis,specific_skills
+2823,Research And Development,specific_skills
+2823,Microsoft Word,specific_skills
+2824,Active Listening,basic_skills
+2824,Reading Comprehension,basic_skills
+2824,Complex Problem Solving,basic_skills
+2824,Decision Making,basic_skills
+2824,Speaking,basic_skills
+2824,Analytics,specific_skills
+2824,Crisis Intervention,specific_skills
+2824,Psychology,specific_skills
+2824,Patient Care,specific_skills
+2825,Active Listening,basic_skills
+2825,Social Perceptivenesss,basic_skills
+2825,Speaking,basic_skills
+2825,Complex Problem Solving,basic_skills
+2825,Decision Making,basic_skills
+2825,Community Management,basic_skills
+2825,Community Service,basic_skills
+2825,Crisis Management,specific_skills
+2825,Crisis Intervention,specific_skills
+2825,Data Management,specific_skills
+2826,Speaking,basic_skills
+2826,Active Listening,basic_skills
+2826,Service Orientation,basic_skills
+2826,Social Perceptivenesss,basic_skills
+2826,Reading Comprehension,basic_skills
+2826,Crisis Management,specific_skills
+2826,Crisis Intervention,specific_skills
+2826,Data Management,specific_skills
+2831,Reading Comprehension,basic_skills
+2831,Writing,basic_skills
+2831,Active Listening,basic_skills
+2831,Speaking,basic_skills
+2831,Critical Thinking,basic_skills
+2831,Proofreading,specific_skills
+2831,Copywriting,specific_skills
+2831,Analysis,specific_skills
+2831,News Editing,specific_skills
+2831,Knowledge Management,specific_skills
+2832,Reading Comprehension,basic_skills
+2832,Writing,basic_skills
+2832,Active Listening,basic_skills
+2832,Speaking,basic_skills
+2832,Critical Thinking,basic_skills
+2832,Copywriting,specific_skills
+2832,Data Analysis,specific_skills
+2832,Proofreading,specific_skills
+2832,Data Visualization,specific_skills
+2832,Digital Advertising,specific_skills
+2832,Microsoft Office,specific_skills
+2833,Active Listening,basic_skills
+2833,Speaking,basic_skills
+2833,Reading Comprehension,basic_skills
+2833,Writing,basic_skills
+2833,Critical Thinking,basic_skills
+2833,Microsoft Office,specific_skills
+2841,Critical Thinking,basic_skills
+2841,Active Listening,basic_skills
+2841,Decision Making,basic_skills
+2841,Reading Comprehension,basic_skills
+2841,Adobe Illustrator,specific_skills
+2841,Adobe Photoshop,specific_skills
+2841,Graphic Design,specific_skills
+2841,Video Editing,specific_skills
+2841,Animation,specific_skills
+2842,Active Listening,basic_skills
+2842,Speaking,basic_skills
+2842,Critical Thinking,basic_skills
+2842,Coordination,basic_skills
+2842,Decision Making,basic_skills
+2842,Food Hygiene And Safety Standard,specific_skills
+2842,Quality Management,specific_skills
+2842,Music Composition,specific_skills
+2843,Active Listening,basic_skills
+2843,Coordination,basic_skills
+2843,Critical Thinking,basic_skills
+2843,Teaching,basic_skills
+2843,Speaking,basic_skills
+2843,Monitoring,basic_skills
+2844,Speaking,basic_skills
+2844,Active Listening,basic_skills
+2844,Critical Thinking,basic_skills
+2844,Coordination,basic_skills
+2844,Monitoring,basic_skills
+2844,Video Editing,specific_skills
+2844,Video Production,specific_skills
+2844,Motion Graphic,specific_skills
+2844,Illustration,specific_skills
+2844,Animation,specific_skills
+2844,Photography,specific_skills
+2845,Reading Comprehension,basic_skills
+2845,Speaking,basic_skills
+2845,Active Listening,basic_skills
+2845,Social Perceptivenesss,basic_skills
+2845,Critical Thinking,basic_skills
+2845,Acting,basic_skills
+2845,Concept Art,specific_skills
+2846,Speaking,basic_skills
+2846,Active Listening,basic_skills
+2846,Reading Comprehension,basic_skills
+2846,Critical Thinking,basic_skills
+2846,Social Perceptivenesss,basic_skills
+2846,Audio Editing,specific_skills
+2847,Reading Comprehension,basic_skills
+2847,Speaking,basic_skills
+2847,Active Listening,basic_skills
+2847,Social Perceptivenesss,basic_skills
+2847,Critical Thinking,basic_skills
+2847,Acting,basic_skills
+2847,Concept Art,specific_skills
+2849,Reading Comprehension,basic_skills
+2849,Speaking,basic_skills
+2849,Writing,basic_skills
+2849,Active Listening,basic_skills
+2849,Critical Thinking,basic_skills
+2849,Art Fundamentals,specific_skills
+2849,Concept Art,specific_skills
+2849,Analysis,specific_skills
+2849,Portfolio Management,specific_skills
+2911,Active Listening,basic_skills
+2911,Critical Thinking,basic_skills
+2911,Speaking,basic_skills
+2911,Reading Comprehension,basic_skills
+2911,Social Perceptivenesss,basic_skills
+2911,Administration Management,specific_skills
+2911,Regulatory Process Skills,specific_skills
+2912,Active Listening,basic_skills
+2912,Reading Comprehension,basic_skills
+2912,Critical Thinking,basic_skills
+2912,Speaking,basic_skills
+2912,Decision Making,basic_skills
+2912,Tax Audit,specific_skills
+2912,Costing Skills,specific_skills
+2912,Analysis,specific_skills
+2912,Credit Management,specific_skills
+2912,Tax Preparation,specific_skills
+2912,Writing,basic_skills
+2913,Active Listening,basic_skills
+2913,Reading Comprehension,basic_skills
+2913,Speaking,basic_skills
+2913,Critical Thinking,basic_skills
+2913,Decision Making,basic_skills
+2913,Microsoft Office,specific_skills
+2913,Regulatory Process Skills,specific_skills
+2914,Active Listening,basic_skills
+2914,Reading Comprehension,basic_skills
+2914,Speaking,basic_skills
+2914,Critical Thinking,basic_skills
+2914,Decision Making,basic_skills
+2914,Administration Management,specific_skills
+2914,Microsoft Office,specific_skills
+2914,Regulatory Process Skills,specific_skills
+2915,Active Listening,basic_skills
+2915,Coordination,basic_skills
+2915,Critical Thinking,basic_skills
+2915,Management Of Personnel Resources,basic_skills
+2915,Monitoring,basic_skills
+2915,Microsoft Office,specific_skills
+2915,Regulatory Process Skills,specific_skills
+2916,Active Listening,basic_skills
+2916,Coordination,basic_skills
+2916,Critical Thinking,basic_skills
+2916,Management Of Personnel Resources,basic_skills
+2916,Monitoring,basic_skills
+2916,Microsoft Office,specific_skills
+2916,Regulatory Process Skills,specific_skills
+2919,Active Listening,basic_skills
+2919,Critical Thinking,basic_skills
+2919,Reading Comprehension,basic_skills
+2919,Decision Making,basic_skills
+2919,Writing,basic_skills
+2919,Data Entry,specific_skills
+2919,Microsoft Office,specific_skills
+2919,Regulatory Process Skills,specific_skills
+3111,Mathematics,basic_skills
+3111,Reading Comprehension,basic_skills
+3111,Critical Thinking,basic_skills
+3111,Speaking,basic_skills
+3111,Analytical,specific_skills
+3111,Microsoft Office,specific_skills
+3111,Scientific,specific_skills
+3111,Research And Development,specific_skills
+3111,Operation And Control,specific_skills
+3111,Troubleshooting,specific_skills
+3111,Technical Engineering,specific_skills
+3111,Problem Solving,basic_skills
+3112,Critical Thinking,basic_skills
+3112,Active Listening,basic_skills
+3112,Reading Comprehension,basic_skills
+3112,Mathematics,basic_skills
+3112,Speaking,basic_skills
+3112,Cabling,specific_skills
+3112,Testing Skills,specific_skills
+3112,Engine Repair,specific_skills
+3112,Work Safety,specific_skills
+3112,Failure Analysis,specific_skills
+3112,Construction,specific_skills
+3112,Operation And Control,specific_skills
+3112,Technical Engineering,specific_skills
+3112,Green Skills,specific_skills
+3113,Critical Thinking,basic_skills
+3113,Reading Comprehension,basic_skills
+3113,Complex Problem Solving,basic_skills
+3113,Active Listening,basic_skills
+3113,Electrical Troubleshooting,specific_skills
+3113,Electrical Wiring,specific_skills
+3113,Cabling,specific_skills
+3113,Technical Engineering,specific_skills
+3114,Critical Thinking,basic_skills
+3114,Reading Comprehension,basic_skills
+3114,Complex Problem Solving,basic_skills
+3114,Active Listening,basic_skills
+3114,Electrical Troubleshooting,specific_skills
+3114,Electrical Wiring,specific_skills
+3114,Cabling,specific_skills
+3114,Technical Engineering,specific_skills
+3115,Reading Comprehension,basic_skills
+3115,Active Listening,basic_skills
+3115,Critical Thinking,basic_skills
+3115,Complex Problem Solving,basic_skills
+3115,Research And Development,specific_skills
+3115,Mechanical & Electrical,specific_skills
+3115,Testing Skills,specific_skills
+3115,Repairing,specific_skills
+3115,Robotic Engineering,specific_skills
+3115,Operation And Control,specific_skills
+3115,Mechanical Maintenance,specific_skills
+3115,Technical Engineering,specific_skills
+3116,Complex Problem Solving,basic_skills
+3116,Critical Thinking,basic_skills
+3116,Decision Making,basic_skills
+3116,Mathematics,basic_skills
+3116,Research And Development,specific_skills
+3116,Instrumental Analysis,specific_skills
+3116,Testing Skills,specific_skills
+3116,Repairing,specific_skills
+3116,Operation And Control,specific_skills
+3116,Quality Control,specific_skills
+3116,Supervisory Skills,specific_skills
+3116,Technical Engineering,specific_skills
+3117,Complex Problem Solving,basic_skills
+3117,Critical Thinking,basic_skills
+3117,Decision Making,basic_skills
+3117,Mathematics,basic_skills
+3117,Testing Skills,specific_skills
+3117,Repairing,specific_skills
+3117,Operation And Control,specific_skills
+3117,Work Safety,specific_skills
+3117,Supervisory Skills,specific_skills
+3117,Green Skills,specific_skills
+3117,Technical Engineering,specific_skills
+3118,Active Listening,basic_skills
+3118,Critical Thinking,basic_skills
+3118,Reading Comprehension,basic_skills
+3118,Speaking,basic_skills
+3118,Writing,basic_skills
+3118,Autocad,specific_skills
+3118,Engineering Drawings,specific_skills
+3118,Technical Engineering,specific_skills
+3119,Reading Comprehension,basic_skills
+3119,Active Listening,basic_skills
+3119,Critical Thinking,basic_skills
+3119,Complex Problem Solving,basic_skills
+3119,Monitoring,basic_skills
+3119,Equipment Maintenance,specific_skills
+3119,Equipment Repair,specific_skills
+3119,Mechanical Maintenance,specific_skills
+3119,Machine Operation,specific_skills
+3119,Mechanical And Repairing Skills,specific_skills
+3119,Work Safety,specific_skills
+3119,Technical Engineering,specific_skills
+3119,Food Safety,specific_skills
+3119,Food Hygiene And Safety Standard,specific_skills
+3121,Planning,basic_skills
+3121,Time Management,basic_skills
+3121,Management,basic_skills
+3121,Communication,basic_skills
+3121,Problem Solving,basic_skills
+3121,Decision Making,basic_skills
+3121,Supervisory Skills,specific_skills
+3121,Equipment Maintenance,specific_skills
+3121,Mechanical Maintenance,specific_skills
+3121,Work Safety,specific_skills
+3122,Active Listening,basic_skills
+3122,Management Of Personnel Resources,basic_skills
+3122,Speaking,basic_skills
+3122,Time Management,basic_skills
+3122,Coordination,basic_skills
+3122,Warehouse Management,specific_skills
+3122,Data Entry,specific_skills
+3122,Supervisory Skills,specific_skills
+3122,Inventory Management,specific_skills
+3122,Work Safety,specific_skills
+3122,Administration Management,specific_skills
+3122,Inventory Checking,specific_skills
+3122,Interpersonal,basic_skills
+3122,Writing,basic_skills
+3122,Halal Compliance,specific_skills
+3123,Coordination,basic_skills
+3123,Active Listening,basic_skills
+3123,Speaking,basic_skills
+3123,Critical Thinking,basic_skills
+3123,Construction,specific_skills
+3123,Supervisory Skills,specific_skills
+3123,Staff Management,specific_skills
+3123,Administration Management,specific_skills
+3123,Work Safety,specific_skills
+3123,Management Of Personnel Resources,basic_skills
+3129,Coordination,basic_skills
+3129,Monitoring,basic_skills
+3129,Speaking,basic_skills
+3129,Time Management,basic_skills
+3129,Supervisory Skills,specific_skills
+3129,Administration Management,specific_skills
+3129,Work Safety,specific_skills
+3131,Coordination,basic_skills
+3131,Critical Thinking,basic_skills
+3131,Monitoring,basic_skills
+3131,Speaking,basic_skills
+3131,Active Listening,basic_skills
+3131,Work Safety,specific_skills
+3131,Electrical Wiring,specific_skills
+3131,Refractory,specific_skills
+3131,Mechanical & Electrical,specific_skills
+3131,Electrical Troubleshooting,specific_skills
+3131,Equipment Maintenance,specific_skills
+3131,Risk Assessment,specific_skills
+3132,Coordination,basic_skills
+3132,Critical Thinking,basic_skills
+3132,Monitoring,basic_skills
+3132,Speaking,basic_skills
+3132,Active Listening,basic_skills
+3132,Analysis,specific_skills
+3132,Work Safety,specific_skills
+3132,Troubleshooting,specific_skills
+3132,Equipment Maintenance,specific_skills
+3132,Risk Assessment,specific_skills
+3133,Speaking,basic_skills
+3133,Complex Problem Solving,basic_skills
+3133,Coordination,basic_skills
+3133,Monitoring,basic_skills
+3133,Time Management,basic_skills
+3133,Critical Thinking,basic_skills
+3133,Analysis,specific_skills
+3133,Instrumental Analysis,specific_skills
+3133,Work Safety,specific_skills
+3133,Troubleshooting,specific_skills
+3133,Equipment Maintenance,specific_skills
+3133,Risk Assessment,specific_skills
+3134,Speaking,basic_skills
+3134,Complex Problem Solving,basic_skills
+3134,Coordination,basic_skills
+3134,Reading Comprehension,basic_skills
+3134,Monitoring,basic_skills
+3134,Time Management,basic_skills
+3134,Critical Thinking,basic_skills
+3134,Analysis,specific_skills
+3134,Instrumental Analysis,specific_skills
+3134,Work Safety,specific_skills
+3134,Troubleshooting,specific_skills
+3134,Equipment Maintenance,specific_skills
+3134,Risk Assessment,specific_skills
+3135,Speaking,basic_skills
+3135,Complex Problem Solving,basic_skills
+3135,Coordination,basic_skills
+3135,Reading Comprehension,basic_skills
+3135,Monitoring,basic_skills
+3135,Time Management,basic_skills
+3135,Critical Thinking,basic_skills
+3135,Analysis,specific_skills
+3135,Instrumental Analysis,specific_skills
+3135,Work Safety,specific_skills
+3135,Troubleshooting,specific_skills
+3135,Equipment Maintenance,specific_skills
+3135,Risk Assessment,specific_skills
+3141,Reading Comprehension,basic_skills
+3141,Critical Thinking,basic_skills
+3141,Active Listening,basic_skills
+3141,Active Learning,basic_skills
+3141,Laboratory Testing,specific_skills
+3141,Scientific,specific_skills
+3141,Soil Sampling,specific_skills
+3141,Record Keeping,specific_skills
+3141,Analysis,specific_skills
+3141,Work Safety,specific_skills
+3141,Troubleshooting,specific_skills
+3141,Risk Assessment,specific_skills
+3142,Reading Comprehension,basic_skills
+3142,Active Listening,basic_skills
+3142,Complex Problem Solving,basic_skills
+3142,Critical Thinking,basic_skills
+3142,Writing,basic_skills
+3142,Laboratory Testing,specific_skills
+3142,Soil Sampling,specific_skills
+3142,Record Keeping,specific_skills
+3142,Analysis,specific_skills
+3142,Work Safety,specific_skills
+3142,Horticulturist,specific_skills
+3142,Scientific,specific_skills
+3142,Farming Skills,specific_skills
+3142,Halal Compliance,specific_skills
+3143,Critical Thinking,basic_skills
+3143,Reading Comprehension,basic_skills
+3143,Decision Making,basic_skills
+3143,Speaking,basic_skills
+3143,Soil Sampling,specific_skills
+3143,Analysis,specific_skills
+3143,Work Safety,specific_skills
+3143,Technical Engineering,specific_skills
+3143,Laboratory Testing,specific_skills
+3143,Record Keeping,specific_skills
+3143,Farming Skills,specific_skills
+3144,Active Listening,basic_skills
+3144,Decision Making,basic_skills
+3144,Monitoring,basic_skills
+3144,Critical Thinking,basic_skills
+3144,Laboratory Testing,specific_skills
+3144,Scientific,specific_skills
+3144,Record Keeping,specific_skills
+3144,Analysis,specific_skills
+3144,Work Safety,specific_skills
+3144,Technical Engineering,specific_skills
+3144,Farming Skills,specific_skills
+3151,Teamwork,basic_skills
+3151,Decision Making,basic_skills
+3151,Complex Problem Solving,basic_skills
+3151,Critical Thinking,basic_skills
+3151,Technical Engineering,specific_skills
+3151,Mechanical & Electrical,specific_skills
+3151,Mechanical Maintenance,specific_skills
+3152,Teamwork,basic_skills
+3152,Decision Making,basic_skills
+3152,Complex Problem Solving,basic_skills
+3152,Critical Thinking,basic_skills
+3152,Technical Engineering,specific_skills
+3152,Mechanical & Electrical,specific_skills
+3152,Mechanical Maintenance,specific_skills
+3153,Teamwork,basic_skills
+3153,Decision Making,basic_skills
+3153,Complex Problem Solving,basic_skills
+3153,Critical Thinking,basic_skills
+3153,Technical Engineering,specific_skills
+3153,Mechanical & Electrical,specific_skills
+3153,Mechanical Maintenance,specific_skills
+3154,Teamwork,basic_skills
+3154,Decision Making,basic_skills
+3154,Complex Problem Solving,basic_skills
+3154,Critical Thinking,basic_skills
+3154,Engine Repair,specific_skills
+3154,Mechanical Maintenance,specific_skills
+3154,Technical Engineering,specific_skills
+3154,Mechanical & Electrical,specific_skills
+3159,Active Listening,basic_skills
+3159,Coordination,basic_skills
+3159,Time Management,basic_skills
+3159,Critical Thinking,basic_skills
+3159,Debugging,specific_skills
+3159,Vehicle Maintenance,specific_skills
+3159,Green Skills,specific_skills
+3161,Active Listening,basic_skills
+3161,Coordination,basic_skills
+3161,Time Management,basic_skills
+3161,Critical Thinking,basic_skills
+3161,Debugging,specific_skills
+3161,Technical Engineering,specific_skills
+3211,Active Listening,basic_skills
+3211,Speaking,basic_skills
+3211,Reading Comprehension,basic_skills
+3211,Critical Thinking,basic_skills
+3211,Social Perceptivenesss,basic_skills
+3211,Medical Imaging,specific_skills
+3211,Machine Operation,specific_skills
+3211,Patient Evaluation,specific_skills
+3212,Active Listening,basic_skills
+3212,Speaking,basic_skills
+3212,Reading Comprehension,basic_skills
+3212,Critical Thinking,basic_skills
+3212,Social Perceptivenesss,basic_skills
+3212,Medical Imaging,specific_skills
+3212,Machine Operation,specific_skills
+3212,Patient Evaluation,specific_skills
+3213,Active Listening,basic_skills
+3213,Reading Comprehension,basic_skills
+3213,Speaking,basic_skills
+3213,Critical Thinking,basic_skills
+3213,Monitoring,basic_skills
+3213,Inventory Management,specific_skills
+3213,Invoicing,specific_skills
+3214,Reading Comprehension,basic_skills
+3214,Critical Thinking,basic_skills
+3214,Time Management,basic_skills
+3214,Active Learning,basic_skills
+3214,Occlusion,specific_skills
+3215,Active Listening,basic_skills
+3215,Critical Thinking,basic_skills
+3215,Reading Comprehension,basic_skills
+3215,Speaking,basic_skills
+3215,Occlusion,specific_skills
+3221,Service Orientation,basic_skills
+3221,Active Listening,basic_skills
+3221,Social Perceptivenesss,basic_skills
+3221,Monitoring,basic_skills
+3221,Coordination,basic_skills
+3221,Nursing,specific_skills
+3221,Infection Control,specific_skills
+3221,Patient Care,specific_skills
+3222,Active Listening,basic_skills
+3222,Critical Thinking,basic_skills
+3222,Social Perceptivenesss,basic_skills
+3222,Speaking,basic_skills
+3222,Active Learning,basic_skills
+3222,Nursing,specific_skills
+3222,Infection Control,specific_skills
+3222,Midwifery,specific_skills
+3231,Active Listening,basic_skills
+3231,Critical Thinking,basic_skills
+3231,Social Perceptivenesss,basic_skills
+3231,Service Orientation,basic_skills
+3231,Decision Making,basic_skills
+3231,Analysis,specific_skills
+3241,Active Listening,basic_skills
+3241,Critical Thinking,basic_skills
+3241,Monitoring,basic_skills
+3241,Reading Comprehension,basic_skills
+3241,Service Orientation,basic_skills
+3241,Laboratory Testing,specific_skills
+3241,Surgical Instruments,specific_skills
+3241,Speaking,basic_skills
+3241,Complex Problem Solving,basic_skills
+3241,Technical Engineering,specific_skills
+3251,Active Listening,basic_skills
+3251,Reading Comprehension,basic_skills
+3251,Speaking,basic_skills
+3251,Critical Thinking,basic_skills
+3251,Service Orientation,basic_skills
+3251,Dental Care,specific_skills
+3251,Infection Control,specific_skills
+3251,Decision Making,basic_skills
+3251,Monitoring,basic_skills
+3252,Speaking,basic_skills
+3252,Active Listening,basic_skills
+3252,Service Orientation,basic_skills
+3252,Reading Comprehension,basic_skills
+3252,Coordination,basic_skills
+3252,Medical Records Management,specific_skills
+3252,Record Keeping,specific_skills
+3253,Active Listening,basic_skills
+3253,Social Perceptivenesss,basic_skills
+3253,Speaking,basic_skills
+3253,Writing,basic_skills
+3253,Reading Comprehension,basic_skills
+3253,Phlebotomy,specific_skills
+3254,Speaking,basic_skills
+3254,Active Listening,basic_skills
+3254,Reading Comprehension,basic_skills
+3254,Critical Thinking,basic_skills
+3254,Service Orientation,basic_skills
+3254,Patient Care,specific_skills
+3255,Active Listening,basic_skills
+3255,Monitoring,basic_skills
+3255,Social Perceptivenesss,basic_skills
+3255,Speaking,basic_skills
+3255,Active Learning,basic_skills
+3255,Reflexology,specific_skills
+3255,Massage Therapy,specific_skills
+3255,Physical Therapy,specific_skills
+3255,Technical Engineering,specific_skills
+3256,Speaking,basic_skills
+3256,Active Listening,basic_skills
+3256,Reading Comprehension,basic_skills
+3256,Social Perceptivenesss,basic_skills
+3256,Monitoring,basic_skills
+3256,Patient Care,specific_skills
+3256,Dental Care,specific_skills
+3256,First Aid,specific_skills
+3256,Patient Examination,specific_skills
+3256,Nursing,specific_skills
+3256,Technical Engineering,specific_skills
+3257,Speaking,basic_skills
+3257,Active Listening,basic_skills
+3257,Complex Problem Solving,basic_skills
+3257,Critical Thinking,basic_skills
+3257,Reading Comprehension,basic_skills
+3257,Data Management,specific_skills
+3257,Root Cause Analysis,specific_skills
+3257,Environmental Impact Assessment,specific_skills
+3258,Critical Thinking,basic_skills
+3258,Service Orientation,basic_skills
+3258,Reading Comprehension,basic_skills
+3258,Medical Records Management,specific_skills
+3258,First Aid,specific_skills
+3259,Critical Thinking,basic_skills
+3259,Service Orientation,basic_skills
+3259,Reading Comprehension,basic_skills
+3259,Medical Records Management,specific_skills
+3259,First Aid,specific_skills
+3311,Critical Thinking,basic_skills
+3311,Active Listening,basic_skills
+3311,Reading Comprehension,basic_skills
+3311,Speaking,basic_skills
+3311,Persuasion,basic_skills
+3311,Analysis,specific_skills
+3311,Financial Reporting,specific_skills
+3311,Forecasting,specific_skills
+3312,Active Listening,basic_skills
+3312,Speaking,basic_skills
+3312,Decision Making,basic_skills
+3312,Reading Comprehension,basic_skills
+3312,Critical Thinking,basic_skills
+3312,Credit Analysis,specific_skills
+3313,Mathematics,basic_skills
+3313,Active Listening,basic_skills
+3313,Critical Thinking,basic_skills
+3313,Reading Comprehension,basic_skills
+3313,Speaking,basic_skills
+3313,Analysis,specific_skills
+3313,Internal Auditing,specific_skills
+3313,Financial Auditing,specific_skills
+3313,Tax Audit,specific_skills
+3313,Cash Management,specific_skills
+3313,Bookkeeping,specific_skills
+3314,Mathematics,basic_skills
+3314,Basic Ict,basic_skills
+3314,Calculation,basic_skills
+3314,Critical Thinking,basic_skills
+3314,Data Analysis,specific_skills
+3314,Analysis,specific_skills
+3315,Active Listening,basic_skills
+3315,Reading Comprehension,basic_skills
+3315,Critical Thinking,basic_skills
+3315,Mathematics,basic_skills
+3315,Decision Making,basic_skills
+3315,Analysis,specific_skills
+3321,Reading Comprehension,basic_skills
+3321,Active Listening,basic_skills
+3321,Speaking,basic_skills
+3321,Critical Thinking,basic_skills
+3321,Persuasion,basic_skills
+3321,Sales Management,specific_skills
+3321,Medical Consultant,specific_skills
+3322,Active Listening,basic_skills
+3322,Speaking,basic_skills
+3322,Negotiation,basic_skills
+3322,Persuasion,basic_skills
+3322,Social Perceptivenesss,basic_skills
+3322,Sales Management,specific_skills
+3323,Negotiation,basic_skills
+3323,Reading Comprehension,basic_skills
+3323,Active Listening,basic_skills
+3323,Complex Problem Solving,basic_skills
+3323,Speaking,basic_skills
+3323,Costing Skills,specific_skills
+3323,Invoicing,specific_skills
+3323,Supply Chain Management,specific_skills
+3323,Cost Analysis,specific_skills
+3324,Speaking,basic_skills
+3324,Critical Thinking,basic_skills
+3324,Reading Comprehension,basic_skills
+3324,Active Learning,basic_skills
+3331,Speaking,basic_skills
+3331,Critical Thinking,basic_skills
+3331,Reading Comprehension,basic_skills
+3331,Active Learning,basic_skills
+3331,Warehousing,specific_skills
+3332,Active Listening,basic_skills
+3332,Reading Comprehension,basic_skills
+3332,Speaking,basic_skills
+3332,Coordination,basic_skills
+3332,Critical Thinking,basic_skills
+3332,Administration Management,specific_skills
+3332,Event Management,specific_skills
+3333,Active Listening,basic_skills
+3333,Reading Comprehension,basic_skills
+3333,Speaking,basic_skills
+3333,Coordination,basic_skills
+3333,Critical Thinking,basic_skills
+3333,Administration Management,specific_skills
+3333,Event Management,specific_skills
+3334,Active Listening,basic_skills
+3334,Negotiation,basic_skills
+3334,Coordination,basic_skills
+3334,Social Perceptivenesss,basic_skills
+3334,Property Management,specific_skills
+3334,Market Analysis,specific_skills
+3339,Active Listening,basic_skills
+3339,Negotiation,basic_skills
+3339,Coordination,basic_skills
+3339,Social Perceptivenesss,basic_skills
+3339,Property Management,specific_skills
+3339,Market Analysis,specific_skills
+3341,Active Listening,basic_skills
+3341,Clerical/ Administration,basic_skills
+3341,Monitoring,basic_skills
+3341,Reading Comprehension,basic_skills
+3341,Social Perceptivenesss,basic_skills
+3341,Budgeting,specific_skills
+3341,Invoice Processing,specific_skills
+3341,Administration Management,specific_skills
+3341,Record Keeping,specific_skills
+3341,Staff Management,specific_skills
+3341,Coordination,basic_skills
+3342,Reading Comprehension,basic_skills
+3342,Writing,basic_skills
+3342,Active Listening,basic_skills
+3342,Speaking,basic_skills
+3342,Time Management,basic_skills
+3343,Active Listening,basic_skills
+3343,Reading Comprehension,basic_skills
+3343,Speaking,basic_skills
+3343,Service Orientation,basic_skills
+3343,Writing,basic_skills
+3343,Administration Management,specific_skills
+3343,Document Management,specific_skills
+3343,Record Keeping,specific_skills
+3343,Corporate Reporting,specific_skills
+3344,Speaking,basic_skills
+3344,Active Listening,basic_skills
+3344,Service Orientation,basic_skills
+3344,Reading Comprehension,basic_skills
+3344,Coordination,basic_skills
+3344,Patient Care,specific_skills
+3344,Microsoft Excel,specific_skills
+3344,Nursing,specific_skills
+3344,Data Entry,specific_skills
+3344,Portfolio Management,specific_skills
+3411,Reading Comprehension,basic_skills
+3411,Active Listening,basic_skills
+3411,Speaking,basic_skills
+3411,Writing,basic_skills
+3411,Critical Thinking,basic_skills
+3411,Contract Analysis,specific_skills
+3511,Critical Thinking,basic_skills
+3511,Active Listening,basic_skills
+3511,Decision Making,basic_skills
+3511,Reading Comprehension,basic_skills
+3511,Active Learning,basic_skills
+3511,Network Administration,specific_skills
+3511,Food Safety,specific_skills
+3511,Cybersecurity Assessment,specific_skills
+3511,Penetration Testing,specific_skills
+3512,Critical Thinking,basic_skills
+3512,Active Listening,basic_skills
+3512,Decision Making,basic_skills
+3512,Reading Comprehension,basic_skills
+3512,Active Learning,basic_skills
+3512,Network Administration,specific_skills
+3512,Food Safety,specific_skills
+3512,Cybersecurity Assessment,specific_skills
+3512,Penetration Testing,specific_skills
+3512,Working With Computers,specific_skills
+3513,Critical Thinking,basic_skills
+3513,Active Listening,basic_skills
+3513,Decision Making,basic_skills
+3513,Reading Comprehension,basic_skills
+3513,Active Learning,basic_skills
+3513,Network Administration,specific_skills
+3513,Food Safety,specific_skills
+3513,Cybersecurity Assessment,specific_skills
+3513,Penetration Testing,specific_skills
+3513,Network Security,specific_skills
+3513,Data Management Protection,specific_skills
+3513,Coding,specific_skills
+3514,Critical Thinking,basic_skills
+3514,Active Listening,basic_skills
+3514,Decision Making,basic_skills
+3514,Reading Comprehension,basic_skills
+3514,Active Learning,basic_skills
+3514,Food Safety,specific_skills
+3514,Web Design,specific_skills
+3514,Website Management,specific_skills
+3514,Computer Animation,specific_skills
+3521,Monitoring,basic_skills
+3521,Critical Thinking,basic_skills
+3521,Reading Comprehension,basic_skills
+3521,Complex Problem Solving,basic_skills
+3521,Audio Editing,specific_skills
+3521,Video Editing,specific_skills
+3521,Video Production,specific_skills
+3521,Motion Graphic,specific_skills
+3521,Active Listening,basic_skills
+3522,Critical Thinking,basic_skills
+3522,Active Listening,basic_skills
+3522,Monitoring,basic_skills
+3522,Complex Problem Solving,basic_skills
+3522,Cloud Computing,specific_skills
+3522,Working With Computers,specific_skills
+3522,Network Operation Centre,specific_skills
+3522,Cabling,specific_skills
+3611,Active Listening,basic_skills
+3611,Social Perceptivenesss,basic_skills
+3611,Speaking,basic_skills
+3611,Service Orientation,basic_skills
+3611,Community Service,basic_skills
+3611,Community Management,basic_skills
+3621,Speaking,basic_skills
+3621,Active Listening,basic_skills
+3621,Critical Thinking,basic_skills
+3621,Coordination,basic_skills
+3621,Decision Making,basic_skills
+3622,Teaching,basic_skills
+3622,Speaking,basic_skills
+3622,Learning Strategies,basic_skills
+3622,Monitoring,basic_skills
+3622,Active Listening,basic_skills
+3622,Analytics,specific_skills
+3622,Administration Management,specific_skills
+3622,Food Hygiene And Safety Standard,specific_skills
+3623,Teaching,basic_skills
+3623,Social Perceptivenesss,basic_skills
+3623,Speaking,basic_skills
+3623,Active Listening,basic_skills
+3623,Physical Therapy,specific_skills
+3623,First Aid,specific_skills
+3631,Active Listening,basic_skills
+3631,Speaking,basic_skills
+3631,Service Orientation,basic_skills
+3631,Social Perceptivenesss,basic_skills
+3631,Photo Editing,specific_skills
+3631,Adobe Photoshop,specific_skills
+3631,Creative Design,specific_skills
+3631,Storyboarding,specific_skills
+3631,Photography,specific_skills
+3631,Visual Design,specific_skills
+3632,Active Listening,basic_skills
+3632,Critical Thinking,basic_skills
+3632,Reading Comprehension,basic_skills
+3632,Speaking,basic_skills
+3632,Service Orientation,basic_skills
+3632,Interior Design,specific_skills
+3632,Sketchup,specific_skills
+3632,Illustration,specific_skills
+3632,Graphic Design,specific_skills
+3633,Active Listening,basic_skills
+3633,Reading Comprehension,basic_skills
+3633,Speaking,basic_skills
+3633,Writing,basic_skills
+3633,Administration Management,specific_skills
+3633,Microsoft Office,specific_skills
+3634,Active Listening,basic_skills
+3634,Reading Comprehension,basic_skills
+3634,Speaking,basic_skills
+3634,Writing,basic_skills
+3634,Administration Management,specific_skills
+3634,Microsoft Office,specific_skills
+3641,Monitoring,basic_skills
+3641,Coordination,basic_skills
+3641,Speaking,basic_skills
+3641,Social Perceptivenesss,basic_skills
+3641,Cooking,specific_skills
+3641,Food Preparation,specific_skills
+3641,Restaurant Management,specific_skills
+3641,Administration Management,specific_skills
+3641,Order Management,specific_skills
+3711,Active Listening,basic_skills
+3711,Critical Thinking,basic_skills
+3711,Speaking,basic_skills
+3711,Reading Comprehension,basic_skills
+3711,Social Perceptivenesss,basic_skills
+3711,Administration Management,specific_skills
+3712,Active Listening,basic_skills
+3712,Reading Comprehension,basic_skills
+3712,Critical Thinking,basic_skills
+3712,Speaking,basic_skills
+3712,Decision Making,basic_skills
+3712,Tax Audit,specific_skills
+3712,Costing Skills,specific_skills
+3712,Analysis,specific_skills
+3712,Tax Preparation,specific_skills
+3712,Credit Management,specific_skills
+3713,Active Listening,basic_skills
+3713,Reading Comprehension,basic_skills
+3713,Critical Thinking,basic_skills
+3713,Speaking,basic_skills
+3713,Decision Making,basic_skills
+3713,Tax Audit,specific_skills
+3713,Costing Skills,specific_skills
+3713,Analysis,specific_skills
+3713,Tax Preparation,specific_skills
+3713,Credit Management,specific_skills
+3714,Active Listening,basic_skills
+3714,Reading Comprehension,basic_skills
+3714,Critical Thinking,basic_skills
+3714,Speaking,basic_skills
+3714,Decision Making,basic_skills
+3714,Tax Audit,specific_skills
+3714,Costing Skills,specific_skills
+3714,Analysis,specific_skills
+3714,Tax Preparation,specific_skills
+3714,Credit Management,specific_skills
+3715,Active Listening,basic_skills
+3715,Critical Thinking,basic_skills
+3715,Speaking,basic_skills
+3715,Social Perceptivenesss,basic_skills
+3715,Negotiation,basic_skills
+3715,Regulatory Process Skills,specific_skills
+3716,Active Listening,basic_skills
+3716,Critical Thinking,basic_skills
+3716,Speaking,basic_skills
+3716,Social Perceptivenesss,basic_skills
+3716,Negotiation,basic_skills
+3716,Regulatory Process Skills,specific_skills
+3719,Active Listening,basic_skills
+3719,Critical Thinking,basic_skills
+3719,Speaking,basic_skills
+3719,Social Perceptivenesss,basic_skills
+3719,Negotiation,basic_skills
+3719,Regulatory Process Skills,specific_skills
+4111,Reading Comprehension,basic_skills
+4111,Writing,basic_skills
+4111,Clerical/ Administration,basic_skills
+4111,Basic Ict,basic_skills
+4111,Service Orientation,basic_skills
+4111,Microsoft Office,specific_skills
+4111,Record Keeping,specific_skills
+4111,Data Entry,specific_skills
+4111,Document Management,specific_skills
+4121,Reading Comprehension,basic_skills
+4121,Writing,basic_skills
+4121,Clerical/ Administration,basic_skills
+4121,Basic Ict,basic_skills
+4121,Service Orientation,basic_skills
+4121,Microsoft Office,specific_skills
+4121,Record Keeping,specific_skills
+4121,Data Entry,specific_skills
+4121,Document Management,specific_skills
+4131,Reading Comprehension,basic_skills
+4131,Writing,basic_skills
+4131,Clerical/ Administration,basic_skills
+4131,Basic Ict,basic_skills
+4131,Service Orientation,basic_skills
+4131,Microsoft Office,specific_skills
+4131,Record Keeping,specific_skills
+4131,Data Entry,specific_skills
+4131,Document Management,specific_skills
+4132,Reading Comprehension,basic_skills
+4132,Active Listening,basic_skills
+4132,Monitoring,basic_skills
+4132,Time Management,basic_skills
+4132,Writing,basic_skills
+4132,Clerical/ Administration,basic_skills
+4132,Microsoft Office,specific_skills
+4132,Record Keeping,specific_skills
+4132,Data Entry,specific_skills
+4132,Document Management,specific_skills
+4132,Data Migration,specific_skills
+4132,Internet Literacy,specific_skills
+4211,Active Listening,basic_skills
+4211,Speaking,basic_skills
+4211,Reading Comprehension,basic_skills
+4211,Service Orientation,basic_skills
+4211,Clerical/ Administration,basic_skills
+4211,Account Management,specific_skills
+4211,Credit Management,specific_skills
+4211,Cash Management,specific_skills
+4211,Data Entry,specific_skills
+4211,Record Keeping,specific_skills
+4212,Active Listening,basic_skills
+4212,Speaking,basic_skills
+4212,Reading Comprehension,basic_skills
+4212,Service Orientation,basic_skills
+4212,Critical Thinking,basic_skills
+4212,Clerical/ Administration,basic_skills
+4212,Microsoft Office,specific_skills
+4212,Operating System Software,specific_skills
+4212,Microsoft Powerpoint,specific_skills
+4212,Business Intelligence (Bi),specific_skills
+4212,Microsoft Word,specific_skills
+4213,Active Listening,basic_skills
+4213,Speaking,basic_skills
+4213,Decision Making,basic_skills
+4213,Critical Thinking,basic_skills
+4213,Complex Problem Solving,basic_skills
+4213,Data Entry,specific_skills
+4213,Presentation Software,specific_skills
+4213,Business Intelligence (Bi),specific_skills
+4214,Persuasion,basic_skills
+4214,Social Perceptivenesss,basic_skills
+4214,Critical Thinking,basic_skills
+4214,Monitoring,basic_skills
+4214,Negotiation,basic_skills
+4214,Microsoft Office,specific_skills
+4214,Credit Management,specific_skills
+4221,Active Listening,basic_skills
+4221,Service Orientation,basic_skills
+4221,Reading Comprehension,basic_skills
+4221,Speaking,basic_skills
+4221,Social Perceptivenesss,basic_skills
+4221,Clerical/ Administration,basic_skills
+4221,Communication,basic_skills
+4221,Costing Skills,specific_skills
+4221,Invoicing,specific_skills
+4221,Microsoft Excel,specific_skills
+4222,Active Listening,basic_skills
+4222,Speaking,basic_skills
+4222,Service Orientation,basic_skills
+4222,Reading Comprehension,basic_skills
+4222,Communication,basic_skills
+4222,Clerical/ Administration,basic_skills
+4222,Critical Thinking,basic_skills
+4222,Microsoft Office,specific_skills
+4222,Order Processing,specific_skills
+4222,Administration Management,specific_skills
+4222,Data Entry,specific_skills
+4223,Active Listening,basic_skills
+4223,Speaking,basic_skills
+4223,Service Orientation,basic_skills
+4223,Social Perceptivenesss,basic_skills
+4223,Critical Thinking,basic_skills
+4223,Communication,basic_skills
+4223,Clerical/ Administration,basic_skills
+4223,Data Entry,specific_skills
+4223,Operating System Software,specific_skills
+4224,Active Listening,basic_skills
+4224,Speaking,basic_skills
+4224,Service Orientation,basic_skills
+4224,Critical Thinking,basic_skills
+4224,Reading Comprehension,basic_skills
+4224,Communication,basic_skills
+4224,Clerical/ Administration,basic_skills
+4224,Microsoft Office,specific_skills
+4224,Data Entry,specific_skills
+4224,Record Keeping,specific_skills
+4225,Active Listening,basic_skills
+4225,Speaking,basic_skills
+4225,Service Orientation,basic_skills
+4225,Reading Comprehension,basic_skills
+4225,Critical Thinking,basic_skills
+4225,Communication,basic_skills
+4225,Clerical/ Administration,basic_skills
+4225,Data Entry,specific_skills
+4225,Microsoft Office,specific_skills
+4225,Database Management,specific_skills
+4225,Record Keeping,specific_skills
+4226,Active Listening,basic_skills
+4226,Speaking,basic_skills
+4226,Reading Comprehension,basic_skills
+4226,Critical Thinking,basic_skills
+4226,Service Orientation,basic_skills
+4226,Communication,basic_skills
+4226,Clerical/ Administration,basic_skills
+4226,Database User Interface And Query Software,specific_skills
+4226,Administration Management,specific_skills
+4226,Data Entry,specific_skills
+4226,Presentation Software,specific_skills
+4226,Data Management,specific_skills
+4229,Active Listening,basic_skills
+4229,Service Orientation,basic_skills
+4229,Social Perceptivenesss,basic_skills
+4229,Coordination,basic_skills
+4229,Reading Comprehension,basic_skills
+4229,Clerical/ Administration,basic_skills
+4229,Microsoft Office,specific_skills
+4229,Database User Interface And Query Software,specific_skills
+4229,Data Entry,specific_skills
+4311,Mathematics,basic_skills
+4311,Active Listening,basic_skills
+4311,Critical Thinking,basic_skills
+4311,Reading Comprehension,basic_skills
+4311,Speaking,basic_skills
+4311,Clerical/ Administration,basic_skills
+4311,Microsoft Office,specific_skills
+4311,Data Entry,specific_skills
+4311,Account Management,specific_skills
+4311,Financial Reporting,specific_skills
+4311,Invoice Processing,specific_skills
+4312,Active Listening,basic_skills
+4312,Speaking,basic_skills
+4312,Reading Comprehension,basic_skills
+4312,Writing,basic_skills
+4312,Service Orientation,basic_skills
+4312,Clerical/ Administration,basic_skills
+4312,Administration Management,specific_skills
+4312,Microsoft Word,specific_skills
+4312,Microsoft Office,specific_skills
+4312,Document Management,specific_skills
+4312,Financial Reporting,specific_skills
+4312,Leasing,specific_skills
+4312,Budgeting,specific_skills
+4313,Speaking,basic_skills
+4313,Reading Comprehension,basic_skills
+4313,Critical Thinking,basic_skills
+4313,Writing,basic_skills
+4313,Mathematics,basic_skills
+4313,Clerical/ Administration,basic_skills
+4313,Payroll Administration,specific_skills
+4313,Microsoft Office,specific_skills
+4313,Data Entry,specific_skills
+4313,Budgeting,specific_skills
+4313,Costing Skills,specific_skills
+4321,Speaking,basic_skills
+4321,Active Listening,basic_skills
+4321,Clerical/ Administration,basic_skills
+4321,Writing,basic_skills
+4321,Mathematics,basic_skills
+4321,Warehouse Management,specific_skills
+4321,Data Entry,specific_skills
+4321,Microsoft Office,specific_skills
+4321,Inventory Management,specific_skills
+4321,Record Keeping,specific_skills
+4322,Speaking,basic_skills
+4322,Active Listening,basic_skills
+4322,Time Management,basic_skills
+4322,Reading Comprehension,basic_skills
+4322,Critical Thinking,basic_skills
+4322,Clerical/ Administration,basic_skills
+4322,Mathematics,basic_skills
+4322,Order Management,specific_skills
+4322,Record Keeping,specific_skills
+4323,Speaking,basic_skills
+4323,Active Listening,basic_skills
+4323,Critical Thinking,basic_skills
+4323,Monitoring,basic_skills
+4323,Service Orientation,basic_skills
+4323,Clerical/ Administration,basic_skills
+4323,Administration Management,specific_skills
+4323,Microsoft Office,specific_skills
+4323,Record Keeping,specific_skills
+4323,Supply Chain Management,specific_skills
+4411,Service Orientation,basic_skills
+4411,Clerical/ Administration,basic_skills
+4411,Reading Comprehension,basic_skills
+4411,Coordination,basic_skills
+4411,Critical Thinking,basic_skills
+4411,Microsoft Office,specific_skills
+4411,Customer Experience,specific_skills
+4411,Data Entry,specific_skills
+4411,Database User Interface And Query Software,specific_skills
+4412,Reading Comprehension,basic_skills
+4412,Speaking,basic_skills
+4412,Time Management,basic_skills
+4412,Clerical/ Administration,basic_skills
+4412,Microsoft Office,specific_skills
+4412,Customer Experience,specific_skills
+4412,Data Entry,specific_skills
+4413,Reading Comprehension,basic_skills
+4413,Speaking,basic_skills
+4413,Time Management,basic_skills
+4413,Clerical/ Administration,basic_skills
+4413,Microsoft Office,specific_skills
+4413,Customer Experience,specific_skills
+4413,Data Entry,specific_skills
+4413,Proofreading,specific_skills
+4414,Reading Comprehension,basic_skills
+4414,Speaking,basic_skills
+4414,Time Management,basic_skills
+4414,Clerical/ Administration,basic_skills
+4414,Microsoft Office,specific_skills
+4414,Customer Experience,specific_skills
+4414,Proofreading,specific_skills
+4415,Monitoring,basic_skills
+4415,Reading Comprehension,basic_skills
+4415,Active Listening,basic_skills
+4415,Service Orientation,basic_skills
+4415,Clerical/ Administration,basic_skills
+4415,Microsoft Office,specific_skills
+4415,Document Management,specific_skills
+4415,Data Management,specific_skills
+4415,Halal Compliance,specific_skills
+4416,Reading Comprehension,basic_skills
+4416,Active Listening,basic_skills
+4416,Speaking,basic_skills
+4416,Writing,basic_skills
+4416,Critical Thinking,basic_skills
+4416,Clerical/ Administration,basic_skills
+4416,Microsoft Office,specific_skills
+4416,Document Management,specific_skills
+4416,Record Keeping,specific_skills
+4416,Data Management,specific_skills
+4419,Speaking,basic_skills
+4419,Active Listening,basic_skills
+4419,Coordination,basic_skills
+4419,Monitoring,basic_skills
+4419,Social Perceptivenesss,basic_skills
+4419,Administration Management,specific_skills
+4419,Budgeting,specific_skills
+4419,Costing Skills,specific_skills
+4419,Data Entry,specific_skills
+4419,Reading Comprehension,basic_skills
+4419,Writing,basic_skills
+4419,Clerical/ Administration,basic_skills
+4419,Critical Thinking,basic_skills
+4419,Decision Making,basic_skills
+4419,Service Orientation,basic_skills
+5111,Service Orientation,basic_skills
+5111,Active Listening,basic_skills
+5111,Social Perceptivenesss,basic_skills
+5111,Speaking,basic_skills
+5111,Monitoring,basic_skills
+5111,Food Preparation,specific_skills
+5111,Occupational Safety And Health,specific_skills
+5111,Customer Experience,specific_skills
+5112,Active Listening,basic_skills
+5112,Critical Thinking,basic_skills
+5112,Service Orientation,basic_skills
+5113,Active Listening,basic_skills
+5113,Speaking,basic_skills
+5113,Service Orientation,basic_skills
+5113,Coordination,basic_skills
+5113,Persuasion,basic_skills
+5113,Microsoft Office,specific_skills
+5121,Active Listening,basic_skills
+5121,Service Orientation,basic_skills
+5121,Cooking,specific_skills
+5121,Food Preparation,specific_skills
+5121,Inventory Management,specific_skills
+5121,Team Management,specific_skills
+5121,Monitoring,basic_skills
+5121,Coordination,basic_skills
+5121,Critical Thinking,basic_skills
+5121,Speaking,basic_skills
+5121,Social Perceptivenesss,basic_skills
+5131,Active Listening,basic_skills
+5131,Service Orientation,basic_skills
+5131,Speaking,basic_skills
+5131,Social Perceptivenesss,basic_skills
+5131,Coordination,basic_skills
+5131,Food Preparation,specific_skills
+5131,Monitoring,basic_skills
+5132,Active Listening,basic_skills
+5132,Service Orientation,basic_skills
+5132,Social Perceptivenesss,basic_skills
+5132,Coordination,basic_skills
+5132,Critical Thinking,basic_skills
+5132,Food Preparation,specific_skills
+5141,Active Listening,basic_skills
+5141,Speaking,basic_skills
+5141,Service Orientation,basic_skills
+5141,Active Learning,basic_skills
+5141,Beauty Skills,specific_skills
+5142,Service Orientation,basic_skills
+5142,Social Perceptivenesss,basic_skills
+5142,Beauty Skills,specific_skills
+5151,Active Listening,basic_skills
+5151,Service Orientation,basic_skills
+5151,Social Perceptivenesss,basic_skills
+5151,Speaking,basic_skills
+5151,Housekeeping,specific_skills
+5151,Microsoft Office,specific_skills
+5151,Data Entry,specific_skills
+5151,Staff Management,specific_skills
+5151,Team Management,specific_skills
+5152,Speaking,basic_skills
+5152,Active Listening,basic_skills
+5152,Service Orientation,basic_skills
+5152,Social Perceptivenesss,basic_skills
+5152,Housekeeping,specific_skills
+5152,Cooking,specific_skills
+5152,Child Care,specific_skills
+5152,Coordination,basic_skills
+5152,Time Management,basic_skills
+5153,Active Listening,basic_skills
+5153,Service Orientation,basic_skills
+5153,Coordination,basic_skills
+5153,Time Management,basic_skills
+5153,Equipment Maintenance,specific_skills
+5153,Facility Maintenance,specific_skills
+5153,Plumbing,specific_skills
+5161,Active Listening,basic_skills
+5161,Speaking,basic_skills
+5162,Public Relations,basic_skills
+5162,Sales,basic_skills
+5163,Speaking,basic_skills
+5163,Active Listening,basic_skills
+5163,Critical Thinking,basic_skills
+5163,Coordination,basic_skills
+5163,Decision Making,basic_skills
+5164,Monitoring,basic_skills
+5164,Active Listening,basic_skills
+5164,Coordination,basic_skills
+5164,Decision Making,basic_skills
+5164,Reading Comprehension,basic_skills
+5164,Critical Thinking,basic_skills
+5164,Service Orientation,basic_skills
+5165,Speaking,basic_skills
+5165,Active Listening,basic_skills
+5165,Teaching,basic_skills
+5165,Learning Strategies,basic_skills
+5165,Active Learning,basic_skills
+5169,Speaking,basic_skills
+5169,Active Listening,basic_skills
+5169,Service Orientation,basic_skills
+5169,Social Perceptivenesss,basic_skills
+5169,Coordination,basic_skills
+5169,Conflict Management,specific_skills
+5169,Time Management,basic_skills
+5169,Reading Comprehension,basic_skills
+5169,Critical Thinking,basic_skills
+5211,Persuasion,basic_skills
+5211,Active Listening,basic_skills
+5211,Service Orientation,basic_skills
+5211,Speaking,basic_skills
+5211,Negotiation,basic_skills
+5211,Sales,basic_skills
+5211,Cash Management,specific_skills
+5211,Digital Advertising,specific_skills
+5212,Persuasion,basic_skills
+5212,Speaking,basic_skills
+5212,Social Perceptivenesss,basic_skills
+5212,Service Orientation,basic_skills
+5212,Active Listening,basic_skills
+5212,Sales,basic_skills
+5212,Food Preparation,specific_skills
+5221,Active Listening,basic_skills
+5221,Service Orientation,basic_skills
+5221,Speaking,basic_skills
+5221,Coordination,basic_skills
+5221,Critical Thinking,basic_skills
+5221,Sales,basic_skills
+5221,Cash Management,specific_skills
+5221,Digital Advertising,specific_skills
+5222,Active Listening,basic_skills
+5222,Monitoring,basic_skills
+5222,Speaking,basic_skills
+5222,Coordination,basic_skills
+5222,Sales,basic_skills
+5222,Microsoft Office,specific_skills
+5222,Administration Management,specific_skills
+5222,Invoicing,specific_skills
+5222,Sales Management,specific_skills
+5223,Persuasion,basic_skills
+5223,Active Listening,basic_skills
+5223,Service Orientation,basic_skills
+5223,Speaking,basic_skills
+5223,Negotiation,basic_skills
+5223,Sales,basic_skills
+5223,Microsoft Office,specific_skills
+5223,Data Entry,specific_skills
+5223,Inventory Management,specific_skills
+5223,Invoicing,specific_skills
+5231,Service Orientation,basic_skills
+5231,Active Listening,basic_skills
+5231,Speaking,basic_skills
+5231,Mathematics,basic_skills
+5231,Social Perceptivenesss,basic_skills
+5231,Data Entry,specific_skills
+5231,Invoicing,specific_skills
+5231,Record Keeping,specific_skills
+5231,Cash Management,specific_skills
+5241,Social Perceptivenesss,basic_skills
+5241,Communication,basic_skills
+5241,Testing Skills,specific_skills
+5241,Online Advertising,specific_skills
+5242,Active Listening,basic_skills
+5242,Speaking,basic_skills
+5242,Customer Services,basic_skills
+5242,Service Orientation,basic_skills
+5242,Communication,basic_skills
+5242,Online Advertising,specific_skills
+5242,Photo Editing,specific_skills
+5242,Internet Literacy,specific_skills
+5243,Active Listening,basic_skills
+5243,Speaking,basic_skills
+5243,Customer Services,basic_skills
+5243,Service Orientation,basic_skills
+5243,Communication,basic_skills
+5243,Testing Skills,specific_skills
+5244,Speaking,basic_skills
+5244,Persuasion,basic_skills
+5244,Active Listening,basic_skills
+5244,Service Orientation,basic_skills
+5244,Social Perceptivenesss,basic_skills
+5244,Microsoft Office,specific_skills
+5244,Data Entry,specific_skills
+5244,Sales Management,specific_skills
+5245,Active Listening,basic_skills
+5245,Service Orientation,basic_skills
+5245,Speaking,basic_skills
+5245,Time Management,basic_skills
+5246,Active Listening,basic_skills
+5246,Service Orientation,basic_skills
+5246,Speaking,basic_skills
+5246,Social Perceptivenesss,basic_skills
+5249,Active Listening,basic_skills
+5249,Service Orientation,basic_skills
+5249,Speaking,basic_skills
+5249,Reading Comprehension,basic_skills
+5249,Critical Thinking,basic_skills
+5249,Online Advertising,specific_skills
+5311,Monitoring,basic_skills
+5311,Service Orientation,basic_skills
+5311,Social Perceptivenesss,basic_skills
+5311,Active Listening,basic_skills
+5311,Coordination,basic_skills
+5311,Cooking,specific_skills
+5311,Infant Care,specific_skills
+5311,Housekeeping,specific_skills
+5312,Active Listening,basic_skills
+5312,Coordination,basic_skills
+5312,Critical Thinking,basic_skills
+5312,Monitoring,basic_skills
+5312,Reading Comprehension,basic_skills
+5312,Child Care,specific_skills
+5312,Record Keeping,specific_skills
+5312,Housekeeping,specific_skills
+5312,Nursing,specific_skills
+5312,Teaching,basic_skills
+5312,Speaking,basic_skills
+5312,Learning Strategies,basic_skills
+5321,Speaking,basic_skills
+5321,Active Listening,basic_skills
+5321,Reading Comprehension,basic_skills
+5321,Social Perceptivenesss,basic_skills
+5321,Monitoring,basic_skills
+5321,Nursing,specific_skills
+5321,Patient Care,specific_skills
+5321,Home Care,specific_skills
+5321,Phlebotomy,specific_skills
+5321,First Aid,specific_skills
+5321,Service Orientation,basic_skills
+5321,Coordination,basic_skills
+5321,Critical Thinking,basic_skills
+5321,Decision Making,basic_skills
+5321,Writing,basic_skills
+5322,Service Orientation,basic_skills
+5322,Social Perceptivenesss,basic_skills
+5322,Active Listening,basic_skills
+5322,Speaking,basic_skills
+5322,Monitoring,basic_skills
+5322,Housekeeping,specific_skills
+5322,Cooking,specific_skills
+5322,Nursing,specific_skills
+5322,Home Care,specific_skills
+5411,Critical Thinking,basic_skills
+5411,Monitoring,basic_skills
+5411,Speaking,basic_skills
+5411,Active Listening,basic_skills
+5411,Complex Problem Solving,basic_skills
+5411,First Aid,specific_skills
+5412,Active Listening,basic_skills
+5412,Critical Thinking,basic_skills
+5412,Speaking,basic_skills
+5412,Social Perceptivenesss,basic_skills
+5412,Negotiation,basic_skills
+5412,First Aid,specific_skills
+5413,Social Perceptivenesss,basic_skills
+5413,Speaking,basic_skills
+5413,Active Listening,basic_skills
+5413,Monitoring,basic_skills
+5413,Critical Thinking,basic_skills
+5413,Supervisory Skills,specific_skills
+5413,Crisis Management,specific_skills
+5413,Data Entry,specific_skills
+5414,Coordination,basic_skills
+5414,Speaking,basic_skills
+5414,Active Listening,basic_skills
+5414,Monitoring,basic_skills
+5414,Critical Thinking,basic_skills
+5414,Supervisory Skills,specific_skills
+5414,Crisis Management,specific_skills
+5414,Data Entry,specific_skills
+5414,Decision Making,basic_skills
+5415,Active Listening,basic_skills
+5415,Critical Thinking,basic_skills
+5415,Speaking,basic_skills
+5415,Reading Comprehension,basic_skills
+5415,Social Perceptivenesss,basic_skills
+5415,Administration Management,specific_skills
+5419,Monitoring,basic_skills
+5419,Speaking,basic_skills
+5419,Social Perceptivenesss,basic_skills
+5419,Service Orientation,basic_skills
+5419,Active Listening,basic_skills
+5419,Conflict Management,specific_skills
+5419,Traffic Management,specific_skills
+5419,Critical Thinking,basic_skills
+5419,Reading Comprehension,basic_skills
+5419,Decision Making,basic_skills
+5419,Active Learning,basic_skills
+5419,Complex Problem Solving,basic_skills
+5419,Writing,basic_skills
+5419,Coordination,basic_skills
+6111,Self Motivation,basic_skills
+6111,Space Planning,basic_skills
+6111,Time Management,basic_skills
+6111,Farm Machinery,specific_skills
+6111,Mechanical And Repairing Skills,specific_skills
+6111,Equipment Selection,specific_skills
+6111,Problem Solving,basic_skills
+6111,Management,basic_skills
+6111,Sales,basic_skills
+6111,Microsoft Excel,specific_skills
+6111,Microsoft Office,specific_skills
+6111,Troubleshooting,specific_skills
+6111,Supervisory Skills,specific_skills
+6111,Farming Skills,specific_skills
+6111,Budgeting,specific_skills
+6111,Financial Management,specific_skills
+6111,Communication,basic_skills
+6111,Complex Problem Solving,basic_skills
+6112,Problem Solving,basic_skills
+6112,Management,basic_skills
+6112,Sales,basic_skills
+6112,Farm Machinery,specific_skills
+6112,Mechanical And Repairing Skills,specific_skills
+6113,Problem Solving,basic_skills
+6113,Management,basic_skills
+6113,Sales,basic_skills
+6113,Farm Machinery,specific_skills
+6113,Mechanical And Repairing Skills,specific_skills
+6114,Problem Solving,basic_skills
+6114,Management,basic_skills
+6114,Sales,basic_skills
+6114,Farm Machinery,specific_skills
+6114,Mechanical And Repairing Skills,specific_skills
+6115,Problem Solving,basic_skills
+6115,Management,basic_skills
+6115,Sales,basic_skills
+6115,Farm Machinery,specific_skills
+6115,Mechanical And Repairing Skills,specific_skills
+6121,Problem Solving,basic_skills
+6121,Management,basic_skills
+6121,Basic Livestock,basic_skills
+6121,Sales,basic_skills
+6121,Farm Machinery,specific_skills
+6121,Mechanical And Repairing Skills,specific_skills
+6122,Problem Solving,basic_skills
+6122,Management,basic_skills
+6122,Basic Livestock,basic_skills
+6122,Sales,basic_skills
+6122,Farm Machinery,specific_skills
+6122,Mechanical And Repairing Skills,specific_skills
+6123,Problem Solving,basic_skills
+6123,Basic Livestock,basic_skills
+6123,Farm Machinery,specific_skills
+6123,Mechanical And Repairing Skills,specific_skills
+6129,Problem Solving,basic_skills
+6129,Basic Livestock,basic_skills
+6129,Farm Machinery,specific_skills
+6129,Mechanical And Repairing Skills,specific_skills
+6131,Problem Solving,basic_skills
+6131,Basic Livestock,basic_skills
+6131,Farm Machinery,specific_skills
+6131,Mechanical And Repairing Skills,specific_skills
+6211,Problem Solving,basic_skills
+6211,Basic Livestock,basic_skills
+6211,Farm Machinery,specific_skills
+6211,Mechanical And Repairing Skills,specific_skills
+6211,Testing Skills,specific_skills
+6221,Problem Solving,basic_skills
+6221,Basic Livestock,basic_skills
+6221,Farm Machinery,specific_skills
+6221,Mechanical And Repairing Skills,specific_skills
+6222,Problem Solving,basic_skills
+6222,Sales,basic_skills
+6222,Farm Machinery,specific_skills
+6222,Mechanical And Repairing Skills,specific_skills
+6223,Problem Solving,basic_skills
+6223,Sales,basic_skills
+6223,Farm Machinery,specific_skills
+6223,Mechanical And Repairing Skills,specific_skills
+6224,Problem Solving,basic_skills
+6224,Sales,basic_skills
+6224,Farm Machinery,specific_skills
+6224,Mechanical And Repairing Skills,specific_skills
+6311,Problem Solving,basic_skills
+6311,Sales,basic_skills
+6311,Farm Machinery,specific_skills
+6311,Mechanical And Repairing Skills,specific_skills
+6321,Problem Solving,basic_skills
+6321,Sales,basic_skills
+6321,Farm Machinery,specific_skills
+6321,Mechanical And Repairing Skills,specific_skills
+6331,Problem Solving,basic_skills
+6331,Sales,basic_skills
+6331,Farm Machinery,specific_skills
+6331,Mechanical And Repairing Skills,specific_skills
+7111,Handling And Moving Objects,basic_skills
+7111,Communication,basic_skills
+7111,Carpentry,specific_skills
+7111,Electrical Wiring,specific_skills
+7111,Plumbing,specific_skills
+7112,Handling And Moving Objects,basic_skills
+7112,Communication,basic_skills
+7112,Carpentry,specific_skills
+7112,Electrical Wiring,specific_skills
+7112,Plumbing,specific_skills
+7113,Handling And Moving Objects,basic_skills
+7113,Coordination,basic_skills
+7113,Teamwork,basic_skills
+7113,Carpentry,specific_skills
+7113,Work Safety,specific_skills
+7113,Construction,specific_skills
+7113,Sculpting,specific_skills
+7113,Testing Skills,specific_skills
+7114,Handling And Moving Objects,basic_skills
+7114,Carpentry,specific_skills
+7114,Work Safety,specific_skills
+7114,Construction,specific_skills
+7114,Coordination,basic_skills
+7114,Monitoring,basic_skills
+7114,Time Management,basic_skills
+7115,Handling And Moving Objects,basic_skills
+7115,Carpentry,specific_skills
+7115,Woodworking,specific_skills
+7115,Sculpting,specific_skills
+7119,Handling And Moving Objects,basic_skills
+7119,Carpentry,specific_skills
+7119,Plumbing,specific_skills
+7119,Construction,specific_skills
+7121,Handling And Moving Objects,basic_skills
+7121,Carpentry,specific_skills
+7121,Construction,specific_skills
+7122,Handling And Moving Objects,basic_skills
+7122,Carpentry,specific_skills
+7122,Construction,specific_skills
+7123,Handling And Moving Objects,basic_skills
+7123,Coordination,basic_skills
+7123,Carpentry,specific_skills
+7123,Construction,specific_skills
+7124,Handling And Moving Objects,basic_skills
+7124,Coordination,basic_skills
+7124,Carpentry,specific_skills
+7124,Construction,specific_skills
+7124,Electrical Wiring,specific_skills
+7125,Coordination,basic_skills
+7125,Measurement,specific_skills
+7125,Operation And Control,specific_skills
+7125,Installation,specific_skills
+7126,Coordination,basic_skills
+7126,Carpentry,specific_skills
+7126,Pipe Welding,specific_skills
+7126,Plumbing,specific_skills
+7126,Construction,specific_skills
+7127,Coordination,basic_skills
+7127,Handling And Moving Objects,basic_skills
+7127,Electrical Wiring,specific_skills
+7127,Troubleshooting,specific_skills
+7127,Equipment Maintenance,specific_skills
+7127,Repairing,specific_skills
+7127,Installation,specific_skills
+7131,Handling And Moving Objects,basic_skills
+7131,Coordination,basic_skills
+7131,Blasting And Painting,specific_skills
+7131,Carpentry,specific_skills
+7131,Construction,specific_skills
+7132,Handling And Moving Objects,basic_skills
+7132,Coordination,basic_skills
+7132,Blasting And Painting,specific_skills
+7132,Carpentry,specific_skills
+7132,Construction,specific_skills
+7133,Communication,basic_skills
+7133,Coordination,basic_skills
+7211,Handling And Moving Objects,basic_skills
+7211,Coordination,basic_skills
+7211,Communication,basic_skills
+7211,Welding,specific_skills
+7211,Machine Operation,specific_skills
+7212,Coordination,basic_skills
+7212,Handling And Moving Objects,basic_skills
+7212,Welding,specific_skills
+7212,Pipe Welding,specific_skills
+7212,Carpentry,specific_skills
+7212,Electrical Wiring,specific_skills
+7212,Brazing,specific_skills
+7213,Coordination,basic_skills
+7213,Handling And Moving Objects,basic_skills
+7213,Welding,specific_skills
+7213,Pipe Welding,specific_skills
+7213,Carpentry,specific_skills
+7213,Electrical Wiring,specific_skills
+7213,Brazing,specific_skills
+7214,Coordination,basic_skills
+7214,Handling And Moving Objects,basic_skills
+7214,Structure Welding,specific_skills
+7214,Carpentry,specific_skills
+7214,Brazing,specific_skills
+7214,Construction,specific_skills
+7215,Active Listening,basic_skills
+7215,Coordination,basic_skills
+7215,Critical Thinking,basic_skills
+7215,Monitoring,basic_skills
+7215,Cabling,specific_skills
+7221,Coordination,basic_skills
+7221,Handling And Moving Objects,basic_skills
+7221,Repairing,specific_skills
+7221,Welding,specific_skills
+7221,Machine Operation,specific_skills
+7222,Coordination,basic_skills
+7222,Handling And Moving Objects,basic_skills
+7222,Repairing,specific_skills
+7222,Welding,specific_skills
+7222,Machine Operation,specific_skills
+7223,Coordination,basic_skills
+7223,Handling And Moving Objects,basic_skills
+7223,Machine Operation,specific_skills
+7223,Measurement,specific_skills
+7224,Coordination,basic_skills
+7224,Handling And Moving Objects,basic_skills
+7224,Machine Operation,specific_skills
+7224,Measurement,specific_skills
+7231,Problem Solving,basic_skills
+7231,Critical Thinking,basic_skills
+7231,Engine Repair,specific_skills
+7231,Mechanical Maintenance,specific_skills
+7231,Repairing,specific_skills
+7232,Problem Solving,basic_skills
+7232,Critical Thinking,basic_skills
+7232,Engine Repair,specific_skills
+7232,Mechanical Maintenance,specific_skills
+7232,Repairing,specific_skills
+7233,Problem Solving,basic_skills
+7233,Critical Thinking,basic_skills
+7233,Engine Repair,specific_skills
+7233,Mechanical Maintenance,specific_skills
+7233,Repairing,specific_skills
+7233,Electrical Wiring,specific_skills
+7234,Service Orientation,basic_skills
+7234,Complex Problem Solving,basic_skills
+7234,Critical Thinking,basic_skills
+7234,Mechanical Maintenance,specific_skills
+7234,Repairing,specific_skills
+7234,Electrical Wiring,specific_skills
+7239,Service Orientation,basic_skills
+7239,Complex Problem Solving,basic_skills
+7239,Critical Thinking,basic_skills
+7239,Engine Repair,specific_skills
+7239,Mechanical Maintenance,specific_skills
+7239,Repairing,specific_skills
+7239,Electrical Wiring,specific_skills
+7311,Service Orientation,basic_skills
+7311,Complex Problem Solving,basic_skills
+7311,Critical Thinking,basic_skills
+7311,Measurement,specific_skills
+7311,Installation,specific_skills
+7311,Repairing,specific_skills
+7312,Problem Solving,basic_skills
+7312,Critical Thinking,basic_skills
+7312,Measurement,specific_skills
+7312,Installation,specific_skills
+7312,Repairing,specific_skills
+7313,Service Orientation,basic_skills
+7313,Complex Problem Solving,basic_skills
+7313,Critical Thinking,basic_skills
+7313,Measurement,specific_skills
+7313,Installation,specific_skills
+7313,Problem Solving,basic_skills
+7314,Service Orientation,basic_skills
+7314,Complex Problem Solving,basic_skills
+7314,Critical Thinking,basic_skills
+7315,Communication,basic_skills
+7315,Complex Problem Solving,basic_skills
+7315,Reading Comprehension,basic_skills
+7315,Critical Thinking,basic_skills
+7316,Communication,basic_skills
+7316,Complex Problem Solving,basic_skills
+7316,Reading Comprehension,basic_skills
+7316,Critical Thinking,basic_skills
+7317,Communication,basic_skills
+7317,Problem Solving,basic_skills
+7318,Communication,basic_skills
+7318,Problem Solving,basic_skills
+7318,Service Orientation,basic_skills
+7318,Sewing,specific_skills
+7319,Communication,basic_skills
+7319,Problem Solving,basic_skills
+7319,Service Orientation,basic_skills
+7319,Sewing,specific_skills
+7321,Active Listening,basic_skills
+7321,Monitoring,basic_skills
+7321,Speaking,basic_skills
+7321,Time Management,basic_skills
+7321,Photo Editing,specific_skills
+7321,Graphic Design,specific_skills
+7321,Microsoft Office,specific_skills
+7321,Adobe Photoshop,specific_skills
+7322,Active Listening,basic_skills
+7322,Monitoring,basic_skills
+7322,Speaking,basic_skills
+7322,Time Management,basic_skills
+7322,Sketching,specific_skills
+7322,Adobe Photoshop,specific_skills
+7322,Microsoft Office,specific_skills
+7322,Printer Repair,specific_skills
+7323,Active Listening,basic_skills
+7323,Monitoring,basic_skills
+7323,Speaking,basic_skills
+7323,Time Management,basic_skills
+7324,Active Listening,basic_skills
+7324,Monitoring,basic_skills
+7324,Speaking,basic_skills
+7324,Time Management,basic_skills
+7324,Brazing,specific_skills
+7324, Sculpting,specific_skills
+7324,Photography,specific_skills
+7411,Teamwork,basic_skills
+7411,Problem Solving,basic_skills
+7411,Communication,basic_skills
+7411,Active Listening,basic_skills
+7411,Mechanical & Electrical,specific_skills
+7411,Electrical Troubleshooting,specific_skills
+7411,Electrical Wiring,specific_skills
+7412,Teamwork,basic_skills
+7412,Problem Solving,basic_skills
+7412,Communication,basic_skills
+7412,Active Listening,basic_skills
+7412,Mechanical & Electrical,specific_skills
+7412,Electrical Troubleshooting,specific_skills
+7412,Electrical Wiring,specific_skills
+7413,Teamwork,basic_skills
+7413,Problem Solving,basic_skills
+7413,Communication,basic_skills
+7413,Active Listening,basic_skills
+7413,Mechanical & Electrical,specific_skills
+7413,Electrical Troubleshooting,specific_skills
+7413,Electrical Wiring,specific_skills
+7413,Cabling,specific_skills
+7421,Teamwork,basic_skills
+7421,Problem Solving,basic_skills
+7421,Communication,basic_skills
+7421,Active Listening,basic_skills
+7421,Mechanical & Electrical,specific_skills
+7421,Electrical Troubleshooting,specific_skills
+7421,Electrical Wiring,specific_skills
+7421,Cabling,specific_skills
+7422,Teamwork,basic_skills
+7422,Problem Solving,basic_skills
+7422,Communication,basic_skills
+7422,Active Listening,basic_skills
+7422,Mechanical & Electrical,specific_skills
+7422,Electrical Troubleshooting,specific_skills
+7422,Electrical Wiring,specific_skills
+7422,Cabling,specific_skills
+7511,Communication,basic_skills
+7511,Reading Comprehension,basic_skills
+7511,Coordination,basic_skills
+7511,Slaughtering Skills,specific_skills
+7511,Cooking,specific_skills
+7511,Weighing,specific_skills
+7511,Halal Compliance,specific_skills
+7512,Monitoring,basic_skills
+7512,Coordination,basic_skills
+7512,Cooking,specific_skills
+7512,Food Preparation,specific_skills
+7513,Coordination,basic_skills
+7513,Reading Comprehension,basic_skills
+7513,Cooking,specific_skills
+7513,Food Preparation,specific_skills
+7514,Coordination,basic_skills
+7514,Reading Comprehension,basic_skills
+7514,Cooking,specific_skills
+7514,Food Preparation,specific_skills
+7515,Critical Thinking,basic_skills
+7515,Production And Processing,specific_skills
+7515,Testing Skills,specific_skills
+7515,Halal Compliance,specific_skills
+7516,Problem Solving,basic_skills
+7516,Reading Comprehension,basic_skills
+7516,Production And Processing,specific_skills
+7611,Problem Solving,basic_skills
+7611,Reading Comprehension,basic_skills
+7611,Production And Processing,specific_skills
+7611,Testing Skills,specific_skills
+7612,Monitoring,basic_skills
+7612,Creative Arts,basic_skills
+7612,Critical Thinking,basic_skills
+7612,Carpentry,specific_skills
+7612,Cabinet Installation,specific_skills
+7613,Teamwork,basic_skills
+7613,Time Management,basic_skills
+7613,Machine Operation,specific_skills
+7621,Time Management,basic_skills
+7621,Active Listening,basic_skills
+7621,Critical Thinking,basic_skills
+7621,Speaking,basic_skills
+7621,Sewing,specific_skills
+7622,Critical Thinking,basic_skills
+7622,Active Listening,basic_skills
+7622,Decision Making,basic_skills
+7622,Time Management,basic_skills
+7622,Sewing,specific_skills
+7622,Active Learning,basic_skills
+7622,Speaking,basic_skills
+7623,Time Management,basic_skills
+7623,Active Listening,basic_skills
+7623,Critical Thinking,basic_skills
+7623,Speaking,basic_skills
+7623,Sewing,specific_skills
+7624,Reading Comprehension,basic_skills
+7624,Active Listening,basic_skills
+7624,Complex Problem Solving,basic_skills
+7624,Installation,specific_skills
+7624,Repairing,specific_skills
+7624,Sewing,specific_skills
+7625,Reading Comprehension,basic_skills
+7631,Critical Thinking,basic_skills
+7631,Problem Solving,basic_skills
+7631,Active Listening,basic_skills
+7631,Decision Making,basic_skills
+7631,Scuba Skills,specific_skills
+7632,Active Listening,basic_skills
+7632,Decision Making,basic_skills
+7633,Critical Thinking,basic_skills
+7633,Writing,basic_skills
+7633,Active Listening,basic_skills
+7633,Decision Making,basic_skills
+7633,Production And Processing,specific_skills
+7633,Testing Skills,specific_skills
+7634,Active Listening,basic_skills
+7634,Critical Thinking,basic_skills
+7634,Speaking,basic_skills
+7634,Work Safety,specific_skills
+7639,Active Listening,basic_skills
+7639,Critical Thinking,basic_skills
+7639,Speaking,basic_skills
+7639,Photography,specific_skills
+8111,Handling And Moving Objects,basic_skills
+8111,Equipment Maintenance,specific_skills
+8111,Work Safety,specific_skills
+8112,Handling And Moving Objects,basic_skills
+8112,Coordination,basic_skills
+8112,Reading Comprehension,basic_skills
+8112,Work Safety,specific_skills
+8112,Operation Monitoring,specific_skills
+8112,Equipment Maintenance,specific_skills
+8112,Machine Operation,specific_skills
+8113,Handling And Moving Objects,basic_skills
+8113,Coordination,basic_skills
+8113,Reading Comprehension,basic_skills
+8113,Work Safety,specific_skills
+8113,Operation Monitoring,specific_skills
+8113,Equipment Maintenance,specific_skills
+8113,Machine Operation,specific_skills
+8114,Coordination,basic_skills
+8114,Reading Comprehension,basic_skills
+8114,Work Safety,specific_skills
+8114,Machine Operation,specific_skills
+8114,Operation Monitoring,specific_skills
+8121,Coordination,basic_skills
+8121,Reading Comprehension,basic_skills
+8121,Work Safety,specific_skills
+8121,Machine Operation,specific_skills
+8121,Operation Monitoring,specific_skills
+8122,Coordination,basic_skills
+8122,Reading Comprehension,basic_skills
+8122,Work Safety,specific_skills
+8122,Machine Operation,specific_skills
+8122,Operation Monitoring,specific_skills
+8131,Coordination,basic_skills
+8131,Reading Comprehension,basic_skills
+8131,Work Safety,specific_skills
+8131,Machine Operation,specific_skills
+8131,Operation Monitoring,specific_skills
+8132,Coordination,basic_skills
+8132,Reading Comprehension,basic_skills
+8132,Service Orientation,basic_skills
+8132,Work Safety,specific_skills
+8132,Machine Operation,specific_skills
+8132,Photo Editing,specific_skills
+8141,Coordination,basic_skills
+8141,Reading Comprehension,basic_skills
+8141,Work Safety,specific_skills
+8141,Machine Operation,specific_skills
+8141,Operation Monitoring,specific_skills
+8142,Coordination,basic_skills
+8142,Reading Comprehension,basic_skills
+8142,Work Safety,specific_skills
+8142,Machine Operation,specific_skills
+8142,Operation Monitoring,specific_skills
+8143,Coordination,basic_skills
+8143,Reading Comprehension,basic_skills
+8143,Work Safety,specific_skills
+8143,Machine Operation,specific_skills
+8143,Operation Monitoring,specific_skills
+8151,Coordination,basic_skills
+8151,Reading Comprehension,basic_skills
+8151,Machine Operation,specific_skills
+8151,Sewing,specific_skills
+8151,Work Safety,specific_skills
+8152,Coordination,basic_skills
+8152,Reading Comprehension,basic_skills
+8152,Machine Operation,specific_skills
+8152,Sewing,specific_skills
+8152,Work Safety,specific_skills
+8153,Coordination,basic_skills
+8153,Reading Comprehension,basic_skills
+8153,Operation And Control,specific_skills
+8153,Sewing,specific_skills
+8153,Machine Operation,specific_skills
+8153,Work Safety,specific_skills
+8154,Coordination,basic_skills
+8154,Reading Comprehension,basic_skills
+8154,Operation And Control,specific_skills
+8154,Machine Operation,specific_skills
+8154,Work Safety,specific_skills
+8155,Coordination,basic_skills
+8155,Reading Comprehension,basic_skills
+8155,Operation And Control,specific_skills
+8155,Machine Operation,specific_skills
+8155,Work Safety,specific_skills
+8156,Coordination,basic_skills
+8156,Reading Comprehension,basic_skills
+8156,Operation And Control,specific_skills
+8156,Machine Operation,specific_skills
+8156,Work Safety,specific_skills
+8157,Coordination,basic_skills
+8157,Reading Comprehension,basic_skills
+8157,Operation And Control,specific_skills
+8157,Machine Operation,specific_skills
+8157,Work Safety,specific_skills
+8159,Coordination,basic_skills
+8159,Reading Comprehension,basic_skills
+8159,Operation And Control,specific_skills
+8159,Machine Operation,specific_skills
+8159,Work Safety,specific_skills
+8161,Coordination,basic_skills
+8161,Reading Comprehension,basic_skills
+8161,Operation And Control,specific_skills
+8161,Machine Operation,specific_skills
+8161,Work Safety,specific_skills
+8171,Coordination,basic_skills
+8171,Reading Comprehension,basic_skills
+8171,Active Listening,basic_skills
+8171,Operation And Control,specific_skills
+8171,Machine Operation,specific_skills
+8171,Work Safety,specific_skills
+8172,Coordination,basic_skills
+8172,Reading Comprehension,basic_skills
+8172,Active Listening,basic_skills
+8172,Operation And Control,specific_skills
+8172,Machine Operation,specific_skills
+8172,Work Safety,specific_skills
+8173,Coordination,basic_skills
+8173,Reading Comprehension,basic_skills
+8173,Critical Thinking,basic_skills
+8173,Operation And Control,specific_skills
+8173,Machine Operation,specific_skills
+8173,Work Safety,specific_skills
+8181,Coordination,basic_skills
+8181,Reading Comprehension,basic_skills
+8181,Teamwork,basic_skills
+8181,Operation And Control,specific_skills
+8181,Machine Operation,specific_skills
+8181,Work Safety,specific_skills
+8181,Equipment Maintenance,specific_skills
+8182,Coordination,basic_skills
+8182,Reading Comprehension,basic_skills
+8182,Teamwork,basic_skills
+8182,Equipment Maintenance,specific_skills
+8182,Machine Operation,specific_skills
+8182,Work Safety,specific_skills
+8183,Coordination,basic_skills
+8183,Reading Comprehension,basic_skills
+8183,Teamwork,basic_skills
+8183,Equipment Maintenance,specific_skills
+8183,Machine Operation,specific_skills
+8183,Work Safety,specific_skills
+8189,Coordination,basic_skills
+8189,Reading Comprehension,basic_skills
+8189,Teamwork,basic_skills
+8189,Installation,specific_skills
+8189,Machine Operation,specific_skills
+8189,Work Safety,specific_skills
+8211,Coordination,basic_skills
+8211,Reading Comprehension,basic_skills
+8211,Teamwork,basic_skills
+8211,Installation,specific_skills
+8211,Work Safety,specific_skills
+8212,Coordination,basic_skills
+8212,Reading Comprehension,basic_skills
+8212,Active Learning,basic_skills
+8212,Equipment Maintenance,specific_skills
+8212,Electrical Wiring,specific_skills
+8213,Coordination,basic_skills
+8213,Reading Comprehension,basic_skills
+8213,Active Learning,basic_skills
+8213,Equipment Maintenance,specific_skills
+8213,Installation,specific_skills
+8219,Coordination,basic_skills
+8219,Reading Comprehension,basic_skills
+8219,Active Learning,basic_skills
+8219,Installation,specific_skills
+8219,Equipment Maintenance,specific_skills
+8221,Coordination,basic_skills
+8221,Reading Comprehension,basic_skills
+8221,Active Learning,basic_skills
+8221,Equipment Maintenance,specific_skills
+8221,Machine Operation,specific_skills
+8311,Time Management,basic_skills
+8311,Reading Comprehension,basic_skills
+8311,Problem Solving,basic_skills
+8311,Vehicle Maintenance,specific_skills
+8312,Time Management,basic_skills
+8312,Reading Comprehension,basic_skills
+8312,Problem Solving,basic_skills
+8312,Vehicle Maintenance,specific_skills
+8321,Time Management,basic_skills
+8321,Reading Comprehension,basic_skills
+8321,Problem Solving,basic_skills
+8321,Vehicle Maintenance,specific_skills
+8322,Time Management,basic_skills
+8322,Service Orientation,basic_skills
+8322,Vehicle Maintenance,specific_skills
+8322,Digital Advertising,specific_skills
+8331,Service Orientation,basic_skills
+8331,Active Listening,basic_skills
+8331,Time Management,basic_skills
+8331,Commercial Driving,specific_skills
+8331,Vehicle Maintenance,specific_skills
+8332,Active Listening,basic_skills
+8332,Time Management,basic_skills
+8332,Commercial Driving,specific_skills
+8332,Vehicle Maintenance,specific_skills
+8341,Active Listening,basic_skills
+8341,Time Management,basic_skills
+8341,Commercial Driving,specific_skills
+8341,Vehicle Maintenance,specific_skills
+8342,Active Listening,basic_skills
+8342,Time Management,basic_skills
+8342,Commercial Driving,specific_skills
+8342,Vehicle Maintenance,specific_skills
+8343,Active Listening,basic_skills
+8343,Time Management,basic_skills
+8343,Commercial Driving,specific_skills
+8343,Vehicle Maintenance,specific_skills
+8344,Coordination,basic_skills
+8344,Time Management,basic_skills
+8344,Commercial Driving,specific_skills
+8344,Equipment Maintenance,specific_skills
+8351,Coordination,basic_skills
+8351,Time Management,basic_skills
+8351,Operation Monitoring,specific_skills
+8351,Mechanical Maintenance,specific_skills
+9112,Housekeeping,specific_skills
+9121,Laundry,basic_skills
+9312,Construction,specific_skills
+9313,Active Listening,basic_skills
+9313,Construction,specific_skills
+9333,Handling And Moving Objects,basic_skills
+9333,Warehousing,specific_skills
+9334,Handling And Moving Objects,basic_skills
+9334,Warehousing,specific_skills
+9411,Communication,basic_skills
+9411,Cooking,specific_skills
+9412,Communication,basic_skills
+9511,Service Orientation,basic_skills
+9521,Sales,basic_skills
+9521,Communication,basic_skills
+9521,Service Orientation,basic_skills
+9611,Service Orientation,basic_skills
+9613,Service Orientation,basic_skills
+9621,Active Listening,basic_skills
+9621,Service Orientation,basic_skills
+9621,Communication,basic_skills
+9622,Active Listening,basic_skills
+9622,Service Orientation,basic_skills
+9622,Communication,basic_skills
+9623,Coordination,basic_skills
+9625,Service Orientation,basic_skills

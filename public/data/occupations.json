@@ -1,7 +1,7 @@
 {
   "1111": {
     "occupation": "Legislators",
-    "aiExposure": 0.111111111111111,
+    "aiExposure": 0.1111111111,
     "quartile": "Medium low",
     "wage": 30453,
     "basicSkills": [
@@ -61,7 +61,7 @@
   },
   "1112": {
     "occupation": "Senior Government Officials",
-    "aiExposure": 0.285714285714286,
+    "aiExposure": 0.2857142857,
     "quartile": "Medium low",
     "wage": 6282,
     "basicSkills": [
@@ -123,7 +123,7 @@
   },
   "1113": {
     "occupation": "Traditional Chiefs And Heads Of Village",
-    "aiExposure": 0.285714285714286,
+    "aiExposure": 0.2857142857,
     "quartile": "Medium low",
     "wage": 3532,
     "basicSkills": [
@@ -229,7 +229,7 @@
   },
   "1121": {
     "occupation": "Managing Directors And Chief Executives",
-    "aiExposure": 0.0909090909090909,
+    "aiExposure": 0.09090909091,
     "quartile": "Medium low",
     "wage": 5574,
     "basicSkills": [
@@ -297,7 +297,7 @@
   },
   "1211": {
     "occupation": "Finance Managers",
-    "aiExposure": 0.555555555555556,
+    "aiExposure": 0.5555555556,
     "quartile": "Medium high",
     "wage": 5440,
     "basicSkills": [
@@ -471,7 +471,7 @@
   },
   "1214": {
     "occupation": "Business Services Managers",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "High",
     "wage": 5899,
     "basicSkills": [
@@ -604,7 +604,7 @@
   },
   "1216": {
     "occupation": "Quality Managers",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": null,
     "basicSkills": [
@@ -649,7 +649,7 @@
   },
   "1221": {
     "occupation": "Sales And Marketing Managers",
-    "aiExposure": 0.818181818181818,
+    "aiExposure": 0.8181818182,
     "quartile": "Medium high",
     "wage": 4976,
     "basicSkills": [
@@ -719,7 +719,7 @@
   },
   "1222": {
     "occupation": "Advertising And Public Relations Managers",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 5338,
     "basicSkills": [
@@ -779,7 +779,7 @@
   },
   "1223": {
     "occupation": "Research And Development Managers",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium low",
     "wage": 5227,
     "basicSkills": [
@@ -905,7 +905,7 @@
   },
   "1312": {
     "occupation": "Aquaculture And Fisheries Production Managers",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 4516,
     "basicSkills": [
@@ -981,7 +981,7 @@
   },
   "1321": {
     "occupation": "Manufacturing Managers",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 5227,
     "basicSkills": [
@@ -1274,7 +1274,7 @@
   },
   "1411": {
     "occupation": "Hotel And Homestay Managers",
-    "aiExposure": 0.733333333333333,
+    "aiExposure": 0.7333333333,
     "quartile": "Medium high",
     "wage": 5545,
     "basicSkills": [
@@ -1355,7 +1355,7 @@
   },
   "1412": {
     "occupation": "Restaurant Managers",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 3475,
     "basicSkills": [
@@ -1481,7 +1481,7 @@
   },
   "1511": {
     "occupation": "Information And Communications Technology Managers",
-    "aiExposure": 0.454545454545455,
+    "aiExposure": 0.4545454545,
     "quartile": "Medium high",
     "wage": 7137,
     "basicSkills": [
@@ -1567,7 +1567,7 @@
   },
   "1611": {
     "occupation": "Child Care Services Managers",
-    "aiExposure": 0.555555555555556,
+    "aiExposure": 0.5555555556,
     "quartile": "Medium high",
     "wage": 11923,
     "basicSkills": [
@@ -1742,7 +1742,7 @@
   },
   "1614": {
     "occupation": "Social Welfare Managers",
-    "aiExposure": 0.714285714285714,
+    "aiExposure": 0.7142857143,
     "quartile": "Medium high",
     "wage": 14959,
     "basicSkills": [
@@ -1792,7 +1792,7 @@
   },
   "1615": {
     "occupation": "Education Managers",
-    "aiExposure": 0.727272727272727,
+    "aiExposure": 0.7272727273,
     "quartile": "Medium high",
     "wage": 8596,
     "basicSkills": [
@@ -1857,7 +1857,7 @@
   },
   "1616": {
     "occupation": "Financial And Insurance Services Branch Managers",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "High",
     "wage": null,
     "basicSkills": [
@@ -1925,7 +1925,7 @@
   },
   "1617": {
     "occupation": "Legal Managers",
-    "aiExposure": 0.642857142857143,
+    "aiExposure": 0.6428571429,
     "quartile": "Medium high",
     "wage": 6696,
     "basicSkills": [
@@ -2055,7 +2055,7 @@
   },
   "1621": {
     "occupation": "Sports And Recreation Centre Managers",
-    "aiExposure": 0.727272727272727,
+    "aiExposure": 0.7272727273,
     "quartile": "Medium high",
     "wage": 1136,
     "basicSkills": [
@@ -2121,7 +2121,7 @@
   },
   "1622": {
     "occupation": "Personal Care, Cleaning And Related Services Managers",
-    "aiExposure": 0.714285714285714,
+    "aiExposure": 0.7142857143,
     "quartile": "Medium high",
     "wage": 7062,
     "basicSkills": [
@@ -2200,7 +2200,7 @@
   },
   "1623": {
     "occupation": "Security Managers",
-    "aiExposure": 0.545454545454546,
+    "aiExposure": 0.5454545455,
     "quartile": "Medium high",
     "wage": 4602,
     "basicSkills": [
@@ -2264,7 +2264,7 @@
   },
   "1624": {
     "occupation": "Cultural Centre, Museum And Library Managers",
-    "aiExposure": 0.727272727272727,
+    "aiExposure": 0.7272727273,
     "quartile": "Medium high",
     "wage": 4116,
     "basicSkills": [
@@ -2454,7 +2454,7 @@
   },
   "2113": {
     "occupation": "Chemists",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 4911,
     "basicSkills": [
@@ -2513,7 +2513,7 @@
   },
   "2114": {
     "occupation": "Geologists And Geophysicists",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 9718,
     "basicSkills": [
@@ -2715,7 +2715,7 @@
   },
   "2132": {
     "occupation": "Farming, Forestry, Plantation, And Fisheries Advisers",
-    "aiExposure": 0.909090909090909,
+    "aiExposure": 0.9090909091,
     "quartile": "High",
     "wage": 4857,
     "basicSkills": [
@@ -2781,7 +2781,7 @@
   },
   "2133": {
     "occupation": "Environmental Protection Professionals",
-    "aiExposure": 0.769230769230769,
+    "aiExposure": 0.7692307692,
     "quartile": "Medium high",
     "wage": 5753,
     "basicSkills": [
@@ -2856,7 +2856,7 @@
   },
   "2134": {
     "occupation": "Pharmacologists, Pathologists And Related Professionals",
-    "aiExposure": 0.444444444444444,
+    "aiExposure": 0.4444444444,
     "quartile": "Medium high",
     "wage": 5608,
     "basicSkills": [
@@ -2915,7 +2915,7 @@
   },
   "2141": {
     "occupation": "Industrial And Production Engineers",
-    "aiExposure": 0.857142857142857,
+    "aiExposure": 0.8571428571,
     "quartile": "High",
     "wage": 4664,
     "basicSkills": [
@@ -3062,7 +3062,7 @@
   },
   "2143": {
     "occupation": "Environmental Engineers",
-    "aiExposure": 0.888888888888889,
+    "aiExposure": 0.8888888889,
     "quartile": "High",
     "wage": 5515,
     "basicSkills": [
@@ -3121,7 +3121,7 @@
   },
   "2144": {
     "occupation": "Mechanical Engineers",
-    "aiExposure": 0.818181818181818,
+    "aiExposure": 0.8181818182,
     "quartile": "Medium high",
     "wage": 4983,
     "basicSkills": [
@@ -3251,7 +3251,7 @@
   },
   "2146": {
     "occupation": "Mining Engineers, Metallurgists And Related Professionals",
-    "aiExposure": 0.909090909090909,
+    "aiExposure": 0.9090909091,
     "quartile": "High",
     "wage": 7808,
     "basicSkills": [
@@ -3319,7 +3319,7 @@
   },
   "2149": {
     "occupation": "Engineering Professionals (Excluding Electrotechnology) Not Elsewhere Classified",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 4361,
     "basicSkills": [
@@ -3506,7 +3506,7 @@
   },
   "2153": {
     "occupation": "Telecommunications Engineers",
-    "aiExposure": 0.857142857142857,
+    "aiExposure": 0.8571428571,
     "quartile": "High",
     "wage": 4851,
     "basicSkills": [
@@ -3555,7 +3555,7 @@
   },
   "2161": {
     "occupation": "Building Architects",
-    "aiExposure": 0.727272727272727,
+    "aiExposure": 0.7272727273,
     "quartile": "Medium high",
     "wage": 4894,
     "basicSkills": [
@@ -3623,7 +3623,7 @@
   },
   "2162": {
     "occupation": "Landscape Architects",
-    "aiExposure": 0.714285714285714,
+    "aiExposure": 0.7142857143,
     "quartile": "Medium high",
     "wage": 5857,
     "basicSkills": [
@@ -3729,7 +3729,7 @@
   },
   "2164": {
     "occupation": "Town And Traffic Planners",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 5977,
     "basicSkills": [
@@ -3953,7 +3953,7 @@
   },
   "2172": {
     "occupation": "Ship Deck Officers And Pilots",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 6716,
     "basicSkills": [
@@ -4008,7 +4008,7 @@
   },
   "2173": {
     "occupation": "Aircraft Pilots And Related Professionals",
-    "aiExposure": 0.181818181818182,
+    "aiExposure": 0.1818181818,
     "quartile": "Medium low",
     "wage": 17836,
     "basicSkills": [
@@ -4206,7 +4206,7 @@
   },
   "2182": {
     "occupation": "Manufacturing Professionals",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 5366,
     "basicSkills": [
@@ -4321,7 +4321,7 @@
   },
   "2211": {
     "occupation": "Generalist Medical Practitioners",
-    "aiExposure": 0.222222222222222,
+    "aiExposure": 0.2222222222,
     "quartile": "Medium low",
     "wage": 5911,
     "basicSkills": [
@@ -4382,7 +4382,7 @@
   },
   "2212": {
     "occupation": "Specialist Medical Practitioners",
-    "aiExposure": 0.0714285714285714,
+    "aiExposure": 0.07142857143,
     "quartile": "Medium low",
     "wage": 7800,
     "basicSkills": [
@@ -4528,7 +4528,7 @@
   },
   "2222": {
     "occupation": "Midwifery Professionals",
-    "aiExposure": 0.285714285714286,
+    "aiExposure": 0.2857142857,
     "quartile": "Medium low",
     "wage": null,
     "basicSkills": [
@@ -4608,7 +4608,7 @@
   },
   "2231": {
     "occupation": "Traditional And Complementary Medicine Professionals",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 3162,
     "basicSkills": [
@@ -4656,7 +4656,7 @@
   },
   "2241": {
     "occupation": "Paramedical Practitioners",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 5463,
     "basicSkills": [
@@ -4706,7 +4706,7 @@
   },
   "2251": {
     "occupation": "Veterinarians",
-    "aiExposure": 0.272727272727273,
+    "aiExposure": 0.2727272727,
     "quartile": "Medium low",
     "wage": 5496,
     "basicSkills": [
@@ -4770,7 +4770,7 @@
   "2261": {
     "occupation": "Dentists",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 5744,
     "basicSkills": [
       "Active Listening",
@@ -4886,7 +4886,7 @@
   },
   "2263": {
     "occupation": "Environmental And Occupational Health And Hygiene Professionals",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "High",
     "wage": 5851,
     "basicSkills": [
@@ -4959,7 +4959,7 @@
   },
   "2264": {
     "occupation": "Physiotherapists",
-    "aiExposure": 0.230769230769231,
+    "aiExposure": 0.2307692308,
     "quartile": "Medium low",
     "wage": 5000,
     "basicSkills": [
@@ -5034,7 +5034,7 @@
   },
   "2265": {
     "occupation": "Dieticians And Nutritionists",
-    "aiExposure": 0.923076923076923,
+    "aiExposure": 0.9230769231,
     "quartile": "High",
     "wage": 5538,
     "basicSkills": [
@@ -5109,7 +5109,7 @@
   },
   "2266": {
     "occupation": "Audiologists And Speech Therapists",
-    "aiExposure": 0.307692307692308,
+    "aiExposure": 0.3076923077,
     "quartile": "Medium low",
     "wage": 2869,
     "basicSkills": [
@@ -5235,7 +5235,7 @@
   },
   "2268": {
     "occupation": "Occupational Therapists",
-    "aiExposure": 0.0833333333333333,
+    "aiExposure": 0.08333333333,
     "quartile": "Medium low",
     "wage": null,
     "basicSkills": [
@@ -5303,7 +5303,7 @@
   },
   "2269": {
     "occupation": "Health Professionals Not Elsewhere Classified",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 4852,
     "basicSkills": [
@@ -5356,7 +5356,7 @@
   },
   "2311": {
     "occupation": "University And Higher Education Teaching Professionals",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 7834,
     "basicSkills": [
@@ -5417,7 +5417,7 @@
   },
   "2321": {
     "occupation": "Vocational Education Teachers",
-    "aiExposure": 0.714285714285714,
+    "aiExposure": 0.7142857143,
     "quartile": "Medium high",
     "wage": 5480,
     "basicSkills": [
@@ -5463,7 +5463,7 @@
   },
   "2331": {
     "occupation": "Secondary School Teachers",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 5966,
     "basicSkills": [
@@ -5509,7 +5509,7 @@
   },
   "2341": {
     "occupation": "Primary School Teachers",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium low",
     "wage": 5607,
     "basicSkills": [
@@ -5555,7 +5555,7 @@
   },
   "2342": {
     "occupation": "Early Childhood Educators",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 3323,
     "basicSkills": [
@@ -5599,7 +5599,7 @@
   },
   "2351": {
     "occupation": "Music Teachers",
-    "aiExposure": 0.555555555555556,
+    "aiExposure": 0.5555555556,
     "quartile": "Medium high",
     "wage": 3750,
     "basicSkills": [
@@ -5653,7 +5653,7 @@
   },
   "2352": {
     "occupation": "Arts Teachers",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 4035,
     "basicSkills": [
@@ -5707,7 +5707,7 @@
   },
   "2353": {
     "occupation": "Performing Arts Teachers",
-    "aiExposure": 0.555555555555556,
+    "aiExposure": 0.5555555556,
     "quartile": "Medium high",
     "wage": 4080,
     "basicSkills": [
@@ -5866,7 +5866,7 @@
   },
   "2381": {
     "occupation": "Vocational Training Officers",
-    "aiExposure": 0.916666666666667,
+    "aiExposure": 0.9166666667,
     "quartile": "High",
     "wage": 5371,
     "basicSkills": [
@@ -5938,7 +5938,7 @@
   },
   "2391": {
     "occupation": "Education Method Specialists",
-    "aiExposure": 0.818181818181818,
+    "aiExposure": 0.8181818182,
     "quartile": "Medium high",
     "wage": 8024,
     "basicSkills": [
@@ -6005,7 +6005,7 @@
   },
   "2392": {
     "occupation": "Special Needs Teachers",
-    "aiExposure": 0.142857142857143,
+    "aiExposure": 0.1428571429,
     "quartile": "Medium low",
     "wage": 4466,
     "basicSkills": [
@@ -6113,7 +6113,7 @@
   },
   "2399": {
     "occupation": "Teaching Professionals Not Elsewhere Classified",
-    "aiExposure": 0.636363636363636,
+    "aiExposure": 0.6363636364,
     "quartile": "Medium high",
     "wage": 4776,
     "basicSkills": [
@@ -6634,7 +6634,7 @@
   },
   "2426": {
     "occupation": "Research And Development Professionals",
-    "aiExposure": 0.888888888888889,
+    "aiExposure": 0.8888888889,
     "quartile": "High",
     "wage": 5732,
     "basicSkills": [
@@ -6745,7 +6745,7 @@
   },
   "2432": {
     "occupation": "Public Relations Professionals",
-    "aiExposure": 0.916666666666667,
+    "aiExposure": 0.9166666667,
     "quartile": "High",
     "wage": 3901,
     "basicSkills": [
@@ -7155,7 +7155,7 @@
   },
   "2519": {
     "occupation": "Software And Application Developers And Analysts Not Elsewhere Classified",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "Medium high",
     "wage": 4492,
     "basicSkills": [
@@ -7446,7 +7446,7 @@
   },
   "2531": {
     "occupation": "Cyber Security Professionals",
-    "aiExposure": 0.714285714285714,
+    "aiExposure": 0.7142857143,
     "quartile": "Medium high",
     "wage": null,
     "basicSkills": [
@@ -7499,7 +7499,7 @@
   },
   "2541": {
     "occupation": "Animation And Visual Effects Professionals",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": null,
     "basicSkills": [
@@ -7558,7 +7558,7 @@
   },
   "2542": {
     "occupation": "Digital Games And E-Sport Professionals",
-    "aiExposure": 0.888888888888889,
+    "aiExposure": 0.8888888889,
     "quartile": "High",
     "wage": null,
     "basicSkills": [
@@ -7618,7 +7618,7 @@
   },
   "2543": {
     "occupation": "Creative Contents Designer Professionals",
-    "aiExposure": 0.888888888888889,
+    "aiExposure": 0.8888888889,
     "quartile": "High",
     "wage": null,
     "basicSkills": [
@@ -7751,7 +7751,7 @@
   },
   "2612": {
     "occupation": "Judges",
-    "aiExposure": 0.142857142857143,
+    "aiExposure": 0.1428571429,
     "quartile": "Medium low",
     "wage": 14663,
     "basicSkills": [
@@ -7798,7 +7798,7 @@
   },
   "2619": {
     "occupation": "Legal Professionals Not Elsewhere Classified",
-    "aiExposure": 0.857142857142857,
+    "aiExposure": 0.8571428571,
     "quartile": "High",
     "wage": 5587,
     "basicSkills": [
@@ -7927,7 +7927,7 @@
   },
   "2712": {
     "occupation": "Restaurant Professionals",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 3110,
     "basicSkills": [
@@ -8012,7 +8012,7 @@
   },
   "2811": {
     "occupation": "Archivists And Curators",
-    "aiExposure": 0.888888888888889,
+    "aiExposure": 0.8888888889,
     "quartile": "High",
     "wage": 4613,
     "basicSkills": [
@@ -8194,7 +8194,7 @@
   },
   "2823": {
     "occupation": "Philosophers, Historians And Political Scientists",
-    "aiExposure": 0.857142857142857,
+    "aiExposure": 0.8571428571,
     "quartile": "High",
     "wage": null,
     "basicSkills": [
@@ -8242,7 +8242,7 @@
   },
   "2824": {
     "occupation": "Psychologists",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium low",
     "wage": 6120,
     "basicSkills": [
@@ -8362,7 +8362,7 @@
   "2826": {
     "occupation": "Religious Professionals",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 4263,
     "basicSkills": [
       "Speaking",
@@ -8471,7 +8471,7 @@
   },
   "2832": {
     "occupation": "Journalists",
-    "aiExposure": 0.888888888888889,
+    "aiExposure": 0.8888888889,
     "quartile": "High",
     "wage": 5003,
     "basicSkills": [
@@ -8580,7 +8580,7 @@
   },
   "2841": {
     "occupation": "Visual Artists",
-    "aiExposure": 0.636363636363636,
+    "aiExposure": 0.6363636364,
     "quartile": "Medium high",
     "wage": 1922,
     "basicSkills": [
@@ -8698,7 +8698,7 @@
   "2843": {
     "occupation": "Dancers And Choreographers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 7071,
     "basicSkills": [
       "Active Listening",
@@ -8875,7 +8875,7 @@
   "2847": {
     "occupation": "Clowns, Magicians, Acrobats And Related Professionals",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Reading Comprehension",
@@ -9167,7 +9167,7 @@
   },
   "2915": {
     "occupation": "Professional Police Inspectors And Detectives",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 6201,
     "basicSkills": [
@@ -9222,7 +9222,7 @@
   },
   "2916": {
     "occupation": "Professional Civil Officials",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 5253,
     "basicSkills": [
@@ -9305,7 +9305,7 @@
   },
   "3111": {
     "occupation": "Chemical And Physical Science Technicians",
-    "aiExposure": 0.636363636363636,
+    "aiExposure": 0.6363636364,
     "quartile": "Medium high",
     "wage": 3436,
     "basicSkills": [
@@ -9571,7 +9571,7 @@
   },
   "3116": {
     "occupation": "Chemical Engineering Technicians",
-    "aiExposure": 0.857142857142857,
+    "aiExposure": 0.8571428571,
     "quartile": "High",
     "wage": 4821,
     "basicSkills": [
@@ -9796,7 +9796,7 @@
   },
   "3121": {
     "occupation": "Mining Supervisors",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "Medium high",
     "wage": 4337,
     "basicSkills": [
@@ -9978,7 +9978,7 @@
   },
   "3131": {
     "occupation": "Power Production Plant Operators",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium low",
     "wage": 1847,
     "basicSkills": [
@@ -10084,7 +10084,7 @@
   },
   "3133": {
     "occupation": "Chemical Processing Plant Controllers",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium low",
     "wage": 2613,
     "basicSkills": [
@@ -10136,7 +10136,7 @@
   },
   "3134": {
     "occupation": "Petroleum And Natural Gas Refining Plant Operators",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 1663,
     "basicSkills": [
@@ -10197,7 +10197,7 @@
   },
   "3135": {
     "occupation": "Metal Production Process Controllers",
-    "aiExposure": 0.222222222222222,
+    "aiExposure": 0.2222222222,
     "quartile": "Medium low",
     "wage": 2916,
     "basicSkills": [
@@ -10258,7 +10258,7 @@
   },
   "3141": {
     "occupation": "Life Science Technicians (Excluding Medical)",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 2956,
     "basicSkills": [
@@ -10396,7 +10396,7 @@
   },
   "3143": {
     "occupation": "Forestry Technicians",
-    "aiExposure": 0.545454545454546,
+    "aiExposure": 0.5454545455,
     "quartile": "Medium high",
     "wage": 4146,
     "basicSkills": [
@@ -10463,7 +10463,7 @@
   },
   "3144": {
     "occupation": "Fishery Technicians",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 3499,
     "basicSkills": [
@@ -10515,7 +10515,7 @@
   "3151": {
     "occupation": "Aircraft Technicians",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 3638,
     "basicSkills": [
       "Teamwork",
@@ -10565,7 +10565,7 @@
   },
   "3152": {
     "occupation": "Ship/ Marine Technicians",
-    "aiExposure": 0.272727272727273,
+    "aiExposure": 0.2727272727,
     "quartile": "Medium low",
     "wage": 4296,
     "basicSkills": [
@@ -10668,7 +10668,7 @@
   "3154": {
     "occupation": "Motor Vehicle Technicians",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2773,
     "basicSkills": [
       "Teamwork",
@@ -10742,7 +10742,7 @@
   },
   "3161": {
     "occupation": "Nuclear Research And Development Associate Professionals",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": null,
     "basicSkills": [
@@ -10788,7 +10788,7 @@
   },
   "3211": {
     "occupation": "Medical Imaging And Therapeutic Equipment Technicians",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 4061,
     "basicSkills": [
@@ -10923,7 +10923,7 @@
   },
   "3214": {
     "occupation": "Medical And Dental Prosthetic Technicians",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 2236,
     "basicSkills": [
@@ -10964,7 +10964,7 @@
   },
   "3215": {
     "occupation": "Orthotic And Prosthetic Technicians",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 2845,
     "basicSkills": [
@@ -10994,7 +10994,7 @@
   "3221": {
     "occupation": "Nursing Associate Professionals (Except Dental)",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 4335,
     "basicSkills": [
       "Service Orientation",
@@ -11041,7 +11041,7 @@
   },
   "3222": {
     "occupation": "Midwifery Associate Professionals",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium high",
     "wage": 3812,
     "basicSkills": [
@@ -11089,7 +11089,7 @@
   },
   "3231": {
     "occupation": "Traditional And Complementary Medicine Associate Professionals",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 3265,
     "basicSkills": [
@@ -11173,7 +11173,7 @@
   },
   "3251": {
     "occupation": "Dental Assistants And Therapists",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium high",
     "wage": 3769,
     "basicSkills": [
@@ -11307,7 +11307,7 @@
   },
   "3254": {
     "occupation": "Dispensing Opticians",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 4115,
     "basicSkills": [
@@ -12166,7 +12166,7 @@
   },
   "3339": {
     "occupation": "Business Services Agents Not Elsewhere Classified",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "Medium high",
     "wage": 1813,
     "basicSkills": [
@@ -12442,7 +12442,7 @@
   },
   "3411": {
     "occupation": "Legal And Related Associate Professionals",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "High",
     "wage": 3262,
     "basicSkills": [
@@ -12508,7 +12508,7 @@
   },
   "3511": {
     "occupation": "Information And Communications Technology Operation Technicians",
-    "aiExposure": 0.714285714285714,
+    "aiExposure": 0.7142857143,
     "quartile": "Medium high",
     "wage": 3170,
     "basicSkills": [
@@ -12557,7 +12557,7 @@
   },
   "3512": {
     "occupation": "Information And Communications Technology User Support Technicians",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 2831,
     "basicSkills": [
@@ -12603,7 +12603,7 @@
   },
   "3513": {
     "occupation": "Computer Network And Systems Technicians",
-    "aiExposure": 0.714285714285714,
+    "aiExposure": 0.7142857143,
     "quartile": "Medium high",
     "wage": 3296,
     "basicSkills": [
@@ -12813,7 +12813,7 @@
   },
   "3611": {
     "occupation": "Social Work Associate Professionals",
-    "aiExposure": 0.555555555555556,
+    "aiExposure": 0.5555555556,
     "quartile": "Medium high",
     "wage": 3679,
     "basicSkills": [
@@ -12866,7 +12866,7 @@
   },
   "3621": {
     "occupation": "Athletes And Sports Players",
-    "aiExposure": 0.222222222222222,
+    "aiExposure": 0.2222222222,
     "quartile": "Medium low",
     "wage": 1865,
     "basicSkills": [
@@ -12918,7 +12918,7 @@
   },
   "3622": {
     "occupation": "Sports Coaches, Instructors And Officials",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 3228,
     "basicSkills": [
@@ -13036,7 +13036,7 @@
   },
   "3631": {
     "occupation": "Photographers",
-    "aiExposure": 0.454545454545455,
+    "aiExposure": 0.4545454545,
     "quartile": "Medium high",
     "wage": 2722,
     "basicSkills": [
@@ -13155,7 +13155,7 @@
   },
   "3633": {
     "occupation": "Gallery, Museum And Library Associate Professionals",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 3299,
     "basicSkills": [
@@ -13243,7 +13243,7 @@
   },
   "3641": {
     "occupation": "Chefs",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 3154,
     "basicSkills": [
@@ -13300,7 +13300,7 @@
   },
   "3711": {
     "occupation": "Customs And Border Inspector Associate Professionals",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 2437,
     "basicSkills": [
@@ -13438,7 +13438,7 @@
   },
   "3714": {
     "occupation": "Government Licensing Official Associate Professionals",
-    "aiExposure": 0.857142857142857,
+    "aiExposure": 0.8571428571,
     "quartile": "High",
     "wage": 3567,
     "basicSkills": [
@@ -13488,7 +13488,7 @@
   },
   "3715": {
     "occupation": "Police Officers",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 4474,
     "basicSkills": [
@@ -13602,7 +13602,7 @@
   },
   "4111": {
     "occupation": "General Office Clerks",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 2042,
     "basicSkills": [
@@ -13871,7 +13871,7 @@
   },
   "4212": {
     "occupation": "Bookmakers, Croupiers And Related Gaming Workers",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "Medium high",
     "wage": 1453,
     "basicSkills": [
@@ -14163,7 +14163,7 @@
   },
   "4224": {
     "occupation": "Receptionists",
-    "aiExposure": 0.916666666666667,
+    "aiExposure": 0.9166666667,
     "quartile": "High",
     "wage": 1519,
     "basicSkills": [
@@ -14540,7 +14540,7 @@
   },
   "4321": {
     "occupation": "Stock Clerks",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 1861,
     "basicSkills": [
@@ -14681,7 +14681,7 @@
   },
   "4411": {
     "occupation": "Library Clerks",
-    "aiExposure": 0.857142857142857,
+    "aiExposure": 0.8571428571,
     "quartile": "High",
     "wage": 3854,
     "basicSkills": [
@@ -14848,7 +14848,7 @@
   },
   "4415": {
     "occupation": "Filing And Copying Clerks",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "High",
     "wage": 2636,
     "basicSkills": [
@@ -14991,7 +14991,7 @@
   "5111": {
     "occupation": "Travel Attendants And Travel Stewards",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2011,
     "basicSkills": [
       "Service Orientation",
@@ -15092,7 +15092,7 @@
   },
   "5113": {
     "occupation": "Travel Guides",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 1730,
     "basicSkills": [
@@ -15134,7 +15134,7 @@
   },
   "5121": {
     "occupation": "Cooks",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 1622,
     "basicSkills": [
@@ -15193,7 +15193,7 @@
   },
   "5131": {
     "occupation": "Waiters",
-    "aiExposure": 0.142857142857143,
+    "aiExposure": 0.1428571429,
     "quartile": "Medium low",
     "wage": 1211,
     "basicSkills": [
@@ -15240,7 +15240,7 @@
   },
   "5132": {
     "occupation": "Bartenders",
-    "aiExposure": 0.222222222222222,
+    "aiExposure": 0.2222222222,
     "quartile": "Medium low",
     "wage": 1140,
     "basicSkills": [
@@ -15294,7 +15294,7 @@
   },
   "5141": {
     "occupation": "Hairdressers",
-    "aiExposure": 0.142857142857143,
+    "aiExposure": 0.1428571429,
     "quartile": "Medium low",
     "wage": 1679,
     "basicSkills": [
@@ -15339,7 +15339,7 @@
   },
   "5142": {
     "occupation": "Beauticians And Related Workers",
-    "aiExposure": 0.0769230769230769,
+    "aiExposure": 0.07692307692,
     "quartile": "Medium low",
     "wage": 1812,
     "basicSkills": [
@@ -15406,7 +15406,7 @@
   },
   "5151": {
     "occupation": "Cleaning And Housekeeping Supervisors In Offices, Hotels And Other Establishments",
-    "aiExposure": 0.111111111111111,
+    "aiExposure": 0.1111111111,
     "quartile": "Medium low",
     "wage": 1618,
     "basicSkills": [
@@ -15609,7 +15609,7 @@
   "5162": {
     "occupation": "Companions And Valets",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Public Relations",
@@ -15682,7 +15682,7 @@
   "5164": {
     "occupation": "Pet Groomers And Animal Care Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1692,
     "basicSkills": [
       "Monitoring",
@@ -15731,7 +15731,7 @@
   },
   "5165": {
     "occupation": "Driving Instructors",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 1769,
     "basicSkills": [
@@ -15772,7 +15772,7 @@
   "5169": {
     "occupation": "Personal Services Workers Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2133,
     "basicSkills": [
       "Speaking",
@@ -15804,7 +15804,7 @@
   },
   "5211": {
     "occupation": "Stall And Market Salespersons",
-    "aiExposure": 0.666666666666667,
+    "aiExposure": 0.6666666667,
     "quartile": "Medium high",
     "wage": 1692,
     "basicSkills": [
@@ -15849,7 +15849,7 @@
   "5212": {
     "occupation": "Street Food Salespersons",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1613,
     "basicSkills": [
       "Persuasion",
@@ -15887,7 +15887,7 @@
   },
   "5221": {
     "occupation": "Shopkeepers",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium high",
     "wage": 1845,
     "basicSkills": [
@@ -15935,7 +15935,7 @@
   },
   "5222": {
     "occupation": "Shop Supervisors",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 1995,
     "basicSkills": [
@@ -15992,7 +15992,7 @@
   },
   "5223": {
     "occupation": "Shop Sales Assistants",
-    "aiExposure": 0.777777777777778,
+    "aiExposure": 0.7777777778,
     "quartile": "Medium high",
     "wage": 1317,
     "basicSkills": [
@@ -16050,7 +16050,7 @@
   },
   "5231": {
     "occupation": "Cashiers And Ticket Clerks",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": 1338,
     "basicSkills": [
@@ -16107,7 +16107,7 @@
   },
   "5241": {
     "occupation": "Fashion And Other Models",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 1733,
     "basicSkills": [
@@ -16147,7 +16147,7 @@
   },
   "5242": {
     "occupation": "Sales Demonstrators",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 1592,
     "basicSkills": [
@@ -16195,7 +16195,7 @@
   },
   "5243": {
     "occupation": "Door-To-Door Salespersons",
-    "aiExposure": 0.428571428571429,
+    "aiExposure": 0.4285714286,
     "quartile": "Medium high",
     "wage": 1800,
     "basicSkills": [
@@ -16277,7 +16277,7 @@
   },
   "5245": {
     "occupation": "Service Station And Pump Attendants",
-    "aiExposure": 0.111111111111111,
+    "aiExposure": 0.1111111111,
     "quartile": "Medium low",
     "wage": 1226,
     "basicSkills": [
@@ -16363,7 +16363,7 @@
   },
   "5249": {
     "occupation": "Sales Workers Not Elsewhere Classified",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 2484,
     "basicSkills": [
@@ -16410,7 +16410,7 @@
   "5311": {
     "occupation": "Child Care Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1491,
     "basicSkills": [
       "Monitoring",
@@ -16514,7 +16514,7 @@
   "5321": {
     "occupation": "Health Care Assistants",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2695,
     "basicSkills": [
       "Speaking",
@@ -16702,7 +16702,7 @@
   "5413": {
     "occupation": "Prison Guards",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 3523,
     "basicSkills": [
       "Social Perceptivenesss",
@@ -16742,7 +16742,7 @@
   "5414": {
     "occupation": "Security Guards",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1642,
     "basicSkills": [
       "Coordination",
@@ -16861,7 +16861,7 @@
   "5419": {
     "occupation": "Protective Services Workers Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1739,
     "basicSkills": [
       "Monitoring",
@@ -16984,7 +16984,7 @@
   },
   "6112": {
     "occupation": "Shrub Crop Growers",
-    "aiExposure": 0.571428571428571,
+    "aiExposure": 0.5714285714,
     "quartile": "Medium high",
     "wage": 1527,
     "basicSkills": [
@@ -17135,7 +17135,7 @@
   },
   "6115": {
     "occupation": "Vegetable Growers",
-    "aiExposure": 0.333333333333333,
+    "aiExposure": 0.3333333333,
     "quartile": "Medium low",
     "wage": null,
     "basicSkills": [
@@ -17356,7 +17356,7 @@
   },
   "6131": {
     "occupation": "Mixed Crop And Animal Producers",
-    "aiExposure": 0.444444444444444,
+    "aiExposure": 0.4444444444,
     "quartile": "Medium high",
     "wage": 2188,
     "basicSkills": [
@@ -17409,7 +17409,7 @@
   "6211": {
     "occupation": "Skilled Forestry And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2522,
     "basicSkills": [
       "Problem Solving",
@@ -17457,7 +17457,7 @@
   },
   "6221": {
     "occupation": "Fishery And Aquaculture Producers",
-    "aiExposure": 0.111111111111111,
+    "aiExposure": 0.1111111111,
     "quartile": "Medium low",
     "wage": 1570,
     "basicSkills": [
@@ -17510,7 +17510,7 @@
   "6222": {
     "occupation": "Skilled Inland And Coastal Waters Fishery Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1430,
     "basicSkills": [
       "Problem Solving",
@@ -17554,7 +17554,7 @@
   "6223": {
     "occupation": "Skilled Deep-Sea Fishery Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1120,
     "basicSkills": [
       "Problem Solving",
@@ -17590,7 +17590,7 @@
   "6224": {
     "occupation": "Hunters And Trappers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2092,
     "basicSkills": [
       "Problem Solving",
@@ -17705,7 +17705,7 @@
   },
   "6331": {
     "occupation": "Subsistence Mixed Crop And Livestock Farmers",
-    "aiExposure": 0.444444444444444,
+    "aiExposure": 0.4444444444,
     "quartile": "Medium high",
     "wage": 1947,
     "basicSkills": [
@@ -17758,7 +17758,7 @@
   "7111": {
     "occupation": "House Builders And Construction Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -17799,7 +17799,7 @@
   "7112": {
     "occupation": "Bricklayers And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1312,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -17828,7 +17828,7 @@
   "7113": {
     "occupation": "Stonemasons, Stone Cutters, Splitters And Carvers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -17880,7 +17880,7 @@
   "7114": {
     "occupation": "Concrete Placers, Concrete Finishers And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1442,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -17919,7 +17919,7 @@
   "7115": {
     "occupation": "Carpenters And Joiners",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1676,
     "basicSkills": [
       "Handling And Moving Objects"
@@ -17955,7 +17955,7 @@
   "7119": {
     "occupation": "Building Frame And Related Trades Workers Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1724,
     "basicSkills": [
       "Handling And Moving Objects"
@@ -18018,7 +18018,7 @@
   "7122": {
     "occupation": "Floor Layers And Tile Setters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1733,
     "basicSkills": [
       "Handling And Moving Objects"
@@ -18049,7 +18049,7 @@
   "7123": {
     "occupation": "Plasterers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1664,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -18080,7 +18080,7 @@
   },
   "7124": {
     "occupation": "Insulation Workers",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 1469,
     "basicSkills": [
@@ -18122,7 +18122,7 @@
   "7125": {
     "occupation": "Glaziers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1595,
     "basicSkills": [
       "Coordination"
@@ -18154,7 +18154,7 @@
   "7126": {
     "occupation": "Plumbers And Pipe Fitters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2183,
     "basicSkills": [
       "Coordination"
@@ -18226,7 +18226,7 @@
   "7131": {
     "occupation": "Painters And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1442,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -18267,7 +18267,7 @@
   "7132": {
     "occupation": "Spray Painters And Varnishers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1730,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -18296,7 +18296,7 @@
   "7133": {
     "occupation": "Building Structure Cleaners",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2297,
     "basicSkills": [
       "Communication",
@@ -18317,7 +18317,7 @@
   "7211": {
     "occupation": "Metal Moulders And Coremakers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2910,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -18346,7 +18346,7 @@
   "7212": {
     "occupation": "Welders And Flame Cutters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1797,
     "basicSkills": [
       "Coordination",
@@ -18389,7 +18389,7 @@
   "7213": {
     "occupation": "Sheet-Metal Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2083,
     "basicSkills": [
       "Coordination",
@@ -18428,7 +18428,7 @@
   "7214": {
     "occupation": "Structural-Metal Preparers And Erectors",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1845,
     "basicSkills": [
       "Coordination",
@@ -18470,7 +18470,7 @@
   "7215": {
     "occupation": "Riggers And Cable Splicers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1845,
     "basicSkills": [
       "Active Listening",
@@ -18511,7 +18511,7 @@
   "7221": {
     "occupation": "Blacksmiths, Hammersmiths And Forging-Press Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2794,
     "basicSkills": [
       "Coordination",
@@ -18548,7 +18548,7 @@
   "7222": {
     "occupation": "Toolmakers And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1821,
     "basicSkills": [
       "Coordination",
@@ -18597,7 +18597,7 @@
   "7223": {
     "occupation": "Metal Working Machine Tool Setters And Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1692,
     "basicSkills": [
       "Coordination",
@@ -18625,7 +18625,7 @@
   "7224": {
     "occupation": "Metal Polishers, Wheel Grinders And Tool Sharpeners",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1845,
     "basicSkills": [
       "Coordination",
@@ -18657,7 +18657,7 @@
   "7231": {
     "occupation": "Motor Vehicle Mechanics And Repairers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1845,
     "basicSkills": [
       "Problem Solving",
@@ -18686,7 +18686,7 @@
   "7232": {
     "occupation": "Aircraft Engine Mechanics And Repairers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2891,
     "basicSkills": [
       "Problem Solving",
@@ -18723,7 +18723,7 @@
   "7233": {
     "occupation": "Agricultural And Industrial Machinery Mechanics And Repairers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1816,
     "basicSkills": [
       "Problem Solving",
@@ -18757,7 +18757,7 @@
   "7234": {
     "occupation": "Bicycle And Related Repairers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Service Orientation",
@@ -18811,7 +18811,7 @@
   "7239": {
     "occupation": "Machinery Mechanics And Repairers Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1918,
     "basicSkills": [
       "Service Orientation",
@@ -18834,7 +18834,7 @@
   "7311": {
     "occupation": "Precision Instrument Makers And Repairers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2045,
     "basicSkills": [
       "Service Orientation",
@@ -18876,7 +18876,7 @@
   "7312": {
     "occupation": "Musical Instrument Makers And Tuners",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1130,
     "basicSkills": [
       "Problem Solving",
@@ -18913,7 +18913,7 @@
   "7313": {
     "occupation": "Jewellery And Precious Metal Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2549,
     "basicSkills": [
       "Service Orientation",
@@ -18955,7 +18955,7 @@
   "7314": {
     "occupation": "Potters And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Service Orientation",
@@ -19000,7 +19000,7 @@
   },
   "7315": {
     "occupation": "Glass Makers, Cutters, Grinders And Finishers",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 1272,
     "basicSkills": [
@@ -19040,7 +19040,7 @@
   "7316": {
     "occupation": "Sign Writers, Decorative Painters, Engravers And Etchers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1678,
     "basicSkills": [
       "Communication",
@@ -19075,7 +19075,7 @@
   "7317": {
     "occupation": "Handicraft Workers In Wood, Basketry And Related Materials",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1667,
     "basicSkills": [
       "Communication",
@@ -19120,7 +19120,7 @@
   "7318": {
     "occupation": "Handicraft Workers In Textile, Leather And Related Materials",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1692,
     "basicSkills": [
       "Communication",
@@ -19152,7 +19152,7 @@
   "7319": {
     "occupation": "Handicraft Workers Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1833,
     "basicSkills": [
       "Communication",
@@ -19171,7 +19171,7 @@
   },
   "7321": {
     "occupation": "Pre-Press Workers",
-    "aiExposure": 0.833333333333333,
+    "aiExposure": 0.8333333333,
     "quartile": "High",
     "wage": 1924,
     "basicSkills": [
@@ -19268,7 +19268,7 @@
   "7323": {
     "occupation": "Print Finishing And Binding Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1505,
     "basicSkills": [
       "Active Listening",
@@ -19299,7 +19299,7 @@
   "7324": {
     "occupation": "Printing And Photo Engravers And Etchers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Active Listening",
@@ -19354,7 +19354,7 @@
   "7411": {
     "occupation": "Building And Related Electricians",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1847,
     "basicSkills": [
       "Teamwork",
@@ -19381,7 +19381,7 @@
   "7412": {
     "occupation": "Electrical Mechanics And Fitters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1845,
     "basicSkills": [
       "Teamwork",
@@ -19428,7 +19428,7 @@
   "7413": {
     "occupation": "Electrical Line Installers And Repairers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1674,
     "basicSkills": [
       "Teamwork",
@@ -19464,7 +19464,7 @@
   "7421": {
     "occupation": "Electronics Mechanics And Services",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2349,
     "basicSkills": [
       "Teamwork",
@@ -19491,7 +19491,7 @@
   },
   "7422": {
     "occupation": "Information And Communications Technology Installers And Services",
-    "aiExposure": 0.142857142857143,
+    "aiExposure": 0.1428571429,
     "quartile": "Medium low",
     "wage": 1930,
     "basicSkills": [
@@ -19540,7 +19540,7 @@
   "7511": {
     "occupation": "Meat And Fish Processing Workers And Related Food Preparers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1199,
     "basicSkills": [
       "Communication",
@@ -19587,7 +19587,7 @@
   "7512": {
     "occupation": "Bakers, Pastry And Pasta-Cooks, And Confectionery Makers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2475,
     "basicSkills": [
       "Monitoring",
@@ -19623,7 +19623,7 @@
   "7513": {
     "occupation": "Dairy-Product Makers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1692,
     "basicSkills": [
       "Coordination",
@@ -19651,7 +19651,7 @@
   "7514": {
     "occupation": "Fruit, Vegetable And Related Preservers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 3934,
     "basicSkills": [
       "Coordination",
@@ -19679,7 +19679,7 @@
   "7515": {
     "occupation": "Food And Beverage Tasters And Graders",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1336,
     "basicSkills": [
       "Critical Thinking"
@@ -19703,7 +19703,7 @@
   "7516": {
     "occupation": "Tobacco Preparers And Tobacco Product Makers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2513,
     "basicSkills": [
       "Problem Solving",
@@ -19738,7 +19738,7 @@
   "7611": {
     "occupation": "Wood Treaters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Problem Solving",
@@ -19766,7 +19766,7 @@
   "7612": {
     "occupation": "Cabinet-Makers And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1492,
     "basicSkills": [
       "Monitoring",
@@ -19803,7 +19803,7 @@
   "7613": {
     "occupation": "Woodworking-Machine Tool Setters And Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1612,
     "basicSkills": [
       "Teamwork",
@@ -19826,7 +19826,7 @@
   "7621": {
     "occupation": "Tailors, Dressmakers, Furriers And Hatters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1692,
     "basicSkills": [
       "Time Management",
@@ -19883,7 +19883,7 @@
   "7622": {
     "occupation": "Garment And Related Pattern-Makers And Cutters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1930,
     "basicSkills": [
       "Critical Thinking",
@@ -19918,7 +19918,7 @@
   "7623": {
     "occupation": "Shoemakers And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2728,
     "basicSkills": [
       "Time Management",
@@ -19975,7 +19975,7 @@
   "7624": {
     "occupation": "Upholsterers And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1212,
     "basicSkills": [
       "Reading Comprehension",
@@ -20013,7 +20013,7 @@
   "7625": {
     "occupation": "Pelt Dressers, Tanners And Fellmongers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Reading Comprehension"
@@ -20162,7 +20162,7 @@
   },
   "7633": {
     "occupation": "Product Graders And Testers (Excluding Foods And Beverages)",
-    "aiExposure": 0.285714285714286,
+    "aiExposure": 0.2857142857,
     "quartile": "Medium low",
     "wage": 1204,
     "basicSkills": [
@@ -20208,7 +20208,7 @@
   },
   "7634": {
     "occupation": "Fumigators And Pest And Weed Controllers",
-    "aiExposure": 0.444444444444444,
+    "aiExposure": 0.4444444444,
     "quartile": "Medium high",
     "wage": 1514,
     "basicSkills": [
@@ -20261,7 +20261,7 @@
   "7639": {
     "occupation": "Other Related Craft Workers Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2556,
     "basicSkills": [
       "Active Listening",
@@ -20289,7 +20289,7 @@
   "8111": {
     "occupation": "Miners And Quarry Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2290,
     "basicSkills": [
       "Handling And Moving Objects"
@@ -20340,7 +20340,7 @@
   "8112": {
     "occupation": "Mineral And Stone Processing Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2618,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -20375,7 +20375,7 @@
   "8113": {
     "occupation": "Well Drillers And Borers And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2680,
     "basicSkills": [
       "Handling And Moving Objects",
@@ -20406,7 +20406,7 @@
   "8114": {
     "occupation": "Cement, Stone And Other Mineral Products Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1869,
     "basicSkills": [
       "Coordination",
@@ -20439,7 +20439,7 @@
   "8121": {
     "occupation": "Metal Processing Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1840,
     "basicSkills": [
       "Coordination",
@@ -20476,7 +20476,7 @@
   "8122": {
     "occupation": "Metal Finishing, Plating And Coating Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2800,
     "basicSkills": [
       "Coordination",
@@ -20529,7 +20529,7 @@
   "8131": {
     "occupation": "Chemical Products Plant And Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2280,
     "basicSkills": [
       "Coordination",
@@ -20573,7 +20573,7 @@
   },
   "8132": {
     "occupation": "Photographic Products Machine Operators",
-    "aiExposure": 0.142857142857143,
+    "aiExposure": 0.1428571429,
     "quartile": "Medium low",
     "wage": 1692,
     "basicSkills": [
@@ -20620,7 +20620,7 @@
   "8141": {
     "occupation": "Rubber Products Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1730,
     "basicSkills": [
       "Coordination",
@@ -20657,7 +20657,7 @@
   "8142": {
     "occupation": "Plastic Products Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1480,
     "basicSkills": [
       "Coordination",
@@ -20698,7 +20698,7 @@
   "8143": {
     "occupation": "Paper Products Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1632,
     "basicSkills": [
       "Coordination",
@@ -20731,7 +20731,7 @@
   "8151": {
     "occupation": "Fibre Preparing, Spinning And Winding Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1726,
     "basicSkills": [
       "Coordination",
@@ -20764,7 +20764,7 @@
   "8152": {
     "occupation": "Weaving And Knitting Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1692,
     "basicSkills": [
       "Coordination",
@@ -20785,7 +20785,7 @@
   "8153": {
     "occupation": "Sewing Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1017,
     "basicSkills": [
       "Coordination",
@@ -20815,7 +20815,7 @@
   "8154": {
     "occupation": "Bleaching, Dyeing And Fabric Cleaning Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1845,
     "basicSkills": [
       "Coordination",
@@ -20856,7 +20856,7 @@
   "8155": {
     "occupation": "Fur And Leather Preparing Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": null,
     "basicSkills": [
       "Coordination",
@@ -20885,7 +20885,7 @@
   "8156": {
     "occupation": "Shoemaking And Related Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1730,
     "basicSkills": [
       "Coordination",
@@ -20914,7 +20914,7 @@
   "8157": {
     "occupation": "Laundry Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1095,
     "basicSkills": [
       "Coordination",
@@ -20967,7 +20967,7 @@
   "8159": {
     "occupation": "Textile, Fur And Leather Products Machine Operators Not Elesewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1263,
     "basicSkills": [
       "Coordination",
@@ -20988,7 +20988,7 @@
   "8161": {
     "occupation": "Food And Related Products Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1542,
     "basicSkills": [
       "Coordination",
@@ -21037,7 +21037,7 @@
   "8171": {
     "occupation": "Pulp And Papermaking Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1692,
     "basicSkills": [
       "Coordination",
@@ -21091,7 +21091,7 @@
   "8172": {
     "occupation": "Wood Processing Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1412,
     "basicSkills": [
       "Coordination",
@@ -21141,7 +21141,7 @@
   "8173": {
     "occupation": "Wood Products Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1318,
     "basicSkills": [
       "Coordination",
@@ -21163,7 +21163,7 @@
   "8181": {
     "occupation": "Glass And Ceramics Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1516,
     "basicSkills": [
       "Coordination",
@@ -21234,7 +21234,7 @@
   "8182": {
     "occupation": "Steam Engine And Boiler Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1730,
     "basicSkills": [
       "Coordination",
@@ -21268,7 +21268,7 @@
   "8183": {
     "occupation": "Packing, Bottling And Labelling Machine Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1603,
     "basicSkills": [
       "Coordination",
@@ -21298,7 +21298,7 @@
   "8189": {
     "occupation": "Stationary Plant And Machine Operators Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1747,
     "basicSkills": [
       "Coordination",
@@ -21320,7 +21320,7 @@
   "8211": {
     "occupation": "Mechanical Machinery Assemblers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1861,
     "basicSkills": [
       "Coordination",
@@ -21341,7 +21341,7 @@
   "8212": {
     "occupation": "Electrical And Electronic Equipment Assemblers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1776,
     "basicSkills": [
       "Coordination",
@@ -21366,7 +21366,7 @@
   "8213": {
     "occupation": "Leather, Metal, Rubber And Plastic Products Assemblers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1500,
     "basicSkills": [
       "Coordination",
@@ -21387,7 +21387,7 @@
   "8219": {
     "occupation": "Assemblers Not Elsewhere Classified",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1501,
     "basicSkills": [
       "Coordination",
@@ -21412,7 +21412,7 @@
   "8221": {
     "occupation": "Machine-Tool Setter-Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1730,
     "basicSkills": [
       "Coordination",
@@ -21473,7 +21473,7 @@
   "8312": {
     "occupation": "Railway Brake, Signal And Switch Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1874,
     "basicSkills": [
       "Time Management",
@@ -21544,7 +21544,7 @@
   },
   "8322": {
     "occupation": "Car, Taxi And Van Drivers",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 2504,
     "basicSkills": [
@@ -21585,7 +21585,7 @@
   "8331": {
     "occupation": "Bus And Tram Drivers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 2029,
     "basicSkills": [
       "Service Orientation",
@@ -21629,7 +21629,7 @@
   },
   "8332": {
     "occupation": "Heavy Truck And Lorry Drivers",
-    "aiExposure": 0.166666666666667,
+    "aiExposure": 0.1666666667,
     "quartile": "Medium low",
     "wage": 1692,
     "basicSkills": [
@@ -21670,7 +21670,7 @@
   "8341": {
     "occupation": "Mobile Farm And Forestry Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1513,
     "basicSkills": [
       "Active Listening",
@@ -21694,7 +21694,7 @@
   "8342": {
     "occupation": "Earth-Moving And Related Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1527,
     "basicSkills": [
       "Active Listening",
@@ -21738,7 +21738,7 @@
   "8343": {
     "occupation": "Crane, Hoist And Related Plant Operators",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1830,
     "basicSkills": [
       "Active Listening",
@@ -21822,7 +21822,7 @@
   "8351": {
     "occupation": "Ships Deck Crews And Related Workers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1644,
     "basicSkills": [
       "Coordination",
@@ -21862,7 +21862,7 @@
   "9112": {
     "occupation": "Cleaners And Helpers In Offices, Hotels And Other Establishments",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1414,
     "basicSkills": [],
     "specificSkills": [
@@ -21890,7 +21890,7 @@
   "9121": {
     "occupation": "Hand Launderers And Ironers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1674,
     "basicSkills": [
       "Laundry"
@@ -21918,7 +21918,7 @@
   "9312": {
     "occupation": "Civil Engineering Labourers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1153,
     "basicSkills": [],
     "specificSkills": [
@@ -21938,7 +21938,7 @@
   "9313": {
     "occupation": "Building Construction Labourers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1240,
     "basicSkills": [
       "Active Listening"
@@ -21963,7 +21963,7 @@
   },
   "9333": {
     "occupation": "Transport And Storage Labourers",
-    "aiExposure": 0.111111111111111,
+    "aiExposure": 0.1111111111,
     "quartile": "Medium low",
     "wage": 1512,
     "basicSkills": [
@@ -22014,7 +22014,7 @@
   "9334": {
     "occupation": "Shelf Fillers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1601,
     "basicSkills": [
       "Handling And Moving Objects"
@@ -22106,7 +22106,7 @@
   "9412": {
     "occupation": "Kitchen Helpers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1211,
     "basicSkills": [
       "Communication"
@@ -22145,7 +22145,7 @@
   },
   "9511": {
     "occupation": "Street And Related Service Workers",
-    "aiExposure": 0.111111111111111,
+    "aiExposure": 0.1111111111,
     "quartile": "Medium low",
     "wage": 1220,
     "basicSkills": [
@@ -22194,7 +22194,7 @@
   "9521": {
     "occupation": "Street Vendors (Excluding Food)",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1757,
     "basicSkills": [
       "Sales",
@@ -22220,7 +22220,7 @@
   "9611": {
     "occupation": "Garbage Collectors",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1211,
     "basicSkills": [
       "Service Orientation"
@@ -22252,7 +22252,7 @@
   "9613": {
     "occupation": "Sweepers And Related Labourers",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1315,
     "basicSkills": [
       "Service Orientation"
@@ -22284,7 +22284,7 @@
   "9621": {
     "occupation": "Messengers, Package Deliverers And Luggage Porters",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1882,
     "basicSkills": [
       "Active Listening",
@@ -22330,7 +22330,7 @@
   "9622": {
     "occupation": "Odd-Job Persons",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1857,
     "basicSkills": [
       "Active Listening",
@@ -22380,7 +22380,7 @@
   "9623": {
     "occupation": "Meter Readers And Vending-Machine Collectors",
     "aiExposure": 0,
-    "quartile": "Medium low",
+    "quartile": "Low",
     "wage": 1657,
     "basicSkills": [
       "Coordination"
@@ -22403,7 +22403,7 @@
   },
   "9625": {
     "occupation": "Attendants",
-    "aiExposure": 0.222222222222222,
+    "aiExposure": 0.2222222222,
     "quartile": "Medium low",
     "wage": 2157,
     "basicSkills": [
