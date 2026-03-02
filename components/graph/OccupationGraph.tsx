@@ -38,6 +38,7 @@ export default function OccupationGraph({
   const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const selectedNodeId = selectedNodeIdProp;
   const nodeById = useRef<Map<string, SimNode>>(new Map());
 
@@ -90,6 +91,19 @@ export default function OccupationGraph({
     }
     return set;
   }, [selectedNodeId, edges]);
+
+  // Build adjacency set for hovered node (suppressed when a node is selected)
+  const hoveredNeighborIds = useMemo<Set<string> | null>(() => {
+    if (!hoveredNodeId || selectedNodeId) return null;
+    const set = new Set<string>();
+    for (const e of edges) {
+      const src = typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+      const tgt = typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+      if (src === hoveredNodeId) set.add(tgt);
+      if (tgt === hoveredNodeId) set.add(src);
+    }
+    return set;
+  }, [hoveredNodeId, selectedNodeId, edges]);
 
   const getNodeOpacity = useCallback(
     (node: SimNode) => {
@@ -338,6 +352,8 @@ export default function OccupationGraph({
                 const color = MASCO_GROUPS[node.group]?.color ?? '#888';
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
+                const isHovered = node.id === hoveredNodeId;
+                const isHoveredNeighbor = !!hoveredNeighborIds?.has(node.id);
                 return (
                   <circle
                     key={node.id}
@@ -349,10 +365,22 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isSelected ? 'var(--foreground)' : 'var(--background)'
+                      isSelected || isHovered
+                        ? 'var(--foreground)'
+                        : isHoveredNeighbor
+                        ? color
+                        : 'var(--background)'
                     }
-                    strokeWidth={isSelected ? 2.5 : 0.8}
-                    strokeOpacity={opacity}
+                    strokeWidth={
+                      isSelected || isHovered ? 2.5
+                      : isHoveredNeighbor ? 2
+                      : 0.8
+                    }
+                    strokeOpacity={
+                      isHoveredNeighbor && !isSelected && !isHovered
+                        ? opacity * 0.7
+                        : opacity
+                    }
                     style={{ cursor: 'pointer' }}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -361,13 +389,17 @@ export default function OccupationGraph({
                     }}
                     onMouseEnter={() => {
                       const t = transformRef.current;
+                      setHoveredNodeId(node.id);
                       setTooltip({
                         x: t.applyX(node.x ?? 0),
                         y: t.applyY(node.y ?? 0),
                         node,
                       });
                     }}
-                    onMouseLeave={() => setTooltip(null)}
+                    onMouseLeave={() => {
+                      setHoveredNodeId(null);
+                      setTooltip(null);
+                    }}
                   />
                 );
               })}
@@ -390,21 +422,20 @@ export default function OccupationGraph({
           }}
         >
           <p className="font-semibold leading-tight">{tooltip.node.label}</p>
-          <p className="text-muted-foreground mt-0.5">
-            Code: {tooltip.node.id}
-          </p>
-          <p className="text-muted-foreground">
-            AI Exposure:{' '}
-            <span className="text-popover-foreground font-medium">
-              {(tooltip.node.aiExposure * 100).toFixed(1)}%
-            </span>
-          </p>
-          <p className="text-muted-foreground">
-            Quartile:{' '}
-            <span className="text-popover-foreground">
-              {tooltip.node.quartile}
-            </span>
-          </p>
+          <div className="mt-2">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-muted-foreground text-[11px]">AI Exposure</span>
+              <span className="font-medium text-[11px]">
+                {(tooltip.node.aiExposure * 100).toFixed(1)}%
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full rounded-full bg-foreground"
+                style={{ width: `${tooltip.node.aiExposure * 100}%` }}
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>
