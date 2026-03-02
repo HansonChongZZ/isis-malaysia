@@ -35,6 +35,7 @@ interface OccupationPanelProps {
   detail: OccupationDetail | null
   nodes: GraphNode[]
   edges: GraphEdge[]
+  isOpen: boolean
   onClose: () => void
   onNodeSelect: (id: string) => void
 }
@@ -125,6 +126,7 @@ export default function OccupationPanel({
   detail,
   nodes,
   edges,
+  isOpen,
   onClose,
   onNodeSelect,
 }: OccupationPanelProps) {
@@ -181,7 +183,7 @@ export default function OccupationPanel({
   })
 
   return (
-    <Dialog open={!!nodeId && !!detail} onOpenChange={(open) => { if (!open) onClose() }}>
+    <Dialog open={isOpen && !!nodeId && !!detail} onOpenChange={(open) => { if (!open) onClose() }}>
       <DialogContent className="bg-card border-border text-foreground sm:max-w-6xl max-h-[90vh] overflow-hidden p-0 flex flex-col" showCloseButton={false}>
         {detail && nodeId && (
           <>

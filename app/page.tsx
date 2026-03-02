@@ -26,7 +26,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
 
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
 
@@ -64,14 +64,27 @@ export default function HomePage() {
     return [...all].sort()
   }, [occupations])
 
+  // Occupation list for combobox (sorted by label)
+  const occupationList = useMemo<{ id: string; label: string }[]>(() => {
+    return nodes
+      .map((n) => ({ id: n.id, label: n.label }))
+      .sort((a, b) => a.label.localeCompare(b.label))
+  }, [nodes])
+
   const selectedDetail = selectedNodeId ? occupations[selectedNodeId] ?? null : null
+
+  const handleNodeSelect = (id: string | null) => {
+    setSelectedNodeId(id)
+    if (id) setIsPanelOpen(true)
+  }
 
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-background text-foreground overflow-hidden">
       {/* Graph controls */}
       <GraphControls
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
+        occupations={occupationList}
+        selectedOccupation={selectedNodeId}
+        onOccupationSelect={handleNodeSelect}
         filterGroup={filterGroup}
         setFilterGroup={setFilterGroup}
         filterSkills={filterSkills}
@@ -101,9 +114,9 @@ export default function HomePage() {
           <OccupationGraph
             nodes={nodes}
             edges={edges}
-            onNodeSelect={setSelectedNodeId}
+            onNodeSelect={handleNodeSelect}
+            selectedNodeId={selectedNodeId}
             filterGroup={filterGroup}
-            searchQuery={searchQuery}
             filterSkills={filterSkills}
             allSkills={allSkills}
           />
@@ -126,8 +139,9 @@ export default function HomePage() {
         detail={selectedDetail}
         nodes={nodes}
         edges={edges}
-        onClose={() => setSelectedNodeId(null)}
-        onNodeSelect={setSelectedNodeId}
+        isOpen={isPanelOpen}
+        onClose={() => setIsPanelOpen(false)}
+        onNodeSelect={handleNodeSelect}
       />
     </div>
   )

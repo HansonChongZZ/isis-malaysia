@@ -2,7 +2,7 @@
 
 import { useRef, useMemo } from 'react';
 import { MASCO_GROUPS } from '@/lib/constants';
-import { Search, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import {
   Combobox,
   ComboboxChip,
@@ -10,14 +10,18 @@ import {
   ComboboxChipsInput,
   ComboboxContent,
   ComboboxEmpty,
+  ComboboxInput,
   ComboboxItem,
   ComboboxList,
   ComboboxValue,
 } from '@/components/ui/combobox';
 
+type OccupationOption = { id: string; label: string };
+
 interface GraphControlsProps {
-  searchQuery: string;
-  setSearchQuery: (v: string) => void;
+  occupations: OccupationOption[];
+  selectedOccupation: string | null;
+  onOccupationSelect: (id: string | null) => void;
   filterGroup: number | null;
   setFilterGroup: (v: number | null) => void;
   filterSkills: string[];
@@ -26,8 +30,9 @@ interface GraphControlsProps {
 }
 
 export default function GraphControls({
-  searchQuery,
-  setSearchQuery,
+  occupations,
+  selectedOccupation,
+  onOccupationSelect,
   filterGroup,
   setFilterGroup,
   filterSkills,
@@ -35,6 +40,11 @@ export default function GraphControls({
   uniqueSkills,
 }: GraphControlsProps) {
   const chipsRef = useRef<HTMLDivElement>(null);
+
+  const selectedOccupationObj = useMemo(() => {
+    if (!selectedOccupation) return null;
+    return occupations.find((o) => o.id === selectedOccupation) ?? null;
+  }, [occupations, selectedOccupation]);
 
   const sortedSkills = useMemo(() => {
     const selectedSet = new Set(filterSkills);
@@ -45,24 +55,33 @@ export default function GraphControls({
 
   return (
     <div className="flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
-      {/* Search — full row on mobile, constrained on desktop */}
-      <div className="relative flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
-        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground w-3.5 h-3.5" />
-        <input
-          type="text"
-          placeholder="Search occupation or code…"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-input text-foreground text-sm pl-8 pr-8 py-1.5 rounded-md border border-border focus:outline-none focus:border-ring placeholder:text-muted-foreground"
-        />
-        {searchQuery && (
-          <button
-            onClick={() => setSearchQuery('')}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
-        )}
+      {/* Occupation search — full row on mobile, constrained on desktop */}
+      <div className="flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
+        <Combobox
+          items={occupations}
+          itemToStringValue={(occ) => occ.label}
+          value={selectedOccupationObj}
+          onValueChange={(occ) => onOccupationSelect(occ?.id ?? null)}
+        >
+          <ComboboxInput
+            placeholder="Search occupation…"
+            showClear={!!selectedOccupation}
+            className="w-full"
+          />
+          <ComboboxContent>
+            <ComboboxEmpty>No occupations found.</ComboboxEmpty>
+            <ComboboxList>
+              {(occ) => (
+                <ComboboxItem key={occ.id} value={occ}>
+                  <span>{occ.label}</span>
+                  <span className="text-muted-foreground text-xs ml-1">
+                    {occ.id}
+                  </span>
+                </ComboboxItem>
+              )}
+            </ComboboxList>
+          </ComboboxContent>
+        </Combobox>
       </div>
 
       {/* Filter row — wraps below search on mobile */}

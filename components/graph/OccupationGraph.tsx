@@ -16,8 +16,8 @@ interface OccupationGraphProps {
   nodes: GraphNode[];
   edges: GraphEdge[];
   onNodeSelect: (nodeId: string | null) => void;
+  selectedNodeId: string | null;
   filterGroup: number | null;
-  searchQuery: string;
   filterSkills: string[];
   allSkills: Map<string, Set<string>>; // nodeId -> skills set
 }
@@ -26,8 +26,8 @@ export default function OccupationGraph({
   nodes,
   edges,
   onNodeSelect,
+  selectedNodeId: selectedNodeIdProp,
   filterGroup,
-  searchQuery,
   filterSkills,
   allSkills,
 }: OccupationGraphProps) {
@@ -38,7 +38,7 @@ export default function OccupationGraph({
   const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const selectedNodeId = selectedNodeIdProp;
   const nodeById = useRef<Map<string, SimNode>>(new Map());
 
   const simNodes = useMemo<SimNode[]>(
@@ -54,23 +54,15 @@ export default function OccupationGraph({
   // Compute visible IDs based on filters
   const visibleIds = useMemo<Set<string> | null>(() => {
     const hasGroupFilter = filterGroup !== null;
-    const hasSearch = searchQuery.trim().length > 0;
     const hasSkillFilter = filterSkills.length > 0;
 
-    if (!hasGroupFilter && !hasSearch && !hasSkillFilter) return null;
+    if (!hasGroupFilter && !hasSkillFilter) return null;
 
     const result = new Set<string>();
-    const q = searchQuery.toLowerCase();
     const skillQueries = filterSkills.map((s) => s.toLowerCase());
 
     for (const node of simNodes) {
       if (hasGroupFilter && node.group !== filterGroup) continue;
-      if (
-        hasSearch &&
-        !node.label.toLowerCase().includes(q) &&
-        !node.id.includes(q)
-      )
-        continue;
       if (hasSkillFilter) {
         const nodeSkills = allSkills.get(node.id);
         if (!nodeSkills) continue;
@@ -82,7 +74,7 @@ export default function OccupationGraph({
       result.add(node.id);
     }
     return result;
-  }, [simNodes, filterGroup, searchQuery, filterSkills, allSkills]);
+  }, [simNodes, filterGroup, filterSkills, allSkills]);
 
   // Build adjacency set for selected node
   const connectedIds = useMemo<Set<string> | null>(() => {
@@ -336,7 +328,6 @@ export default function OccupationGraph({
           height={dimensions.height}
           style={{ position: 'absolute', top: 0, left: 0, cursor: 'grab' }}
           onClick={() => {
-            setSelectedNodeId(null);
             onNodeSelect(null);
           }}
         >
@@ -366,7 +357,6 @@ export default function OccupationGraph({
                     onClick={(e) => {
                       e.stopPropagation();
                       const newId = selectedNodeId === node.id ? null : node.id;
-                      setSelectedNodeId(newId);
                       onNodeSelect(newId);
                     }}
                     onMouseEnter={() => {
