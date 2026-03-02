@@ -13,15 +13,15 @@ export const MASCO_GROUPS: Record<number, { label: string; color: string }> = {
 // Cluster center offsets (relative to canvas center) for MASCO groups
 // These guide the forceX/Y to produce cluster organization
 export const CLUSTER_OFFSETS: Record<number, { x: number; y: number }> = {
-  1: { x: -300, y: -200 },
-  2: { x: 0, y: -280 },
-  3: { x: 300, y: -200 },
-  4: { x: 350, y: 50 },
-  5: { x: 200, y: 280 },
-  6: { x: 0, y: 320 },
-  7: { x: -200, y: 280 },
-  8: { x: -350, y: 50 },
-  9: { x: -150, y: -50 },
+  1: { x: -180, y: -120 },
+  2: { x: 0, y: -168 },
+  3: { x: 180, y: -120 },
+  4: { x: 210, y: 30 },
+  5: { x: 120, y: 168 },
+  6: { x: 0, y: 192 },
+  7: { x: -120, y: 168 },
+  8: { x: -210, y: 30 },
+  9: { x: -90, y: -30 },
 }
 
 export const QUARTILE_LABELS: Record<string, string> = {
