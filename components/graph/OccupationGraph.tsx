@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
 import type { GraphNode, GraphEdge, SimNode } from '@/lib/types';
-import { MASCO_GROUPS } from '@/lib/constants';
+import { MASCO_GROUPS, NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
 import { useForceSimulation } from '@/hooks/useForceSimulation';
 import { useGraphInteraction } from '@/hooks/useGraphInteraction';
 
@@ -344,7 +344,7 @@ export default function OccupationGraph({
           <g ref={gRef}>
             <g className="nodes">
               {simNodes.map((node) => {
-                const r = 4 + node.aiExposure * 12;
+                const r = NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
                 const color = MASCO_GROUPS[node.group]?.color ?? '#888';
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;

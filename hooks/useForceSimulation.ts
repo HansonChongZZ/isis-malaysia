@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import * as d3 from 'd3';
 import type { SimNode, SimEdge, GraphEdge } from '@/lib/types';
-import { CLUSTER_OFFSETS } from '@/lib/constants';
+import { CLUSTER_OFFSETS, NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_COLLIDE_PADDING } from '@/lib/constants';
 
 interface UseForceSimulationProps {
   nodes: SimNode[];
@@ -44,7 +44,7 @@ export function useForceSimulation({
       .force('center', d3.forceCenter(cx, cy))
       .force(
         'collide',
-        d3.forceCollide<SimNode>((d) => 4 + d.aiExposure * 12 + 2),
+        d3.forceCollide<SimNode>((d) => NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE + NODE_RADIUS_COLLIDE_PADDING),
       )
       .force(
         'x',
