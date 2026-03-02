@@ -5,7 +5,6 @@ import * as d3 from 'd3';
 import type { GraphNode, GraphEdge, SimNode } from '@/lib/types';
 import { MASCO_GROUPS, NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
 import { useForceSimulation } from '@/hooks/useForceSimulation';
-import { useGraphInteraction } from '@/hooks/useGraphInteraction';
 
 interface TooltipState {
   x: number;
@@ -19,7 +18,7 @@ interface OccupationGraphProps {
   onNodeSelect: (nodeId: string | null) => void;
   filterGroup: number | null;
   searchQuery: string;
-  filterSkill: string;
+  filterSkills: string[];
   allSkills: Map<string, Set<string>>; // nodeId -> skills set
 }
 
@@ -29,7 +28,7 @@ export default function OccupationGraph({
   onNodeSelect,
   filterGroup,
   searchQuery,
-  filterSkill,
+  filterSkills,
   allSkills,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,13 +55,13 @@ export default function OccupationGraph({
   const visibleIds = useMemo<Set<string> | null>(() => {
     const hasGroupFilter = filterGroup !== null;
     const hasSearch = searchQuery.trim().length > 0;
-    const hasSkillFilter = filterSkill.trim().length > 0;
+    const hasSkillFilter = filterSkills.length > 0;
 
     if (!hasGroupFilter && !hasSearch && !hasSkillFilter) return null;
 
     const result = new Set<string>();
     const q = searchQuery.toLowerCase();
-    const skillQ = filterSkill.toLowerCase();
+    const skillQueries = filterSkills.map((s) => s.toLowerCase());
 
     for (const node of simNodes) {
       if (hasGroupFilter && node.group !== filterGroup) continue;
@@ -75,15 +74,15 @@ export default function OccupationGraph({
       if (hasSkillFilter) {
         const nodeSkills = allSkills.get(node.id);
         if (!nodeSkills) continue;
-        const match = [...nodeSkills].some((s) =>
-          s.toLowerCase().includes(skillQ),
+        const match = skillQueries.some((fq) =>
+          [...nodeSkills].some((s) => s.toLowerCase().includes(fq)),
         );
         if (!match) continue;
       }
       result.add(node.id);
     }
     return result;
-  }, [simNodes, filterGroup, searchQuery, filterSkill, allSkills]);
+  }, [simNodes, filterGroup, searchQuery, filterSkills, allSkills]);
 
   // Build adjacency set for selected node
   const connectedIds = useMemo<Set<string> | null>(() => {

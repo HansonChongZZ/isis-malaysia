@@ -28,7 +28,7 @@ export default function HomePage() {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
-  const [filterSkill, setFilterSkill] = useState("")
+  const [filterSkills, setFilterSkills] = useState<string[]>([])
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -74,8 +74,8 @@ export default function HomePage() {
         setSearchQuery={setSearchQuery}
         filterGroup={filterGroup}
         setFilterGroup={setFilterGroup}
-        filterSkill={filterSkill}
-        setFilterSkill={setFilterSkill}
+        filterSkills={filterSkills}
+        setFilterSkills={setFilterSkills}
         uniqueSkills={uniqueSkills}
       />
 
@@ -104,7 +104,7 @@ export default function HomePage() {
             onNodeSelect={setSelectedNodeId}
             filterGroup={filterGroup}
             searchQuery={searchQuery}
-            filterSkill={filterSkill}
+            filterSkills={filterSkills}
             allSkills={allSkills}
           />
         )}
