@@ -232,10 +232,13 @@ export default function GraphControls({
                   <button
                     onClick={() => onSizeMetricChange('wage')}
                     aria-pressed={sizeMetric === 'wage'}
+                    disabled={maxWage === 0}
                     className={`flex-1 px-3 py-1.5 transition-colors ${
                       sizeMetric === 'wage'
                         ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                        : maxWage === 0
+                          ? 'bg-muted/50 text-muted-foreground opacity-50 cursor-not-allowed'
+                          : 'bg-muted/50 text-muted-foreground hover:text-foreground'
                     }`}
                   >
                     Wages
