@@ -11,6 +11,8 @@ interface UseForceSimulationProps {
   width: number;
   height: number;
   onTick: () => void;
+  nodeSizeMetric: 'aiExposure' | 'wage';
+  maxWage: number;
 }
 
 export function useForceSimulation({
@@ -19,6 +21,8 @@ export function useForceSimulation({
   width,
   height,
   onTick,
+  nodeSizeMetric,
+  maxWage,
 }: UseForceSimulationProps) {
   const simulationRef = useRef<d3.Simulation<SimNode, SimEdge> | null>(null);
 
@@ -44,7 +48,12 @@ export function useForceSimulation({
       .force('center', d3.forceCenter(cx, cy))
       .force(
         'collide',
-        d3.forceCollide<SimNode>((d) => NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE + NODE_RADIUS_COLLIDE_PADDING),
+        d3.forceCollide<SimNode>((d) => {
+          const r = nodeSizeMetric === 'wage' && d.wage !== null && maxWage > 0
+            ? NODE_RADIUS_BASE + (d.wage / maxWage) * NODE_RADIUS_SCALE
+            : NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE;
+          return r + NODE_RADIUS_COLLIDE_PADDING;
+        }),
       )
       .force(
         'x',
@@ -74,7 +83,7 @@ export function useForceSimulation({
     return () => {
       simulation.stop();
     };
-  }, [nodes, edges, width, height, onTick]);
+  }, [nodes, edges, width, height, onTick, nodeSizeMetric, maxWage]);
 
   const reheat = useCallback(() => {
     const sim = simulationRef.current;

@@ -317,6 +317,8 @@ export default function OccupationGraph({
     width: dimensions.width,
     height: dimensions.height,
     onTick: handleTick,
+    nodeSizeMetric,
+    maxWage,
   });
 
   // Resize canvas to match container with HiDPI support
