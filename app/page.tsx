@@ -29,6 +29,8 @@ export default function HomePage() {
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
+  const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
+  const [sizeThreshold, setSizeThreshold] = useState(0)
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -64,6 +66,15 @@ export default function HomePage() {
     return [...all].sort()
   }, [occupations])
 
+  // Max wage for threshold slider range
+  const maxWage = useMemo(() => {
+    let max = 0
+    for (const n of nodes) {
+      if (n.wage !== null && n.wage > max) max = n.wage
+    }
+    return max
+  }, [nodes])
+
   // Occupation list for combobox (sorted by label)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
     return nodes
@@ -78,6 +89,11 @@ export default function HomePage() {
     if (id) setIsPanelOpen(true)
   }
 
+  const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
+    setSizeMetric(metric)
+    setSizeThreshold(0)
+  }
+
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-background text-foreground overflow-hidden">
       {/* Graph controls */}
@@ -90,6 +106,11 @@ export default function HomePage() {
         filterSkills={filterSkills}
         setFilterSkills={setFilterSkills}
         uniqueSkills={uniqueSkills}
+        sizeMetric={sizeMetric}
+        onSizeMetricChange={handleSizeMetricChange}
+        sizeThreshold={sizeThreshold}
+        onSizeThresholdChange={setSizeThreshold}
+        maxWage={maxWage}
       />
 
       {/* Main graph area */}
@@ -119,6 +140,8 @@ export default function HomePage() {
             filterGroup={filterGroup}
             filterSkills={filterSkills}
             allSkills={allSkills}
+            sizeMetric={sizeMetric}
+            sizeThreshold={sizeThreshold}
           />
         )}
 
