@@ -55,13 +55,20 @@ export default function GraphControls({
 
   useEffect(() => {
     if (!settingsOpen) return;
-    const handler = (e: MouseEvent) => {
+    const handleClick = (e: MouseEvent) => {
       if (settingsRef.current && !settingsRef.current.contains(e.target as Node)) {
         setSettingsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSettingsOpen(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [settingsOpen]);
 
   const selectedOccupationObj = useMemo(() => {
@@ -199,6 +206,7 @@ export default function GraphControls({
                 <button
                   onClick={() => setSettingsOpen(false)}
                   className="text-muted-foreground hover:text-foreground"
+                  aria-label="Close"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -212,6 +220,7 @@ export default function GraphControls({
                 <div className="flex rounded-md border border-border overflow-hidden text-xs">
                   <button
                     onClick={() => onSizeMetricChange('aiExposure')}
+                    aria-pressed={sizeMetric === 'aiExposure'}
                     className={`flex-1 px-3 py-1.5 transition-colors ${
                       sizeMetric === 'aiExposure'
                         ? 'bg-primary text-primary-foreground'
@@ -222,6 +231,7 @@ export default function GraphControls({
                   </button>
                   <button
                     onClick={() => onSizeMetricChange('wage')}
+                    aria-pressed={sizeMetric === 'wage'}
                     className={`flex-1 px-3 py-1.5 transition-colors ${
                       sizeMetric === 'wage'
                         ? 'bg-primary text-primary-foreground'
@@ -244,6 +254,7 @@ export default function GraphControls({
                   </div>
                   <input
                     type="range"
+                    aria-label={sizeMetric === 'aiExposure' ? 'AI Exposure threshold' : 'Wage threshold'}
                     min={0}
                     max={sizeMetric === 'aiExposure' ? 100 : maxWage}
                     step={sizeMetric === 'aiExposure' ? 1 : 100}
