@@ -42,6 +42,7 @@ export default function OccupationGraph({
   const selectedNodeId = selectedNodeIdProp;
   const nodeById = useRef<Map<string, SimNode>>(new Map());
   const edgeColorRef = useRef('#888');
+  const foregroundColorRef = useRef('#000');
   const [mascoColors, setMascoColors] = useState<Record<number, string>>({});
 
   const simNodes = useMemo<SimNode[]>(
@@ -63,7 +64,10 @@ export default function OccupationGraph({
     for (let i = 1; i <= 9; i++) {
       colors[i] = style.getPropertyValue(`--masco-${i}`).trim() || '#888';
     }
-    edgeColorRef.current = style.getPropertyValue('--muted-foreground').trim() || '#888';
+    edgeColorRef.current =
+      style.getPropertyValue('--muted-foreground').trim() || '#888';
+    foregroundColorRef.current =
+      style.getPropertyValue('--foreground').trim() || '#000';
     setMascoColors(colors);
     drawEdgesRef.current();
   }, []);
@@ -71,7 +75,10 @@ export default function OccupationGraph({
   useEffect(() => {
     readThemeColors();
     const observer = new MutationObserver(readThemeColors);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
     return () => observer.disconnect();
   }, [readThemeColors]);
 
@@ -120,22 +127,52 @@ export default function OccupationGraph({
     if (!hoveredNodeId || selectedNodeId) return null;
     const set = new Set<string>();
     for (const e of edges) {
-      const src = typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
-      const tgt = typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+      const src =
+        typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+      const tgt =
+        typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
       if (src === hoveredNodeId) set.add(tgt);
       if (tgt === hoveredNodeId) set.add(src);
     }
     return set;
   }, [hoveredNodeId, selectedNodeId, edges]);
 
+  const hoveredEdges = useMemo(() => {
+    if (!hoveredNodeId || selectedNodeId || !hoveredNeighborIds) return [];
+    return edges.filter((e) => {
+      const src =
+        typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+      const tgt =
+        typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+      if (src !== hoveredNodeId && tgt !== hoveredNodeId) return false;
+      if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt)))
+        return false;
+      return true;
+    });
+  }, [hoveredNodeId, selectedNodeId, hoveredNeighborIds, edges, visibleIds]);
+
   const getNodeOpacity = useCallback(
     (node: SimNode) => {
       if (visibleIds && !visibleIds.has(node.id)) return 0.06;
       if (selectedNodeId && connectedIds && !connectedIds.has(node.id))
         return 0.12;
+      if (
+        hoveredNodeId &&
+        !selectedNodeId &&
+        node.id !== hoveredNodeId &&
+        hoveredNeighborIds &&
+        !hoveredNeighborIds.has(node.id)
+      )
+        return 0.6;
       return 1;
     },
-    [visibleIds, selectedNodeId, connectedIds],
+    [
+      visibleIds,
+      selectedNodeId,
+      connectedIds,
+      hoveredNodeId,
+      hoveredNeighborIds,
+    ],
   );
 
   const visibleEdges = useMemo(() => {
@@ -160,25 +197,51 @@ export default function OccupationGraph({
     const { k, x, y } = transformRef.current;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (visibleEdges.length === 0) return;
 
     ctx.save();
     ctx.setTransform(k * dpr, 0, 0, k * dpr, x * dpr, y * dpr);
-    ctx.strokeStyle = edgeColorRef.current;
-    ctx.lineWidth = 0.5 / k;
 
-    // Batch strokes by weight tier — max 7 draw calls regardless of edge count
-    const byWeight = new Map<number, typeof visibleEdges>();
-    for (const edge of visibleEdges) {
-      const w = edge.weight;
-      if (!byWeight.has(w)) byWeight.set(w, []);
-      byWeight.get(w)!.push(edge);
+    // Draw selection edges (existing behavior)
+    if (visibleEdges.length > 0) {
+      ctx.strokeStyle = edgeColorRef.current;
+      ctx.lineWidth = 0.5 / k;
+
+      const byWeight = new Map<number, typeof visibleEdges>();
+      for (const edge of visibleEdges) {
+        const w = edge.weight;
+        if (!byWeight.has(w)) byWeight.set(w, []);
+        byWeight.get(w)!.push(edge);
+      }
+
+      for (const [weight, group] of byWeight) {
+        ctx.globalAlpha = Math.min(0.05 + (weight / 7) * 0.3 + 0.25, 0.8);
+        ctx.beginPath();
+        for (const edge of group) {
+          const src = nodeById.current.get(
+            typeof edge.source === 'string'
+              ? edge.source
+              : (edge.source as SimNode).id,
+          );
+          const tgt = nodeById.current.get(
+            typeof edge.target === 'string'
+              ? edge.target
+              : (edge.target as SimNode).id,
+          );
+          if (!src || !tgt) continue;
+          ctx.moveTo(src.x ?? 0, src.y ?? 0);
+          ctx.lineTo(tgt.x ?? 0, tgt.y ?? 0);
+        }
+        ctx.stroke();
+      }
     }
 
-    for (const [weight, group] of byWeight) {
-      ctx.globalAlpha = Math.min(0.05 + (weight / 7) * 0.3 + 0.25, 0.8);
+    // Draw hover edges
+    if (hoveredEdges.length > 0) {
+      ctx.strokeStyle = foregroundColorRef.current;
+      ctx.lineWidth = 1.5 / k;
+      ctx.globalAlpha = 0.6;
       ctx.beginPath();
-      for (const edge of group) {
+      for (const edge of hoveredEdges) {
         const src = nodeById.current.get(
           typeof edge.source === 'string'
             ? edge.source
@@ -197,7 +260,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [visibleEdges]);
+  }, [visibleEdges, hoveredEdges]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
@@ -352,7 +415,11 @@ export default function OccupationGraph({
   });
 
   return (
-    <div ref={containerRef} className="w-full h-full relative overflow-hidden" style={{ backgroundColor: 'var(--canvas-background)' }}>
+    <div
+      ref={containerRef}
+      className="w-full h-full relative overflow-hidden"
+      style={{ backgroundColor: 'var(--canvas-background)' }}
+    >
       {/* Canvas renders edges — behind SVG, no pointer events */}
       <canvas
         ref={canvasRef}
@@ -371,7 +438,8 @@ export default function OccupationGraph({
           <g ref={gRef}>
             <g className="nodes">
               {simNodes.map((node) => {
-                const r = NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
+                const r =
+                  NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
                 const color = mascoColors[node.group] || '#888';
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
@@ -388,23 +456,23 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isSelected || isHovered
+                      isSelected || isHovered || isHoveredNeighbor
                         ? 'var(--foreground)'
-                        : isHoveredNeighbor
-                        ? color
                         : 'var(--background)'
                     }
                     strokeWidth={
-                      isSelected || isHovered ? 2.5
-                      : isHoveredNeighbor ? 2
-                      : 0.8
+                      isSelected || isHovered
+                        ? 2.5
+                        : isHoveredNeighbor
+                          ? 2
+                          : 0.8
                     }
-                    strokeOpacity={
-                      isHoveredNeighbor && !isSelected && !isHovered
-                        ? opacity * 0.7
-                        : opacity
-                    }
-                    style={{ cursor: 'pointer' }}
+                    strokeOpacity={opacity}
+                    style={{
+                      cursor: 'pointer',
+                      transition:
+                        'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease',
+                    }}
                     onClick={(e) => {
                       e.stopPropagation();
                       const newId = selectedNodeId === node.id ? null : node.id;
@@ -447,7 +515,9 @@ export default function OccupationGraph({
           <p className="font-semibold leading-tight">{tooltip.node.label}</p>
           <div className="mt-2">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-muted-foreground text-[11px]">AI Exposure</span>
+              <span className="text-muted-foreground text-[11px]">
+                AI Exposure
+              </span>
               <span className="font-medium text-[11px]">
                 {(tooltip.node.aiExposure * 100).toFixed(1)}%
               </span>
