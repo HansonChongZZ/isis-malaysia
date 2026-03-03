@@ -84,7 +84,7 @@ export default function GraphControls({
   }, [uniqueSkills, filterSkills]);
 
   return (
-    <div className="flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
+    <div className="relative z-20 flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
       {/* Occupation search — full row on mobile, constrained on desktop */}
       <div className="flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
         <Combobox
