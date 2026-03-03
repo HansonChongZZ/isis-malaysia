@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { MASCO_GROUPS } from '@/lib/constants';
-import { X } from 'lucide-react';
+import { Settings2, X } from 'lucide-react';
 import {
   Combobox,
   ComboboxChip,
@@ -27,6 +27,11 @@ interface GraphControlsProps {
   filterSkills: string[];
   setFilterSkills: (v: string[]) => void;
   uniqueSkills: string[];
+  sizeMetric: 'aiExposure' | 'wage';
+  onSizeMetricChange: (metric: 'aiExposure' | 'wage') => void;
+  sizeThreshold: number;
+  onSizeThresholdChange: (value: number) => void;
+  maxWage: number;
 }
 
 export default function GraphControls({
@@ -38,8 +43,33 @@ export default function GraphControls({
   filterSkills,
   setFilterSkills,
   uniqueSkills,
+  sizeMetric,
+  onSizeMetricChange,
+  sizeThreshold,
+  onSizeThresholdChange,
+  maxWage,
 }: GraphControlsProps) {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsRef = useRef<HTMLDivElement>(null);
   const chipsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!settingsOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (settingsRef.current && !settingsRef.current.contains(e.target as Node)) {
+        setSettingsOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSettingsOpen(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [settingsOpen]);
 
   const selectedOccupationObj = useMemo(() => {
     if (!selectedOccupation) return null;
@@ -54,7 +84,7 @@ export default function GraphControls({
   }, [uniqueSkills, filterSkills]);
 
   return (
-    <div className="flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
+    <div className="relative z-20 flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
       {/* Occupation search — full row on mobile, constrained on desktop */}
       <div className="flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
         <Combobox
@@ -157,6 +187,99 @@ export default function GraphControls({
             Clear filters
           </button>
         )}
+
+        {/* Visualization Settings */}
+        <div className="relative ml-auto shrink-0" ref={settingsRef}>
+          <button
+            onClick={() => setSettingsOpen((o) => !o)}
+            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            aria-label="Visualization settings"
+          >
+            <Settings2 className="w-4 h-4" />
+          </button>
+
+          {settingsOpen && (
+            <div className="absolute right-0 top-full mt-1 z-50 w-72 bg-popover text-popover-foreground border border-border rounded-lg shadow-lg">
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border">
+                <span className="text-sm font-semibold">Visualization Settings</span>
+                <button
+                  onClick={() => setSettingsOpen(false)}
+                  className="text-muted-foreground hover:text-foreground"
+                  aria-label="Close"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Node Size section */}
+              <div className="px-4 py-3 space-y-3">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Node Size</p>
+
+                {/* Metric toggle */}
+                <div className="flex rounded-md border border-border overflow-hidden text-xs">
+                  <button
+                    onClick={() => onSizeMetricChange('aiExposure')}
+                    aria-pressed={sizeMetric === 'aiExposure'}
+                    className={`flex-1 px-3 py-1.5 transition-colors ${
+                      sizeMetric === 'aiExposure'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    AI Exposure
+                  </button>
+                  <button
+                    onClick={() => onSizeMetricChange('wage')}
+                    aria-pressed={sizeMetric === 'wage'}
+                    disabled={maxWage === 0}
+                    className={`flex-1 px-3 py-1.5 transition-colors ${
+                      sizeMetric === 'wage'
+                        ? 'bg-primary text-primary-foreground'
+                        : maxWage === 0
+                          ? 'bg-muted/50 text-muted-foreground opacity-50 cursor-not-allowed'
+                          : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Wages
+                  </button>
+                </div>
+
+                {/* Threshold slider */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Threshold</span>
+                    <span className="font-medium">
+                      {sizeMetric === 'aiExposure'
+                        ? `≥ ${sizeThreshold}%`
+                        : `≥ RM ${sizeThreshold.toLocaleString()}`}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    aria-label={sizeMetric === 'aiExposure' ? 'AI Exposure threshold' : 'Wage threshold'}
+                    min={0}
+                    max={sizeMetric === 'aiExposure' ? 100 : maxWage}
+                    step={sizeMetric === 'aiExposure' ? 1 : 100}
+                    value={sizeThreshold}
+                    onChange={(e) => onSizeThresholdChange(Number(e.target.value))}
+                    className="w-full accent-primary h-1.5 cursor-pointer"
+                  />
+                </div>
+
+                {/* Reset */}
+                {sizeThreshold > 0 && (
+                  <button
+                    onClick={() => onSizeThresholdChange(0)}
+                    className="text-xs text-muted-foreground hover:text-foreground underline"
+                  >
+                    Default Settings
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
