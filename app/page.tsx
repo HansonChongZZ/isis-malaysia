@@ -31,6 +31,7 @@ export default function HomePage() {
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
   const [sizeThreshold, setSizeThreshold] = useState(0)
+  const [nodeSizeMetric, setNodeSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -94,6 +95,15 @@ export default function HomePage() {
     setSizeThreshold(0)
   }
 
+  const handleNodeSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
+    setNodeSizeMetric(metric)
+  }
+
+  const handleResetSettings = () => {
+    setSizeThreshold(0)
+    setNodeSizeMetric('aiExposure')
+  }
+
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-background text-foreground overflow-hidden">
       {/* Graph controls */}
@@ -111,6 +121,9 @@ export default function HomePage() {
         sizeThreshold={sizeThreshold}
         onSizeThresholdChange={setSizeThreshold}
         maxWage={maxWage}
+        nodeSizeMetric={nodeSizeMetric}
+        onNodeSizeMetricChange={handleNodeSizeMetricChange}
+        onResetSettings={handleResetSettings}
       />
 
       {/* Main graph area */}
@@ -142,6 +155,8 @@ export default function HomePage() {
             allSkills={allSkills}
             sizeMetric={sizeMetric}
             sizeThreshold={sizeThreshold}
+            nodeSizeMetric={nodeSizeMetric}
+            maxWage={maxWage}
           />
         )}
 
