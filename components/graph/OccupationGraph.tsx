@@ -41,6 +41,7 @@ export default function OccupationGraph({
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const selectedNodeId = selectedNodeIdProp;
   const nodeById = useRef<Map<string, SimNode>>(new Map());
+  const edgeColorRef = useRef('#888');
 
   const simNodes = useMemo<SimNode[]>(
     () => nodes.map((n) => ({ ...n })),
@@ -51,6 +52,13 @@ export default function OccupationGraph({
   useEffect(() => {
     nodeById.current = new Map(simNodes.map((n) => [n.id, n]));
   }, [simNodes]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (el) {
+      edgeColorRef.current = getComputedStyle(el).getPropertyValue('--border').trim() || '#888';
+    }
+  }, []);
 
   // Compute visible IDs based on filters
   const visibleIds = useMemo<Set<string> | null>(() => {
@@ -141,7 +149,7 @@ export default function OccupationGraph({
 
     ctx.save();
     ctx.setTransform(k * dpr, 0, 0, k * dpr, x * dpr, y * dpr);
-    ctx.strokeStyle = '#888';
+    ctx.strokeStyle = edgeColorRef.current;
     ctx.lineWidth = 0.5 / k;
 
     // Batch strokes by weight tier — max 7 draw calls regardless of edge count
@@ -329,7 +337,7 @@ export default function OccupationGraph({
   });
 
   return (
-    <div ref={containerRef} className="w-full h-full relative overflow-hidden">
+    <div ref={containerRef} className="w-full h-full relative overflow-hidden" style={{ backgroundColor: 'var(--canvas-background)' }}>
       {/* Canvas renders edges — behind SVG, no pointer events */}
       <canvas
         ref={canvasRef}

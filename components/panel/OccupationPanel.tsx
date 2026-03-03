@@ -326,11 +326,11 @@ export default function OccupationPanel({
                               <span className="text-xs text-muted-foreground">AI Score:</span>
                               <div className="flex-1 h-1.5 bg-muted rounded-full">
                                 <div
-                                  className="h-full rounded-full bg-orange-400"
+                                  className="h-full rounded-full bg-primary"
                                   style={{ width: `${task.score * 100}%` }}
                                 />
                               </div>
-                              <span className="text-xs text-orange-300 font-mono">
+                              <span className="text-xs text-primary font-mono">
                                 {(task.score * 100).toFixed(0)}%
                               </span>
                             </div>
