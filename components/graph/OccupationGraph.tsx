@@ -22,6 +22,8 @@ interface OccupationGraphProps {
   allSkills: Map<string, Set<string>>; // nodeId -> skills set
   sizeMetric: 'aiExposure' | 'wage';
   sizeThreshold: number;
+  nodeSizeMetric: 'aiExposure' | 'wage';
+  maxWage: number;
 }
 
 export default function OccupationGraph({
@@ -34,6 +36,8 @@ export default function OccupationGraph({
   allSkills,
   sizeMetric,
   sizeThreshold,
+  nodeSizeMetric,
+  maxWage,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -163,8 +167,20 @@ export default function OccupationGraph({
     });
   }, [hoveredNodeId, selectedNodeId, hoveredNeighborIds, edges, visibleIds]);
 
+  const getNodeRadius = useCallback(
+    (node: SimNode) => {
+      if (nodeSizeMetric === 'wage') {
+        if (node.wage === null || maxWage === 0) return NODE_RADIUS_BASE;
+        return NODE_RADIUS_BASE + (node.wage / maxWage) * NODE_RADIUS_SCALE;
+      }
+      return NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
+    },
+    [nodeSizeMetric, maxWage],
+  );
+
   const getNodeOpacity = useCallback(
     (node: SimNode) => {
+      if (nodeSizeMetric === 'wage' && node.wage === null) return 0.06;
       if (visibleIds && !visibleIds.has(node.id)) return 0.06;
       if (selectedNodeId && connectedIds && !connectedIds.has(node.id))
         return 0.12;
@@ -179,6 +195,7 @@ export default function OccupationGraph({
       return 1;
     },
     [
+      nodeSizeMetric,
       visibleIds,
       selectedNodeId,
       connectedIds,
@@ -300,6 +317,8 @@ export default function OccupationGraph({
     width: dimensions.width,
     height: dimensions.height,
     onTick: handleTick,
+    nodeSizeMetric,
+    maxWage,
   });
 
   // Resize canvas to match container with HiDPI support
@@ -450,8 +469,7 @@ export default function OccupationGraph({
           <g ref={gRef}>
             <g className="nodes">
               {simNodes.map((node) => {
-                const r =
-                  NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
+                const r = getNodeRadius(node);
                 const color = mascoColors[node.group] || '#888';
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;

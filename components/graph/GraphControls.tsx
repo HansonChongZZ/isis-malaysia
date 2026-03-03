@@ -32,6 +32,9 @@ interface GraphControlsProps {
   sizeThreshold: number;
   onSizeThresholdChange: (value: number) => void;
   maxWage: number;
+  nodeSizeMetric: 'aiExposure' | 'wage';
+  onNodeSizeMetricChange: (metric: 'aiExposure' | 'wage') => void;
+  onResetSettings: () => void;
 }
 
 export default function GraphControls({
@@ -48,6 +51,9 @@ export default function GraphControls({
   sizeThreshold,
   onSizeThresholdChange,
   maxWage,
+  nodeSizeMetric,
+  onNodeSizeMetricChange,
+  onResetSettings,
 }: GraphControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
@@ -215,6 +221,40 @@ export default function GraphControls({
               {/* Node Size section */}
               <div className="px-4 py-3 space-y-3">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Node Size</p>
+                <div className="flex rounded-md border border-border overflow-hidden text-xs">
+                  <button
+                    onClick={() => onNodeSizeMetricChange('aiExposure')}
+                    aria-pressed={nodeSizeMetric === 'aiExposure'}
+                    className={`flex-1 px-3 py-1.5 transition-colors ${
+                      nodeSizeMetric === 'aiExposure'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    AI Exposure
+                  </button>
+                  <button
+                    onClick={() => onNodeSizeMetricChange('wage')}
+                    aria-pressed={nodeSizeMetric === 'wage'}
+                    disabled={maxWage === 0}
+                    className={`flex-1 px-3 py-1.5 transition-colors ${
+                      nodeSizeMetric === 'wage'
+                        ? 'bg-primary text-primary-foreground'
+                        : maxWage === 0
+                          ? 'bg-muted/50 text-muted-foreground opacity-50 cursor-not-allowed'
+                          : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Wages
+                  </button>
+                </div>
+              </div>
+
+              <div className="border-t border-border" />
+
+              {/* Node Filter section */}
+              <div className="px-4 py-3 space-y-3">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Node Filter</p>
 
                 {/* Metric toggle */}
                 <div className="flex rounded-md border border-border overflow-hidden text-xs">
@@ -268,9 +308,9 @@ export default function GraphControls({
                 </div>
 
                 {/* Reset */}
-                {sizeThreshold > 0 && (
+                {(sizeThreshold > 0 || nodeSizeMetric !== 'aiExposure') && (
                   <button
-                    onClick={() => onSizeThresholdChange(0)}
+                    onClick={onResetSettings}
                     className="text-xs text-muted-foreground hover:text-foreground underline"
                   >
                     Default Settings
