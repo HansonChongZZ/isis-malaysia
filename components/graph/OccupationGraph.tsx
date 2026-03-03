@@ -20,6 +20,8 @@ interface OccupationGraphProps {
   filterGroup: number | null;
   filterSkills: string[];
   allSkills: Map<string, Set<string>>; // nodeId -> skills set
+  sizeMetric: 'aiExposure' | 'wage';
+  sizeThreshold: number;
 }
 
 export default function OccupationGraph({
@@ -30,6 +32,8 @@ export default function OccupationGraph({
   filterGroup,
   filterSkills,
   allSkills,
+  sizeMetric,
+  sizeThreshold,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -86,8 +90,9 @@ export default function OccupationGraph({
   const visibleIds = useMemo<Set<string> | null>(() => {
     const hasGroupFilter = filterGroup !== null;
     const hasSkillFilter = filterSkills.length > 0;
+    const hasThreshold = sizeThreshold > 0;
 
-    if (!hasGroupFilter && !hasSkillFilter) return null;
+    if (!hasGroupFilter && !hasSkillFilter && !hasThreshold) return null;
 
     const result = new Set<string>();
     const skillQueries = filterSkills.map((s) => s.toLowerCase());
@@ -102,10 +107,17 @@ export default function OccupationGraph({
         );
         if (!match) continue;
       }
+      if (hasThreshold) {
+        if (sizeMetric === 'aiExposure') {
+          if (node.aiExposure * 100 < sizeThreshold) continue;
+        } else {
+          if (node.wage === null || node.wage < sizeThreshold) continue;
+        }
+      }
       result.add(node.id);
     }
     return result;
-  }, [simNodes, filterGroup, filterSkills, allSkills]);
+  }, [simNodes, filterGroup, filterSkills, allSkills, sizeMetric, sizeThreshold]);
 
   // Build adjacency set for selected node
   const connectedIds = useMemo<Set<string> | null>(() => {
