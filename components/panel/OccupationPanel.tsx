@@ -99,7 +99,11 @@ const transitionColumns: ColumnDef<TransitionRow>[] = [
         <div className="flex items-center gap-1.5">
           <Badge
             className="text-xs px-1.5 py-0"
-            style={{ backgroundColor: color + "33", color, border: `1px solid ${color}66` }}
+            style={{
+              backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`,
+              color,
+              border: `1px solid color-mix(in srgb, ${color} 40%, transparent)`,
+            }}
           >
             {quartile}
           </Badge>
@@ -195,7 +199,7 @@ export default function OccupationPanel({
                     {groupInfo && (
                       <span
                         className="inline-block w-3 h-3 rounded-full shrink-0"
-                        style={{ backgroundColor: groupInfo.color }}
+                        style={{ backgroundColor: `var(${groupInfo.colorVar})` }}
                       />
                     )}
                     <span className="text-xs text-muted-foreground font-mono">{nodeId}</span>
@@ -231,9 +235,9 @@ export default function OccupationPanel({
                       <Badge
                         className="text-xs"
                         style={{
-                          backgroundColor: quartileColor + "33",
+                          backgroundColor: `color-mix(in srgb, ${quartileColor} 20%, transparent)`,
                           color: quartileColor,
-                          border: `1px solid ${quartileColor}66`,
+                          border: `1px solid color-mix(in srgb, ${quartileColor} 40%, transparent)`,
                         }}
                       >
                         {detail.quartile}

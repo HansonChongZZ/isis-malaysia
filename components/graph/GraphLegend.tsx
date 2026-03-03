@@ -8,7 +8,7 @@ interface GraphLegendProps {
 export default function GraphLegend({ activeGroup, onGroupClick }: GraphLegendProps) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-4 py-2 bg-card/80 border-t border-border shrink-0 overflow-x-auto">
-      {Object.entries(MASCO_GROUPS).map(([g, { label, color }]) => {
+      {Object.entries(MASCO_GROUPS).map(([g, { label, colorVar }]) => {
         const group = Number(g)
         const isActive = activeGroup === null || activeGroup === group
         return (
@@ -20,7 +20,7 @@ export default function GraphLegend({ activeGroup, onGroupClick }: GraphLegendPr
           >
             <span
               className="inline-block w-3 h-3 rounded-full flex-shrink-0"
-              style={{ backgroundColor: color }}
+              style={{ backgroundColor: `var(${colorVar})` }}
             />
             <span className="text-foreground whitespace-nowrap">{label}</span>
           </button>

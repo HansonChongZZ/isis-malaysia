@@ -1,13 +1,13 @@
-export const MASCO_GROUPS: Record<number, { label: string; color: string }> = {
-  1: { label: 'Managers', color: '#2B5F8A' },
-  2: { label: 'Professionals', color: '#D4762C' },
-  3: { label: 'Technicians', color: '#AF125A' },
-  4: { label: 'Clerical', color: '#5A9E96' },
-  5: { label: 'Services & Sales', color: '#3D7A3E' },
-  6: { label: 'Skilled Agricultural', color: '#C4A035' },
-  7: { label: 'Craft & Trades', color: '#8B5E83' },
-  8: { label: 'Plant & Machine Operators', color: '#BD8B9C' },
-  9: { label: 'Elementary', color: '#7A6352' },
+export const MASCO_GROUPS: Record<number, { label: string; colorVar: string }> = {
+  1: { label: 'Managers', colorVar: '--masco-1' },
+  2: { label: 'Professionals', colorVar: '--masco-2' },
+  3: { label: 'Technicians', colorVar: '--masco-3' },
+  4: { label: 'Clerical', colorVar: '--masco-4' },
+  5: { label: 'Services & Sales', colorVar: '--masco-5' },
+  6: { label: 'Skilled Agricultural', colorVar: '--masco-6' },
+  7: { label: 'Craft & Trades', colorVar: '--masco-7' },
+  8: { label: 'Plant & Machine Operators', colorVar: '--masco-8' },
+  9: { label: 'Elementary', colorVar: '--masco-9' },
 };
 
 // Cluster center offsets (relative to canvas center) for MASCO groups
@@ -32,10 +32,10 @@ export const QUARTILE_LABELS: Record<string, string> = {
 };
 
 export const QUARTILE_COLORS: Record<string, string> = {
-  Low: '#2D8A4E',
-  'Medium low': '#6B9A2E',
-  'Medium high': '#D4762C',
-  High: '#C42B3E',
+  Low: 'var(--quartile-low)',
+  'Medium low': 'var(--quartile-medium-low)',
+  'Medium high': 'var(--quartile-medium-high)',
+  High: 'var(--quartile-high)',
 };
 
 // Node radius configuration for graph visualization

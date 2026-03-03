@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
 import type { GraphNode, GraphEdge, SimNode } from '@/lib/types';
-import { MASCO_GROUPS, NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
+import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
 import { useForceSimulation } from '@/hooks/useForceSimulation';
 
 interface TooltipState {
@@ -42,6 +42,7 @@ export default function OccupationGraph({
   const selectedNodeId = selectedNodeIdProp;
   const nodeById = useRef<Map<string, SimNode>>(new Map());
   const edgeColorRef = useRef('#888');
+  const [mascoColors, setMascoColors] = useState<Record<number, string>>({});
 
   const simNodes = useMemo<SimNode[]>(
     () => nodes.map((n) => ({ ...n })),
@@ -53,12 +54,26 @@ export default function OccupationGraph({
     nodeById.current = new Map(simNodes.map((n) => [n.id, n]));
   }, [simNodes]);
 
-  useEffect(() => {
+  // Read MASCO + edge colors from CSS vars, re-read on theme change
+  const readThemeColors = useCallback(() => {
     const el = containerRef.current;
-    if (el) {
-      edgeColorRef.current = getComputedStyle(el).getPropertyValue('--border').trim() || '#888';
+    if (!el) return;
+    const style = getComputedStyle(el);
+    const colors: Record<number, string> = {};
+    for (let i = 1; i <= 9; i++) {
+      colors[i] = style.getPropertyValue(`--masco-${i}`).trim() || '#888';
     }
+    edgeColorRef.current = style.getPropertyValue('--muted-foreground').trim() || '#888';
+    setMascoColors(colors);
+    drawEdgesRef.current();
   }, []);
+
+  useEffect(() => {
+    readThemeColors();
+    const observer = new MutationObserver(readThemeColors);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, [readThemeColors]);
 
   // Compute visible IDs based on filters
   const visibleIds = useMemo<Set<string> | null>(() => {
@@ -357,7 +372,7 @@ export default function OccupationGraph({
             <g className="nodes">
               {simNodes.map((node) => {
                 const r = NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
-                const color = MASCO_GROUPS[node.group]?.color ?? '#888';
+                const color = mascoColors[node.group] || '#888';
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
                 const isHovered = node.id === hoveredNodeId;
