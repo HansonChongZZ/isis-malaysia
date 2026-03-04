@@ -12,6 +12,12 @@ const d3 = await import('d3');
 const nodes = JSON.parse(readFileSync(join(DATA_DIR, 'nodes.json'), 'utf-8'));
 const edges = JSON.parse(readFileSync(join(DATA_DIR, 'edges.json'), 'utf-8'));
 
+// Strip existing positions so re-runs start from d3's default initialization
+for (const n of nodes) {
+  delete n.x;
+  delete n.y;
+}
+
 // Use a large virtual canvas so forces have room to spread
 const W = 4000;
 const H = 2400;
