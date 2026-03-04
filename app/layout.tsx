@@ -3,6 +3,7 @@ import { Montserrat, Merriweather, Fira_Code } from "next/font/google"
 import "./globals.css"
 import ThemeProvider from "@/components/ThemeProvider"
 import ThemeToggle from "@/components/ThemeToggle"
+import TutorialButton from "@/components/tutorial/TutorialButton"
 
 const fontSans = Montserrat({ subsets: ["latin"], variable: "--font-sans" })
 const fontSerif = Merriweather({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-serif" })
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="ml-auto text-xs text-muted-foreground hidden sm:block">
               Force-directed skill similarity network
             </div>
+            <TutorialButton />
             <ThemeToggle />
           </header>
           {children}
