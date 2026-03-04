@@ -8,6 +8,7 @@ interface LayoutTunerProps {
   onChange: (tuning: LayoutTuning) => void;
   enabled: boolean;
   onToggle: (enabled: boolean) => void;
+  onExport?: () => void;
 }
 
 export default function LayoutTuner({
@@ -15,6 +16,7 @@ export default function LayoutTuner({
   onChange,
   enabled,
   onToggle,
+  onExport,
 }: LayoutTunerProps) {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -96,6 +98,14 @@ export default function LayoutTuner({
             intra: {tuning.intraStrength} | inter: {tuning.interStrength} |
             charge: {tuning.charge}
           </p>
+          {onExport && (
+            <button
+              onClick={onExport}
+              className="mt-2 w-full bg-primary text-primary-foreground text-xs rounded px-3 py-1.5 hover:opacity-90 transition-opacity"
+            >
+              Export Layout
+            </button>
+          )}
         </div>
       )}
     </div>
