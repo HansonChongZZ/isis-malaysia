@@ -313,12 +313,9 @@ export default function OccupationGraph({
 
   const { simulationRef } = useForceSimulation({
     nodes: simNodes,
-    edges,
     width: dimensions.width,
     height: dimensions.height,
     onTick: handleTick,
-    nodeSizeMetric,
-    maxWage,
   });
 
   // Resize canvas to match container with HiDPI support

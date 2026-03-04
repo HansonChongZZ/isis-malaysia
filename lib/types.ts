@@ -37,9 +37,3 @@ export type SimNode = GraphNode & {
   fx?: number | null
   fy?: number | null
 }
-
-export type SimEdge = {
-  source: SimNode | string
-  target: SimNode | string
-  weight: number
-}

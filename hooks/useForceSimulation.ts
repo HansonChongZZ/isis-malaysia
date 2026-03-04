@@ -1,16 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useCallback } from 'react';
-import type { SimNode, SimEdge, GraphEdge } from '@/lib/types';
+import type { SimNode } from '@/lib/types';
 
 interface UseForceSimulationProps {
   nodes: SimNode[];
-  edges: GraphEdge[];
   width: number;
   height: number;
   onTick: () => void;
-  nodeSizeMetric: 'aiExposure' | 'wage';
-  maxWage: number;
 }
 
 export function useForceSimulation({
