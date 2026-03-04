@@ -98,9 +98,9 @@ export default function TutorialModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-xl" showCloseButton={true}>
+      <DialogContent className="sm:max-w-xl [&>[data-slot=dialog-close]]:z-20" showCloseButton={true}>
         <DialogHeader className="px-6 pt-6 pb-0">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pr-6">
             <DialogTitle>{step.title}</DialogTitle>
             <span className="text-xs text-muted-foreground shrink-0 ml-2">
               Step {currentStep + 1} of {STEPS.length}
