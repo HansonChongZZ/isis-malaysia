@@ -28,7 +28,7 @@ interface OccupationGraphProps {
   filterGroup: number | null;
   filterSkills: string[];
   allSkills: Map<string, Set<string>>; // nodeId -> skills set
-  sizeMetric: NodeSizeMetric;
+  sizeMetric: 'aiExposure' | 'wage';
   sizeThreshold: number;
   nodeSizeMetric: NodeSizeMetric;
   maxWage: number;
