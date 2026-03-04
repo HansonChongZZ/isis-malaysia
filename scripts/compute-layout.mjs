@@ -38,17 +38,17 @@ const simulation = d3
     d3
       .forceLink(simEdges)
       .id((d) => d.id)
-      .distance((d) => 60 + (7 - d.weight) * 15)
-      .strength(0.03),
+      .distance((d) => 80 + (7 - d.weight) * 20)
+      .strength(0.008),
   )
-  .force('charge', d3.forceManyBody().strength(-2000))
+  .force('charge', d3.forceManyBody().strength(-6000).distanceMax(800))
   .force(
     'collide',
-    d3.forceCollide((d) => NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE + NODE_RADIUS_COLLIDE_PADDING + 4)
-      .iterations(4),
+    d3.forceCollide((d) => NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE + NODE_RADIUS_COLLIDE_PADDING + 8)
+      .iterations(8),
   )
   .force('x', d3.forceX(cx).strength(0.01))
-  .force('y', d3.forceY(cy).strength(0.03))
+  .force('y', d3.forceY(cy).strength(0.025))
   .stop();
 
 // Run 5000 iterations for full stabilization
