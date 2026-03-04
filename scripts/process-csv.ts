@@ -53,6 +53,18 @@ async function main() {
   const skillRows = readCsv<SkillRow>("masco-4d_with_skills.csv")
   const taskRows = readCsv<TaskRow>("masco-4d_with_tasks_and_scores__GPT4o_.csv")
 
+  // Load existing nodes.json to preserve pre-computed x/y positions
+  const existingNodesPath = path.join(OUT_DIR, "nodes.json")
+  const existingPositions: Record<string, { x: number; y: number }> = {}
+  if (fs.existsSync(existingNodesPath)) {
+    const existing = JSON.parse(fs.readFileSync(existingNodesPath, "utf8")) as { id: string; x?: number; y?: number }[]
+    for (const n of existing) {
+      if (n.x !== undefined && n.y !== undefined) {
+        existingPositions[n.id] = { x: n.x, y: n.y }
+      }
+    }
+  }
+
   // Build nodes.json
   const nodes = nodeRows.map((row) => {
     const code = String(row.code).trim()
@@ -61,6 +73,7 @@ async function main() {
     const wage = row.wage === null || row.wage === "NA" || row.wage === "" ? null : Number(row.wage)
     const workers = row.no_of_workers === null || row.no_of_workers === "NA" || row.no_of_workers === "" ? null : Number(row.no_of_workers)
     const quartile = isValidQuartile(row.quartile) ? row.quartile : "Medium low"
+    const pos = existingPositions[code] ?? { x: Math.random(), y: Math.random() }
     return {
       id: code,
       label: row.occupation,
@@ -69,6 +82,8 @@ async function main() {
       quartile,
       wage,
       workers: isNaN(workers as number) ? null : workers,
+      x: pos.x,
+      y: pos.y,
     }
   })
 
