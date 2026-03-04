@@ -5,7 +5,9 @@
     "group": 1,
     "aiExposure": 0.1111111111,
     "quartile": "Medium low",
-    "wage": 30453
+    "wage": 30453,
+    "x": 0.464522,
+    "y": 0.456425
   },
   {
     "id": "1112",
@@ -13,7 +15,9 @@
     "group": 1,
     "aiExposure": 0.2857142857,
     "quartile": "Medium low",
-    "wage": 6282
+    "wage": 6282,
+    "x": 0.460578,
+    "y": 0.455635
   },
   {
     "id": "1113",
@@ -21,7 +25,9 @@
     "group": 1,
     "aiExposure": 0.2857142857,
     "quartile": "Medium low",
-    "wage": 3532
+    "wage": 3532,
+    "x": 0.442251,
+    "y": 0.413998
   },
   {
     "id": "1114",
@@ -29,7 +35,9 @@
     "group": 1,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": null
+    "wage": null,
+    "x": 0.641481,
+    "y": 0.799018
   },
   {
     "id": "1121",
@@ -37,7 +45,9 @@
     "group": 1,
     "aiExposure": 0.09090909091,
     "quartile": "Medium low",
-    "wage": 5574
+    "wage": 5574,
+    "x": 0.440755,
+    "y": 0.430434
   },
   {
     "id": "1211",
@@ -45,7 +55,9 @@
     "group": 1,
     "aiExposure": 0.5555555556,
     "quartile": "Medium high",
-    "wage": 5440
+    "wage": 5440,
+    "x": 0.438643,
+    "y": 0.487799
   },
   {
     "id": "1212",
@@ -53,7 +65,9 @@
     "group": 1,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 6094
+    "wage": 6094,
+    "x": 0.446268,
+    "y": 0.566124
   },
   {
     "id": "1213",
@@ -61,7 +75,9 @@
     "group": 1,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 6734
+    "wage": 6734,
+    "x": 0.23908,
+    "y": 0.298596
   },
   {
     "id": "1214",
@@ -69,7 +85,9 @@
     "group": 1,
     "aiExposure": 0.8333333333,
     "quartile": "High",
-    "wage": 5899
+    "wage": 5899,
+    "x": 0.449054,
+    "y": 0.455798
   },
   {
     "id": "1215",
@@ -77,7 +95,9 @@
     "group": 1,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 5332
+    "wage": 5332,
+    "x": 0.428185,
+    "y": 0.450016
   },
   {
     "id": "1216",
@@ -85,7 +105,9 @@
     "group": 1,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": null
+    "wage": null,
+    "x": 0.656405,
+    "y": 0.19419
   },
   {
     "id": "1221",
@@ -93,7 +115,9 @@
     "group": 1,
     "aiExposure": 0.8181818182,
     "quartile": "Medium high",
-    "wage": 4976
+    "wage": 4976,
+    "x": 0.459103,
+    "y": 0.483044
   },
   {
     "id": "1222",
@@ -101,7 +125,9 @@
     "group": 1,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 5338
+    "wage": 5338,
+    "x": 0.42965,
+    "y": 0.48236
   },
   {
     "id": "1223",
@@ -109,7 +135,9 @@
     "group": 1,
     "aiExposure": 0.4285714286,
     "quartile": "Medium low",
-    "wage": 5227
+    "wage": 5227,
+    "x": 0.45549,
+    "y": 0.466845
   },
   {
     "id": "1311",
@@ -117,7 +145,9 @@
     "group": 1,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 4614
+    "wage": 4614,
+    "x": 0.447005,
+    "y": 0.447313
   },
   {
     "id": "1312",
@@ -125,7 +155,9 @@
     "group": 1,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 4516
+    "wage": 4516,
+    "x": 0.449377,
+    "y": 0.43117
   },
   {
     "id": "1321",
@@ -133,7 +165,9 @@
     "group": 1,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 5227
+    "wage": 5227,
+    "x": 0.45037,
+    "y": 0.470984
   },
   {
     "id": "1322",
@@ -141,7 +175,9 @@
     "group": 1,
     "aiExposure": 0.6,
     "quartile": "Medium high",
-    "wage": 4968
+    "wage": 4968,
+    "x": 0.438242,
+    "y": 0.499402
   },
   {
     "id": "1323",
@@ -149,7 +185,9 @@
     "group": 1,
     "aiExposure": 0.7,
     "quartile": "Medium high",
-    "wage": 5091
+    "wage": 5091,
+    "x": 0.452875,
+    "y": 0.500791
   },
   {
     "id": "1324",
@@ -157,7 +195,9 @@
     "group": 1,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4580
+    "wage": 4580,
+    "x": 0.433309,
+    "y": 0.467344
   },
   {
     "id": "1411",
@@ -165,7 +205,9 @@
     "group": 1,
     "aiExposure": 0.7333333333,
     "quartile": "Medium high",
-    "wage": 5545
+    "wage": 5545,
+    "x": 0.450323,
+    "y": 0.444199
   },
   {
     "id": "1412",
@@ -173,7 +215,9 @@
     "group": 1,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 3475
+    "wage": 3475,
+    "x": 0.604828,
+    "y": 0.487819
   },
   {
     "id": "1421",
@@ -181,7 +225,9 @@
     "group": 1,
     "aiExposure": 0.8,
     "quartile": "Medium high",
-    "wage": 4761
+    "wage": 4761,
+    "x": 0.443929,
+    "y": 0.507441
   },
   {
     "id": "1511",
@@ -189,7 +235,9 @@
     "group": 1,
     "aiExposure": 0.4545454545,
     "quartile": "Medium high",
-    "wage": 7137
+    "wage": 7137,
+    "x": 0.451808,
+    "y": 0.483655
   },
   {
     "id": "1611",
@@ -197,7 +245,9 @@
     "group": 1,
     "aiExposure": 0.5555555556,
     "quartile": "Medium high",
-    "wage": 11923
+    "wage": 11923,
+    "x": 0.600677,
+    "y": 0.692502
   },
   {
     "id": "1612",
@@ -205,7 +255,9 @@
     "group": 1,
     "aiExposure": 0.625,
     "quartile": "Medium high",
-    "wage": 4930
+    "wage": 4930,
+    "x": 0.461637,
+    "y": 0.47115
   },
   {
     "id": "1613",
@@ -213,7 +265,9 @@
     "group": 1,
     "aiExposure": 0.6,
     "quartile": "Medium high",
-    "wage": null
+    "wage": null,
+    "x": 0.844952,
+    "y": 0.410592
   },
   {
     "id": "1614",
@@ -221,7 +275,9 @@
     "group": 1,
     "aiExposure": 0.7142857143,
     "quartile": "Medium high",
-    "wage": 14959
+    "wage": 14959,
+    "x": 0.423812,
+    "y": 0.519604
   },
   {
     "id": "1615",
@@ -229,7 +285,9 @@
     "group": 1,
     "aiExposure": 0.7272727273,
     "quartile": "Medium high",
-    "wage": 8596
+    "wage": 8596,
+    "x": 0.437222,
+    "y": 0.330392
   },
   {
     "id": "1616",
@@ -237,7 +295,9 @@
     "group": 1,
     "aiExposure": 0.8333333333,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.804534,
+    "y": 0.669002
   },
   {
     "id": "1617",
@@ -245,7 +305,9 @@
     "group": 1,
     "aiExposure": 0.6428571429,
     "quartile": "Medium high",
-    "wage": 6696
+    "wage": 6696,
+    "x": 0.444307,
+    "y": 0.477322
   },
   {
     "id": "1618",
@@ -253,7 +315,9 @@
     "group": 1,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.727189,
+    "y": 0.226515
   },
   {
     "id": "1621",
@@ -261,7 +325,9 @@
     "group": 1,
     "aiExposure": 0.7272727273,
     "quartile": "Medium high",
-    "wage": 1136
+    "wage": 1136,
+    "x": 0.417942,
+    "y": 0.51032
   },
   {
     "id": "1622",
@@ -269,7 +335,9 @@
     "group": 1,
     "aiExposure": 0.7142857143,
     "quartile": "Medium high",
-    "wage": 7062
+    "wage": 7062,
+    "x": 0.431053,
+    "y": 0.50292
   },
   {
     "id": "1623",
@@ -277,7 +345,9 @@
     "group": 1,
     "aiExposure": 0.5454545455,
     "quartile": "Medium high",
-    "wage": 4602
+    "wage": 4602,
+    "x": 0.455204,
+    "y": 0.503085
   },
   {
     "id": "1624",
@@ -285,7 +355,9 @@
     "group": 1,
     "aiExposure": 0.7272727273,
     "quartile": "Medium high",
-    "wage": 4116
+    "wage": 4116,
+    "x": 0.280613,
+    "y": 0.76538
   },
   {
     "id": "2111",
@@ -293,7 +365,9 @@
     "group": 2,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 6918
+    "wage": 6918,
+    "x": 0.502791,
+    "y": 0.470087
   },
   {
     "id": "2112",
@@ -301,7 +375,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4631
+    "wage": 4631,
+    "x": 0.508685,
+    "y": 0.468469
   },
   {
     "id": "2113",
@@ -309,7 +385,9 @@
     "group": 2,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 4911
+    "wage": 4911,
+    "x": 0.495399,
+    "y": 0.463506
   },
   {
     "id": "2114",
@@ -317,7 +395,9 @@
     "group": 2,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 9718
+    "wage": 9718,
+    "x": 0.505067,
+    "y": 0.467425
   },
   {
     "id": "2121",
@@ -325,7 +405,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 6295
+    "wage": 6295,
+    "x": 0.496373,
+    "y": 0.48813
   },
   {
     "id": "2131",
@@ -333,7 +415,9 @@
     "group": 2,
     "aiExposure": 0.6,
     "quartile": "Medium high",
-    "wage": 8705
+    "wage": 8705,
+    "x": 0.513203,
+    "y": 0.457553
   },
   {
     "id": "2132",
@@ -341,7 +425,9 @@
     "group": 2,
     "aiExposure": 0.9090909091,
     "quartile": "High",
-    "wage": 4857
+    "wage": 4857,
+    "x": 0.508665,
+    "y": 0.455982
   },
   {
     "id": "2133",
@@ -349,7 +435,9 @@
     "group": 2,
     "aiExposure": 0.7692307692,
     "quartile": "Medium high",
-    "wage": 5753
+    "wage": 5753,
+    "x": 0.508747,
+    "y": 0.476821
   },
   {
     "id": "2134",
@@ -357,7 +445,9 @@
     "group": 2,
     "aiExposure": 0.4444444444,
     "quartile": "Medium high",
-    "wage": 5608
+    "wage": 5608,
+    "x": 0.488475,
+    "y": 0.43682
   },
   {
     "id": "2141",
@@ -365,7 +455,9 @@
     "group": 2,
     "aiExposure": 0.8571428571,
     "quartile": "High",
-    "wage": 4664
+    "wage": 4664,
+    "x": 0.508855,
+    "y": 0.512637
   },
   {
     "id": "2142",
@@ -373,7 +465,9 @@
     "group": 2,
     "aiExposure": 0.7,
     "quartile": "Medium high",
-    "wage": 4822
+    "wage": 4822,
+    "x": 0.508623,
+    "y": 0.504504
   },
   {
     "id": "2143",
@@ -381,7 +475,9 @@
     "group": 2,
     "aiExposure": 0.8888888889,
     "quartile": "High",
-    "wage": 5515
+    "wage": 5515,
+    "x": 0.514834,
+    "y": 0.472108
   },
   {
     "id": "2144",
@@ -389,7 +485,9 @@
     "group": 2,
     "aiExposure": 0.8181818182,
     "quartile": "Medium high",
-    "wage": 4983
+    "wage": 4983,
+    "x": 0.517584,
+    "y": 0.511895
   },
   {
     "id": "2145",
@@ -397,7 +495,9 @@
     "group": 2,
     "aiExposure": 0.9,
     "quartile": "High",
-    "wage": 6346
+    "wage": 6346,
+    "x": 0.521772,
+    "y": 0.474705
   },
   {
     "id": "2146",
@@ -405,7 +505,9 @@
     "group": 2,
     "aiExposure": 0.9090909091,
     "quartile": "High",
-    "wage": 7808
+    "wage": 7808,
+    "x": 0.535748,
+    "y": 0.491544
   },
   {
     "id": "2149",
@@ -413,7 +515,9 @@
     "group": 2,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 4361
+    "wage": 4361,
+    "x": 0.487467,
+    "y": 0.465712
   },
   {
     "id": "2151",
@@ -421,7 +525,9 @@
     "group": 2,
     "aiExposure": 0.8,
     "quartile": "Medium high",
-    "wage": 4984
+    "wage": 4984,
+    "x": 0.509199,
+    "y": 0.485381
   },
   {
     "id": "2152",
@@ -429,7 +535,9 @@
     "group": 2,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 6014
+    "wage": 6014,
+    "x": 0.509276,
+    "y": 0.481772
   },
   {
     "id": "2153",
@@ -437,7 +545,9 @@
     "group": 2,
     "aiExposure": 0.8571428571,
     "quartile": "High",
-    "wage": 4851
+    "wage": 4851,
+    "x": 0.513985,
+    "y": 0.484623
   },
   {
     "id": "2161",
@@ -445,7 +555,9 @@
     "group": 2,
     "aiExposure": 0.7272727273,
     "quartile": "Medium high",
-    "wage": 4894
+    "wage": 4894,
+    "x": 0.496572,
+    "y": 0.492283
   },
   {
     "id": "2162",
@@ -453,7 +565,9 @@
     "group": 2,
     "aiExposure": 0.7142857143,
     "quartile": "Medium high",
-    "wage": 5857
+    "wage": 5857,
+    "x": 0.504505,
+    "y": 0.490727
   },
   {
     "id": "2163",
@@ -461,7 +575,9 @@
     "group": 2,
     "aiExposure": 0.875,
     "quartile": "High",
-    "wage": 4030
+    "wage": 4030,
+    "x": 0.497641,
+    "y": 0.277004
   },
   {
     "id": "2164",
@@ -469,7 +585,9 @@
     "group": 2,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 5977
+    "wage": 5977,
+    "x": 0.559903,
+    "y": 0.536627
   },
   {
     "id": "2165",
@@ -477,7 +595,9 @@
     "group": 2,
     "aiExposure": 0.625,
     "quartile": "Medium high",
-    "wage": 4556
+    "wage": 4556,
+    "x": 0.492468,
+    "y": 0.481252
   },
   {
     "id": "2166",
@@ -485,7 +605,9 @@
     "group": 2,
     "aiExposure": 0.9,
     "quartile": "High",
-    "wage": 4455
+    "wage": 4455,
+    "x": 0.664977,
+    "y": 0.593953
   },
   {
     "id": "2171",
@@ -493,7 +615,9 @@
     "group": 2,
     "aiExposure": 0.375,
     "quartile": "Medium low",
-    "wage": 5462
+    "wage": 5462,
+    "x": 0.40811,
+    "y": 0.489477
   },
   {
     "id": "2172",
@@ -501,7 +625,9 @@
     "group": 2,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 6716
+    "wage": 6716,
+    "x": 0.39994,
+    "y": 0.461004
   },
   {
     "id": "2173",
@@ -509,7 +635,9 @@
     "group": 2,
     "aiExposure": 0.1818181818,
     "quartile": "Medium low",
-    "wage": 17836
+    "wage": 17836,
+    "x": 0.506144,
+    "y": 0.472881
   },
   {
     "id": "2174",
@@ -517,7 +645,9 @@
     "group": 2,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 6734
+    "wage": 6734,
+    "x": 0.223633,
+    "y": 0.511408
   },
   {
     "id": "2175",
@@ -525,7 +655,9 @@
     "group": 2,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 4971
+    "wage": 4971,
+    "x": 0.355198,
+    "y": 0.38806
   },
   {
     "id": "2181",
@@ -533,7 +665,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.583518,
+    "y": 0.849434
   },
   {
     "id": "2182",
@@ -541,7 +675,9 @@
     "group": 2,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 5366
+    "wage": 5366,
+    "x": 0.478566,
+    "y": 0.470137
   },
   {
     "id": "2183",
@@ -549,7 +685,9 @@
     "group": 2,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 5690
+    "wage": 5690,
+    "x": 0.501909,
+    "y": 0.501859
   },
   {
     "id": "2211",
@@ -557,7 +695,9 @@
     "group": 2,
     "aiExposure": 0.2222222222,
     "quartile": "Medium low",
-    "wage": 5911
+    "wage": 5911,
+    "x": 0.562813,
+    "y": 0.498281
   },
   {
     "id": "2212",
@@ -565,7 +705,9 @@
     "group": 2,
     "aiExposure": 0.07142857143,
     "quartile": "Medium low",
-    "wage": 7800
+    "wage": 7800,
+    "x": 0.569366,
+    "y": 0.500909
   },
   {
     "id": "2221",
@@ -573,7 +715,9 @@
     "group": 2,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 3809
+    "wage": 3809,
+    "x": 0.60867,
+    "y": 0.525237
   },
   {
     "id": "2222",
@@ -581,7 +725,9 @@
     "group": 2,
     "aiExposure": 0.2857142857,
     "quartile": "Medium low",
-    "wage": null
+    "wage": null,
+    "x": 0.136975,
+    "y": 0.505307
   },
   {
     "id": "2231",
@@ -589,7 +735,9 @@
     "group": 2,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 3162
+    "wage": 3162,
+    "x": 0.590062,
+    "y": 0.513401
   },
   {
     "id": "2241",
@@ -597,7 +745,9 @@
     "group": 2,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 5463
+    "wage": 5463,
+    "x": 0.576142,
+    "y": 0.481722
   },
   {
     "id": "2251",
@@ -605,7 +755,9 @@
     "group": 2,
     "aiExposure": 0.2727272727,
     "quartile": "Medium low",
-    "wage": 5496
+    "wage": 5496,
+    "x": 0.505984,
+    "y": 0.479616
   },
   {
     "id": "2261",
@@ -613,7 +765,9 @@
     "group": 2,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 5744
+    "wage": 5744,
+    "x": 0.574992,
+    "y": 0.498599
   },
   {
     "id": "2262",
@@ -621,7 +775,9 @@
     "group": 2,
     "aiExposure": 0.875,
     "quartile": "High",
-    "wage": 5234
+    "wage": 5234,
+    "x": 0.520226,
+    "y": 0.456561
   },
   {
     "id": "2263",
@@ -629,7 +785,9 @@
     "group": 2,
     "aiExposure": 0.8333333333,
     "quartile": "High",
-    "wage": 5851
+    "wage": 5851,
+    "x": 0.50991,
+    "y": 0.44215
   },
   {
     "id": "2264",
@@ -637,7 +795,9 @@
     "group": 2,
     "aiExposure": 0.2307692308,
     "quartile": "Medium low",
-    "wage": 5000
+    "wage": 5000,
+    "x": 0.586538,
+    "y": 0.502754
   },
   {
     "id": "2265",
@@ -645,7 +805,9 @@
     "group": 2,
     "aiExposure": 0.9230769231,
     "quartile": "High",
-    "wage": 5538
+    "wage": 5538,
+    "x": 0.509506,
+    "y": 0.429114
   },
   {
     "id": "2266",
@@ -653,7 +815,9 @@
     "group": 2,
     "aiExposure": 0.3076923077,
     "quartile": "Medium low",
-    "wage": 2869
+    "wage": 2869,
+    "x": 0.613975,
+    "y": 0.447881
   },
   {
     "id": "2267",
@@ -661,7 +825,9 @@
     "group": 2,
     "aiExposure": 0.375,
     "quartile": "Medium low",
-    "wage": 5960
+    "wage": 5960,
+    "x": 0.565757,
+    "y": 0.491602
   },
   {
     "id": "2268",
@@ -669,7 +835,9 @@
     "group": 2,
     "aiExposure": 0.08333333333,
     "quartile": "Medium low",
-    "wage": null
+    "wage": null,
+    "x": 0.370154,
+    "y": 0.158206
   },
   {
     "id": "2269",
@@ -677,7 +845,9 @@
     "group": 2,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 4852
+    "wage": 4852,
+    "x": 0.525634,
+    "y": 0.479639
   },
   {
     "id": "2311",
@@ -685,7 +855,9 @@
     "group": 2,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 7834
+    "wage": 7834,
+    "x": 0.50517,
+    "y": 0.452921
   },
   {
     "id": "2321",
@@ -693,7 +865,9 @@
     "group": 2,
     "aiExposure": 0.7142857143,
     "quartile": "Medium high",
-    "wage": 5480
+    "wage": 5480,
+    "x": 0.679153,
+    "y": 0.577188
   },
   {
     "id": "2331",
@@ -701,7 +875,9 @@
     "group": 2,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 5966
+    "wage": 5966,
+    "x": 0.517061,
+    "y": 0.429746
   },
   {
     "id": "2341",
@@ -709,7 +885,9 @@
     "group": 2,
     "aiExposure": 0.4285714286,
     "quartile": "Medium low",
-    "wage": 5607
+    "wage": 5607,
+    "x": 0.525668,
+    "y": 0.426318
   },
   {
     "id": "2342",
@@ -717,7 +895,9 @@
     "group": 2,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 3323
+    "wage": 3323,
+    "x": 0.548062,
+    "y": 0.374503
   },
   {
     "id": "2351",
@@ -725,7 +905,9 @@
     "group": 2,
     "aiExposure": 0.5555555556,
     "quartile": "Medium high",
-    "wage": 3750
+    "wage": 3750,
+    "x": 0.260996,
+    "y": 0.784407
   },
   {
     "id": "2352",
@@ -733,7 +915,9 @@
     "group": 2,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 4035
+    "wage": 4035,
+    "x": 0.521615,
+    "y": 0.131945
   },
   {
     "id": "2353",
@@ -741,7 +925,9 @@
     "group": 2,
     "aiExposure": 0.5555555556,
     "quartile": "Medium high",
-    "wage": 4080
+    "wage": 4080,
+    "x": 0.540766,
+    "y": 0.38417
   },
   {
     "id": "2361",
@@ -749,7 +935,9 @@
     "group": 2,
     "aiExposure": 0.875,
     "quartile": "High",
-    "wage": 6105
+    "wage": 6105,
+    "x": 0.513056,
+    "y": 0.434399
   },
   {
     "id": "2371",
@@ -757,7 +945,9 @@
     "group": 2,
     "aiExposure": 0.375,
     "quartile": "Medium low",
-    "wage": 2435
+    "wage": 2435,
+    "x": 0.541122,
+    "y": 0.404344
   },
   {
     "id": "2381",
@@ -765,7 +955,9 @@
     "group": 2,
     "aiExposure": 0.9166666667,
     "quartile": "High",
-    "wage": 5371
+    "wage": 5371,
+    "x": 0.530891,
+    "y": 0.500414
   },
   {
     "id": "2391",
@@ -773,7 +965,9 @@
     "group": 2,
     "aiExposure": 0.8181818182,
     "quartile": "Medium high",
-    "wage": 8024
+    "wage": 8024,
+    "x": 0.491693,
+    "y": 0.494664
   },
   {
     "id": "2392",
@@ -781,7 +975,9 @@
     "group": 2,
     "aiExposure": 0.1428571429,
     "quartile": "Medium low",
-    "wage": 4466
+    "wage": 4466,
+    "x": 0.547918,
+    "y": 0.390978
   },
   {
     "id": "2393",
@@ -789,7 +985,9 @@
     "group": 2,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": null
+    "wage": null,
+    "x": 0.168536,
+    "y": 0.674967
   },
   {
     "id": "2399",
@@ -797,7 +995,9 @@
     "group": 2,
     "aiExposure": 0.6363636364,
     "quartile": "Medium high",
-    "wage": 4776
+    "wage": 4776,
+    "x": 0.515515,
+    "y": 0.449688
   },
   {
     "id": "2411",
@@ -805,7 +1005,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4452
+    "wage": 4452,
+    "x": 0.482762,
+    "y": 0.485555
   },
   {
     "id": "2412",
@@ -813,7 +1015,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5166
+    "wage": 5166,
+    "x": 0.496286,
+    "y": 0.472215
   },
   {
     "id": "2413",
@@ -821,7 +1025,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 6787
+    "wage": 6787,
+    "x": 0.512036,
+    "y": 0.518347
   },
   {
     "id": "2421",
@@ -829,7 +1035,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5234
+    "wage": 5234,
+    "x": 0.485215,
+    "y": 0.452794
   },
   {
     "id": "2422",
@@ -837,7 +1045,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 7212
+    "wage": 7212,
+    "x": 0.497207,
+    "y": 0.450791
   },
   {
     "id": "2423",
@@ -845,7 +1055,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4562
+    "wage": 4562,
+    "x": 0.478736,
+    "y": 0.453908
   },
   {
     "id": "2424",
@@ -853,7 +1065,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4490
+    "wage": 4490,
+    "x": 0.510245,
+    "y": 0.459925
   },
   {
     "id": "2425",
@@ -861,7 +1075,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4750
+    "wage": 4750,
+    "x": 0.501803,
+    "y": 0.447324
   },
   {
     "id": "2426",
@@ -869,7 +1085,9 @@
     "group": 2,
     "aiExposure": 0.8888888889,
     "quartile": "High",
-    "wage": 5732
+    "wage": 5732,
+    "x": 0.502189,
+    "y": 0.479697
   },
   {
     "id": "2431",
@@ -877,7 +1095,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5041
+    "wage": 5041,
+    "x": 0.407529,
+    "y": 0.463101
   },
   {
     "id": "2432",
@@ -885,7 +1105,9 @@
     "group": 2,
     "aiExposure": 0.9166666667,
     "quartile": "High",
-    "wage": 3901
+    "wage": 3901,
+    "x": 0.561967,
+    "y": 0.465682
   },
   {
     "id": "2433",
@@ -893,7 +1115,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5983
+    "wage": 5983,
+    "x": 0.53768,
+    "y": 0.517347
   },
   {
     "id": "2434",
@@ -901,7 +1125,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5773
+    "wage": 5773,
+    "x": 0.497537,
+    "y": 0.466924
   },
   {
     "id": "2511",
@@ -909,7 +1135,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5871
+    "wage": 5871,
+    "x": 0.486954,
+    "y": 0.562763
   },
   {
     "id": "2512",
@@ -917,7 +1145,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 6387
+    "wage": 6387,
+    "x": 0.489106,
+    "y": 0.476909
   },
   {
     "id": "2513",
@@ -925,7 +1155,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3664
+    "wage": 3664,
+    "x": 0.516613,
+    "y": 0.504393
   },
   {
     "id": "2514",
@@ -933,7 +1165,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4904
+    "wage": 4904,
+    "x": 0.534112,
+    "y": 0.535124
   },
   {
     "id": "2519",
@@ -941,7 +1175,9 @@
     "group": 2,
     "aiExposure": 0.8333333333,
     "quartile": "Medium high",
-    "wage": 4492
+    "wage": 4492,
+    "x": 0.499821,
+    "y": 0.47536
   },
   {
     "id": "2521",
@@ -949,7 +1185,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4953
+    "wage": 4953,
+    "x": 0.517194,
+    "y": 0.479759
   },
   {
     "id": "2522",
@@ -957,7 +1195,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5447
+    "wage": 5447,
+    "x": 0.213442,
+    "y": 0.563742
   },
   {
     "id": "2523",
@@ -965,7 +1205,9 @@
     "group": 2,
     "aiExposure": 0.875,
     "quartile": "High",
-    "wage": 4844
+    "wage": 4844,
+    "x": 0.516758,
+    "y": 0.475625
   },
   {
     "id": "2524",
@@ -973,7 +1215,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.554216,
+    "y": 0.8745
   },
   {
     "id": "2531",
@@ -981,7 +1225,9 @@
     "group": 2,
     "aiExposure": 0.7142857143,
     "quartile": "Medium high",
-    "wage": null
+    "wage": null,
+    "x": 0.188328,
+    "y": 0.298163
   },
   {
     "id": "2541",
@@ -989,7 +1235,9 @@
     "group": 2,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": null
+    "wage": null,
+    "x": 0.881226,
+    "y": 0.480597
   },
   {
     "id": "2542",
@@ -997,7 +1245,9 @@
     "group": 2,
     "aiExposure": 0.8888888889,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.272974,
+    "y": 0.813811
   },
   {
     "id": "2543",
@@ -1005,7 +1255,9 @@
     "group": 2,
     "aiExposure": 0.8888888889,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.4875,
+    "y": 0.116968
   },
   {
     "id": "2611",
@@ -1013,7 +1265,9 @@
     "group": 2,
     "aiExposure": 0.25,
     "quartile": "Medium low",
-    "wage": 6029
+    "wage": 6029,
+    "x": 0.498264,
+    "y": 0.459017
   },
   {
     "id": "2612",
@@ -1021,7 +1275,9 @@
     "group": 2,
     "aiExposure": 0.1428571429,
     "quartile": "Medium low",
-    "wage": 14663
+    "wage": 14663,
+    "x": 0.423596,
+    "y": 0.497948
   },
   {
     "id": "2619",
@@ -1029,7 +1285,9 @@
     "group": 2,
     "aiExposure": 0.8571428571,
     "quartile": "High",
-    "wage": 5587
+    "wage": 5587,
+    "x": 0.509396,
+    "y": 0.451105
   },
   {
     "id": "2711",
@@ -1037,7 +1295,9 @@
     "group": 2,
     "aiExposure": 0.8,
     "quartile": "Medium high",
-    "wage": 4907
+    "wage": 4907,
+    "x": 0.502445,
+    "y": 0.43328
   },
   {
     "id": "2712",
@@ -1045,7 +1305,9 @@
     "group": 2,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 3110
+    "wage": 3110,
+    "x": 0.468083,
+    "y": 0.437818
   },
   {
     "id": "2811",
@@ -1053,7 +1315,9 @@
     "group": 2,
     "aiExposure": 0.8888888889,
     "quartile": "High",
-    "wage": 4613
+    "wage": 4613,
+    "x": 0.519188,
+    "y": 0.433944
   },
   {
     "id": "2812",
@@ -1061,7 +1325,9 @@
     "group": 2,
     "aiExposure": 0.875,
     "quartile": "High",
-    "wage": 5138
+    "wage": 5138,
+    "x": 0.17314,
+    "y": 0.712514
   },
   {
     "id": "2821",
@@ -1069,7 +1335,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5477
+    "wage": 5477,
+    "x": 0.517616,
+    "y": 0.468958
   },
   {
     "id": "2822",
@@ -1077,7 +1345,9 @@
     "group": 2,
     "aiExposure": 0.8,
     "quartile": "Medium high",
-    "wage": 6158
+    "wage": 6158,
+    "x": 0.51069,
+    "y": 0.472594
   },
   {
     "id": "2823",
@@ -1085,7 +1355,9 @@
     "group": 2,
     "aiExposure": 0.8571428571,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.145329,
+    "y": 0.365259
   },
   {
     "id": "2824",
@@ -1093,7 +1365,9 @@
     "group": 2,
     "aiExposure": 0.4285714286,
     "quartile": "Medium low",
-    "wage": 6120
+    "wage": 6120,
+    "x": 0.539686,
+    "y": 0.493076
   },
   {
     "id": "2825",
@@ -1101,7 +1375,9 @@
     "group": 2,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 5106
+    "wage": 5106,
+    "x": 0.527205,
+    "y": 0.487882
   },
   {
     "id": "2826",
@@ -1109,7 +1385,9 @@
     "group": 2,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 4263
+    "wage": 4263,
+    "x": 0.544628,
+    "y": 0.349469
   },
   {
     "id": "2831",
@@ -1117,7 +1395,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4748
+    "wage": 4748,
+    "x": 0.513707,
+    "y": 0.466971
   },
   {
     "id": "2832",
@@ -1125,7 +1405,9 @@
     "group": 2,
     "aiExposure": 0.8888888889,
     "quartile": "High",
-    "wage": 5003
+    "wage": 5003,
+    "x": 0.516215,
+    "y": 0.440824
   },
   {
     "id": "2833",
@@ -1133,7 +1415,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4095
+    "wage": 4095,
+    "x": 0.520824,
+    "y": 0.439885
   },
   {
     "id": "2841",
@@ -1141,7 +1425,9 @@
     "group": 2,
     "aiExposure": 0.6363636364,
     "quartile": "Medium high",
-    "wage": 1922
+    "wage": 1922,
+    "x": 0.526822,
+    "y": 0.648112
   },
   {
     "id": "2842",
@@ -1149,7 +1435,9 @@
     "group": 2,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 3011
+    "wage": 3011,
+    "x": 0.4256,
+    "y": 0.40499
   },
   {
     "id": "2843",
@@ -1157,7 +1445,9 @@
     "group": 2,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 7071
+    "wage": 7071,
+    "x": 0.886633,
+    "y": 0.544175
   },
   {
     "id": "2844",
@@ -1165,7 +1455,9 @@
     "group": 2,
     "aiExposure": 0.625,
     "quartile": "Medium high",
-    "wage": 6550
+    "wage": 6550,
+    "x": 0.622822,
+    "y": 0.614834
   },
   {
     "id": "2845",
@@ -1173,7 +1465,9 @@
     "group": 2,
     "aiExposure": 0.4,
     "quartile": "Medium low",
-    "wage": null
+    "wage": null,
+    "x": 0.554472,
+    "y": 0.116188
   },
   {
     "id": "2846",
@@ -1181,7 +1475,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4595
+    "wage": 4595,
+    "x": 0.735452,
+    "y": 0.807097
   },
   {
     "id": "2847",
@@ -1189,7 +1485,9 @@
     "group": 2,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.120346,
+    "y": 0.430832
   },
   {
     "id": "2849",
@@ -1197,7 +1495,9 @@
     "group": 2,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 6245
+    "wage": 6245,
+    "x": 0.512843,
+    "y": 0.478563
   },
   {
     "id": "2911",
@@ -1205,7 +1505,9 @@
     "group": 2,
     "aiExposure": 0.7,
     "quartile": "Medium high",
-    "wage": 5109
+    "wage": 5109,
+    "x": 0.481522,
+    "y": 0.431365
   },
   {
     "id": "2912",
@@ -1213,7 +1515,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5277
+    "wage": 5277,
+    "x": 0.498006,
+    "y": 0.479044
   },
   {
     "id": "2913",
@@ -1221,7 +1525,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 7315
+    "wage": 7315,
+    "x": 0.527751,
+    "y": 0.4391
   },
   {
     "id": "2914",
@@ -1229,7 +1535,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4959
+    "wage": 4959,
+    "x": 0.503838,
+    "y": 0.441558
   },
   {
     "id": "2915",
@@ -1237,7 +1545,9 @@
     "group": 2,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 6201
+    "wage": 6201,
+    "x": 0.521926,
+    "y": 0.42758
   },
   {
     "id": "2916",
@@ -1245,7 +1555,9 @@
     "group": 2,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 5253
+    "wage": 5253,
+    "x": 0.524759,
+    "y": 0.433724
   },
   {
     "id": "2919",
@@ -1253,7 +1565,9 @@
     "group": 2,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5218
+    "wage": 5218,
+    "x": 0.524748,
+    "y": 0.444287
   },
   {
     "id": "3111",
@@ -1261,7 +1575,9 @@
     "group": 3,
     "aiExposure": 0.6363636364,
     "quartile": "Medium high",
-    "wage": 3436
+    "wage": 3436,
+    "x": 0.52507,
+    "y": 0.413561
   },
   {
     "id": "3112",
@@ -1269,7 +1585,9 @@
     "group": 3,
     "aiExposure": 0.875,
     "quartile": "High",
-    "wage": 2924
+    "wage": 2924,
+    "x": 0.516589,
+    "y": 0.42487
   },
   {
     "id": "3113",
@@ -1277,7 +1595,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3061
+    "wage": 3061,
+    "x": 0.544366,
+    "y": 0.434231
   },
   {
     "id": "3114",
@@ -1285,7 +1605,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2947
+    "wage": 2947,
+    "x": 0.545012,
+    "y": 0.441957
   },
   {
     "id": "3115",
@@ -1293,7 +1615,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2694
+    "wage": 2694,
+    "x": 0.537872,
+    "y": 0.432615
   },
   {
     "id": "3116",
@@ -1301,7 +1625,9 @@
     "group": 3,
     "aiExposure": 0.8571428571,
     "quartile": "High",
-    "wage": 4821
+    "wage": 4821,
+    "x": 0.531708,
+    "y": 0.43114
   },
   {
     "id": "3117",
@@ -1309,7 +1635,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3079
+    "wage": 3079,
+    "x": 0.53637,
+    "y": 0.439876
   },
   {
     "id": "3118",
@@ -1317,7 +1645,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3347
+    "wage": 3347,
+    "x": 0.54723,
+    "y": 0.438074
   },
   {
     "id": "3119",
@@ -1325,7 +1655,9 @@
     "group": 3,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 2820
+    "wage": 2820,
+    "x": 0.519745,
+    "y": 0.422053
   },
   {
     "id": "3121",
@@ -1333,7 +1665,9 @@
     "group": 3,
     "aiExposure": 0.8333333333,
     "quartile": "Medium high",
-    "wage": 4337
+    "wage": 4337,
+    "x": 0.515985,
+    "y": 0.413706
   },
   {
     "id": "3122",
@@ -1341,7 +1675,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2912
+    "wage": 2912,
+    "x": 0.490815,
+    "y": 0.416167
   },
   {
     "id": "3123",
@@ -1349,7 +1685,9 @@
     "group": 3,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 2852
+    "wage": 2852,
+    "x": 0.468633,
+    "y": 0.41247
   },
   {
     "id": "3129",
@@ -1357,7 +1695,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2802
+    "wage": 2802,
+    "x": 0.485912,
+    "y": 0.419253
   },
   {
     "id": "3131",
@@ -1365,7 +1705,9 @@
     "group": 3,
     "aiExposure": 0.4285714286,
     "quartile": "Medium low",
-    "wage": 1847
+    "wage": 1847,
+    "x": 0.588588,
+    "y": 0.476544
   },
   {
     "id": "3132",
@@ -1373,7 +1715,9 @@
     "group": 3,
     "aiExposure": 0.25,
     "quartile": "Medium low",
-    "wage": 1764
+    "wage": 1764,
+    "x": 0.555887,
+    "y": 0.565016
   },
   {
     "id": "3133",
@@ -1381,7 +1725,9 @@
     "group": 3,
     "aiExposure": 0.4285714286,
     "quartile": "Medium low",
-    "wage": 2613
+    "wage": 2613,
+    "x": 0.496416,
+    "y": 0.532281
   },
   {
     "id": "3134",
@@ -1389,7 +1735,9 @@
     "group": 3,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 1663
+    "wage": 1663,
+    "x": 0.555721,
+    "y": 0.557063
   },
   {
     "id": "3135",
@@ -1397,7 +1745,9 @@
     "group": 3,
     "aiExposure": 0.2222222222,
     "quartile": "Medium low",
-    "wage": 2916
+    "wage": 2916,
+    "x": 0.535484,
+    "y": 0.478994
   },
   {
     "id": "3141",
@@ -1405,7 +1755,9 @@
     "group": 3,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 2956
+    "wage": 2956,
+    "x": 0.497996,
+    "y": 0.42117
   },
   {
     "id": "3142",
@@ -1413,7 +1765,9 @@
     "group": 3,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 3695
+    "wage": 3695,
+    "x": 0.493825,
+    "y": 0.428391
   },
   {
     "id": "3143",
@@ -1421,7 +1775,9 @@
     "group": 3,
     "aiExposure": 0.5454545455,
     "quartile": "Medium high",
-    "wage": 4146
+    "wage": 4146,
+    "x": 0.504997,
+    "y": 0.429503
   },
   {
     "id": "3144",
@@ -1429,7 +1785,9 @@
     "group": 3,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 3499
+    "wage": 3499,
+    "x": 0.508872,
+    "y": 0.423116
   },
   {
     "id": "3151",
@@ -1437,7 +1795,9 @@
     "group": 3,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 3638
+    "wage": 3638,
+    "x": 0.553278,
+    "y": 0.428646
   },
   {
     "id": "3152",
@@ -1445,7 +1805,9 @@
     "group": 3,
     "aiExposure": 0.2727272727,
     "quartile": "Medium low",
-    "wage": 4296
+    "wage": 4296,
+    "x": 0.546266,
+    "y": 0.427593
   },
   {
     "id": "3153",
@@ -1453,7 +1815,9 @@
     "group": 3,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 2462
+    "wage": 2462,
+    "x": 0.61238,
+    "y": 0.439723
   },
   {
     "id": "3154",
@@ -1461,7 +1825,9 @@
     "group": 3,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2773
+    "wage": 2773,
+    "x": 0.595353,
+    "y": 0.446171
   },
   {
     "id": "3159",
@@ -1469,7 +1835,9 @@
     "group": 3,
     "aiExposure": 0.75,
     "quartile": "Medium high",
-    "wage": 3367
+    "wage": 3367,
+    "x": 0.563771,
+    "y": 0.449793
   },
   {
     "id": "3161",
@@ -1477,7 +1845,9 @@
     "group": 3,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": null
+    "wage": null,
+    "x": 0.426985,
+    "y": 0.879511
   },
   {
     "id": "3211",
@@ -1485,7 +1855,9 @@
     "group": 3,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 4061
+    "wage": 4061,
+    "x": 0.598398,
+    "y": 0.398289
   },
   {
     "id": "3212",
@@ -1493,7 +1865,9 @@
     "group": 3,
     "aiExposure": 0.25,
     "quartile": "Medium low",
-    "wage": 3970
+    "wage": 3970,
+    "x": 0.600958,
+    "y": 0.40696
   },
   {
     "id": "3213",
@@ -1501,7 +1875,9 @@
     "group": 3,
     "aiExposure": 0.4,
     "quartile": "Medium low",
-    "wage": 3012
+    "wage": 3012,
+    "x": 0.433402,
+    "y": 0.41101
   },
   {
     "id": "3214",
@@ -1509,7 +1885,9 @@
     "group": 3,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 2236
+    "wage": 2236,
+    "x": 0.664022,
+    "y": 0.145788
   },
   {
     "id": "3215",
@@ -1517,7 +1895,9 @@
     "group": 3,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 2845
+    "wage": 2845,
+    "x": 0.643063,
+    "y": 0.86888
   },
   {
     "id": "3221",
@@ -1525,7 +1905,9 @@
     "group": 3,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 4335
+    "wage": 4335,
+    "x": 0.601164,
+    "y": 0.440319
   },
   {
     "id": "3222",
@@ -1533,7 +1915,9 @@
     "group": 3,
     "aiExposure": 0.4285714286,
     "quartile": "Medium high",
-    "wage": 3812
+    "wage": 3812,
+    "x": 0.604756,
+    "y": 0.430069
   },
   {
     "id": "3231",
@@ -1541,7 +1925,9 @@
     "group": 3,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 3265
+    "wage": 3265,
+    "x": 0.480272,
+    "y": 0.442509
   },
   {
     "id": "3241",
@@ -1549,7 +1935,9 @@
     "group": 3,
     "aiExposure": 0.25,
     "quartile": "Medium low",
-    "wage": 3437
+    "wage": 3437,
+    "x": 0.543023,
+    "y": 0.420253
   },
   {
     "id": "3251",
@@ -1557,7 +1945,9 @@
     "group": 3,
     "aiExposure": 0.4285714286,
     "quartile": "Medium high",
-    "wage": 3769
+    "wage": 3769,
+    "x": 0.626492,
+    "y": 0.451468
   },
   {
     "id": "3252",
@@ -1565,7 +1955,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2601
+    "wage": 2601,
+    "x": 0.4838,
+    "y": 0.410993
   },
   {
     "id": "3253",
@@ -1573,7 +1965,9 @@
     "group": 3,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 5963
+    "wage": 5963,
+    "x": 0.784114,
+    "y": 0.227375
   },
   {
     "id": "3254",
@@ -1581,7 +1975,9 @@
     "group": 3,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 4115
+    "wage": 4115,
+    "x": 0.602189,
+    "y": 0.454666
   },
   {
     "id": "3255",
@@ -1589,7 +1985,9 @@
     "group": 3,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 2893
+    "wage": 2893,
+    "x": 0.570022,
+    "y": 0.410897
   },
   {
     "id": "3256",
@@ -1597,7 +1995,9 @@
     "group": 3,
     "aiExposure": 0.4,
     "quartile": "Medium low",
-    "wage": 4193
+    "wage": 4193,
+    "x": 0.556986,
+    "y": 0.435689
   },
   {
     "id": "3257",
@@ -1605,7 +2005,9 @@
     "group": 3,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 2003
+    "wage": 2003,
+    "x": 0.361692,
+    "y": 0.635315
   },
   {
     "id": "3258",
@@ -1613,7 +2015,9 @@
     "group": 3,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 1736
+    "wage": 1736,
+    "x": 0.641711,
+    "y": 0.335791
   },
   {
     "id": "3259",
@@ -1621,7 +2025,9 @@
     "group": 3,
     "aiExposure": 0.8,
     "quartile": "Medium high",
-    "wage": 6695
+    "wage": 6695,
+    "x": 0.463015,
+    "y": 0.515139
   },
   {
     "id": "3311",
@@ -1629,7 +2035,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4389
+    "wage": 4389,
+    "x": 0.47533,
+    "y": 0.493605
   },
   {
     "id": "3312",
@@ -1637,7 +2045,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4442
+    "wage": 4442,
+    "x": 0.872773,
+    "y": 0.33218
   },
   {
     "id": "3313",
@@ -1645,7 +2055,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3248
+    "wage": 3248,
+    "x": 0.486561,
+    "y": 0.457224
   },
   {
     "id": "3314",
@@ -1653,7 +2065,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3680
+    "wage": 3680,
+    "x": 0.479428,
+    "y": 0.466376
   },
   {
     "id": "3315",
@@ -1661,7 +2075,9 @@
     "group": 3,
     "aiExposure": 0.8,
     "quartile": "Medium high",
-    "wage": 3544
+    "wage": 3544,
+    "x": 0.524347,
+    "y": 0.460278
   },
   {
     "id": "3321",
@@ -1669,7 +2085,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4295
+    "wage": 4295,
+    "x": 0.359287,
+    "y": 0.469282
   },
   {
     "id": "3322",
@@ -1677,7 +2095,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2714
+    "wage": 2714,
+    "x": 0.336478,
+    "y": 0.44986
   },
   {
     "id": "3323",
@@ -1685,7 +2105,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3372
+    "wage": 3372,
+    "x": 0.474433,
+    "y": 0.517558
   },
   {
     "id": "3324",
@@ -1693,7 +2115,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 6529
+    "wage": 6529,
+    "x": 0.161213,
+    "y": 0.294525
   },
   {
     "id": "3331",
@@ -1701,7 +2125,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 4649
+    "wage": 4649,
+    "x": 0.90631,
+    "y": 0.458747
   },
   {
     "id": "3332",
@@ -1709,7 +2135,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1813
+    "wage": 1813,
+    "x": 0.455461,
+    "y": 0.409386
   },
   {
     "id": "3333",
@@ -1717,7 +2145,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2500
+    "wage": 2500,
+    "x": 0.453344,
+    "y": 0.400437
   },
   {
     "id": "3334",
@@ -1725,7 +2155,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3646
+    "wage": 3646,
+    "x": 0.594445,
+    "y": 0.634027
   },
   {
     "id": "3339",
@@ -1733,7 +2165,9 @@
     "group": 3,
     "aiExposure": 0.8333333333,
     "quartile": "Medium high",
-    "wage": 1813
+    "wage": 1813,
+    "x": 0.255601,
+    "y": 0.497904
   },
   {
     "id": "3341",
@@ -1741,7 +2175,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3138
+    "wage": 3138,
+    "x": 0.46982,
+    "y": 0.421147
   },
   {
     "id": "3342",
@@ -1749,7 +2185,9 @@
     "group": 3,
     "aiExposure": 0.9,
     "quartile": "High",
-    "wage": 3503
+    "wage": 3503,
+    "x": 0.457282,
+    "y": 0.89712
   },
   {
     "id": "3343",
@@ -1757,7 +2195,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2906
+    "wage": 2906,
+    "x": 0.475449,
+    "y": 0.415706
   },
   {
     "id": "3344",
@@ -1765,7 +2205,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1461
+    "wage": 1461,
+    "x": 0.559939,
+    "y": 0.42265
   },
   {
     "id": "3411",
@@ -1773,7 +2215,9 @@
     "group": 3,
     "aiExposure": 0.8333333333,
     "quartile": "High",
-    "wage": 3262
+    "wage": 3262,
+    "x": 0.207047,
+    "y": 0.666366
   },
   {
     "id": "3511",
@@ -1781,7 +2225,9 @@
     "group": 3,
     "aiExposure": 0.7142857143,
     "quartile": "Medium high",
-    "wage": 3170
+    "wage": 3170,
+    "x": 0.556251,
+    "y": 0.36095
   },
   {
     "id": "3512",
@@ -1789,7 +2235,9 @@
     "group": 3,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 2831
+    "wage": 2831,
+    "x": 0.582832,
+    "y": 0.455385
   },
   {
     "id": "3513",
@@ -1797,7 +2245,9 @@
     "group": 3,
     "aiExposure": 0.7142857143,
     "quartile": "Medium high",
-    "wage": 3296
+    "wage": 3296,
+    "x": 0.458204,
+    "y": 0.37209
   },
   {
     "id": "3514",
@@ -1805,7 +2255,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 6491
+    "wage": 6491,
+    "x": 0.708376,
+    "y": 0.422265
   },
   {
     "id": "3521",
@@ -1813,7 +2265,9 @@
     "group": 3,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 3435
+    "wage": 3435,
+    "x": 0.379423,
+    "y": 0.825994
   },
   {
     "id": "3522",
@@ -1821,7 +2275,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2891
+    "wage": 2891,
+    "x": 0.466308,
+    "y": 0.383316
   },
   {
     "id": "3611",
@@ -1829,7 +2285,9 @@
     "group": 3,
     "aiExposure": 0.5555555556,
     "quartile": "Medium high",
-    "wage": 3679
+    "wage": 3679,
+    "x": 0.835711,
+    "y": 0.71316
   },
   {
     "id": "3621",
@@ -1837,7 +2295,9 @@
     "group": 3,
     "aiExposure": 0.2222222222,
     "quartile": "Medium low",
-    "wage": 1865
+    "wage": 1865,
+    "x": 0.099498,
+    "y": 0.58536
   },
   {
     "id": "3622",
@@ -1845,7 +2305,9 @@
     "group": 3,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 3228
+    "wage": 3228,
+    "x": 0.468018,
+    "y": 0.40546
   },
   {
     "id": "3623",
@@ -1853,7 +2315,9 @@
     "group": 3,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 2908
+    "wage": 2908,
+    "x": 0.627121,
+    "y": 0.493852
   },
   {
     "id": "3631",
@@ -1861,7 +2325,9 @@
     "group": 3,
     "aiExposure": 0.4545454545,
     "quartile": "Medium high",
-    "wage": 2722
+    "wage": 2722,
+    "x": 0.37631,
+    "y": 0.344946
   },
   {
     "id": "3632",
@@ -1869,7 +2335,9 @@
     "group": 3,
     "aiExposure": 0.875,
     "quartile": "High",
-    "wage": 3771
+    "wage": 3771,
+    "x": 0.797457,
+    "y": 0.545885
   },
   {
     "id": "3633",
@@ -1877,7 +2345,9 @@
     "group": 3,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 3299
+    "wage": 3299,
+    "x": 0.48078,
+    "y": 0.39958
   },
   {
     "id": "3634",
@@ -1885,7 +2355,9 @@
     "group": 3,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 4136
+    "wage": 4136,
+    "x": 0.483387,
+    "y": 0.393711
   },
   {
     "id": "3641",
@@ -1893,7 +2365,9 @@
     "group": 3,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 3154
+    "wage": 3154,
+    "x": 0.458745,
+    "y": 0.402945
   },
   {
     "id": "3711",
@@ -1901,7 +2375,9 @@
     "group": 3,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 2437
+    "wage": 2437,
+    "x": 0.418431,
+    "y": 0.402084
   },
   {
     "id": "3712",
@@ -1909,7 +2385,9 @@
     "group": 3,
     "aiExposure": 0.9,
     "quartile": "High",
-    "wage": 4596
+    "wage": 4596,
+    "x": 0.477775,
+    "y": 0.482232
   },
   {
     "id": "3713",
@@ -1917,7 +2395,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 5070
+    "wage": 5070,
+    "x": 0.491732,
+    "y": 0.520494
   },
   {
     "id": "3714",
@@ -1925,7 +2405,9 @@
     "group": 3,
     "aiExposure": 0.8571428571,
     "quartile": "High",
-    "wage": 3567
+    "wage": 3567,
+    "x": 0.473823,
+    "y": 0.463914
   },
   {
     "id": "3715",
@@ -1933,7 +2415,9 @@
     "group": 3,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 4474
+    "wage": 4474,
+    "x": 0.466754,
+    "y": 0.312227
   },
   {
     "id": "3716",
@@ -1941,7 +2425,9 @@
     "group": 3,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2757
+    "wage": 2757,
+    "x": 0.445431,
+    "y": 0.342877
   },
   {
     "id": "3719",
@@ -1949,7 +2435,9 @@
     "group": 3,
     "aiExposure": 0.8,
     "quartile": "Medium high",
-    "wage": 3696
+    "wage": 3696,
+    "x": 0.463851,
+    "y": 0.326714
   },
   {
     "id": "4111",
@@ -1957,7 +2445,9 @@
     "group": 4,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 2042
+    "wage": 2042,
+    "x": 0.532588,
+    "y": 0.387399
   },
   {
     "id": "4121",
@@ -1965,7 +2455,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 3046
+    "wage": 3046,
+    "x": 0.502359,
+    "y": 0.395016
   },
   {
     "id": "4131",
@@ -1973,7 +2465,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1763
+    "wage": 1763,
+    "x": 0.519547,
+    "y": 0.39087
   },
   {
     "id": "4132",
@@ -1981,7 +2475,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1833
+    "wage": 1833,
+    "x": 0.520063,
+    "y": 0.397952
   },
   {
     "id": "4211",
@@ -1989,7 +2485,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2800
+    "wage": 2800,
+    "x": 0.503959,
+    "y": 0.384527
   },
   {
     "id": "4212",
@@ -1997,7 +2495,9 @@
     "group": 4,
     "aiExposure": 0.8333333333,
     "quartile": "Medium high",
-    "wage": 1453
+    "wage": 1453,
+    "x": 0.557126,
+    "y": 0.396399
   },
   {
     "id": "4213",
@@ -2005,7 +2505,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2372
+    "wage": 2372,
+    "x": 0.506572,
+    "y": 0.371799
   },
   {
     "id": "4214",
@@ -2013,7 +2515,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1797
+    "wage": 1797,
+    "x": 0.525335,
+    "y": 0.3972
   },
   {
     "id": "4221",
@@ -2021,7 +2525,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2312
+    "wage": 2312,
+    "x": 0.482755,
+    "y": 0.555696
   },
   {
     "id": "4222",
@@ -2029,7 +2535,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1813
+    "wage": 1813,
+    "x": 0.511712,
+    "y": 0.399184
   },
   {
     "id": "4223",
@@ -2037,7 +2545,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2630
+    "wage": 2630,
+    "x": 0.510575,
+    "y": 0.377347
   },
   {
     "id": "4224",
@@ -2045,7 +2555,9 @@
     "group": 4,
     "aiExposure": 0.9166666667,
     "quartile": "High",
-    "wage": 1519
+    "wage": 1519,
+    "x": 0.537092,
+    "y": 0.399311
   },
   {
     "id": "4225",
@@ -2053,7 +2565,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2316
+    "wage": 2316,
+    "x": 0.499878,
+    "y": 0.390203
   },
   {
     "id": "4226",
@@ -2061,7 +2575,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2374
+    "wage": 2374,
+    "x": 0.488833,
+    "y": 0.391352
   },
   {
     "id": "4229",
@@ -2069,7 +2585,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2931
+    "wage": 2931,
+    "x": 0.508415,
+    "y": 0.391499
   },
   {
     "id": "4311",
@@ -2077,7 +2595,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1933
+    "wage": 1933,
+    "x": 0.516763,
+    "y": 0.385377
   },
   {
     "id": "4312",
@@ -2085,7 +2605,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2339
+    "wage": 2339,
+    "x": 0.492203,
+    "y": 0.407224
   },
   {
     "id": "4313",
@@ -2093,7 +2615,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 1645
+    "wage": 1645,
+    "x": 0.519832,
+    "y": 0.404395
   },
   {
     "id": "4321",
@@ -2101,7 +2625,9 @@
     "group": 4,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 1861
+    "wage": 1861,
+    "x": 0.537989,
+    "y": 0.39253
   },
   {
     "id": "4322",
@@ -2109,7 +2635,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2492
+    "wage": 2492,
+    "x": 0.495978,
+    "y": 0.370321
   },
   {
     "id": "4323",
@@ -2117,7 +2645,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2744
+    "wage": 2744,
+    "x": 0.498476,
+    "y": 0.398098
   },
   {
     "id": "4411",
@@ -2125,7 +2655,9 @@
     "group": 4,
     "aiExposure": 0.8571428571,
     "quartile": "High",
-    "wage": 3854
+    "wage": 3854,
+    "x": 0.510178,
+    "y": 0.387466
   },
   {
     "id": "4412",
@@ -2133,7 +2665,9 @@
     "group": 4,
     "aiExposure": 0.4,
     "quartile": "Medium low",
-    "wage": 2147
+    "wage": 2147,
+    "x": 0.535335,
+    "y": 0.381771
   },
   {
     "id": "4413",
@@ -2141,7 +2675,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2110
+    "wage": 2110,
+    "x": 0.521244,
+    "y": 0.384418
   },
   {
     "id": "4414",
@@ -2149,7 +2685,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2424
+    "wage": 2424,
+    "x": 0.503846,
+    "y": 0.400993
   },
   {
     "id": "4415",
@@ -2157,7 +2695,9 @@
     "group": 4,
     "aiExposure": 0.8333333333,
     "quartile": "High",
-    "wage": 2636
+    "wage": 2636,
+    "x": 0.512108,
+    "y": 0.393525
   },
   {
     "id": "4416",
@@ -2165,7 +2705,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2519
+    "wage": 2519,
+    "x": 0.507881,
+    "y": 0.402717
   },
   {
     "id": "4419",
@@ -2173,7 +2715,9 @@
     "group": 4,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2316
+    "wage": 2316,
+    "x": 0.484879,
+    "y": 0.402366
   },
   {
     "id": "5111",
@@ -2181,7 +2725,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2011
+    "wage": 2011,
+    "x": 0.490808,
+    "y": 0.281172
   },
   {
     "id": "5112",
@@ -2189,7 +2735,9 @@
     "group": 5,
     "aiExposure": 0.25,
     "quartile": "Medium low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.41584,
+    "y": 0.912863
   },
   {
     "id": "5113",
@@ -2197,7 +2745,9 @@
     "group": 5,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 1730
+    "wage": 1730,
+    "x": 0.584546,
+    "y": 0.388018
   },
   {
     "id": "5121",
@@ -2205,7 +2755,9 @@
     "group": 5,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 1622
+    "wage": 1622,
+    "x": 0.557349,
+    "y": 0.354925
   },
   {
     "id": "5131",
@@ -2213,7 +2765,9 @@
     "group": 5,
     "aiExposure": 0.1428571429,
     "quartile": "Medium low",
-    "wage": 1211
+    "wage": 1211,
+    "x": 0.441343,
+    "y": 0.267675
   },
   {
     "id": "5132",
@@ -2221,7 +2775,9 @@
     "group": 5,
     "aiExposure": 0.2222222222,
     "quartile": "Medium low",
-    "wage": 1140
+    "wage": 1140,
+    "x": 0.451873,
+    "y": 0.263232
   },
   {
     "id": "5141",
@@ -2229,7 +2785,9 @@
     "group": 5,
     "aiExposure": 0.1428571429,
     "quartile": "Medium low",
-    "wage": 1679
+    "wage": 1679,
+    "x": 0.312126,
+    "y": 0.728991
   },
   {
     "id": "5142",
@@ -2237,7 +2795,9 @@
     "group": 5,
     "aiExposure": 0.07692307692,
     "quartile": "Medium low",
-    "wage": 1812
+    "wage": 1812,
+    "x": 0.29294,
+    "y": 0.71547
   },
   {
     "id": "5151",
@@ -2245,7 +2805,9 @@
     "group": 5,
     "aiExposure": 0.1111111111,
     "quartile": "Medium low",
-    "wage": 1618
+    "wage": 1618,
+    "x": 0.552786,
+    "y": 0.374126
   },
   {
     "id": "5152",
@@ -2253,7 +2815,9 @@
     "group": 5,
     "aiExposure": 0.1,
     "quartile": "Medium low",
-    "wage": 2101
+    "wage": 2101,
+    "x": 0.4766,
+    "y": 0.391309
   },
   {
     "id": "5153",
@@ -2261,7 +2825,9 @@
     "group": 5,
     "aiExposure": 0.375,
     "quartile": "Medium low",
-    "wage": 2331
+    "wage": 2331,
+    "x": 0.512717,
+    "y": 0.330147
   },
   {
     "id": "5161",
@@ -2269,7 +2835,9 @@
     "group": 5,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": null
+    "wage": null,
+    "x": 0.833709,
+    "y": 0.744893
   },
   {
     "id": "5162",
@@ -2277,7 +2845,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.075511,
+    "y": 0.556589
   },
   {
     "id": "5163",
@@ -2285,7 +2855,9 @@
     "group": 5,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.781272,
+    "y": 0.192229
   },
   {
     "id": "5164",
@@ -2293,7 +2865,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.523191,
+    "y": 0.918731
   },
   {
     "id": "5165",
@@ -2301,7 +2875,9 @@
     "group": 5,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 1769
+    "wage": 1769,
+    "x": 0.19748,
+    "y": 0.220426
   },
   {
     "id": "5169",
@@ -2309,7 +2885,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2133
+    "wage": 2133,
+    "x": 0.927398,
+    "y": 0.526926
   },
   {
     "id": "5211",
@@ -2317,7 +2895,9 @@
     "group": 5,
     "aiExposure": 0.6666666667,
     "quartile": "Medium high",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.488269,
+    "y": 0.698878
   },
   {
     "id": "5212",
@@ -2325,7 +2905,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1613
+    "wage": 1613,
+    "x": 0.435396,
+    "y": 0.241441
   },
   {
     "id": "5221",
@@ -2333,7 +2915,9 @@
     "group": 5,
     "aiExposure": 0.4285714286,
     "quartile": "Medium high",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.500751,
+    "y": 0.699715
   },
   {
     "id": "5222",
@@ -2341,7 +2925,9 @@
     "group": 5,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 1995
+    "wage": 1995,
+    "x": 0.468092,
+    "y": 0.390657
   },
   {
     "id": "5223",
@@ -2349,7 +2935,9 @@
     "group": 5,
     "aiExposure": 0.7777777778,
     "quartile": "Medium high",
-    "wage": 1317
+    "wage": 1317,
+    "x": 0.573848,
+    "y": 0.38332
   },
   {
     "id": "5231",
@@ -2357,7 +2945,9 @@
     "group": 5,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": 1338
+    "wage": 1338,
+    "x": 0.564282,
+    "y": 0.351119
   },
   {
     "id": "5241",
@@ -2365,7 +2955,9 @@
     "group": 5,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 1733
+    "wage": 1733,
+    "x": 0.672146,
+    "y": 0.416819
   },
   {
     "id": "5242",
@@ -2373,7 +2965,9 @@
     "group": 5,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 1592
+    "wage": 1592,
+    "x": 0.672249,
+    "y": 0.430853
   },
   {
     "id": "5243",
@@ -2381,7 +2975,9 @@
     "group": 5,
     "aiExposure": 0.4285714286,
     "quartile": "Medium high",
-    "wage": 1800
+    "wage": 1800,
+    "x": 0.24936,
+    "y": 0.674028
   },
   {
     "id": "5244",
@@ -2389,7 +2985,9 @@
     "group": 5,
     "aiExposure": 1,
     "quartile": "High",
-    "wage": 2065
+    "wage": 2065,
+    "x": 0.528046,
+    "y": 0.388842
   },
   {
     "id": "5245",
@@ -2397,7 +2995,9 @@
     "group": 5,
     "aiExposure": 0.1111111111,
     "quartile": "Medium low",
-    "wage": 1226
+    "wage": 1226,
+    "x": 0.610972,
+    "y": 0.904945
   },
   {
     "id": "5246",
@@ -2405,7 +3005,9 @@
     "group": 5,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 1163
+    "wage": 1163,
+    "x": 0.135331,
+    "y": 0.292735
   },
   {
     "id": "5249",
@@ -2413,7 +3015,9 @@
     "group": 5,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 2484
+    "wage": 2484,
+    "x": 0.926307,
+    "y": 0.437281
   },
   {
     "id": "5311",
@@ -2421,7 +3025,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1491
+    "wage": 1491,
+    "x": 0.381484,
+    "y": 0.501008
   },
   {
     "id": "5312",
@@ -2429,7 +3035,9 @@
     "group": 5,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 2765
+    "wage": 2765,
+    "x": 0.49803,
+    "y": 0.354145
   },
   {
     "id": "5321",
@@ -2437,7 +3045,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2695
+    "wage": 2695,
+    "x": 0.425303,
+    "y": 0.502999
   },
   {
     "id": "5322",
@@ -2445,7 +3055,9 @@
     "group": 5,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 1060
+    "wage": 1060,
+    "x": 0.447408,
+    "y": 0.414915
   },
   {
     "id": "5411",
@@ -2453,7 +3065,9 @@
     "group": 5,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 3506
+    "wage": 3506,
+    "x": 0.732812,
+    "y": 0.370206
   },
   {
     "id": "5412",
@@ -2461,7 +3075,9 @@
     "group": 5,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 3854
+    "wage": 3854,
+    "x": 0.572436,
+    "y": 0.686383
   },
   {
     "id": "5413",
@@ -2469,7 +3085,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 3523
+    "wage": 3523,
+    "x": 0.546362,
+    "y": 0.367646
   },
   {
     "id": "5414",
@@ -2477,7 +3095,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1642
+    "wage": 1642,
+    "x": 0.596293,
+    "y": 0.360117
   },
   {
     "id": "5415",
@@ -2485,7 +3105,9 @@
     "group": 5,
     "aiExposure": 0.6,
     "quartile": "Medium high",
-    "wage": 3376
+    "wage": 3376,
+    "x": 0.439062,
+    "y": 0.392552
   },
   {
     "id": "5419",
@@ -2493,7 +3115,9 @@
     "group": 5,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1739
+    "wage": 1739,
+    "x": 0.614574,
+    "y": 0.10164
   },
   {
     "id": "6111",
@@ -2501,7 +3125,9 @@
     "group": 6,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 1901
+    "wage": 1901,
+    "x": 0.571306,
+    "y": 0.576643
   },
   {
     "id": "6112",
@@ -2509,7 +3135,9 @@
     "group": 6,
     "aiExposure": 0.5714285714,
     "quartile": "Medium high",
-    "wage": 1527
+    "wage": 1527,
+    "x": 0.579755,
+    "y": 0.655429
   },
   {
     "id": "6113",
@@ -2517,7 +3145,9 @@
     "group": 6,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 2918
+    "wage": 2918,
+    "x": 0.584315,
+    "y": 0.646574
   },
   {
     "id": "6114",
@@ -2525,7 +3155,9 @@
     "group": 6,
     "aiExposure": 0.4,
     "quartile": "Medium low",
-    "wage": 2784
+    "wage": 2784,
+    "x": 0.571289,
+    "y": 0.653972
   },
   {
     "id": "6115",
@@ -2533,7 +3165,9 @@
     "group": 6,
     "aiExposure": 0.3333333333,
     "quartile": "Medium low",
-    "wage": null
+    "wage": null,
+    "x": 0.367942,
+    "y": 0.111215
   },
   {
     "id": "6121",
@@ -2541,7 +3175,9 @@
     "group": 6,
     "aiExposure": 0.3,
     "quartile": "Medium low",
-    "wage": 1250
+    "wage": 1250,
+    "x": 0.59184,
+    "y": 0.68105
   },
   {
     "id": "6122",
@@ -2549,7 +3185,9 @@
     "group": 6,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 2739
+    "wage": 2739,
+    "x": 0.584281,
+    "y": 0.660406
   },
   {
     "id": "6123",
@@ -2557,7 +3195,9 @@
     "group": 6,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 1928
+    "wage": 1928,
+    "x": 0.585921,
+    "y": 0.672707
   },
   {
     "id": "6129",
@@ -2565,7 +3205,9 @@
     "group": 6,
     "aiExposure": 0.25,
     "quartile": "Medium low",
-    "wage": 2122
+    "wage": 2122,
+    "x": 0.590536,
+    "y": 0.660713
   },
   {
     "id": "6131",
@@ -2573,7 +3215,9 @@
     "group": 6,
     "aiExposure": 0.4444444444,
     "quartile": "Medium high",
-    "wage": 2188
+    "wage": 2188,
+    "x": 0.575246,
+    "y": 0.649889
   },
   {
     "id": "6211",
@@ -2581,7 +3225,9 @@
     "group": 6,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2522
+    "wage": 2522,
+    "x": 0.573493,
+    "y": 0.660917
   },
   {
     "id": "6221",
@@ -2589,7 +3235,9 @@
     "group": 6,
     "aiExposure": 0.1111111111,
     "quartile": "Medium low",
-    "wage": 1570
+    "wage": 1570,
+    "x": 0.580443,
+    "y": 0.690639
   },
   {
     "id": "6222",
@@ -2597,7 +3245,9 @@
     "group": 6,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1430
+    "wage": 1430,
+    "x": 0.632675,
+    "y": 0.693928
   },
   {
     "id": "6223",
@@ -2605,7 +3255,9 @@
     "group": 6,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1120
+    "wage": 1120,
+    "x": 0.770641,
+    "y": 0.826006
   },
   {
     "id": "6224",
@@ -2613,7 +3265,9 @@
     "group": 6,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2092
+    "wage": 2092,
+    "x": 0.57722,
+    "y": 0.666048
   },
   {
     "id": "6311",
@@ -2621,7 +3275,9 @@
     "group": 6,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 2092
+    "wage": 2092,
+    "x": 0.592218,
+    "y": 0.655784
   },
   {
     "id": "6321",
@@ -2629,7 +3285,9 @@
     "group": 6,
     "aiExposure": 0.5,
     "quartile": "Medium high",
-    "wage": 1487
+    "wage": 1487,
+    "x": 0.5808,
+    "y": 0.676414
   },
   {
     "id": "6331",
@@ -2637,7 +3295,9 @@
     "group": 6,
     "aiExposure": 0.4444444444,
     "quartile": "Medium high",
-    "wage": 1947
+    "wage": 1947,
+    "x": 0.585612,
+    "y": 0.653639
   },
   {
     "id": "7111",
@@ -2645,7 +3305,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.900971,
+    "y": 0.643164
   },
   {
     "id": "7112",
@@ -2653,7 +3315,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1312
+    "wage": 1312,
+    "x": 0.270442,
+    "y": 0.644627
   },
   {
     "id": "7113",
@@ -2661,7 +3325,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.680868,
+    "y": 0.119509
   },
   {
     "id": "7114",
@@ -2669,7 +3335,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1442
+    "wage": 1442,
+    "x": 0.287509,
+    "y": 0.649401
   },
   {
     "id": "7115",
@@ -2677,7 +3345,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1676
+    "wage": 1676,
+    "x": 0.265893,
+    "y": 0.591367
   },
   {
     "id": "7119",
@@ -2685,7 +3355,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1724
+    "wage": 1724,
+    "x": 0.294213,
+    "y": 0.602915
   },
   {
     "id": "7121",
@@ -2693,7 +3365,9 @@
     "group": 7,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 1296
+    "wage": 1296,
+    "x": 0.285139,
+    "y": 0.602627
   },
   {
     "id": "7122",
@@ -2701,7 +3375,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1733
+    "wage": 1733,
+    "x": 0.275153,
+    "y": 0.589813
   },
   {
     "id": "7123",
@@ -2709,7 +3385,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1664
+    "wage": 1664,
+    "x": 0.282084,
+    "y": 0.611544
   },
   {
     "id": "7124",
@@ -2717,7 +3395,9 @@
     "group": 7,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 1469
+    "wage": 1469,
+    "x": 0.292314,
+    "y": 0.581167
   },
   {
     "id": "7125",
@@ -2725,7 +3405,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1595
+    "wage": 1595,
+    "x": 0.811893,
+    "y": 0.194508
   },
   {
     "id": "7126",
@@ -2733,7 +3415,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2183
+    "wage": 2183,
+    "x": 0.274049,
+    "y": 0.612715
   },
   {
     "id": "7127",
@@ -2741,7 +3425,9 @@
     "group": 7,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 1833
+    "wage": 1833,
+    "x": 0.365998,
+    "y": 0.531547
   },
   {
     "id": "7131",
@@ -2749,7 +3435,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1442
+    "wage": 1442,
+    "x": 0.299232,
+    "y": 0.647221
   },
   {
     "id": "7132",
@@ -2757,7 +3445,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1730
+    "wage": 1730,
+    "x": 0.275404,
+    "y": 0.597884
   },
   {
     "id": "7133",
@@ -2765,7 +3455,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2297
+    "wage": 2297,
+    "x": 0.571435,
+    "y": 0.073206
   },
   {
     "id": "7211",
@@ -2773,7 +3465,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2910
+    "wage": 2910,
+    "x": 0.654704,
+    "y": 0.693942
   },
   {
     "id": "7212",
@@ -2781,7 +3475,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1797
+    "wage": 1797,
+    "x": 0.265852,
+    "y": 0.600143
   },
   {
     "id": "7213",
@@ -2789,7 +3485,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2083
+    "wage": 2083,
+    "x": 0.321493,
+    "y": 0.565004
   },
   {
     "id": "7214",
@@ -2797,7 +3495,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.270133,
+    "y": 0.606579
   },
   {
     "id": "7215",
@@ -2805,7 +3505,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.328259,
+    "y": 0.117842
   },
   {
     "id": "7221",
@@ -2813,7 +3515,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2794
+    "wage": 2794,
+    "x": 0.423248,
+    "y": 0.546338
   },
   {
     "id": "7222",
@@ -2821,7 +3525,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1821
+    "wage": 1821,
+    "x": 0.228597,
+    "y": 0.638115
   },
   {
     "id": "7223",
@@ -2829,7 +3535,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.74493,
+    "y": 0.147924
   },
   {
     "id": "7224",
@@ -2837,7 +3545,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.571605,
+    "y": 0.823026
   },
   {
     "id": "7231",
@@ -2845,7 +3555,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.319381,
+    "y": 0.473036
   },
   {
     "id": "7232",
@@ -2853,7 +3565,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2891
+    "wage": 2891,
+    "x": 0.377149,
+    "y": 0.444971
   },
   {
     "id": "7233",
@@ -2861,7 +3575,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1816
+    "wage": 1816,
+    "x": 0.252424,
+    "y": 0.59919
   },
   {
     "id": "7234",
@@ -2869,7 +3585,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.491646,
+    "y": 0.072369
   },
   {
     "id": "7239",
@@ -2877,7 +3595,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1918
+    "wage": 1918,
+    "x": 0.330014,
+    "y": 0.552053
   },
   {
     "id": "7311",
@@ -2885,7 +3605,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2045
+    "wage": 2045,
+    "x": 0.316335,
+    "y": 0.48464
   },
   {
     "id": "7312",
@@ -2893,7 +3615,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1130
+    "wage": 1130,
+    "x": 0.857607,
+    "y": 0.251951
   },
   {
     "id": "7313",
@@ -2901,7 +3625,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2549
+    "wage": 2549,
+    "x": 0.31897,
+    "y": 0.505791
   },
   {
     "id": "7314",
@@ -2909,7 +3635,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.24462,
+    "y": 0.16957
   },
   {
     "id": "7315",
@@ -2917,7 +3645,9 @@
     "group": 7,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 1272
+    "wage": 1272,
+    "x": 0.9209,
+    "y": 0.597482
   },
   {
     "id": "7316",
@@ -2925,7 +3655,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1678
+    "wage": 1678,
+    "x": 0.127567,
+    "y": 0.734405
   },
   {
     "id": "7317",
@@ -2933,7 +3665,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1667
+    "wage": 1667,
+    "x": 0.647399,
+    "y": 0.089624
   },
   {
     "id": "7318",
@@ -2941,7 +3675,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.692933,
+    "y": 0.898747
   },
   {
     "id": "7319",
@@ -2949,7 +3685,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1833
+    "wage": 1833,
+    "x": 0.087789,
+    "y": 0.34928
   },
   {
     "id": "7321",
@@ -2957,7 +3695,9 @@
     "group": 7,
     "aiExposure": 0.8333333333,
     "quartile": "High",
-    "wage": 1924
+    "wage": 1924,
+    "x": 0.559645,
+    "y": 0.383288
   },
   {
     "id": "7322",
@@ -2965,7 +3705,9 @@
     "group": 7,
     "aiExposure": 0.25,
     "quartile": "Medium low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.530831,
+    "y": 0.535457
   },
   {
     "id": "7323",
@@ -2973,7 +3715,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1505
+    "wage": 1505,
+    "x": 0.382594,
+    "y": 0.085297
   },
   {
     "id": "7324",
@@ -2981,7 +3725,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.870628,
+    "y": 0.734417
   },
   {
     "id": "7411",
@@ -2989,7 +3735,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1847
+    "wage": 1847,
+    "x": 0.309784,
+    "y": 0.551594
   },
   {
     "id": "7412",
@@ -2997,7 +3745,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.307426,
+    "y": 0.544539
   },
   {
     "id": "7413",
@@ -3005,7 +3755,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1674
+    "wage": 1674,
+    "x": 0.284668,
+    "y": 0.622689
   },
   {
     "id": "7421",
@@ -3013,7 +3765,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2349
+    "wage": 2349,
+    "x": 0.327149,
+    "y": 0.543748
   },
   {
     "id": "7422",
@@ -3021,7 +3775,9 @@
     "group": 7,
     "aiExposure": 0.1428571429,
     "quartile": "Medium low",
-    "wage": 1930
+    "wage": 1930,
+    "x": 0.339782,
+    "y": 0.543773
   },
   {
     "id": "7511",
@@ -3029,7 +3785,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1199
+    "wage": 1199,
+    "x": 0.251444,
+    "y": 0.710661
   },
   {
     "id": "7512",
@@ -3037,7 +3795,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2475
+    "wage": 2475,
+    "x": 0.453186,
+    "y": 0.283904
   },
   {
     "id": "7513",
@@ -3045,7 +3805,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.562709,
+    "y": 0.589181
   },
   {
     "id": "7514",
@@ -3053,7 +3815,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 3934
+    "wage": 3934,
+    "x": 0.359019,
+    "y": 0.422151
   },
   {
     "id": "7515",
@@ -3061,7 +3825,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1336
+    "wage": 1336,
+    "x": 0.234577,
+    "y": 0.505985
   },
   {
     "id": "7516",
@@ -3069,7 +3835,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2513
+    "wage": 2513,
+    "x": 0.229474,
+    "y": 0.553658
   },
   {
     "id": "7611",
@@ -3077,7 +3845,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.289141,
+    "y": 0.127509
   },
   {
     "id": "7612",
@@ -3085,7 +3855,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1492
+    "wage": 1492,
+    "x": 0.291936,
+    "y": 0.612604
   },
   {
     "id": "7613",
@@ -3093,7 +3865,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1612
+    "wage": 1612,
+    "x": 0.089939,
+    "y": 0.67994
   },
   {
     "id": "7621",
@@ -3101,7 +3875,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.708239,
+    "y": 0.109352
   },
   {
     "id": "7622",
@@ -3109,7 +3885,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1930
+    "wage": 1930,
+    "x": 0.639399,
+    "y": 0.924773
   },
   {
     "id": "7623",
@@ -3117,7 +3895,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2728
+    "wage": 2728,
+    "x": 0.107085,
+    "y": 0.293118
   },
   {
     "id": "7624",
@@ -3125,7 +3905,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1212
+    "wage": 1212,
+    "x": 0.942513,
+    "y": 0.413391
   },
   {
     "id": "7625",
@@ -3133,7 +3915,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.266186,
+    "y": 0.875882
   },
   {
     "id": "7631",
@@ -3141,7 +3925,9 @@
     "group": 7,
     "aiExposure": 0.1,
     "quartile": "Medium low",
-    "wage": 1938
+    "wage": 1938,
+    "x": 0.439399,
+    "y": 0.072708
   },
   {
     "id": "7632",
@@ -3149,7 +3935,9 @@
     "group": 7,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 1263
+    "wage": 1263,
+    "x": 0.833898,
+    "y": 0.786648
   },
   {
     "id": "7633",
@@ -3157,7 +3945,9 @@
     "group": 7,
     "aiExposure": 0.2857142857,
     "quartile": "Medium low",
-    "wage": 1204
+    "wage": 1204,
+    "x": 0.273591,
+    "y": 0.537498
   },
   {
     "id": "7634",
@@ -3165,7 +3955,9 @@
     "group": 7,
     "aiExposure": 0.4444444444,
     "quartile": "Medium high",
-    "wage": 1514
+    "wage": 1514,
+    "x": 0.667188,
+    "y": 0.538264
   },
   {
     "id": "7639",
@@ -3173,7 +3965,9 @@
     "group": 7,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2556
+    "wage": 2556,
+    "x": 0.488802,
+    "y": 0.944068
   },
   {
     "id": "8111",
@@ -3181,7 +3975,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2290
+    "wage": 2290,
+    "x": 0.56188,
+    "y": 0.610999
   },
   {
     "id": "8112",
@@ -3189,7 +3985,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2618
+    "wage": 2618,
+    "x": 0.571236,
+    "y": 0.593606
   },
   {
     "id": "8113",
@@ -3197,7 +3995,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2680
+    "wage": 2680,
+    "x": 0.559842,
+    "y": 0.599704
   },
   {
     "id": "8114",
@@ -3205,7 +4005,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1869
+    "wage": 1869,
+    "x": 0.634008,
+    "y": 0.58558
   },
   {
     "id": "8121",
@@ -3213,7 +4015,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1840
+    "wage": 1840,
+    "x": 0.629512,
+    "y": 0.622468
   },
   {
     "id": "8122",
@@ -3221,7 +4025,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2800
+    "wage": 2800,
+    "x": 0.593629,
+    "y": 0.603155
   },
   {
     "id": "8131",
@@ -3229,7 +4035,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2280
+    "wage": 2280,
+    "x": 0.635762,
+    "y": 0.597935
   },
   {
     "id": "8132",
@@ -3237,7 +4045,9 @@
     "group": 8,
     "aiExposure": 0.1428571429,
     "quartile": "Medium low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.608509,
+    "y": 0.608174
   },
   {
     "id": "8141",
@@ -3245,7 +4055,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1730
+    "wage": 1730,
+    "x": 0.587253,
+    "y": 0.615059
   },
   {
     "id": "8142",
@@ -3253,7 +4065,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1480
+    "wage": 1480,
+    "x": 0.899228,
+    "y": 0.711628
   },
   {
     "id": "8143",
@@ -3261,7 +4075,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1632
+    "wage": 1632,
+    "x": 0.247057,
+    "y": 0.533597
   },
   {
     "id": "8151",
@@ -3269,7 +4085,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1726
+    "wage": 1726,
+    "x": 0.649033,
+    "y": 0.603047
   },
   {
     "id": "8152",
@@ -3277,7 +4095,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.636658,
+    "y": 0.725511
   },
   {
     "id": "8153",
@@ -3285,7 +4105,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1017
+    "wage": 1017,
+    "x": 0.147357,
+    "y": 0.231669
   },
   {
     "id": "8154",
@@ -3293,7 +4115,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.637668,
+    "y": 0.61464
   },
   {
     "id": "8155",
@@ -3301,7 +4125,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": null
+    "wage": null,
+    "x": 0.205566,
+    "y": 0.840858
   },
   {
     "id": "8156",
@@ -3309,7 +4135,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1730
+    "wage": 1730,
+    "x": 0.645046,
+    "y": 0.580798
   },
   {
     "id": "8157",
@@ -3317,7 +4145,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1095
+    "wage": 1095,
+    "x": 0.792462,
+    "y": 0.846304
   },
   {
     "id": "8159",
@@ -3325,7 +4155,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1263
+    "wage": 1263,
+    "x": 0.056525,
+    "y": 0.457482
   },
   {
     "id": "8161",
@@ -3333,7 +4165,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1542
+    "wage": 1542,
+    "x": 0.824255,
+    "y": 0.330446
   },
   {
     "id": "8171",
@@ -3341,7 +4175,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.556599,
+    "y": 0.736852
   },
   {
     "id": "8172",
@@ -3349,7 +4185,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1412
+    "wage": 1412,
+    "x": 0.255367,
+    "y": 0.131976
   },
   {
     "id": "8173",
@@ -3357,7 +4195,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1318
+    "wage": 1318,
+    "x": 0.933038,
+    "y": 0.638056
   },
   {
     "id": "8181",
@@ -3365,7 +4205,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1516
+    "wage": 1516,
+    "x": 0.275841,
+    "y": 0.635163
   },
   {
     "id": "8182",
@@ -3373,7 +4215,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1730
+    "wage": 1730,
+    "x": 0.649926,
+    "y": 0.59241
   },
   {
     "id": "8183",
@@ -3381,7 +4225,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1603
+    "wage": 1603,
+    "x": 0.705157,
+    "y": 0.750568
   },
   {
     "id": "8189",
@@ -3389,7 +4235,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1747
+    "wage": 1747,
+    "x": 0.585714,
+    "y": 0.625877
   },
   {
     "id": "8211",
@@ -3397,7 +4245,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1861
+    "wage": 1861,
+    "x": 0.613128,
+    "y": 0.589897
   },
   {
     "id": "8212",
@@ -3405,7 +4255,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1776
+    "wage": 1776,
+    "x": 0.415684,
+    "y": 0.709432
   },
   {
     "id": "8213",
@@ -3413,7 +4265,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1500
+    "wage": 1500,
+    "x": 0.401836,
+    "y": 0.062533
   },
   {
     "id": "8219",
@@ -3421,7 +4275,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1501
+    "wage": 1501,
+    "x": 0.872338,
+    "y": 0.768094
   },
   {
     "id": "8221",
@@ -3429,7 +4285,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1730
+    "wage": 1730,
+    "x": 0.569927,
+    "y": 0.638784
   },
   {
     "id": "8311",
@@ -3437,7 +4295,9 @@
     "group": 8,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 2307
+    "wage": 2307,
+    "x": 0.708215,
+    "y": 0.378564
   },
   {
     "id": "8312",
@@ -3445,7 +4305,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1874
+    "wage": 1874,
+    "x": 0.424974,
+    "y": 0.302718
   },
   {
     "id": "8321",
@@ -3453,7 +4315,9 @@
     "group": 8,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 1814
+    "wage": 1814,
+    "x": 0.498291,
+    "y": 0.326436
   },
   {
     "id": "8322",
@@ -3461,7 +4325,9 @@
     "group": 8,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 2504
+    "wage": 2504,
+    "x": 0.632247,
+    "y": 0.375712
   },
   {
     "id": "8331",
@@ -3469,7 +4335,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 2029
+    "wage": 2029,
+    "x": 0.431468,
+    "y": 0.43248
   },
   {
     "id": "8332",
@@ -3477,7 +4345,9 @@
     "group": 8,
     "aiExposure": 0.1666666667,
     "quartile": "Medium low",
-    "wage": 1692
+    "wage": 1692,
+    "x": 0.401609,
+    "y": 0.330785
   },
   {
     "id": "8341",
@@ -3485,7 +4355,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1513
+    "wage": 1513,
+    "x": 0.748107,
+    "y": 0.87968
   },
   {
     "id": "8342",
@@ -3493,7 +4365,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1527
+    "wage": 1527,
+    "x": 0.063573,
+    "y": 0.403135
   },
   {
     "id": "8343",
@@ -3501,7 +4375,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1830
+    "wage": 1830,
+    "x": 0.443803,
+    "y": 0.295676
   },
   {
     "id": "8344",
@@ -3509,7 +4385,9 @@
     "group": 8,
     "aiExposure": 0.2,
     "quartile": "Medium low",
-    "wage": 1845
+    "wage": 1845,
+    "x": 0.530192,
+    "y": 0.596724
   },
   {
     "id": "8351",
@@ -3517,7 +4395,9 @@
     "group": 8,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1644
+    "wage": 1644,
+    "x": 0.311587,
+    "y": 0.091908
   },
   {
     "id": "9112",
@@ -3525,7 +4405,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1414
+    "wage": 1414,
+    "x": 0.757766,
+    "y": 0.620307
   },
   {
     "id": "9121",
@@ -3533,7 +4415,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1674
+    "wage": 1674,
+    "x": 0.066938,
+    "y": 0.647565
   },
   {
     "id": "9312",
@@ -3541,7 +4425,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1153
+    "wage": 1153,
+    "x": 0.743775,
+    "y": 0.115328
   },
   {
     "id": "9313",
@@ -3549,7 +4435,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1240
+    "wage": 1240,
+    "x": 0.603115,
+    "y": 0.9449
   },
   {
     "id": "9333",
@@ -3557,7 +4445,9 @@
     "group": 9,
     "aiExposure": 0.1111111111,
     "quartile": "Medium low",
-    "wage": 1512
+    "wage": 1512,
+    "x": 0.562057,
+    "y": 0.187827
   },
   {
     "id": "9334",
@@ -3565,7 +4455,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1601
+    "wage": 1601,
+    "x": 0.586829,
+    "y": 0.194328
   },
   {
     "id": "9411",
@@ -3573,7 +4465,9 @@
     "group": 9,
     "aiExposure": 0.125,
     "quartile": "Medium low",
-    "wage": 1302
+    "wage": 1302,
+    "x": 0.373131,
+    "y": 0.604145
   },
   {
     "id": "9412",
@@ -3581,7 +4475,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1211
+    "wage": 1211,
+    "x": 0.472474,
+    "y": 0.05
   },
   {
     "id": "9511",
@@ -3589,7 +4485,9 @@
     "group": 9,
     "aiExposure": 0.1111111111,
     "quartile": "Medium low",
-    "wage": 1220
+    "wage": 1220,
+    "x": 0.826209,
+    "y": 0.817981
   },
   {
     "id": "9521",
@@ -3597,7 +4495,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1757
+    "wage": 1757,
+    "x": 0.05,
+    "y": 0.50414
   },
   {
     "id": "9611",
@@ -3605,7 +4505,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1211
+    "wage": 1211,
+    "x": 0.856835,
+    "y": 0.217314
   },
   {
     "id": "9613",
@@ -3613,7 +4515,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1315
+    "wage": 1315,
+    "x": 0.44762,
+    "y": 0.95
   },
   {
     "id": "9621",
@@ -3621,7 +4525,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1882
+    "wage": 1882,
+    "x": 0.213849,
+    "y": 0.159662
   },
   {
     "id": "9622",
@@ -3629,7 +4535,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1857
+    "wage": 1857,
+    "x": 0.95,
+    "y": 0.585144
   },
   {
     "id": "9623",
@@ -3637,7 +4545,9 @@
     "group": 9,
     "aiExposure": 0,
     "quartile": "Low",
-    "wage": 1657
+    "wage": 1657,
+    "x": 0.120521,
+    "y": 0.760736
   },
   {
     "id": "9625",
@@ -3645,6 +4555,8 @@
     "group": 9,
     "aiExposure": 0.2222222222,
     "quartile": "Medium low",
-    "wage": 2157
+    "wage": 2157,
+    "x": 0.627548,
+    "y": 0.062681
   }
 ]

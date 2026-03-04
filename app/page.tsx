@@ -7,6 +7,8 @@ import type { GraphNode, GraphEdge, OccupationDetail } from "@/lib/types"
 import GraphControls from "@/components/graph/GraphControls"
 import GraphLegend from "@/components/graph/GraphLegend"
 import OccupationPanel from "@/components/panel/OccupationPanel"
+import LayoutTuner from "@/components/graph/LayoutTuner"
+import type { LayoutTuning } from "@/hooks/useForceSimulation"
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
 const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
@@ -32,6 +34,12 @@ export default function HomePage() {
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
   const [sizeThreshold, setSizeThreshold] = useState(0)
   const [nodeSizeMetric, setNodeSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
+  const [tuningEnabled, setTuningEnabled] = useState(false)
+  const [tuning, setTuning] = useState<LayoutTuning>({
+    intraStrength: 0.08,
+    interStrength: 0.01,
+    charge: -1000,
+  })
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -157,8 +165,17 @@ export default function HomePage() {
             sizeThreshold={sizeThreshold}
             nodeSizeMetric={nodeSizeMetric}
             maxWage={maxWage}
+            tuning={tuningEnabled ? tuning : null}
           />
         )}
+
+        {/* Layout tuner (temporary) */}
+        <LayoutTuner
+          tuning={tuning}
+          onChange={setTuning}
+          enabled={tuningEnabled}
+          onToggle={setTuningEnabled}
+        />
 
         {/* Node count badge */}
         {!loading && !error && (
