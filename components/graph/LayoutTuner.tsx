@@ -18,7 +18,7 @@ export default function LayoutTuner({
   onToggle,
   onExport,
 }: LayoutTunerProps) {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   const update = (key: keyof LayoutTuning, value: number) => {
     onChange({ ...tuning, [key]: value });
