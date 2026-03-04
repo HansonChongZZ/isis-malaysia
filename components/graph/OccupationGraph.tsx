@@ -401,6 +401,7 @@ export default function OccupationGraph({
         aiExposure: n.aiExposure,
         quartile: n.quartile,
         wage: n.wage,
+        workers: n.workers,
         x: Math.min(
           1,
           Math.max(0, parseFloat((((n.x ?? 0) - minX) / rangeX).toFixed(6))),
