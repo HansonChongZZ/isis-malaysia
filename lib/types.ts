@@ -46,3 +46,5 @@ export type SimEdge = {
   target: SimNode | string
   weight: number
 }
+
+export type NodeSizeMetric = 'aiExposure' | 'wage' | 'workers'

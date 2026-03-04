@@ -9,7 +9,7 @@ import {
   type MutableRefObject,
 } from 'react';
 import * as d3 from 'd3';
-import type { GraphNode, GraphEdge, SimNode } from '@/lib/types';
+import type { GraphNode, GraphEdge, SimNode, NodeSizeMetric } from '@/lib/types';
 import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
 import { useForceSimulation } from '@/hooks/useForceSimulation';
 import type { LayoutTuning } from '@/hooks/useForceSimulation';
@@ -28,10 +28,11 @@ interface OccupationGraphProps {
   filterGroup: number | null;
   filterSkills: string[];
   allSkills: Map<string, Set<string>>; // nodeId -> skills set
-  sizeMetric: 'aiExposure' | 'wage';
+  sizeMetric: NodeSizeMetric;
   sizeThreshold: number;
-  nodeSizeMetric: 'aiExposure' | 'wage';
+  nodeSizeMetric: NodeSizeMetric;
   maxWage: number;
+  maxWorkers: number;
   tuning?: LayoutTuning | null;
   exportRef?: MutableRefObject<(() => void) | null>;
 }
@@ -48,6 +49,7 @@ export default function OccupationGraph({
   sizeThreshold,
   nodeSizeMetric,
   maxWage,
+  maxWorkers,
   tuning,
   exportRef,
 }: OccupationGraphProps) {
@@ -192,14 +194,20 @@ export default function OccupationGraph({
         if (node.wage === null || maxWage === 0) return NODE_RADIUS_BASE;
         return NODE_RADIUS_BASE + (node.wage / maxWage) * NODE_RADIUS_SCALE;
       }
+      if (nodeSizeMetric === 'workers') {
+        if (node.workers === null || maxWorkers === 0) return NODE_RADIUS_BASE;
+        const maxLog = Math.log(maxWorkers);
+        return NODE_RADIUS_BASE + (Math.log(node.workers) / maxLog) * NODE_RADIUS_SCALE;
+      }
       return NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
     },
-    [nodeSizeMetric, maxWage],
+    [nodeSizeMetric, maxWage, maxWorkers],
   );
 
   const getNodeOpacity = useCallback(
     (node: SimNode) => {
       if (nodeSizeMetric === 'wage' && node.wage === null) return 0.06;
+      if (nodeSizeMetric === 'workers' && node.workers === null) return 0.06;
       if (visibleIds && !visibleIds.has(node.id)) return 0.06;
       if (selectedNodeId && connectedIds && !connectedIds.has(node.id))
         return 0.12;
@@ -338,6 +346,7 @@ export default function OccupationGraph({
     onTick: handleTick,
     nodeSizeMetric,
     maxWage,
+    maxWorkers,
     tuning,
   });
 

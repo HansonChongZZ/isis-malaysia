@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from 'react';
 import * as d3 from 'd3';
-import type { SimNode, SimEdge, GraphEdge } from '@/lib/types';
+import type { SimNode, SimEdge, GraphEdge, NodeSizeMetric } from '@/lib/types';
 import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_COLLIDE_PADDING } from '@/lib/constants';
 
 export interface LayoutTuning {
@@ -17,8 +17,9 @@ interface UseForceSimulationProps {
   width: number;
   height: number;
   onTick: () => void;
-  nodeSizeMetric: 'aiExposure' | 'wage';
+  nodeSizeMetric: NodeSizeMetric;
   maxWage: number;
+  maxWorkers: number;
   tuning?: LayoutTuning | null;
 }
 
@@ -44,10 +45,24 @@ export function useForceSimulation({
   onTick,
   nodeSizeMetric,
   maxWage,
+  maxWorkers,
   tuning,
 }: UseForceSimulationProps) {
   useEffect(() => {
     if (!nodes.length || !width || !height) return;
+
+    const getCollideRadius = (d: SimNode) => {
+      let r: number;
+      if (nodeSizeMetric === 'wage' && d.wage !== null && maxWage > 0) {
+        r = NODE_RADIUS_BASE + (d.wage / maxWage) * NODE_RADIUS_SCALE;
+      } else if (nodeSizeMetric === 'workers' && d.workers !== null && maxWorkers > 0) {
+        const maxLog = Math.log(maxWorkers);
+        r = NODE_RADIUS_BASE + (Math.log(d.workers) / maxLog) * NODE_RADIUS_SCALE;
+      } else {
+        r = NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE;
+      }
+      return r + NODE_RADIUS_COLLIDE_PADDING;
+    };
 
     // --- Tuning mode: run full force simulation in browser ---
     if (tuning && edges) {
@@ -87,12 +102,7 @@ export function useForceSimulation({
         .force('center', d3.forceCenter(cx, cy))
         .force(
           'collide',
-          d3.forceCollide<SimNode>((d) => {
-            const r = nodeSizeMetric === 'wage' && d.wage !== null && maxWage > 0
-              ? NODE_RADIUS_BASE + (d.wage / maxWage) * NODE_RADIUS_SCALE
-              : NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE;
-            return r + NODE_RADIUS_COLLIDE_PADDING;
-          }),
+          d3.forceCollide<SimNode>(getCollideRadius),
         );
 
       sim.stop();
@@ -116,12 +126,7 @@ export function useForceSimulation({
       .forceSimulation<SimNode>(nodes)
       .force(
         'collide',
-        d3.forceCollide<SimNode>((d) => {
-          const r = nodeSizeMetric === 'wage' && d.wage !== null && maxWage > 0
-            ? NODE_RADIUS_BASE + (d.wage / maxWage) * NODE_RADIUS_SCALE
-            : NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE;
-          return r + NODE_RADIUS_COLLIDE_PADDING;
-        }),
+        d3.forceCollide<SimNode>(getCollideRadius),
       )
       .velocityDecay(0.6);
 
@@ -132,7 +137,7 @@ export function useForceSimulation({
     return () => {
       sim.stop();
     };
-  }, [nodes, edges, width, height, onTick, nodeSizeMetric, maxWage, tuning]);
+  }, [nodes, edges, width, height, onTick, nodeSizeMetric, maxWage, maxWorkers, tuning]);
 
   const reheat = useCallback(() => {
     // No-op: layout is pre-computed
