@@ -7,6 +7,7 @@ export const NodeSchema = z.object({
   aiExposure: z.number().min(0).max(1),
   quartile: z.enum(["Low", "Medium low", "Medium high", "High"]),
   wage: z.number().nullable(),
+  workers: z.number().nullable(),
   x: z.number().min(0).max(1),
   y: z.number().min(0).max(1),
 })

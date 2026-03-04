@@ -17,6 +17,7 @@ interface NodeRow {
   AI_exposure_index: number | string
   quartile: string
   wage: number | string | null
+  no_of_workers: number | string | null
 }
 
 interface EdgeRow {
@@ -58,6 +59,7 @@ async function main() {
     const group = parseInt(code[0], 10)
     const aiExposure = typeof row.AI_exposure_index === "number" ? row.AI_exposure_index : parseFloat(String(row.AI_exposure_index))
     const wage = row.wage === null || row.wage === "NA" || row.wage === "" ? null : Number(row.wage)
+    const workers = row.no_of_workers === null || row.no_of_workers === "NA" || row.no_of_workers === "" ? null : Number(row.no_of_workers)
     const quartile = isValidQuartile(row.quartile) ? row.quartile : "Medium low"
     return {
       id: code,
@@ -66,6 +68,7 @@ async function main() {
       aiExposure: isNaN(aiExposure) ? 0 : aiExposure,
       quartile,
       wage,
+      workers: isNaN(workers as number) ? null : workers,
     }
   })
 
