@@ -1,12 +1,14 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail } from "@/lib/types"
 import GraphControls from "@/components/graph/GraphControls"
 import GraphLegend from "@/components/graph/GraphLegend"
 import OccupationPanel from "@/components/panel/OccupationPanel"
+import LayoutTuner from "@/components/graph/LayoutTuner"
+import type { LayoutTuning } from "@/hooks/useForceSimulation"
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
 const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
@@ -32,6 +34,13 @@ export default function HomePage() {
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
   const [sizeThreshold, setSizeThreshold] = useState(0)
   const [nodeSizeMetric, setNodeSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
+  const [tuningEnabled, setTuningEnabled] = useState(true)
+  const [tuning, setTuning] = useState<LayoutTuning>({
+    intraStrength: 0.8,
+    interStrength: 0.001,
+    charge: -50,
+  })
+  const exportLayoutRef = useRef<(() => void) | null>(null)
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -157,8 +166,19 @@ export default function HomePage() {
             sizeThreshold={sizeThreshold}
             nodeSizeMetric={nodeSizeMetric}
             maxWage={maxWage}
+            tuning={tuningEnabled ? tuning : null}
+            exportRef={exportLayoutRef}
           />
         )}
+
+        {/* Layout tuner (temporary) */}
+        <LayoutTuner
+          tuning={tuning}
+          onChange={setTuning}
+          enabled={tuningEnabled}
+          onToggle={setTuningEnabled}
+          onExport={() => exportLayoutRef.current?.()}
+        />
 
         {/* Node count badge */}
         {!loading && !error && (

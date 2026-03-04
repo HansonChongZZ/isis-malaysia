@@ -1,10 +1,18 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+  type MutableRefObject,
+} from 'react';
 import * as d3 from 'd3';
 import type { GraphNode, GraphEdge, SimNode } from '@/lib/types';
 import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
 import { useForceSimulation } from '@/hooks/useForceSimulation';
+import type { LayoutTuning } from '@/hooks/useForceSimulation';
 
 interface TooltipState {
   x: number;
@@ -24,6 +32,8 @@ interface OccupationGraphProps {
   sizeThreshold: number;
   nodeSizeMetric: 'aiExposure' | 'wage';
   maxWage: number;
+  tuning?: LayoutTuning | null;
+  exportRef?: MutableRefObject<(() => void) | null>;
 }
 
 export default function OccupationGraph({
@@ -38,6 +48,8 @@ export default function OccupationGraph({
   sizeThreshold,
   nodeSizeMetric,
   maxWage,
+  tuning,
+  exportRef,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -121,7 +133,14 @@ export default function OccupationGraph({
       result.add(node.id);
     }
     return result;
-  }, [simNodes, filterGroup, filterSkills, allSkills, sizeMetric, sizeThreshold]);
+  }, [
+    simNodes,
+    filterGroup,
+    filterSkills,
+    allSkills,
+    sizeMetric,
+    sizeThreshold,
+  ]);
 
   // Build adjacency set for selected node
   const connectedIds = useMemo<Set<string> | null>(() => {
@@ -311,14 +330,15 @@ export default function OccupationGraph({
     drawEdgesRef.current();
   }, []);
 
-  const { simulationRef } = useForceSimulation({
+  useForceSimulation({
     nodes: simNodes,
-    edges,
+    edges: tuning ? edges : undefined,
     width: dimensions.width,
     height: dimensions.height,
     onTick: handleTick,
     nodeSizeMetric,
     maxWage,
+    tuning,
   });
 
   // Resize canvas to match container with HiDPI support
@@ -350,14 +370,61 @@ export default function OccupationGraph({
     return () => obs.disconnect();
   }, []);
 
+  // Export layout: normalize sim positions back to 0-1 and trigger download
+  useEffect(() => {
+    if (!exportRef) return;
+    exportRef.current = () => {
+      if (!simNodes.length) return;
+
+      const xs = simNodes.map((n) => n.x ?? 0);
+      const ys = simNodes.map((n) => n.y ?? 0);
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      const minY = Math.min(...ys);
+      const maxY = Math.max(...ys);
+      const rangeX = maxX - minX || 1;
+      const rangeY = maxY - minY || 1;
+
+      const exported = simNodes.map((n) => ({
+        id: n.id,
+        label: n.label,
+        group: n.group,
+        aiExposure: n.aiExposure,
+        quartile: n.quartile,
+        wage: n.wage,
+        x: Math.min(
+          1,
+          Math.max(0, parseFloat((((n.x ?? 0) - minX) / rangeX).toFixed(6))),
+        ),
+        y: Math.min(
+          1,
+          Math.max(0, parseFloat((((n.y ?? 0) - minY) / rangeY).toFixed(6))),
+        ),
+      }));
+
+      const blob = new Blob([JSON.stringify(exported, null, 2)], {
+        type: 'application/json',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'nodes.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+    return () => {
+      if (exportRef) exportRef.current = null;
+    };
+  }, [exportRef, simNodes]);
+
   // Zoom + pan behavior — restrict pan to node bounds
   useEffect(() => {
     if (!svgRef.current || !gRef.current) return;
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
 
-    const minScale = 0.25;
-    const maxScale = 1;
+    const minScale = 0.2;
+    const maxScale = 3;
     const padding = 80;
 
     // Node bounds in simulation/content coordinates (ensure at least viewport size at min zoom)
@@ -402,48 +469,6 @@ export default function OccupationGraph({
       svg.on('.zoom', null);
     };
   }, [dimensions.width, dimensions.height, simNodes]);
-
-  // Drag behavior
-  useEffect(() => {
-    const sim = simulationRef.current;
-    if (!sim || !svgRef.current) return;
-
-    const svg = d3.select(svgRef.current);
-
-    function dragStarted(
-      event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>,
-    ) {
-      event.sourceEvent.stopPropagation();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
-    }
-    function dragged(
-      event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>,
-    ) {
-      const [gx, gy] = transformRef.current.invert([event.x, event.y]);
-      event.subject.x = gx;
-      event.subject.y = gy;
-      event.subject.fx = gx;
-      event.subject.fy = gy;
-      handleTick();
-    }
-    function dragEnded(
-      event: d3.D3DragEvent<SVGCircleElement, SimNode, SimNode>,
-    ) {
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-
-    svg
-      .selectAll<SVGCircleElement, SimNode>('circle.node')
-      .call(
-        d3
-          .drag<SVGCircleElement, SimNode>()
-          .on('start', dragStarted)
-          .on('drag', dragged)
-          .on('end', dragEnded),
-      );
-  });
 
   return (
     <div
