@@ -11,11 +11,11 @@ import {
   ComboboxChipsInput,
   ComboboxContent,
   ComboboxEmpty,
-  ComboboxInput,
   ComboboxItem,
   ComboboxList,
   ComboboxValue,
 } from '@/components/ui/combobox';
+import OccupationSearch from '@/components/graph/OccupationSearch';
 
 type OccupationOption = { id: string; label: string };
 
@@ -80,11 +80,6 @@ export default function GraphControls({
     };
   }, [settingsOpen]);
 
-  const selectedOccupationObj = useMemo(() => {
-    if (!selectedOccupation) return null;
-    return occupations.find((o) => o.id === selectedOccupation) ?? null;
-  }, [occupations, selectedOccupation]);
-
   const sortedSkills = useMemo(() => {
     const selectedSet = new Set(filterSkills);
     const selected = filterSkills.slice();
@@ -96,31 +91,11 @@ export default function GraphControls({
     <div className="relative z-20 flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
       {/* Occupation search — full row on mobile, constrained on desktop */}
       <div className="flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
-        <Combobox
-          items={occupations}
-          itemToStringValue={(occ) => occ.label}
-          value={selectedOccupationObj}
-          onValueChange={(occ) => onOccupationSelect(occ?.id ?? null)}
-        >
-          <ComboboxInput
-            placeholder="Search occupation…"
-            showClear={!!selectedOccupation}
-            className="w-full"
-          />
-          <ComboboxContent>
-            <ComboboxEmpty>No occupations found.</ComboboxEmpty>
-            <ComboboxList>
-              {(occ) => (
-                <ComboboxItem key={occ.id} value={occ}>
-                  <span>{occ.label}</span>
-                  <span className="text-muted-foreground text-xs ml-1">
-                    {occ.id}
-                  </span>
-                </ComboboxItem>
-              )}
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
+        <OccupationSearch
+          occupations={occupations}
+          selectedOccupation={selectedOccupation}
+          onOccupationSelect={onOccupationSelect}
+        />
       </div>
 
       {/* Filter row — wraps below search on mobile */}
