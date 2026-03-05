@@ -28,7 +28,7 @@ export default function LayoutTuner({
     return (
       <button
         onClick={() => setCollapsed(false)}
-        className="absolute top-2 right-2 z-30 bg-card border border-border rounded px-2 py-1 text-xs text-muted-foreground hover:text-foreground"
+        className="absolute top-2 right-2 z-0 bg-card border border-border rounded px-2 py-1 text-xs text-muted-foreground hover:text-foreground"
       >
         Tuner
       </button>
