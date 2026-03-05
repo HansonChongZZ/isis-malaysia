@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo, useRef } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
-import type { GraphNode, GraphEdge, OccupationDetail } from "@/lib/types"
+import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
 import GraphControls from "@/components/graph/GraphControls"
 import GraphLegend from "@/components/graph/GraphLegend"
 import OccupationPanel from "@/components/panel/OccupationPanel"
@@ -33,7 +33,7 @@ export default function HomePage() {
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
   const [sizeThreshold, setSizeThreshold] = useState(0)
-  const [nodeSizeMetric, setNodeSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
+  const [nodeSizeMetric, setNodeSizeMetric] = useState<NodeSizeMetric>('aiExposure')
   const [tuningEnabled, setTuningEnabled] = useState(true)
   const [tuning, setTuning] = useState<LayoutTuning>({
     intraStrength: 0.8,
@@ -85,6 +85,15 @@ export default function HomePage() {
     return max
   }, [nodes])
 
+  // Max workers for node sizing
+  const maxWorkers = useMemo(() => {
+    let max = 0
+    for (const n of nodes) {
+      if (n.workers !== null && n.workers > max) max = n.workers
+    }
+    return max
+  }, [nodes])
+
   // Occupation list for combobox (sorted by label)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
     return nodes
@@ -104,7 +113,7 @@ export default function HomePage() {
     setSizeThreshold(0)
   }
 
-  const handleNodeSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
+  const handleNodeSizeMetricChange = (metric: NodeSizeMetric) => {
     setNodeSizeMetric(metric)
   }
 
@@ -132,6 +141,7 @@ export default function HomePage() {
         maxWage={maxWage}
         nodeSizeMetric={nodeSizeMetric}
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
+        maxWorkers={maxWorkers}
         onResetSettings={handleResetSettings}
       />
 
@@ -166,6 +176,7 @@ export default function HomePage() {
             sizeThreshold={sizeThreshold}
             nodeSizeMetric={nodeSizeMetric}
             maxWage={maxWage}
+            maxWorkers={maxWorkers}
             tuning={tuningEnabled ? tuning : null}
             exportRef={exportLayoutRef}
           />

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { MASCO_GROUPS } from '@/lib/constants';
+import type { NodeSizeMetric } from '@/lib/types';
 import { Settings2, X } from 'lucide-react';
 import {
   Combobox,
@@ -32,8 +33,9 @@ interface GraphControlsProps {
   sizeThreshold: number;
   onSizeThresholdChange: (value: number) => void;
   maxWage: number;
-  nodeSizeMetric: 'aiExposure' | 'wage';
-  onNodeSizeMetricChange: (metric: 'aiExposure' | 'wage') => void;
+  nodeSizeMetric: NodeSizeMetric;
+  onNodeSizeMetricChange: (metric: NodeSizeMetric) => void;
+  maxWorkers: number;
   onResetSettings: () => void;
 }
 
@@ -53,6 +55,7 @@ export default function GraphControls({
   maxWage,
   nodeSizeMetric,
   onNodeSizeMetricChange,
+  maxWorkers,
   onResetSettings,
 }: GraphControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -237,7 +240,7 @@ export default function GraphControls({
                     onClick={() => onNodeSizeMetricChange('wage')}
                     aria-pressed={nodeSizeMetric === 'wage'}
                     disabled={maxWage === 0}
-                    className={`flex-1 px-3 py-1.5 transition-colors ${
+                    className={`flex-1 px-3 py-1.5 transition-colors border-l border-border ${
                       nodeSizeMetric === 'wage'
                         ? 'bg-primary text-primary-foreground'
                         : maxWage === 0
@@ -246,6 +249,20 @@ export default function GraphControls({
                     }`}
                   >
                     Wages
+                  </button>
+                  <button
+                    onClick={() => onNodeSizeMetricChange('workers')}
+                    aria-pressed={nodeSizeMetric === 'workers'}
+                    disabled={maxWorkers === 0}
+                    className={`flex-1 px-3 py-1.5 transition-colors border-l border-border ${
+                      nodeSizeMetric === 'workers'
+                        ? 'bg-primary text-primary-foreground'
+                        : maxWorkers === 0
+                          ? 'bg-muted/50 text-muted-foreground opacity-50 cursor-not-allowed'
+                          : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Workers
                   </button>
                 </div>
               </div>
