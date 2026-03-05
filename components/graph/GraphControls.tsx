@@ -3,7 +3,7 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { MASCO_GROUPS } from '@/lib/constants';
 import type { NodeSizeMetric } from '@/lib/types';
-import { Settings2, X } from 'lucide-react';
+import { Search, Settings2, X } from 'lucide-react';
 import {
   Combobox,
   ComboboxChip,
@@ -39,6 +39,7 @@ interface GraphControlsProps {
   maxWorkers: number;
   onResetSettings: () => void;
   hideSearchOnDesktop?: boolean;
+  onShowHeroSearch?: () => void;
 }
 
 export default function GraphControls({
@@ -60,6 +61,7 @@ export default function GraphControls({
   maxWorkers,
   onResetSettings,
   hideSearchOnDesktop,
+  onShowHeroSearch,
 }: GraphControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
@@ -103,6 +105,18 @@ export default function GraphControls({
           onOccupationSelect={onOccupationSelect}
         />
       </div>
+
+      {/* Re-open hero search button — visible on desktop when hero was dismissed */}
+      {onShowHeroSearch && !selectedOccupation && (
+        <button
+          onClick={onShowHeroSearch}
+          className="hidden sm:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md border border-border hover:bg-muted/50 transition-colors"
+          aria-label="Open search"
+        >
+          <Search className="w-4 h-4" />
+          Search
+        </button>
+      )}
 
       {/* Filter row — wraps below search on mobile */}
       <div className="flex gap-2 flex-1 flex-wrap sm:flex-nowrap items-center min-w-0">

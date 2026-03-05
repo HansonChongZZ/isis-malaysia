@@ -29,6 +29,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
 
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [heroDismissed, setHeroDismissed] = useState(false)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
@@ -144,7 +145,8 @@ export default function HomePage() {
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
         maxWorkers={maxWorkers}
         onResetSettings={handleResetSettings}
-        hideSearchOnDesktop={!selectedNodeId}
+        hideSearchOnDesktop={!selectedNodeId && !heroDismissed}
+        onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
       />
 
       {/* Main graph area */}
@@ -185,13 +187,14 @@ export default function HomePage() {
         )}
 
         {/* Hero search bar — floating over graph when no occupation selected (desktop only) */}
-        {!selectedNodeId && (
+        {!selectedNodeId && !heroDismissed && (
           <div className="hidden sm:flex absolute inset-x-0 top-[20%] z-10 justify-center px-4 pointer-events-none">
             <div className="w-full max-w-xl pointer-events-auto hero-search-enter">
               <OccupationSearch
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
                 onOccupationSelect={handleNodeSelect}
+                onDismiss={() => setHeroDismissed(true)}
                 hero
               />
             </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import {
   Combobox,
   ComboboxContent,
@@ -18,6 +18,7 @@ interface OccupationSearchProps {
   selectedOccupation: string | null;
   onOccupationSelect: (id: string | null) => void;
   hero?: boolean;
+  onDismiss?: () => void;
 }
 
 export default function OccupationSearch({
@@ -25,6 +26,7 @@ export default function OccupationSearch({
   selectedOccupation,
   onOccupationSelect,
   hero = false,
+  onDismiss,
 }: OccupationSearchProps) {
   const selectedOccupationObj = useMemo(() => {
     if (!selectedOccupation) return null;
@@ -35,6 +37,15 @@ export default function OccupationSearch({
     return (
       <div className="search-hero-border rounded-xl shadow-lg shadow-primary/10 relative">
         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none z-10" />
+        {onDismiss && (
+          <button
+            onClick={onDismiss}
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 z-10 p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+            aria-label="Dismiss search"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
         <Combobox
           items={occupations}
           itemToStringValue={(occ) => occ.label}
