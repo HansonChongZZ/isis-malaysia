@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import {
   Combobox,
@@ -33,9 +33,11 @@ export default function OccupationSearch({
     return occupations.find((o) => o.id === selectedOccupation) ?? null;
   }, [occupations, selectedOccupation]);
 
+  const heroRef = useRef<HTMLDivElement>(null);
+
   if (hero) {
     return (
-      <div className="search-hero-border rounded-xl shadow-lg shadow-primary/10 relative">
+      <div ref={heroRef} className="search-hero-border rounded-xl shadow-lg shadow-primary/10 relative">
         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none z-10" />
         {onDismiss && (
           <button
@@ -58,7 +60,7 @@ export default function OccupationSearch({
             showClear={!!selectedOccupation}
             className="w-full h-12 text-base rounded-xl bg-card/90 backdrop-blur-md border-transparent [&_input]:pl-10"
           />
-          <ComboboxContent>
+          <ComboboxContent anchor={heroRef} className="rounded-xl">
             <ComboboxEmpty>No occupations found.</ComboboxEmpty>
             <ComboboxList>
               {(occ) => (
