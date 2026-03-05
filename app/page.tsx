@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
 import GraphControls from "@/components/graph/GraphControls"
+import OccupationSearch from '@/components/graph/OccupationSearch'
 import GraphLegend from "@/components/graph/GraphLegend"
 import OccupationPanel from "@/components/panel/OccupationPanel"
 import LayoutTuner from "@/components/graph/LayoutTuner"
@@ -143,6 +144,7 @@ export default function HomePage() {
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
         maxWorkers={maxWorkers}
         onResetSettings={handleResetSettings}
+        hideSearchOnDesktop={!selectedNodeId}
       />
 
       {/* Main graph area */}
@@ -180,6 +182,20 @@ export default function HomePage() {
             tuning={tuningEnabled ? tuning : null}
             exportRef={exportLayoutRef}
           />
+        )}
+
+        {/* Hero search bar — floating over graph when no occupation selected (desktop only) */}
+        {!selectedNodeId && (
+          <div className="hidden sm:flex absolute inset-x-0 top-[20%] z-10 justify-center px-4 pointer-events-none">
+            <div className="w-full max-w-xl pointer-events-auto">
+              <OccupationSearch
+                occupations={occupationList}
+                selectedOccupation={selectedNodeId}
+                onOccupationSelect={handleNodeSelect}
+                hero
+              />
+            </div>
+          </div>
         )}
 
         {/* Layout tuner (temporary) */}

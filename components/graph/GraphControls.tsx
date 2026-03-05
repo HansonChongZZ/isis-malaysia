@@ -16,6 +16,7 @@ import {
   ComboboxValue,
 } from '@/components/ui/combobox';
 import OccupationSearch from '@/components/graph/OccupationSearch';
+import { cn } from '@/lib/utils';
 
 type OccupationOption = { id: string; label: string };
 
@@ -37,6 +38,7 @@ interface GraphControlsProps {
   onNodeSizeMetricChange: (metric: NodeSizeMetric) => void;
   maxWorkers: number;
   onResetSettings: () => void;
+  hideSearchOnDesktop?: boolean;
 }
 
 export default function GraphControls({
@@ -57,6 +59,7 @@ export default function GraphControls({
   onNodeSizeMetricChange,
   maxWorkers,
   onResetSettings,
+  hideSearchOnDesktop,
 }: GraphControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
@@ -90,7 +93,10 @@ export default function GraphControls({
   return (
     <div className="relative z-20 flex flex-wrap gap-2 px-4 py-2.5 bg-card/80 backdrop-blur border-b border-border shrink-0">
       {/* Occupation search — full row on mobile, constrained on desktop */}
-      <div className="flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm">
+      <div className={cn(
+        "flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm",
+        hideSearchOnDesktop && "sm:hidden"
+      )}>
         <OccupationSearch
           occupations={occupations}
           selectedOccupation={selectedOccupation}
