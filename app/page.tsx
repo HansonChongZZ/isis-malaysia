@@ -145,7 +145,7 @@ export default function HomePage() {
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
         maxWorkers={maxWorkers}
         onResetSettings={handleResetSettings}
-        hideSearchOnDesktop={!selectedNodeId && !heroDismissed}
+        hideSearchOnDesktop={!selectedNodeId}
         onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
       />
 
