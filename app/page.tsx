@@ -96,12 +96,15 @@ export default function HomePage() {
     return max
   }, [nodes])
 
-  // Occupation list for combobox (sorted by label)
+  // Occupation list for combobox (sorted by label, filtered by active MASCO group)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
-    return nodes
+    const filtered = filterGroup !== null
+      ? nodes.filter((n) => n.group === filterGroup)
+      : nodes
+    return filtered
       .map((n) => ({ id: n.id, label: n.label }))
       .sort((a, b) => a.label.localeCompare(b.label))
-  }, [nodes])
+  }, [nodes, filterGroup])
 
   const selectedDetail = selectedNodeId ? occupations[selectedNodeId] ?? null : null
 
