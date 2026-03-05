@@ -187,7 +187,7 @@ export default function HomePage() {
         {/* Hero search bar — floating over graph when no occupation selected (desktop only) */}
         {!selectedNodeId && (
           <div className="hidden sm:flex absolute inset-x-0 top-[20%] z-10 justify-center px-4 pointer-events-none">
-            <div className="w-full max-w-xl pointer-events-auto">
+            <div className="w-full max-w-xl pointer-events-auto hero-search-enter">
               <OccupationSearch
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
