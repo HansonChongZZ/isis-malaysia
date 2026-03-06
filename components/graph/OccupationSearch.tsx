@@ -64,9 +64,9 @@ export default function OccupationSearch({
             <ComboboxEmpty>No occupations found.</ComboboxEmpty>
             <ComboboxList>
               {(occ) => (
-                <ComboboxItem key={occ.id} value={occ}>
+                <ComboboxItem key={occ.id} value={occ} className="px-3">
                   <span>{occ.label}</span>
-                  <span className="text-muted-foreground text-xs ml-1">
+                  <span className="text-muted-foreground text-xs ml-auto tabular-nums">
                     {occ.id}
                   </span>
                 </ComboboxItem>
