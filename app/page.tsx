@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
 import GraphControls from "@/components/graph/GraphControls"
+import OccupationSearch from '@/components/graph/OccupationSearch'
 import GraphLegend from "@/components/graph/GraphLegend"
 import OccupationPanel from "@/components/panel/OccupationPanel"
 import LayoutTuner from "@/components/graph/LayoutTuner"
@@ -28,6 +29,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
 
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [heroDismissed, setHeroDismissed] = useState(false)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
@@ -94,12 +96,15 @@ export default function HomePage() {
     return max
   }, [nodes])
 
-  // Occupation list for combobox (sorted by label)
+  // Occupation list for combobox (sorted by label, filtered by active MASCO group)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
-    return nodes
+    const filtered = filterGroup !== null
+      ? nodes.filter((n) => n.group === filterGroup)
+      : nodes
+    return filtered
       .map((n) => ({ id: n.id, label: n.label }))
       .sort((a, b) => a.label.localeCompare(b.label))
-  }, [nodes])
+  }, [nodes, filterGroup])
 
   const selectedDetail = selectedNodeId ? occupations[selectedNodeId] ?? null : null
 
@@ -143,6 +148,8 @@ export default function HomePage() {
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
         maxWorkers={maxWorkers}
         onResetSettings={handleResetSettings}
+        hideSearchOnDesktop={!selectedNodeId}
+        onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
       />
 
       {/* Main graph area */}
@@ -180,6 +187,21 @@ export default function HomePage() {
             tuning={tuningEnabled ? tuning : null}
             exportRef={exportLayoutRef}
           />
+        )}
+
+        {/* Hero search bar — floating over graph when no occupation selected (desktop only) */}
+        {!selectedNodeId && !heroDismissed && (
+          <div className="hidden sm:flex absolute inset-x-0 top-[20%] z-10 justify-center px-4 pointer-events-none">
+            <div className="w-full max-w-xl pointer-events-auto hero-search-enter">
+              <OccupationSearch
+                occupations={occupationList}
+                selectedOccupation={selectedNodeId}
+                onOccupationSelect={handleNodeSelect}
+                onDismiss={() => setHeroDismissed(true)}
+                hero
+              />
+            </div>
+          </div>
         )}
 
         {/* Layout tuner (temporary) */}

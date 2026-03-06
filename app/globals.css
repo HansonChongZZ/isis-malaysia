@@ -244,3 +244,45 @@
 @keyframes edgeFadeIn {
   from { opacity: 0; }
 }
+
+/* Prominent search bar gradient border */
+.search-hero-border {
+  position: relative;
+  border: none;
+}
+
+.search-hero-border::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: calc(var(--radius) + 4px);
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    oklch(0.445 0.085 240),
+    oklch(0.55 0.12 280),
+    oklch(0.445 0.085 240)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Hero search bar entry animation */
+@keyframes hero-search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-search-enter {
+  animation: hero-search-in 300ms ease-out;
+}
