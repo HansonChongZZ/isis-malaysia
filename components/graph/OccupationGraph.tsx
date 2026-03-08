@@ -67,6 +67,8 @@ export default function OccupationGraph({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+  const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null);
+  const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
   const selectedNodeId = selectedNodeIdProp;
   const selectionMode = !selectedNodeId
     ? 'none'
@@ -77,6 +79,15 @@ export default function OccupationGraph({
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
   const [mascoColors, setMascoColors] = useState<Record<number, string>>({});
+
+  const selectionModeRef = useRef(selectionMode);
+  const selectedNodeIdRef = useRef(selectedNodeId);
+  const secondSelectedNodeIdRef = useRef(secondSelectedNodeId);
+  useEffect(() => {
+    selectionModeRef.current = selectionMode;
+    selectedNodeIdRef.current = selectedNodeId;
+    secondSelectedNodeIdRef.current = secondSelectedNodeId;
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
 
   const simNodes = useMemo<SimNode[]>(
     () => nodes.map((n) => ({ ...n })),
@@ -181,6 +192,42 @@ export default function OccupationGraph({
       );
     }) ?? null;
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, edges]);
+
+  const pairSkillsComparison = useMemo(() => {
+    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId) return null;
+    const detailA = occupations[selectedNodeId];
+    const detailB = occupations[secondSelectedNodeId];
+    if (!detailA || !detailB) return null;
+
+    const skillsA = new Set([...detailA.basicSkills, ...detailA.specificSkills].map(s => s.toLowerCase()));
+    const skillsB = new Set([...detailB.basicSkills, ...detailB.specificSkills].map(s => s.toLowerCase()));
+
+    const shared: string[] = [];
+    const onlyA: string[] = [];
+    const onlyB: string[] = [];
+
+    for (const skill of detailA.basicSkills) {
+      if (skillsB.has(skill.toLowerCase())) shared.push(skill);
+      else onlyA.push(skill);
+    }
+    for (const skill of detailA.specificSkills) {
+      if (skillsB.has(skill.toLowerCase())) {
+        if (!shared.some(s => s.toLowerCase() === skill.toLowerCase())) shared.push(skill);
+      } else onlyA.push(skill);
+    }
+    for (const skill of [...detailB.basicSkills, ...detailB.specificSkills]) {
+      if (!skillsA.has(skill.toLowerCase())) onlyB.push(skill);
+    }
+
+    return {
+      shared,
+      onlyA,
+      onlyB,
+      labelA: detailA.occupation,
+      labelB: detailB.occupation,
+      totalUnique: shared.length + onlyA.length + onlyB.length,
+    };
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, occupations]);
 
   // Build adjacency set for hovered node (suppressed when a node is selected)
   const hoveredNeighborIds = useMemo<Set<string> | null>(() => {
@@ -404,6 +451,27 @@ export default function OccupationGraph({
     drawEdges();
   }, [drawEdges]);
 
+  // Compute initial badge position for pair mode
+  useEffect(() => {
+    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId) {
+      setBadgePos(null);
+      return;
+    }
+    const nodeA = nodeById.current.get(selectedNodeId);
+    const nodeB = nodeById.current.get(secondSelectedNodeId);
+    if (!nodeA || !nodeB) return;
+
+    const t = transformRef.current;
+    const mx = ((nodeA.x ?? 0) + (nodeB.x ?? 0)) / 2;
+    const my = ((nodeA.y ?? 0) + (nodeB.y ?? 0)) / 2;
+    setBadgePos({ x: t.applyX(mx), y: t.applyY(my) });
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
+
+  // Reset edge tooltip on selection change
+  useEffect(() => {
+    setShowEdgeTooltip(false);
+  }, [selectedNodeId, secondSelectedNodeId]);
+
   // Resize observer
   useEffect(() => {
     const container = containerRef.current;
@@ -509,6 +577,17 @@ export default function OccupationGraph({
         g.attr('transform', event.transform.toString());
         setTooltip(null);
         drawEdgesRef.current();
+
+        // Update badge position during zoom
+        if (selectionModeRef.current === 'pair' && selectedNodeIdRef.current && secondSelectedNodeIdRef.current) {
+          const nodeA = nodeById.current.get(selectedNodeIdRef.current);
+          const nodeB = nodeById.current.get(secondSelectedNodeIdRef.current);
+          if (nodeA && nodeB) {
+            const mx = ((nodeA.x ?? 0) + (nodeB.x ?? 0)) / 2;
+            const my = ((nodeA.y ?? 0) + (nodeB.y ?? 0)) / 2;
+            setBadgePos({ x: event.transform.applyX(mx), y: event.transform.applyY(my) });
+          }
+        }
       });
 
     zoomRef.current = zoom;
@@ -685,6 +764,24 @@ export default function OccupationGraph({
                 style={{ width: `${tooltip.node.aiExposure * 100}%` }}
               />
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edge skills badge */}
+      {badgePos && pairSkillsComparison && (
+        <div
+          className="absolute z-20 cursor-pointer select-none"
+          style={{
+            left: badgePos.x,
+            top: badgePos.y,
+            transform: 'translate(-50%, -50%)',
+          }}
+          onMouseEnter={() => setShowEdgeTooltip(true)}
+          onMouseLeave={() => setShowEdgeTooltip(false)}
+        >
+          <div className="bg-popover text-popover-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap">
+            {pairSkillsComparison.shared.length} shared skills
           </div>
         </div>
       )}
