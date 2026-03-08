@@ -13,6 +13,7 @@ import type { GraphNode, GraphEdge, SimNode, NodeSizeMetric, OccupationDetail } 
 import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
 import { useForceSimulation } from '@/hooks/useForceSimulation';
 import type { LayoutTuning } from '@/hooks/useForceSimulation';
+import EdgeSkillsTooltip from './EdgeSkillsTooltip';
 
 interface TooltipState {
   x: number;
@@ -768,21 +769,46 @@ export default function OccupationGraph({
         </div>
       )}
 
-      {/* Edge skills badge */}
+      {/* Edge skills badge + tooltip */}
       {badgePos && pairSkillsComparison && (
         <div
-          className="absolute z-20 cursor-pointer select-none"
+          className="absolute z-20"
           style={{
             left: badgePos.x,
             top: badgePos.y,
             transform: 'translate(-50%, -50%)',
           }}
-          onMouseEnter={() => setShowEdgeTooltip(true)}
-          onMouseLeave={() => setShowEdgeTooltip(false)}
         >
-          <div className="bg-popover text-popover-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap">
-            {pairSkillsComparison.shared.length} shared skills
+          <div
+            className="cursor-pointer select-none"
+            onMouseEnter={() => setShowEdgeTooltip(true)}
+            onMouseLeave={() => setShowEdgeTooltip(false)}
+          >
+            <div className="bg-popover text-popover-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap">
+              {pairSkillsComparison.shared.length} shared skills
+            </div>
           </div>
+          {showEdgeTooltip && (
+            <div
+              className="absolute left-1/2 mt-2"
+              style={{
+                transform: badgePos.y > (dimensions.height ?? 0) / 2
+                  ? 'translate(-50%, calc(-100% - 40px))'
+                  : 'translateX(-50%)',
+              }}
+              onMouseEnter={() => setShowEdgeTooltip(true)}
+              onMouseLeave={() => setShowEdgeTooltip(false)}
+            >
+              <EdgeSkillsTooltip
+                labelA={pairSkillsComparison.labelA}
+                labelB={pairSkillsComparison.labelB}
+                shared={pairSkillsComparison.shared}
+                onlyA={pairSkillsComparison.onlyA}
+                onlyB={pairSkillsComparison.onlyB}
+                totalUnique={pairSkillsComparison.totalUnique}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
