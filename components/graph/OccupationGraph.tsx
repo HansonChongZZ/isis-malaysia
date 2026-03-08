@@ -8,6 +8,7 @@ import {
   useMemo,
   type MutableRefObject,
 } from 'react';
+import { createPortal } from 'react-dom';
 import * as d3 from 'd3';
 import type { GraphNode, GraphEdge, SimNode, NodeSizeMetric, OccupationDetail } from '@/lib/types';
 import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
@@ -786,27 +787,36 @@ export default function OccupationGraph({
               {pairSkillsComparison.shared.length} shared skills
             </div>
           </div>
-          {showEdgeTooltip && (
-            <div
-              className="absolute left-1/2 mt-2"
-              style={{
-                transform: badgePos.y > (dimensions.height ?? 0) / 2
-                  ? 'translate(-50%, calc(-100% - 40px))'
-                  : 'translateX(-50%)',
-              }}
-              onMouseEnter={() => setShowEdgeTooltip(true)}
-              onMouseLeave={() => setShowEdgeTooltip(false)}
-            >
-              <EdgeSkillsTooltip
-                labelA={pairSkillsComparison.labelA}
-                labelB={pairSkillsComparison.labelB}
-                shared={pairSkillsComparison.shared}
-                onlyA={pairSkillsComparison.onlyA}
-                onlyB={pairSkillsComparison.onlyB}
-                totalUnique={pairSkillsComparison.totalUnique}
-              />
-            </div>
-          )}
+          {showEdgeTooltip && (() => {
+            const rect = containerRef.current?.getBoundingClientRect();
+            const vx = (rect?.left ?? 0) + badgePos.x;
+            const vy = (rect?.top ?? 0) + badgePos.y;
+            const showAbove = vy > window.innerHeight / 2;
+            return createPortal(
+              <div
+                className="fixed z-50"
+                style={{
+                  left: Math.min(Math.max(vx, 250), window.innerWidth - 250),
+                  top: showAbove ? undefined : vy + 20,
+                  bottom: showAbove ? window.innerHeight - vy + 20 : undefined,
+                  transform: 'translateX(-50%)',
+                  maxHeight: showAbove ? `${vy - 40}px` : `${window.innerHeight - vy - 40}px`,
+                }}
+                onMouseEnter={() => setShowEdgeTooltip(true)}
+                onMouseLeave={() => setShowEdgeTooltip(false)}
+              >
+                <EdgeSkillsTooltip
+                  labelA={pairSkillsComparison.labelA}
+                  labelB={pairSkillsComparison.labelB}
+                  shared={pairSkillsComparison.shared}
+                  onlyA={pairSkillsComparison.onlyA}
+                  onlyB={pairSkillsComparison.onlyB}
+                  totalUnique={pairSkillsComparison.totalUnique}
+                />
+              </div>,
+              document.body,
+            );
+          })()}
         </div>
       )}
     </div>

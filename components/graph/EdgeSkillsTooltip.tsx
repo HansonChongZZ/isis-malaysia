@@ -18,7 +18,7 @@ export default function EdgeSkillsTooltip({
   totalUnique,
 }: EdgeSkillsTooltipProps) {
   return (
-    <div className="w-[360px] max-h-[400px] overflow-y-auto bg-popover text-popover-foreground rounded-lg shadow-xl border border-border p-4 space-y-3">
+    <div className="w-[480px] max-h-full overflow-y-auto bg-popover text-popover-foreground rounded-lg shadow-xl border border-border p-4 space-y-3">
       {/* Header */}
       <div>
         <p className="font-semibold text-sm leading-tight">
