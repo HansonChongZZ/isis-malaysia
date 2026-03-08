@@ -575,8 +575,12 @@ export default function OccupationGraph({
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      const newId = selectedNodeId === node.id ? null : node.id;
-                      onNodeSelect(newId);
+                      if (selectionMode === 'pair') {
+                        onNodeSelect(node.id);
+                      } else {
+                        const newId = selectedNodeId === node.id ? null : node.id;
+                        onNodeSelect(newId);
+                      }
                     }}
                     onMouseEnter={() => {
                       if (selectionMode === 'pair') return;
