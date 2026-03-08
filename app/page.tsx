@@ -169,16 +169,15 @@ export default function HomePage() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && !isPanelOpen) {
         setSelectedNodeId(null)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
-        setIsPanelOpen(false)
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [isPanelOpen])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
     setSizeMetric(metric)
