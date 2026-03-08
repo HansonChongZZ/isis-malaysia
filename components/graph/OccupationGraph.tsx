@@ -207,17 +207,24 @@ export default function OccupationGraph({
     const onlyA: string[] = [];
     const onlyB: string[] = [];
 
-    for (const skill of detailA.basicSkills) {
-      if (skillsB.has(skill.toLowerCase())) shared.push(skill);
-      else onlyA.push(skill);
-    }
-    for (const skill of detailA.specificSkills) {
-      if (skillsB.has(skill.toLowerCase())) {
-        if (!shared.some(s => s.toLowerCase() === skill.toLowerCase())) shared.push(skill);
-      } else onlyA.push(skill);
+    const seenShared = new Set<string>();
+    const seenA = new Set<string>();
+    const seenB = new Set<string>();
+
+    for (const skill of [...detailA.basicSkills, ...detailA.specificSkills]) {
+      const lower = skill.toLowerCase();
+      if (skillsB.has(lower)) {
+        if (!seenShared.has(lower)) { shared.push(skill); seenShared.add(lower); }
+      } else {
+        if (!seenA.has(lower)) { onlyA.push(skill); seenA.add(lower); }
+      }
     }
     for (const skill of [...detailB.basicSkills, ...detailB.specificSkills]) {
-      if (!skillsA.has(skill.toLowerCase())) onlyB.push(skill);
+      const lower = skill.toLowerCase();
+      if (!skillsA.has(lower) && !seenB.has(lower)) {
+        onlyB.push(skill);
+        seenB.add(lower);
+      }
     }
 
     return {
@@ -452,21 +459,12 @@ export default function OccupationGraph({
     drawEdges();
   }, [drawEdges]);
 
-  // Compute initial badge position for pair mode
+  // Clear badge position when leaving pair mode
   useEffect(() => {
-    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId) {
+    if (selectionMode !== 'pair') {
       setBadgePos(null);
-      return;
     }
-    const nodeA = nodeById.current.get(selectedNodeId);
-    const nodeB = nodeById.current.get(secondSelectedNodeId);
-    if (!nodeA || !nodeB) return;
-
-    const t = transformRef.current;
-    const mx = ((nodeA.x ?? 0) + (nodeB.x ?? 0)) / 2;
-    const my = ((nodeA.y ?? 0) + (nodeB.y ?? 0)) / 2;
-    setBadgePos({ x: t.applyX(mx), y: t.applyY(my) });
-  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
+  }, [selectionMode]);
 
   // Reset edge tooltip on selection change
   useEffect(() => {

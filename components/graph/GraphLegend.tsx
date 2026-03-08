@@ -1,11 +1,19 @@
 import { MASCO_GROUPS } from "@/lib/constants"
+import type { NodeSizeMetric } from "@/lib/types"
+
+const SIZE_METRIC_LABELS: Record<NodeSizeMetric, string> = {
+  aiExposure: "AI exposure",
+  wage: "wage",
+  workers: "number of workers",
+}
 
 interface GraphLegendProps {
   activeGroup: number | null
   onGroupClick: (group: number | null) => void
+  nodeSizeMetric: NodeSizeMetric
 }
 
-export default function GraphLegend({ activeGroup, onGroupClick }: GraphLegendProps) {
+export default function GraphLegend({ activeGroup, onGroupClick, nodeSizeMetric }: GraphLegendProps) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-4 py-2 bg-card/80 border-t border-border shrink-0 overflow-x-auto">
       {Object.entries(MASCO_GROUPS).map(([g, { label, colorVar }]) => {
@@ -27,7 +35,7 @@ export default function GraphLegend({ activeGroup, onGroupClick }: GraphLegendPr
         )
       })}
       <span className="ml-auto text-xs text-muted-foreground whitespace-nowrap hidden sm:inline">
-        Node size = AI exposure
+        Node size = {SIZE_METRIC_LABELS[nodeSizeMetric]}
       </span>
     </div>
   )
