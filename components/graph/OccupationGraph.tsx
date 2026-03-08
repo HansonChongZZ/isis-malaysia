@@ -9,7 +9,7 @@ import {
   type MutableRefObject,
 } from 'react';
 import * as d3 from 'd3';
-import type { GraphNode, GraphEdge, SimNode, NodeSizeMetric } from '@/lib/types';
+import type { GraphNode, GraphEdge, SimNode, NodeSizeMetric, OccupationDetail } from '@/lib/types';
 import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
 import { useForceSimulation } from '@/hooks/useForceSimulation';
 import type { LayoutTuning } from '@/hooks/useForceSimulation';
@@ -33,6 +33,8 @@ interface OccupationGraphProps {
   nodeSizeMetric: NodeSizeMetric;
   maxWage: number;
   maxWorkers: number;
+  secondSelectedNodeId: string | null;
+  occupations: Record<string, OccupationDetail>;
   tuning?: LayoutTuning | null;
   exportRef?: MutableRefObject<(() => void) | null>;
 }
@@ -50,6 +52,8 @@ export default function OccupationGraph({
   nodeSizeMetric,
   maxWage,
   maxWorkers,
+  secondSelectedNodeId,
+  occupations,
   tuning,
   exportRef,
 }: OccupationGraphProps) {
@@ -62,6 +66,11 @@ export default function OccupationGraph({
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const selectedNodeId = selectedNodeIdProp;
+  const selectionMode = !selectedNodeId
+    ? 'none'
+    : secondSelectedNodeId
+      ? 'pair'
+      : 'single';
   const nodeById = useRef<Map<string, SimNode>>(new Map());
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
@@ -159,6 +168,18 @@ export default function OccupationGraph({
     return set;
   }, [selectedNodeId, edges]);
 
+  const pairEdge = useMemo(() => {
+    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId) return null;
+    return edges.find((e) => {
+      const src = typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+      const tgt = typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+      return (
+        (src === selectedNodeId && tgt === secondSelectedNodeId) ||
+        (src === secondSelectedNodeId && tgt === selectedNodeId)
+      );
+    }) ?? null;
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, edges]);
+
   // Build adjacency set for hovered node (suppressed when a node is selected)
   const hoveredNeighborIds = useMemo<Set<string> | null>(() => {
     if (!hoveredNodeId || selectedNodeId) return null;
@@ -209,6 +230,11 @@ export default function OccupationGraph({
       if (nodeSizeMetric === 'wage' && node.wage === null) return 0.06;
       if (nodeSizeMetric === 'workers' && node.workers === null) return 0.06;
       if (visibleIds && !visibleIds.has(node.id)) return 0.06;
+      // Pair mode: only show the two selected nodes
+      if (selectionMode === 'pair' && selectedNodeId && secondSelectedNodeId) {
+        if (node.id !== selectedNodeId && node.id !== secondSelectedNodeId) return 0.05;
+        return 1;
+      }
       if (selectedNodeId && connectedIds && !connectedIds.has(node.id))
         return 0.12;
       if (
@@ -224,7 +250,9 @@ export default function OccupationGraph({
     [
       nodeSizeMetric,
       visibleIds,
+      selectionMode,
       selectedNodeId,
+      secondSelectedNodeId,
       connectedIds,
       hoveredNodeId,
       hoveredNeighborIds,
@@ -232,6 +260,10 @@ export default function OccupationGraph({
   );
 
   const visibleEdges = useMemo(() => {
+    if (selectionMode === 'pair') {
+      // Only show the edge between the two selected nodes
+      return pairEdge ? [pairEdge] : [];
+    }
     if (!selectedNodeId || !connectedIds) return [];
     return edges.filter((e) => {
       const src =
@@ -243,7 +275,7 @@ export default function OccupationGraph({
         return false;
       return true;
     });
-  }, [selectedNodeId, connectedIds, edges, visibleIds]);
+  }, [selectionMode, pairEdge, selectedNodeId, connectedIds, edges, visibleIds]);
 
   const drawEdges = useCallback(() => {
     const canvas = canvasRef.current;
@@ -261,6 +293,9 @@ export default function OccupationGraph({
     if (visibleEdges.length > 0) {
       ctx.strokeStyle = edgeColorRef.current;
       ctx.lineWidth = 0.5 / k;
+      if (selectionMode === 'pair') {
+        ctx.lineWidth = 2 / k;
+      }
 
       const byWeight = new Map<number, typeof visibleEdges>();
       for (const edge of visibleEdges) {
@@ -316,7 +351,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [visibleEdges, hoveredEdges]);
+  }, [selectionMode, visibleEdges, hoveredEdges]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
@@ -544,6 +579,7 @@ export default function OccupationGraph({
                       onNodeSelect(newId);
                     }}
                     onMouseEnter={() => {
+                      if (selectionMode === 'pair') return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
                       setTooltip({
