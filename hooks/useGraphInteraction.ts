@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useMemo } from "react"
-import type { SimNode, GraphEdge } from "@/lib/types"
+import type { GraphNode, GraphEdge } from "@/lib/types"
 
 interface UseGraphInteractionProps {
   edges: GraphEdge[]
@@ -19,8 +19,8 @@ export function useGraphInteraction({ edges }: UseGraphInteractionProps) {
     if (!selectedNodeId) return null
     const set = new Set<string>([selectedNodeId])
     for (const e of edges) {
-      const src = typeof e.source === "string" ? e.source : (e.source as SimNode).id
-      const tgt = typeof e.target === "string" ? e.target : (e.target as SimNode).id
+      const src = typeof e.source === "string" ? e.source : (e.source as GraphNode).id
+      const tgt = typeof e.target === "string" ? e.target : (e.target as GraphNode).id
       if (src === selectedNodeId) set.add(tgt)
       if (tgt === selectedNodeId) set.add(src)
     }
@@ -28,7 +28,7 @@ export function useGraphInteraction({ edges }: UseGraphInteractionProps) {
   }, [selectedNodeId, edges])
 
   const getNodeOpacity = useCallback(
-    (node: SimNode, visibleIds: Set<string> | null) => {
+    (node: GraphNode, visibleIds: Set<string> | null) => {
       // If there's a visibility filter (search/group/skill), apply it
       if (visibleIds && !visibleIds.has(node.id)) return 0.08
 
@@ -42,8 +42,8 @@ export function useGraphInteraction({ edges }: UseGraphInteractionProps) {
 
   const getEdgeOpacity = useCallback(
     (edge: GraphEdge, visibleIds: Set<string> | null) => {
-      const src = typeof edge.source === "string" ? edge.source : (edge.source as SimNode).id
-      const tgt = typeof edge.target === "string" ? edge.target : (edge.target as SimNode).id
+      const src = typeof edge.source === "string" ? edge.source : (edge.source as GraphNode).id
+      const tgt = typeof edge.target === "string" ? edge.target : (edge.target as GraphNode).id
 
       if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt))) return 0
 

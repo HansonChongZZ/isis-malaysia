@@ -32,6 +32,4 @@ export type GraphNode = z.infer<typeof NodeSchema>
 export type GraphEdge = z.infer<typeof EdgeSchema>
 export type OccupationDetail = z.infer<typeof OccupationDetailSchema>
 
-export type SimNode = GraphNode
-
 export type NodeSizeMetric = 'aiExposure' | 'wage' | 'workers'
