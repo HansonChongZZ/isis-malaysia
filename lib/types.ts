@@ -8,8 +8,8 @@ export const NodeSchema = z.object({
   quartile: z.enum(["Low", "Medium low", "Medium high", "High"]),
   wage: z.number().nullable(),
   workers: z.number().nullable(),
-  x: z.number().min(0).max(1),
-  y: z.number().min(0).max(1),
+  x: z.number(),
+  y: z.number(),
 })
 
 export const EdgeSchema = z.object({
@@ -32,19 +32,6 @@ export type GraphNode = z.infer<typeof NodeSchema>
 export type GraphEdge = z.infer<typeof EdgeSchema>
 export type OccupationDetail = z.infer<typeof OccupationDetailSchema>
 
-export type SimNode = GraphNode & {
-  x?: number
-  y?: number
-  vx?: number
-  vy?: number
-  fx?: number | null
-  fy?: number | null
-}
-
-export type SimEdge = {
-  source: SimNode | string
-  target: SimNode | string
-  weight: number
-}
+export type SimNode = GraphNode
 
 export type NodeSizeMetric = 'aiExposure' | 'wage' | 'workers'
