@@ -62,6 +62,8 @@ export default function OccupationGraph({
   const gRef = useRef<SVGGElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
+  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const preZoomTransformRef = useRef<d3.ZoomTransform | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
@@ -509,11 +511,61 @@ export default function OccupationGraph({
         drawEdgesRef.current();
       });
 
+    zoomRef.current = zoom;
+
     svg.call(zoom);
     return () => {
       svg.on('.zoom', null);
     };
   }, [dimensions.width, dimensions.height, simNodes]);
+
+  // Auto-zoom to frame both nodes in pair mode
+  useEffect(() => {
+    if (!svgRef.current || !zoomRef.current) return;
+    const svg = d3.select(svgRef.current);
+    const zoom = zoomRef.current;
+
+    if (selectionMode === 'pair' && selectedNodeId && secondSelectedNodeId) {
+      const nodeA = nodeById.current.get(selectedNodeId);
+      const nodeB = nodeById.current.get(secondSelectedNodeId);
+      if (!nodeA || !nodeB) return;
+
+      // Save current transform for restoring later
+      preZoomTransformRef.current = transformRef.current;
+
+      const padding = 120;
+      const ax = nodeA.x ?? 0;
+      const ay = nodeA.y ?? 0;
+      const bx = nodeB.x ?? 0;
+      const by = nodeB.y ?? 0;
+
+      const cx = (ax + bx) / 2;
+      const cy = (ay + by) / 2;
+      const dx = Math.abs(bx - ax) + padding * 2;
+      const dy = Math.abs(by - ay) + padding * 2;
+      const scale = Math.min(
+        dimensions.width / dx,
+        dimensions.height / dy,
+        2, // max zoom
+      );
+      const tx = dimensions.width / 2 - cx * scale;
+      const ty = dimensions.height / 2 - cy * scale;
+      const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
+
+      svg.transition()
+        .duration(500)
+        .ease(d3.easeCubicInOut)
+        .call(zoom.transform, target);
+    } else if (selectionMode !== 'pair' && preZoomTransformRef.current) {
+      // Restore previous zoom on deselect
+      const prev = preZoomTransformRef.current;
+      preZoomTransformRef.current = null;
+      svg.transition()
+        .duration(400)
+        .ease(d3.easeCubicInOut)
+        .call(zoom.transform, prev);
+    }
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, dimensions.width, dimensions.height]);
 
   return (
     <div
