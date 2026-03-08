@@ -9,15 +9,14 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import * as d3 from 'd3';
-import type { GraphNode, GraphEdge, SimNode, NodeSizeMetric, OccupationDetail } from '@/lib/types';
+import type { GraphNode, GraphEdge, NodeSizeMetric, OccupationDetail } from '@/lib/types';
 import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
-import { useForceSimulation } from '@/hooks/useForceSimulation';
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
 
 interface TooltipState {
   x: number;
   y: number;
-  node: SimNode;
+  node: GraphNode;
 }
 
 interface OccupationGraphProps {
@@ -71,7 +70,7 @@ export default function OccupationGraph({
     : secondSelectedNodeId
       ? 'pair'
       : 'single';
-  const nodeById = useRef<Map<string, SimNode>>(new Map());
+  const nodeById = useRef<Map<string, GraphNode>>(new Map());
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
   const [mascoColors, setMascoColors] = useState<Record<number, string>>({});
@@ -85,7 +84,7 @@ export default function OccupationGraph({
     secondSelectedNodeIdRef.current = secondSelectedNodeId;
   }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
 
-  const simNodes = useMemo<SimNode[]>(
+  const simNodes = useMemo<GraphNode[]>(
     () => nodes.map((n) => ({ ...n })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [nodes.length],
@@ -168,9 +167,9 @@ export default function OccupationGraph({
     const set = new Set<string>([selectedNodeId]);
     for (const e of edges) {
       const src =
-        typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+        typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
-        typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+        typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
       if (src === selectedNodeId) set.add(tgt);
       if (tgt === selectedNodeId) set.add(src);
     }
@@ -180,8 +179,8 @@ export default function OccupationGraph({
   const pairEdge = useMemo(() => {
     if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId) return null;
     return edges.find((e) => {
-      const src = typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
-      const tgt = typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+      const src = typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
+      const tgt = typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
       return (
         (src === selectedNodeId && tgt === secondSelectedNodeId) ||
         (src === secondSelectedNodeId && tgt === selectedNodeId)
@@ -238,9 +237,9 @@ export default function OccupationGraph({
     const set = new Set<string>();
     for (const e of edges) {
       const src =
-        typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+        typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
-        typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+        typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
       if (src === hoveredNodeId) set.add(tgt);
       if (tgt === hoveredNodeId) set.add(src);
     }
@@ -251,9 +250,9 @@ export default function OccupationGraph({
     if (!hoveredNodeId || selectedNodeId || !hoveredNeighborIds) return [];
     return edges.filter((e) => {
       const src =
-        typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+        typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
-        typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+        typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
       if (src !== hoveredNodeId && tgt !== hoveredNodeId) return false;
       if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt)))
         return false;
@@ -262,7 +261,7 @@ export default function OccupationGraph({
   }, [hoveredNodeId, selectedNodeId, hoveredNeighborIds, edges, visibleIds]);
 
   const getNodeRadius = useCallback(
-    (node: SimNode) => {
+    (node: GraphNode) => {
       if (nodeSizeMetric === 'wage') {
         if (node.wage === null || maxWage === 0) return NODE_RADIUS_BASE;
         return NODE_RADIUS_BASE + (node.wage / maxWage) * NODE_RADIUS_SCALE;
@@ -278,7 +277,7 @@ export default function OccupationGraph({
   );
 
   const getNodeOpacity = useCallback(
-    (node: SimNode) => {
+    (node: GraphNode) => {
       if (nodeSizeMetric === 'wage' && node.wage === null) return 0.06;
       if (nodeSizeMetric === 'workers' && node.workers === null) return 0.06;
       if (visibleIds && !visibleIds.has(node.id)) return 0.06;
@@ -319,9 +318,9 @@ export default function OccupationGraph({
     if (!selectedNodeId || !connectedIds) return [];
     return edges.filter((e) => {
       const src =
-        typeof e.source === 'string' ? e.source : (e.source as SimNode).id;
+        typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
-        typeof e.target === 'string' ? e.target : (e.target as SimNode).id;
+        typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
       if (src !== selectedNodeId && tgt !== selectedNodeId) return false;
       if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt)))
         return false;
@@ -363,16 +362,16 @@ export default function OccupationGraph({
           const src = nodeById.current.get(
             typeof edge.source === 'string'
               ? edge.source
-              : (edge.source as SimNode).id,
+              : (edge.source as GraphNode).id,
           );
           const tgt = nodeById.current.get(
             typeof edge.target === 'string'
               ? edge.target
-              : (edge.target as SimNode).id,
+              : (edge.target as GraphNode).id,
           );
           if (!src || !tgt) continue;
-          ctx.moveTo(src.x ?? 0, src.y ?? 0);
-          ctx.lineTo(tgt.x ?? 0, tgt.y ?? 0);
+          ctx.moveTo(src.x, src.y);
+          ctx.lineTo(tgt.x, tgt.y);
         }
         ctx.stroke();
       }
@@ -388,16 +387,16 @@ export default function OccupationGraph({
         const src = nodeById.current.get(
           typeof edge.source === 'string'
             ? edge.source
-            : (edge.source as SimNode).id,
+            : (edge.source as GraphNode).id,
         );
         const tgt = nodeById.current.get(
           typeof edge.target === 'string'
             ? edge.target
-            : (edge.target as SimNode).id,
+            : (edge.target as GraphNode).id,
         );
         if (!src || !tgt) continue;
-        ctx.moveTo(src.x ?? 0, src.y ?? 0);
-        ctx.lineTo(tgt.x ?? 0, tgt.y ?? 0);
+        ctx.moveTo(src.x, src.y);
+        ctx.lineTo(tgt.x, tgt.y);
       }
       ctx.stroke();
     }
@@ -410,31 +409,6 @@ export default function OccupationGraph({
   useEffect(() => {
     drawEdgesRef.current = drawEdges;
   }, [drawEdges]);
-
-  const handleTick = useCallback(() => {
-    if (!svgRef.current) return;
-    d3.select(svgRef.current)
-      .selectAll<SVGCircleElement, unknown>('circle.node')
-      .each(function () {
-        const node = nodeById.current.get(this.getAttribute('data-id')!);
-        if (node) {
-          this.setAttribute('cx', String(node.x ?? 0));
-          this.setAttribute('cy', String(node.y ?? 0));
-        }
-      });
-    drawEdgesRef.current();
-  }, []);
-
-  useForceSimulation({
-    nodes: simNodes,
-    edges,
-    width: dimensions.width,
-    height: dimensions.height,
-    onTick: handleTick,
-    nodeSizeMetric,
-    maxWage,
-    maxWorkers,
-  });
 
   // Resize canvas to match container with HiDPI support
   useEffect(() => {
@@ -477,67 +451,80 @@ export default function OccupationGraph({
     return () => obs.disconnect();
   }, []);
 
-  // Zoom + pan behavior — restrict pan to node bounds
+  // Zoom + pan with auto-fit
   useEffect(() => {
-    if (!svgRef.current || !gRef.current) return;
+    if (!svgRef.current || !gRef.current || !dimensions.width || !dimensions.height) return;
+    if (!simNodes.length) return;
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
 
+    const padding = 80;
+    const xs = simNodes.map((n) => n.x);
+    const ys = simNodes.map((n) => n.y);
+    const boundsMinX = Math.min(...xs) - padding;
+    const boundsMinY = Math.min(...ys) - padding;
+    const boundsMaxX = Math.max(...xs) + padding;
+    const boundsMaxY = Math.max(...ys) + padding;
+    const boundsW = boundsMaxX - boundsMinX;
+    const boundsH = boundsMaxY - boundsMinY;
+
+    // Fit all nodes into viewport
+    const scale = Math.min(dimensions.width / boundsW, dimensions.height / boundsH, 2);
+    const tx = (dimensions.width - boundsW * scale) / 2 - boundsMinX * scale;
+    const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
+    const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
+
     const minScale = 0.2;
     const maxScale = 3;
-    const padding = 80;
 
-    // Node bounds in simulation/content coordinates (ensure at least viewport size at min zoom)
-    const xs = simNodes.map((n) => n.x ?? dimensions.width / 2);
-    const ys = simNodes.map((n) => n.y ?? dimensions.height / 2);
-    let minX = Math.min(...xs) - padding;
-    let minY = Math.min(...ys) - padding;
-    let maxX = Math.max(...xs) + padding;
-    let maxY = Math.max(...ys) + padding;
-
+    // Expand translate extent for panning
+    let extMinX = boundsMinX;
+    let extMaxX = boundsMaxX;
+    let extMinY = boundsMinY;
+    let extMaxY = boundsMaxY;
     const minExtentW = dimensions.width / minScale;
     const minExtentH = dimensions.height / minScale;
-    const extentW = maxX - minX;
-    const extentH = maxY - minY;
-    if (extentW < minExtentW) {
-      const pad = (minExtentW - extentW) / 2;
-      minX -= pad;
-      maxX += pad;
+    if (boundsW < minExtentW) {
+      const pad = (minExtentW - boundsW) / 2;
+      extMinX -= pad;
+      extMaxX += pad;
     }
-    if (extentH < minExtentH) {
-      const pad = (minExtentH - extentH) / 2;
-      minY -= pad;
-      maxY += pad;
+    if (boundsH < minExtentH) {
+      const pad = (minExtentH - boundsH) / 2;
+      extMinY -= pad;
+      extMaxY += pad;
     }
 
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([minScale, maxScale])
       .translateExtent([
-        [minX, minY],
-        [maxX, maxY],
+        [extMinX, extMinY],
+        [extMaxX, extMaxY],
       ])
       .on('zoom', (event) => {
         transformRef.current = event.transform;
         g.attr('transform', event.transform.toString());
-        setTooltip(null);
+        setTooltip((prev) => prev === null ? prev : null);
         drawEdgesRef.current();
 
-        // Update badge position during zoom
         if (selectionModeRef.current === 'pair' && selectedNodeIdRef.current && secondSelectedNodeIdRef.current) {
           const nodeA = nodeById.current.get(selectedNodeIdRef.current);
           const nodeB = nodeById.current.get(secondSelectedNodeIdRef.current);
           if (nodeA && nodeB) {
-            const mx = ((nodeA.x ?? 0) + (nodeB.x ?? 0)) / 2;
-            const my = ((nodeA.y ?? 0) + (nodeB.y ?? 0)) / 2;
+            const mx = (nodeA.x + nodeB.x) / 2;
+            const my = (nodeA.y + nodeB.y) / 2;
             setBadgePos({ x: event.transform.applyX(mx), y: event.transform.applyY(my) });
           }
         }
       });
 
     zoomRef.current = zoom;
-
     svg.call(zoom);
+
+    // Apply fit transform immediately (no animation on mount/resize)
+    svg.call(zoom.transform, fitTransform);
+
     return () => {
       svg.on('.zoom', null);
     };
@@ -558,10 +545,10 @@ export default function OccupationGraph({
       preZoomTransformRef.current = transformRef.current;
 
       const padding = 120;
-      const ax = nodeA.x ?? 0;
-      const ay = nodeA.y ?? 0;
-      const bx = nodeB.x ?? 0;
-      const by = nodeB.y ?? 0;
+      const ax = nodeA.x;
+      const ay = nodeA.y;
+      const bx = nodeB.x;
+      const by = nodeB.y;
 
       const cx = (ax + bx) / 2;
       const cy = (ay + by) / 2;
@@ -626,8 +613,8 @@ export default function OccupationGraph({
                     key={node.id}
                     className="node"
                     data-id={node.id}
-                    cx={node.x ?? 0}
-                    cy={node.y ?? 0}
+                    cx={node.x}
+                    cy={node.y}
                     r={r}
                     fill={color}
                     fillOpacity={opacity}
@@ -663,8 +650,8 @@ export default function OccupationGraph({
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
                       setTooltip({
-                        x: t.applyX(node.x ?? 0),
-                        y: t.applyY(node.y ?? 0),
+                        x: t.applyX(node.x),
+                        y: t.applyY(node.y),
                         node,
                       });
                     }}
