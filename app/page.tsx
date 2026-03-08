@@ -31,6 +31,8 @@ export default function HomePage() {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [heroDismissed, setHeroDismissed] = useState(false)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
+  const [secondSelectedNodeId, setSecondSelectedNodeId] = useState<string | null>(null)
+  const [panelNodeId, setPanelNodeId] = useState<string | null>(null)
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
@@ -67,6 +69,16 @@ export default function HomePage() {
     }
     return map
   }, [occupations])
+
+  const firstNodeNeighbors = useMemo<Set<string>>(() => {
+    if (!selectedNodeId) return new Set()
+    const set = new Set<string>()
+    for (const e of edges) {
+      if (e.source === selectedNodeId) set.add(e.target)
+      if (e.target === selectedNodeId) set.add(e.source)
+    }
+    return set
+  }, [selectedNodeId, edges])
 
   // Unique sorted skills list for autocomplete
   const uniqueSkills = useMemo<string[]>(() => {
@@ -106,12 +118,67 @@ export default function HomePage() {
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [nodes, filterGroup])
 
-  const selectedDetail = selectedNodeId ? occupations[selectedNodeId] ?? null : null
+  const panelDetail = panelNodeId ? occupations[panelNodeId] ?? null : null
 
   const handleNodeSelect = (id: string | null) => {
+    if (id === null) {
+      // Click background or deselect
+      setSelectedNodeId(null)
+      setSecondSelectedNodeId(null)
+      setPanelNodeId(null)
+      setIsPanelOpen(false)
+      return
+    }
+
+    if (secondSelectedNodeId) {
+      // In pair mode
+      if (id === selectedNodeId || id === secondSelectedNodeId) {
+        // Click either selected node → open panel
+        setPanelNodeId(id)
+        setIsPanelOpen(true)
+      } else {
+        // Click third node → reset to single
+        setSelectedNodeId(id)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+      }
+      return
+    }
+
+    if (selectedNodeId) {
+      // In single mode
+      if (id === selectedNodeId) {
+        // Click same node → open panel
+        setPanelNodeId(id)
+        setIsPanelOpen(true)
+      } else if (firstNodeNeighbors.has(id)) {
+        // Click connected neighbor → pair mode
+        setSecondSelectedNodeId(id)
+      } else {
+        // Click unconnected node → new single selection
+        setSelectedNodeId(id)
+        setSecondSelectedNodeId(null)
+      }
+      return
+    }
+
+    // No selection → first click
     setSelectedNodeId(id)
-    if (id) setIsPanelOpen(true)
   }
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedNodeId(null)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
     setSizeMetric(metric)
@@ -176,6 +243,8 @@ export default function HomePage() {
             edges={edges}
             onNodeSelect={handleNodeSelect}
             selectedNodeId={selectedNodeId}
+            secondSelectedNodeId={secondSelectedNodeId}
+            occupations={occupations}
             filterGroup={filterGroup}
             filterSkills={filterSkills}
             allSkills={allSkills}
@@ -222,16 +291,19 @@ export default function HomePage() {
       </div>
 
       {/* Legend */}
-      <GraphLegend activeGroup={filterGroup} onGroupClick={setFilterGroup} />
+      <GraphLegend activeGroup={filterGroup} onGroupClick={setFilterGroup} nodeSizeMetric={nodeSizeMetric} />
 
       {/* Side panel */}
       <OccupationPanel
-        nodeId={selectedNodeId}
-        detail={selectedDetail}
+        nodeId={panelNodeId}
+        detail={panelDetail}
         nodes={nodes}
         edges={edges}
         isOpen={isPanelOpen}
-        onClose={() => setIsPanelOpen(false)}
+        onClose={() => {
+          setIsPanelOpen(false)
+          setPanelNodeId(null)
+        }}
         onNodeSelect={handleNodeSelect}
       />
     </div>
