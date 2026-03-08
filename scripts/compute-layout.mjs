@@ -1,12 +1,12 @@
 /**
  * Offline layout computation for occupation graph.
  *
- * Two-stage process to match runtime tuning behavior:
+ * Two-stage process:
  *   Stage 1: Compute a spread-out base layout (strong charge, moderate link strengths)
- *   Stage 2: Apply tuning forces (tight intra-cluster, weak inter/charge) for 300 ticks
- *            — identical to what useForceSimulation.ts does at runtime.
+ *            on a 4000x2400 virtual canvas.
+ *   Stage 2: Apply tuning forces (tight intra-cluster, weak inter/charge) for 300 ticks.
  *
- * Normalizes positions to 0-1 range and writes back to nodes.json.
+ * Writes raw pixel positions to nodes.json (no 0-1 normalization).
  *
  * Usage: node scripts/compute-layout.mjs
  */
@@ -45,7 +45,6 @@ const NODE_RADIUS_COLLIDE_PADDING = 4.5;
 // Virtual canvas (landscape)
 const CANVAS_W = 4000;
 const CANVAS_H = 2400;
-const PADDING = 0.05;
 
 // Edge weight max (from EdgeSchema)
 const EDGE_WEIGHT_MAX = 7;
@@ -121,27 +120,8 @@ console.log(`Stage 1 complete in ${Date.now() - t1}ms`);
 
 // ─── Stage 2: Tuning pass (tight clusters) ─────────────────────────────────
 
-// Scale positions to a typical viewport size (matching runtime behavior)
-// The runtime scales 0-1 coords to viewport before running the tuning sim
-const VIEWPORT_W = 1400;
-const VIEWPORT_H = 900;
-
-// First normalize Stage 1 positions to 0-1
-const s1xs = simNodes.map((n) => n.x);
-const s1ys = simNodes.map((n) => n.y);
-const s1minX = Math.min(...s1xs);
-const s1maxX = Math.max(...s1xs);
-const s1minY = Math.min(...s1ys);
-const s1maxY = Math.max(...s1ys);
-const s1rangeX = s1maxX - s1minX || 1;
-const s1rangeY = s1maxY - s1minY || 1;
-
-// Then scale to viewport dimensions (like useForceSimulation does)
+// Reset velocities before tuning
 for (const n of simNodes) {
-  const nx = PADDING + ((n.x - s1minX) / s1rangeX) * (1 - 2 * PADDING);
-  const ny = PADDING + ((n.y - s1minY) / s1rangeY) * (1 - 2 * PADDING);
-  n.x = nx * VIEWPORT_W;
-  n.y = ny * VIEWPORT_H;
   n.vx = 0;
   n.vy = 0;
 }
@@ -166,7 +146,7 @@ const sim2 = forceSimulation(simNodes)
       }),
   )
   .force('charge', forceManyBody().strength(TUNING_CHARGE))
-  .force('center', forceCenter(VIEWPORT_W / 2, VIEWPORT_H / 2))
+  .force('center', forceCenter(cx, cy))
   .force(
     'collide',
     forceCollide((d) => {
@@ -183,7 +163,7 @@ for (let i = 0; i < TUNING_ITERATIONS; i++) {
 }
 console.log(`Stage 2 complete in ${Date.now() - t2}ms`);
 
-// ─── Normalization ──────────────────────────────────────────────────────────
+// ─── Write raw pixel positions ──────────────────────────────────────────────
 
 const xs = simNodes.map((n) => n.x);
 const ys = simNodes.map((n) => n.y);
@@ -191,16 +171,15 @@ const minX = Math.min(...xs);
 const maxX = Math.max(...xs);
 const minY = Math.min(...ys);
 const maxY = Math.max(...ys);
-const rangeX = maxX - minX || 1;
-const rangeY = maxY - minY || 1;
 
 console.log(`Bounds: x=[${minX.toFixed(1)}, ${maxX.toFixed(1)}], y=[${minY.toFixed(1)}, ${maxY.toFixed(1)}]`);
 
 const posMap = new Map();
 for (const n of simNodes) {
-  const nx = PADDING + ((n.x - minX) / rangeX) * (1 - 2 * PADDING);
-  const ny = PADDING + ((n.y - minY) / rangeY) * (1 - 2 * PADDING);
-  posMap.set(n.id, { x: parseFloat(nx.toFixed(6)), y: parseFloat(ny.toFixed(6)) });
+  posMap.set(n.id, {
+    x: parseFloat(n.x.toFixed(1)),
+    y: parseFloat(n.y.toFixed(1)),
+  });
 }
 
 // Write back to nodes.json
@@ -216,21 +195,21 @@ console.log(`Written ${output.length} nodes with x,y to ${nodesPath}`);
 const sample = output[0];
 console.log(`Sample: ${sample.label} (group ${sample.group}) → x=${sample.x}, y=${sample.y}`);
 
-const invalid = output.filter((n) => isNaN(n.x) || isNaN(n.y) || n.x < 0 || n.x > 1 || n.y < 0 || n.y > 1);
+const invalid = output.filter((n) => isNaN(n.x) || isNaN(n.y));
 if (invalid.length > 0) {
   console.error(`ERROR: ${invalid.length} nodes have invalid positions!`);
 } else {
-  console.log('All nodes have valid 0-1 positions.');
+  console.log('All nodes have valid pixel positions.');
 }
 
 // Print group center summary
-console.log('\nNormalized group centers:');
+console.log('\nGroup centers (pixels):');
 const groupIds = [...new Set(nodes.map((n) => n.group))].sort((a, b) => a - b);
 for (const g of groupIds) {
   const gNodes = output.filter((n) => n.group === g);
   const avgX = gNodes.reduce((s, n) => s + n.x, 0) / gNodes.length;
   const avgY = gNodes.reduce((s, n) => s + n.y, 0) / gNodes.length;
-  console.log(`  Group ${g} (n=${gNodes.length}): avg=(${avgX.toFixed(3)}, ${avgY.toFixed(3)})`);
+  console.log(`  Group ${g} (n=${gNodes.length}): avg=(${avgX.toFixed(1)}, ${avgY.toFixed(1)})`);
 }
 
 // Restore original Math.random
