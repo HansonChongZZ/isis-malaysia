@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useMemo, useRef } from "react"
+import { useEffect, useState, useMemo } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
@@ -8,8 +8,6 @@ import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
 import GraphLegend from "@/components/graph/GraphLegend"
 import OccupationPanel from "@/components/panel/OccupationPanel"
-import LayoutTuner from "@/components/graph/LayoutTuner"
-import type { LayoutTuning } from "@/hooks/useForceSimulation"
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
 const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
@@ -31,18 +29,13 @@ export default function HomePage() {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [heroDismissed, setHeroDismissed] = useState(false)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
+  const [secondSelectedNodeId, setSecondSelectedNodeId] = useState<string | null>(null)
+  const [panelNodeId, setPanelNodeId] = useState<string | null>(null)
   const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
   const [sizeThreshold, setSizeThreshold] = useState(0)
   const [nodeSizeMetric, setNodeSizeMetric] = useState<NodeSizeMetric>('aiExposure')
-  const [tuningEnabled, setTuningEnabled] = useState(true)
-  const [tuning, setTuning] = useState<LayoutTuning>({
-    intraStrength: 0.8,
-    interStrength: 0.001,
-    charge: -50,
-  })
-  const exportLayoutRef = useRef<(() => void) | null>(null)
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -67,6 +60,16 @@ export default function HomePage() {
     }
     return map
   }, [occupations])
+
+  const firstNodeNeighbors = useMemo<Set<string>>(() => {
+    if (!selectedNodeId) return new Set()
+    const set = new Set<string>()
+    for (const e of edges) {
+      if (e.source === selectedNodeId) set.add(e.target)
+      if (e.target === selectedNodeId) set.add(e.source)
+    }
+    return set
+  }, [selectedNodeId, edges])
 
   // Unique sorted skills list for autocomplete
   const uniqueSkills = useMemo<string[]>(() => {
@@ -106,12 +109,78 @@ export default function HomePage() {
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [nodes, filterGroup])
 
-  const selectedDetail = selectedNodeId ? occupations[selectedNodeId] ?? null : null
+  const panelDetail = panelNodeId ? occupations[panelNodeId] ?? null : null
 
   const handleNodeSelect = (id: string | null) => {
+    if (id === null) {
+      if (secondSelectedNodeId) {
+        // Pair mode → step back to single mode (show first node + neighbourhood)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+      } else {
+        // Single mode (or none) → clear everything
+        setSelectedNodeId(null)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+      }
+      return
+    }
+
+    if (secondSelectedNodeId) {
+      // In pair mode
+      if (id === selectedNodeId || id === secondSelectedNodeId) {
+        // Click either selected node → open panel
+        setPanelNodeId(id)
+        setIsPanelOpen(true)
+      } else {
+        // Click third node → reset to single
+        setSelectedNodeId(id)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+      }
+      return
+    }
+
+    if (selectedNodeId) {
+      // In single mode
+      if (id === selectedNodeId) {
+        // Click same node → open panel
+        setPanelNodeId(id)
+        setIsPanelOpen(true)
+      } else if (firstNodeNeighbors.has(id)) {
+        // Click connected neighbor → pair mode
+        setSecondSelectedNodeId(id)
+      } else {
+        // Click unconnected node → new single selection
+        setSelectedNodeId(id)
+        setSecondSelectedNodeId(null)
+      }
+      return
+    }
+
+    // No selection → first click
     setSelectedNodeId(id)
-    if (id) setIsPanelOpen(true)
   }
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isPanelOpen) {
+        if (secondSelectedNodeId) {
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+        } else {
+          setSelectedNodeId(null)
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+        }
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isPanelOpen, secondSelectedNodeId])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
     setSizeMetric(metric)
@@ -176,6 +245,8 @@ export default function HomePage() {
             edges={edges}
             onNodeSelect={handleNodeSelect}
             selectedNodeId={selectedNodeId}
+            secondSelectedNodeId={secondSelectedNodeId}
+            occupations={occupations}
             filterGroup={filterGroup}
             filterSkills={filterSkills}
             allSkills={allSkills}
@@ -184,8 +255,6 @@ export default function HomePage() {
             nodeSizeMetric={nodeSizeMetric}
             maxWage={maxWage}
             maxWorkers={maxWorkers}
-            tuning={tuningEnabled ? tuning : null}
-            exportRef={exportLayoutRef}
           />
         )}
 
@@ -204,15 +273,6 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Layout tuner (temporary) */}
-        <LayoutTuner
-          tuning={tuning}
-          onChange={setTuning}
-          enabled={tuningEnabled}
-          onToggle={setTuningEnabled}
-          onExport={() => exportLayoutRef.current?.()}
-        />
-
         {/* Node count badge */}
         {!loading && !error && (
           <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded">
@@ -222,16 +282,19 @@ export default function HomePage() {
       </div>
 
       {/* Legend */}
-      <GraphLegend activeGroup={filterGroup} onGroupClick={setFilterGroup} />
+      <GraphLegend activeGroup={filterGroup} onGroupClick={setFilterGroup} nodeSizeMetric={nodeSizeMetric} />
 
       {/* Side panel */}
       <OccupationPanel
-        nodeId={selectedNodeId}
-        detail={selectedDetail}
+        nodeId={panelNodeId}
+        detail={panelDetail}
         nodes={nodes}
         edges={edges}
         isOpen={isPanelOpen}
-        onClose={() => setIsPanelOpen(false)}
+        onClose={() => {
+          setIsPanelOpen(false)
+          setPanelNodeId(null)
+        }}
         onNodeSelect={handleNodeSelect}
       />
     </div>
