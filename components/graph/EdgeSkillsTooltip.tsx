@@ -55,7 +55,7 @@ export default function EdgeSkillsTooltip({
         <div className="grid grid-cols-2 gap-3">
           {onlyA.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 truncate" title={labelA}>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5" title={labelA}>
                 Only {labelA}
               </p>
               <div className="flex flex-wrap gap-1">
@@ -73,7 +73,7 @@ export default function EdgeSkillsTooltip({
           )}
           {onlyB.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 truncate" title={labelB}>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5" title={labelB}>
                 Only {labelB}
               </p>
               <div className="flex flex-wrap gap-1">
