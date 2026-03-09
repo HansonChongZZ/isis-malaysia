@@ -530,7 +530,7 @@ export default function OccupationGraph({
     };
   }, [dimensions.width, dimensions.height, simNodes]);
 
-  // Auto-zoom to frame both nodes in pair mode
+  // Auto-zoom to frame selection (single or pair mode)
   useEffect(() => {
     if (!svgRef.current || !zoomRef.current) return;
     const svg = d3.select(svgRef.current);
@@ -557,7 +557,7 @@ export default function OccupationGraph({
       const scale = Math.min(
         dimensions.width / dx,
         dimensions.height / dy,
-        2, // max zoom
+        2,
       );
       const tx = dimensions.width / 2 - cx * scale;
       const ty = dimensions.height / 2 - cy * scale;
@@ -567,16 +567,74 @@ export default function OccupationGraph({
         .duration(500)
         .ease(d3.easeCubicInOut)
         .call(zoom.transform, target);
-    } else if (selectionMode !== 'pair' && preZoomTransformRef.current) {
-      // Restore previous zoom on deselect
-      const prev = preZoomTransformRef.current;
+    } else if (selectionMode === 'single' && selectedNodeId && connectedIds) {
+      // Save current transform for restoring later
+      if (!preZoomTransformRef.current) {
+        preZoomTransformRef.current = transformRef.current;
+      }
+
+      const neighbourNodes = simNodes.filter((n) => connectedIds.has(n.id));
+
+      if (neighbourNodes.length <= 1) {
+        // Isolated node (only itself in connectedIds) — zoom to scale 2 centered on node
+        const node = nodeById.current.get(selectedNodeId);
+        if (!node) return;
+        const scale = 2;
+        const tx = dimensions.width / 2 - node.x * scale;
+        const ty = dimensions.height / 2 - node.y * scale;
+        const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
+
+        svg.transition()
+          .duration(500)
+          .ease(d3.easeCubicInOut)
+          .call(zoom.transform, target);
+      } else {
+        // Zoom to fit selected node + neighbours with 200px padding
+        const padding = 200;
+        const xs = neighbourNodes.map((n) => n.x);
+        const ys = neighbourNodes.map((n) => n.y);
+        const minX = Math.min(...xs) - padding;
+        const minY = Math.min(...ys) - padding;
+        const maxX = Math.max(...xs) + padding;
+        const maxY = Math.max(...ys) + padding;
+        const dx = maxX - minX;
+        const dy = maxY - minY;
+        const cx = (minX + maxX) / 2;
+        const cy = (minY + maxY) / 2;
+        const scale = Math.min(dimensions.width / dx, dimensions.height / dy, 3);
+        const tx = dimensions.width / 2 - cx * scale;
+        const ty = dimensions.height / 2 - cy * scale;
+        const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
+
+        svg.transition()
+          .duration(500)
+          .ease(d3.easeCubicInOut)
+          .call(zoom.transform, target);
+      }
+    } else if (selectionMode === 'none' && preZoomTransformRef.current) {
+      // Deselect — zoom back to fit entire graph
       preZoomTransformRef.current = null;
+
+      const padding = 80;
+      const xs = simNodes.map((n) => n.x);
+      const ys = simNodes.map((n) => n.y);
+      const boundsMinX = Math.min(...xs) - padding;
+      const boundsMinY = Math.min(...ys) - padding;
+      const boundsMaxX = Math.max(...xs) + padding;
+      const boundsMaxY = Math.max(...ys) + padding;
+      const boundsW = boundsMaxX - boundsMinX;
+      const boundsH = boundsMaxY - boundsMinY;
+      const scale = Math.min(dimensions.width / boundsW, dimensions.height / boundsH, 2);
+      const tx = (dimensions.width - boundsW * scale) / 2 - boundsMinX * scale;
+      const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
+      const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
+
       svg.transition()
-        .duration(400)
+        .duration(500)
         .ease(d3.easeCubicInOut)
-        .call(zoom.transform, prev);
+        .call(zoom.transform, fitTransform);
     }
-  }, [selectionMode, selectedNodeId, secondSelectedNodeId, dimensions.width, dimensions.height]);
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, connectedIds, simNodes, dimensions.width, dimensions.height]);
 
   return (
     <div
