@@ -64,6 +64,7 @@ export default function OccupationGraph({
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null);
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
+  const [pairLabelPositions, setPairLabelPositions] = useState<{ a: { x: number; y: number; label: string; aiExposure: number }; b: { x: number; y: number; label: string; aiExposure: number } } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
   const selectionMode = !selectedNodeId
     ? 'none'
@@ -427,12 +428,26 @@ export default function OccupationGraph({
     drawEdges();
   }, [drawEdges]);
 
-  // Clear badge position when leaving pair mode
+  // Update badge + label positions when entering/leaving pair mode
   useEffect(() => {
-    if (selectionMode !== 'pair') {
+    if (selectionMode === 'pair' && selectedNodeId && secondSelectedNodeId) {
+      const nodeA = nodeById.current.get(selectedNodeId);
+      const nodeB = nodeById.current.get(secondSelectedNodeId);
+      if (nodeA && nodeB) {
+        const mx = (nodeA.x + nodeB.x) / 2;
+        const my = (nodeA.y + nodeB.y) / 2;
+        const t = transformRef.current;
+        setBadgePos({ x: t.applyX(mx), y: t.applyY(my) });
+        setPairLabelPositions({
+          a: { x: t.applyX(nodeA.x), y: t.applyY(nodeA.y), label: nodeA.label, aiExposure: nodeA.aiExposure },
+          b: { x: t.applyX(nodeB.x), y: t.applyY(nodeB.y), label: nodeB.label, aiExposure: nodeB.aiExposure },
+        });
+      }
+    } else {
       setBadgePos(null);
+      setPairLabelPositions(null);
     }
-  }, [selectionMode]);
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
 
   // Reset edge tooltip on selection change
   useEffect(() => {
@@ -515,6 +530,10 @@ export default function OccupationGraph({
             const mx = (nodeA.x + nodeB.x) / 2;
             const my = (nodeA.y + nodeB.y) / 2;
             setBadgePos({ x: event.transform.applyX(mx), y: event.transform.applyY(my) });
+            setPairLabelPositions({
+              a: { x: event.transform.applyX(nodeA.x), y: event.transform.applyY(nodeA.y), label: nodeA.label, aiExposure: nodeA.aiExposure },
+              b: { x: event.transform.applyX(nodeB.x), y: event.transform.applyY(nodeB.y), label: nodeB.label, aiExposure: nodeB.aiExposure },
+            });
           }
         }
       });
@@ -536,38 +555,7 @@ export default function OccupationGraph({
     const svg = d3.select(svgRef.current);
     const zoom = zoomRef.current;
 
-    if (selectionMode === 'pair' && selectedNodeId && secondSelectedNodeId) {
-      const nodeA = nodeById.current.get(selectedNodeId);
-      const nodeB = nodeById.current.get(secondSelectedNodeId);
-      if (!nodeA || !nodeB) return;
-
-      // Save current transform for restoring later
-      preZoomTransformRef.current = transformRef.current;
-
-      const padding = 120;
-      const ax = nodeA.x;
-      const ay = nodeA.y;
-      const bx = nodeB.x;
-      const by = nodeB.y;
-
-      const cx = (ax + bx) / 2;
-      const cy = (ay + by) / 2;
-      const dx = Math.abs(bx - ax) + padding * 2;
-      const dy = Math.abs(by - ay) + padding * 2;
-      const scale = Math.min(
-        dimensions.width / dx,
-        dimensions.height / dy,
-        2,
-      );
-      const tx = dimensions.width / 2 - cx * scale;
-      const ty = dimensions.height / 2 - cy * scale;
-      const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
-
-      svg.transition()
-        .duration(500)
-        .ease(d3.easeCubicInOut)
-        .call(zoom.transform, target);
-    } else if (selectionMode === 'single' && selectedNodeId && connectedIds) {
+    if (selectionMode === 'single' && selectedNodeId && connectedIds) {
       // Save current transform for restoring later
       if (!preZoomTransformRef.current) {
         preZoomTransformRef.current = transformRef.current;
@@ -757,6 +745,40 @@ export default function OccupationGraph({
           </div>
         </div>
       )}
+
+      {/* Pair mode node labels — same as hover tooltip */}
+      {pairLabelPositions && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => (
+        <div
+          key={i}
+          className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
+          style={{
+            left: pos.x + 14,
+            top: pos.y - 10,
+            transform:
+              pos.x > (dimensions.width ?? 0) - 240
+                ? 'translateX(-110%)'
+                : undefined,
+          }}
+        >
+          <p className="font-semibold leading-tight">{pos.label}</p>
+          <div className="mt-2">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-muted-foreground text-[11px]">
+                AI Exposure
+              </span>
+              <span className="font-medium text-[11px]">
+                {(pos.aiExposure * 100).toFixed(1)}%
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full rounded-full bg-foreground"
+                style={{ width: `${pos.aiExposure * 100}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      ))}
 
       {/* Edge skills badge + tooltip */}
       {badgePos && pairSkillsComparison && (

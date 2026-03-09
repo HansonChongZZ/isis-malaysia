@@ -113,11 +113,18 @@ export default function HomePage() {
 
   const handleNodeSelect = (id: string | null) => {
     if (id === null) {
-      // Click background or deselect
-      setSelectedNodeId(null)
-      setSecondSelectedNodeId(null)
-      setPanelNodeId(null)
-      setIsPanelOpen(false)
+      if (secondSelectedNodeId) {
+        // Pair mode → step back to single mode (show first node + neighbourhood)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+      } else {
+        // Single mode (or none) → clear everything
+        setSelectedNodeId(null)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+      }
       return
     }
 
@@ -161,14 +168,19 @@ export default function HomePage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && !isPanelOpen) {
-        setSelectedNodeId(null)
-        setSecondSelectedNodeId(null)
-        setPanelNodeId(null)
+        if (secondSelectedNodeId) {
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+        } else {
+          setSelectedNodeId(null)
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+        }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isPanelOpen])
+  }, [isPanelOpen, secondSelectedNodeId])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
     setSizeMetric(metric)
