@@ -74,7 +74,9 @@ export default function OccupationGraph({
   const nodeById = useRef<Map<string, GraphNode>>(new Map());
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
-  const [mascoColors, setMascoColors] = useState<Record<number, string>>({});
+  const nodeColorRef = useRef('#034e37');
+  const isolateFillRef = useRef('#d1d5db');
+  const isolateStrokeRef = useRef('#000000');
 
   const selectionModeRef = useRef(selectionMode);
   const selectedNodeIdRef = useRef(selectedNodeId);
@@ -95,20 +97,37 @@ export default function OccupationGraph({
     nodeById.current = new Map(simNodes.map((n) => [n.id, n]));
   }, [simNodes]);
 
-  // Read MASCO + edge colors from CSS vars, re-read on theme change
+  // Compute isolate set (nodes with no edges)
+  const isolateIds = useMemo<Set<string>>(() => {
+    const connected = new Set<string>();
+    for (const e of edges) {
+      const src = typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
+      const tgt = typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
+      connected.add(src);
+      connected.add(tgt);
+    }
+    const isolates = new Set<string>();
+    for (const n of nodes) {
+      if (!connected.has(n.id)) isolates.add(n.id);
+    }
+    return isolates;
+  }, [nodes, edges]);
+
+  // Read node + edge colors from CSS vars, re-read on theme change
   const readThemeColors = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
     const style = getComputedStyle(el);
-    const colors: Record<number, string> = {};
-    for (let i = 1; i <= 9; i++) {
-      colors[i] = style.getPropertyValue(`--masco-${i}`).trim() || '#888';
-    }
     edgeColorRef.current =
       style.getPropertyValue('--muted-foreground').trim() || '#888';
     foregroundColorRef.current =
       style.getPropertyValue('--foreground').trim() || '#000';
-    setMascoColors(colors);
+    nodeColorRef.current =
+      style.getPropertyValue('--node-color').trim() || '#034e37';
+    isolateFillRef.current =
+      style.getPropertyValue('--node-isolate-fill').trim() || '#d1d5db';
+    isolateStrokeRef.current =
+      style.getPropertyValue('--node-isolate-stroke').trim() || '#000';
     drawEdgesRef.current();
   }, []);
 
@@ -231,8 +250,8 @@ export default function OccupationGraph({
       onlyB,
       labelA: detailA.occupation,
       labelB: detailB.occupation,
-      colorA: mascoColors[nodeA?.group ?? -1] || '#888',
-      colorB: mascoColors[nodeB?.group ?? -1] || '#888',
+      colorA: nodeColorRef.current,
+      colorB: nodeColorRef.current,
       totalUnique: shared.length + onlyA.length + onlyB.length,
     };
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, occupations]);
@@ -653,8 +672,9 @@ export default function OccupationGraph({
           <g ref={gRef}>
             <g className="nodes">
               {simNodes.map((node) => {
+                const isIsolate = isolateIds.has(node.id);
                 const r = getNodeRadius(node);
-                const color = mascoColors[node.group] || '#888';
+                const color = isIsolate ? isolateFillRef.current : nodeColorRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
                 const isHovered = node.id === hoveredNodeId;
@@ -670,28 +690,34 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isSelected || isHovered || isHoveredNeighbor
-                        ? 'var(--foreground)'
-                        : 'var(--background)'
+                      isIsolate
+                        ? isolateStrokeRef.current
+                        : isSelected || isHovered || isHoveredNeighbor
+                          ? 'var(--foreground)'
+                          : 'var(--background)'
                     }
                     strokeWidth={
-                      isSelected || isHovered
-                        ? 2.5
-                        : isHoveredNeighbor
-                          ? 2
-                          : 0.8
+                      isIsolate
+                        ? 0.8
+                        : isSelected || isHovered
+                          ? 2.5
+                          : isHoveredNeighbor
+                            ? 2
+                            : 0.8
                     }
                     strokeOpacity={opacity}
                     style={{
-                      cursor: 'pointer',
+                      cursor: isIsolate ? 'default' : 'pointer',
                       transition:
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease',
                     }}
                     onClick={(e) => {
+                      if (isIsolate) return;
                       e.stopPropagation();
                       onNodeSelect(node.id);
                     }}
                     onMouseEnter={() => {
+                      if (isIsolate) return;
                       if (selectionMode === 'pair') return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
@@ -702,6 +728,7 @@ export default function OccupationGraph({
                       });
                     }}
                     onMouseLeave={() => {
+                      if (isIsolate) return;
                       setHoveredNodeId(null);
                       setTooltip(null);
                     }}
@@ -754,7 +781,7 @@ export default function OccupationGraph({
           style={{
             left: pos.x + 14,
             top: pos.y - 10,
-            borderColor: mascoColors[pos.group] || '#888',
+            borderColor: nodeColorRef.current,
             transform: pos.x > (dimensions.width ?? 0) - 240
               ? 'translateX(-110%)'
               : undefined,

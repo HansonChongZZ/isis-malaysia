@@ -6,7 +6,6 @@ import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
 import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
-import GraphLegend from "@/components/graph/GraphLegend"
 import OccupationPanel from "@/components/panel/OccupationPanel"
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
@@ -280,9 +279,6 @@ export default function HomePage() {
           </div>
         )}
       </div>
-
-      {/* Legend */}
-      <GraphLegend activeGroup={filterGroup} onGroupClick={setFilterGroup} nodeSizeMetric={nodeSizeMetric} />
 
       {/* Side panel */}
       <OccupationPanel
