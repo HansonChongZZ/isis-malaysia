@@ -33,3 +33,16 @@ export type GraphEdge = z.infer<typeof EdgeSchema>
 export type OccupationDetail = z.infer<typeof OccupationDetailSchema>
 
 export type NodeSizeMetric = 'aiExposure' | 'wage' | 'workers'
+
+export interface TunerSizingParams {
+  base: number;
+  scale: number;
+  exponent: number;
+}
+
+export interface TunerLayoutParams {
+  collidePadding: number;
+  charge: number;
+  linkDistanceBase: number;
+  linkDistanceScale: number;
+}

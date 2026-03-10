@@ -9,9 +9,10 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import * as d3 from 'd3';
-import type { GraphNode, GraphEdge, NodeSizeMetric, OccupationDetail } from '@/lib/types';
-import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
+import type { GraphNode, GraphEdge, NodeSizeMetric, OccupationDetail, TunerSizingParams } from '@/lib/types';
+import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_EXPONENT } from '@/lib/constants';
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
+import TunerPanel from './TunerPanel';
 
 interface TooltipState {
   x: number;
@@ -66,6 +67,8 @@ export default function OccupationGraph({
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
   const [pairLabelPositions, setPairLabelPositions] = useState<{ a: { x: number; y: number; label: string; aiExposure: number; group: number }; b: { x: number; y: number; label: string; aiExposure: number; group: number } } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
+  const [tunerSizing, setTunerSizing] = useState<TunerSizingParams | null>(null);
+  const [tunerPositions, setTunerPositions] = useState<Map<string, { x: number; y: number }> | null>(null);
   const selectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
@@ -74,7 +77,11 @@ export default function OccupationGraph({
   const nodeById = useRef<Map<string, GraphNode>>(new Map());
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
-  const [mascoColors, setMascoColors] = useState<Record<number, string>>({});
+  const nodeColorRef = useRef('#034e37');
+  const isolateFillRef = useRef('#d1d5db');
+  const isolateStrokeRef = useRef('#000000');
+  const canvasGridRef = useRef('#C8E8D8');
+  const graphCenterRef = useRef({ cx: 0, cy: 0, radius: 1 });
 
   const selectionModeRef = useRef(selectionMode);
   const selectedNodeIdRef = useRef(selectedNodeId);
@@ -93,22 +100,79 @@ export default function OccupationGraph({
 
   useEffect(() => {
     nodeById.current = new Map(simNodes.map((n) => [n.id, n]));
+    // Compute graph center and radius for grid fade
+    if (simNodes.length) {
+      const xs = simNodes.map((n) => n.x);
+      const ys = simNodes.map((n) => n.y);
+      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+      let maxDist = 0;
+      for (const n of simNodes) {
+        const d = Math.hypot(n.x - cx, n.y - cy);
+        if (d > maxDist) maxDist = d;
+      }
+      graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
+    }
   }, [simNodes]);
 
-  // Read MASCO + edge colors from CSS vars, re-read on theme change
+  // Apply tuner position overrides
+  useEffect(() => {
+    if (!tunerPositions) return;
+    for (const node of simNodes) {
+      const pos = tunerPositions.get(node.id);
+      if (pos) {
+        node.x = pos.x;
+        node.y = pos.y;
+      }
+    }
+    if (simNodes.length) {
+      const xs = simNodes.map((n) => n.x);
+      const ys = simNodes.map((n) => n.y);
+      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+      let maxDist = 0;
+      for (const n of simNodes) {
+        const d = Math.hypot(n.x - cx, n.y - cy);
+        if (d > maxDist) maxDist = d;
+      }
+      graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
+    }
+    drawEdgesRef.current();
+  }, [tunerPositions, simNodes]);
+
+  // Compute isolate set (nodes with no edges)
+  const isolateIds = useMemo<Set<string>>(() => {
+    const connected = new Set<string>();
+    for (const e of edges) {
+      const src = typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
+      const tgt = typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
+      connected.add(src);
+      connected.add(tgt);
+    }
+    const isolates = new Set<string>();
+    for (const n of nodes) {
+      if (!connected.has(n.id)) isolates.add(n.id);
+    }
+    return isolates;
+  }, [nodes, edges]);
+
+  // Read node + edge colors from CSS vars, re-read on theme change
   const readThemeColors = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
     const style = getComputedStyle(el);
-    const colors: Record<number, string> = {};
-    for (let i = 1; i <= 9; i++) {
-      colors[i] = style.getPropertyValue(`--masco-${i}`).trim() || '#888';
-    }
     edgeColorRef.current =
       style.getPropertyValue('--muted-foreground').trim() || '#888';
     foregroundColorRef.current =
       style.getPropertyValue('--foreground').trim() || '#000';
-    setMascoColors(colors);
+    nodeColorRef.current =
+      style.getPropertyValue('--node-color').trim() || '#034e37';
+    isolateFillRef.current =
+      style.getPropertyValue('--node-isolate-fill').trim() || '#d1d5db';
+    isolateStrokeRef.current =
+      style.getPropertyValue('--node-isolate-stroke').trim() || '#000';
+    canvasGridRef.current =
+      style.getPropertyValue('--canvas-grid').trim() || '#C8E8D8';
     drawEdgesRef.current();
   }, []);
 
@@ -231,8 +295,8 @@ export default function OccupationGraph({
       onlyB,
       labelA: detailA.occupation,
       labelB: detailB.occupation,
-      colorA: mascoColors[nodeA?.group ?? -1] || '#888',
-      colorB: mascoColors[nodeB?.group ?? -1] || '#888',
+      colorA: nodeColorRef.current,
+      colorB: nodeColorRef.current,
       totalUnique: shared.length + onlyA.length + onlyB.length,
     };
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, occupations]);
@@ -268,18 +332,22 @@ export default function OccupationGraph({
 
   const getNodeRadius = useCallback(
     (node: GraphNode) => {
+      const base = tunerSizing?.base ?? NODE_RADIUS_BASE;
+      const scale = tunerSizing?.scale ?? NODE_RADIUS_SCALE;
+      const exp = tunerSizing?.exponent ?? NODE_RADIUS_EXPONENT;
+
       if (nodeSizeMetric === 'wage') {
-        if (node.wage === null || maxWage === 0) return NODE_RADIUS_BASE;
-        return NODE_RADIUS_BASE + (node.wage / maxWage) * NODE_RADIUS_SCALE;
+        if (node.wage === null || maxWage === 0) return base;
+        return base + Math.pow(node.wage / maxWage, exp) * scale;
       }
       if (nodeSizeMetric === 'workers') {
-        if (node.workers === null || maxWorkers === 0) return NODE_RADIUS_BASE;
+        if (node.workers === null || maxWorkers === 0) return base;
         const maxLog = Math.log(maxWorkers);
-        return NODE_RADIUS_BASE + (Math.log(node.workers) / maxLog) * NODE_RADIUS_SCALE;
+        return base + Math.pow(Math.log(node.workers) / maxLog, exp) * scale;
       }
-      return NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
+      return base + Math.pow(node.aiExposure, exp) * scale;
     },
-    [nodeSizeMetric, maxWage, maxWorkers],
+    [nodeSizeMetric, maxWage, maxWorkers, tunerSizing],
   );
 
   const getNodeOpacity = useCallback(
@@ -345,6 +413,41 @@ export default function OccupationGraph({
 
     ctx.save();
     ctx.setTransform(k * dpr, 0, 0, k * dpr, x * dpr, y * dpr);
+
+    // Draw background grid
+    const gridSize = 80;
+    const vl = (-x / k);
+    const vt = (-y / k);
+    const vr = vl + canvas.width / (k * dpr);
+    const vb = vt + canvas.height / (k * dpr);
+    const startX = Math.floor(vl / gridSize) * gridSize;
+    const startY = Math.floor(vt / gridSize) * gridSize;
+
+    ctx.strokeStyle = canvasGridRef.current;
+    ctx.lineWidth = 1 / k;
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    for (let gx = startX; gx <= vr; gx += gridSize) {
+      ctx.moveTo(gx, vt);
+      ctx.lineTo(gx, vb);
+    }
+    for (let gy = startY; gy <= vb; gy += gridSize) {
+      ctx.moveTo(vl, gy);
+      ctx.lineTo(vr, gy);
+    }
+    ctx.stroke();
+
+    // Apply circular radial fade to the grid
+    const { cx: gcx, cy: gcy, radius: gRadius } = graphCenterRef.current;
+    const fadeRadius = gRadius * 1.2;
+    const grad = ctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, fadeRadius);
+    grad.addColorStop(0, 'rgba(0,0,0,1)');
+    grad.addColorStop(0.5, 'rgba(0,0,0,1)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.fillStyle = grad;
+    ctx.fillRect(vl, vt, vr - vl, vb - vt);
+    ctx.globalCompositeOperation = 'source-over';
 
     // Draw selection edges (existing behavior)
     if (visibleEdges.length > 0) {
@@ -478,7 +581,7 @@ export default function OccupationGraph({
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
 
-    const padding = 80;
+    const padding = 120;
     const xs = simNodes.map((n) => n.x);
     const ys = simNodes.map((n) => n.y);
     const boundsMinX = Math.min(...xs) - padding;
@@ -494,7 +597,7 @@ export default function OccupationGraph({
     const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
     const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-    const minScale = 0.2;
+    const minScale = 0.05;
     const maxScale = 3;
 
     // Expand translate extent for panning
@@ -582,8 +685,8 @@ export default function OccupationGraph({
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
       } else {
-        // Zoom to fit selected node + neighbours with 200px padding
-        const padding = 200;
+        // Zoom to fit selected node + neighbours with 250px padding
+        const padding = 250;
         const xs = neighbourNodes.map((n) => n.x);
         const ys = neighbourNodes.map((n) => n.y);
         const minX = Math.min(...xs) - padding;
@@ -608,7 +711,7 @@ export default function OccupationGraph({
       // Deselect — zoom back to fit entire graph
       preZoomTransformRef.current = null;
 
-      const padding = 80;
+      const padding = 120;
       const xs = simNodes.map((n) => n.x);
       const ys = simNodes.map((n) => n.y);
       const boundsMinX = Math.min(...xs) - padding;
@@ -653,8 +756,9 @@ export default function OccupationGraph({
           <g ref={gRef}>
             <g className="nodes">
               {simNodes.map((node) => {
+                const isIsolate = isolateIds.has(node.id);
                 const r = getNodeRadius(node);
-                const color = mascoColors[node.group] || '#888';
+                const color = isIsolate ? isolateFillRef.current : nodeColorRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
                 const isHovered = node.id === hoveredNodeId;
@@ -670,28 +774,34 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isSelected || isHovered || isHoveredNeighbor
-                        ? 'var(--foreground)'
-                        : 'var(--background)'
+                      isIsolate
+                        ? isolateStrokeRef.current
+                        : isSelected || isHovered || isHoveredNeighbor
+                          ? 'var(--foreground)'
+                          : 'var(--background)'
                     }
                     strokeWidth={
-                      isSelected || isHovered
-                        ? 2.5
-                        : isHoveredNeighbor
-                          ? 2
-                          : 0.8
+                      isIsolate
+                        ? 0.8
+                        : isSelected || isHovered
+                          ? 2.5
+                          : isHoveredNeighbor
+                            ? 2
+                            : 0.8
                     }
                     strokeOpacity={opacity}
                     style={{
-                      cursor: 'pointer',
+                      cursor: isIsolate ? 'default' : 'pointer',
                       transition:
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease',
                     }}
                     onClick={(e) => {
+                      if (isIsolate) return;
                       e.stopPropagation();
                       onNodeSelect(node.id);
                     }}
                     onMouseEnter={() => {
+                      if (isIsolate) return;
                       if (selectionMode === 'pair') return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
@@ -702,6 +812,7 @@ export default function OccupationGraph({
                       });
                     }}
                     onMouseLeave={() => {
+                      if (isIsolate) return;
                       setHoveredNodeId(null);
                       setTooltip(null);
                     }}
@@ -714,11 +825,13 @@ export default function OccupationGraph({
       )}
 
       {/* Hover tooltip */}
-      {tooltip && (
+      {tooltip && (() => {
+        const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
+        return (
         <div
           className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
           style={{
-            left: tooltip.x + 14,
+            left: tooltip.x + tooltipR + 6,
             top: tooltip.y - 10,
             transform:
               tooltip.x > (dimensions.width ?? 0) - 240
@@ -744,17 +857,20 @@ export default function OccupationGraph({
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* Pair mode node labels — float independently when tooltip closed */}
-      {pairLabelPositions && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => (
+      {pairLabelPositions && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => {
+        const pairR = (NODE_RADIUS_BASE + Math.pow(pos.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * transformRef.current.k;
+        return (
         <div
           key={i}
           className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border"
           style={{
-            left: pos.x + 14,
+            left: pos.x + pairR + 6,
             top: pos.y - 10,
-            borderColor: mascoColors[pos.group] || '#888',
+            borderColor: nodeColorRef.current,
             transform: pos.x > (dimensions.width ?? 0) - 240
               ? 'translateX(-110%)'
               : undefined,
@@ -771,7 +887,8 @@ export default function OccupationGraph({
             </div>
           </div>
         </div>
-      ))}
+        );
+      })}
 
       {/* Edge skills badge (always visible in pair mode) */}
       {badgePos && pairSkillsComparison && (
@@ -831,6 +948,13 @@ export default function OccupationGraph({
           document.body,
         );
       })()}
+
+      <TunerPanel
+        nodes={simNodes}
+        edges={edges}
+        onSizingChange={setTunerSizing}
+        onPositionsChange={setTunerPositions}
+      />
     </div>
   );
 }

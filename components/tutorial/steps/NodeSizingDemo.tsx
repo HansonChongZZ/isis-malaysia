@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { SAMPLE_NODES } from '../tutorialSteps';
-import { MASCO_GROUPS, NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
+import { MASCO_GROUPS, NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_EXPONENT } from '@/lib/constants';
 
 const WIDTH = 340;
 const HEIGHT = 220;
@@ -14,7 +14,7 @@ const SCALE = 0.55;
 const UNIFORM_R = 10;
 
 function scaledRadius(value: number) {
-  return (NODE_RADIUS_BASE + value * NODE_RADIUS_SCALE) * SCALE;
+  return (NODE_RADIUS_BASE + Math.pow(value, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * SCALE;
 }
 
 // Sort by AI exposure so the row goes small → large
