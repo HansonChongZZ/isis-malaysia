@@ -29,17 +29,18 @@ const edgesPath = resolve(__dirname, '../public/data/edges.json');
 
 // Constants matching lib/constants.ts
 const NODE_RADIUS_BASE = 9;
-const NODE_RADIUS_SCALE = 27;
-const NODE_RADIUS_COLLIDE_PADDING = 4.5;
+const NODE_RADIUS_SCALE = 100;
+const NODE_RADIUS_EXPONENT = 1;
+const NODE_RADIUS_COLLIDE_PADDING = 8;
 
-// Reference viewport — matches typical browser dimensions
-const VIEWPORT_W = 1400;
-const VIEWPORT_H = 900;
+// Reference viewport — scaled up to give larger nodes room to spread
+const VIEWPORT_W = 5000;
+const VIEWPORT_H = 3200;
 
 // Tuning params (matches the runtime defaults)
 const INTRA_STRENGTH = 0.8;
 const INTER_STRENGTH = 0.001;
-const CHARGE = -50;
+const CHARGE = -60;
 const ITERATIONS = 300;
 
 // Load data
@@ -49,13 +50,13 @@ console.log(`Loaded ${nodes.length} nodes, ${edges.length} edges`);
 
 const groupOf = new Map(nodes.map((n) => [n.id, n.group]));
 
-// Scale existing 0-1 positions to viewport (identical to runtime behavior)
+// Use existing pixel positions as starting points
 const simNodes = nodes.map((n) => ({
   id: n.id,
   aiExposure: n.aiExposure,
   group: n.group,
-  x: n.x * VIEWPORT_W,
-  y: n.y * VIEWPORT_H,
+  x: n.x,
+  y: n.y,
   vx: 0,
   vy: 0,
 }));
@@ -68,11 +69,14 @@ const simEdges = edges.map((e) => ({
 }));
 
 const sim = forceSimulation(simNodes)
+  .alpha(0.3)
+  .alphaDecay(0.01)
+  .velocityDecay(0.6)
   .force(
     'link',
     forceLink(simEdges)
       .id((d) => d.id)
-      .distance((d) => 50 + (7 - d.weight) * 15)
+      .distance((d) => 55 + (7 - d.weight) * 16)
       .strength((d) => {
         const srcId = typeof d.source === 'string' ? d.source : d.source.id;
         const tgtId = typeof d.target === 'string' ? d.target : d.target.id;
@@ -80,13 +84,16 @@ const sim = forceSimulation(simNodes)
       }),
   )
   .force('charge', forceManyBody().strength(CHARGE))
-  .force('center', forceCenter(VIEWPORT_W / 2, VIEWPORT_H / 2))
+  .force('center', forceCenter(
+    simNodes.reduce((s, n) => s + n.x, 0) / simNodes.length,
+    simNodes.reduce((s, n) => s + n.y, 0) / simNodes.length,
+  ))
   .force(
     'collide',
     forceCollide((d) => {
-      const r = NODE_RADIUS_BASE + d.aiExposure * NODE_RADIUS_SCALE;
+      const r = NODE_RADIUS_BASE + Math.pow(d.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE;
       return r + NODE_RADIUS_COLLIDE_PADDING;
-    }),
+    }).strength(0.7),
   );
 
 sim.stop();

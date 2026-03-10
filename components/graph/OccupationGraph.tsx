@@ -9,9 +9,10 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import * as d3 from 'd3';
-import type { GraphNode, GraphEdge, NodeSizeMetric, OccupationDetail } from '@/lib/types';
-import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE } from '@/lib/constants';
+import type { GraphNode, GraphEdge, NodeSizeMetric, OccupationDetail, TunerSizingParams } from '@/lib/types';
+import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_EXPONENT } from '@/lib/constants';
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
+import TunerPanel from './TunerPanel';
 
 interface TooltipState {
   x: number;
@@ -66,6 +67,8 @@ export default function OccupationGraph({
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
   const [pairLabelPositions, setPairLabelPositions] = useState<{ a: { x: number; y: number; label: string; aiExposure: number; group: number }; b: { x: number; y: number; label: string; aiExposure: number; group: number } } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
+  const [tunerSizing, setTunerSizing] = useState<TunerSizingParams | null>(null);
+  const [tunerPositions, setTunerPositions] = useState<Map<string, { x: number; y: number }> | null>(null);
   const selectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
@@ -111,6 +114,31 @@ export default function OccupationGraph({
       graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
     }
   }, [simNodes]);
+
+  // Apply tuner position overrides
+  useEffect(() => {
+    if (!tunerPositions) return;
+    for (const node of simNodes) {
+      const pos = tunerPositions.get(node.id);
+      if (pos) {
+        node.x = pos.x;
+        node.y = pos.y;
+      }
+    }
+    if (simNodes.length) {
+      const xs = simNodes.map((n) => n.x);
+      const ys = simNodes.map((n) => n.y);
+      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+      let maxDist = 0;
+      for (const n of simNodes) {
+        const d = Math.hypot(n.x - cx, n.y - cy);
+        if (d > maxDist) maxDist = d;
+      }
+      graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
+    }
+    drawEdgesRef.current();
+  }, [tunerPositions, simNodes]);
 
   // Compute isolate set (nodes with no edges)
   const isolateIds = useMemo<Set<string>>(() => {
@@ -304,18 +332,22 @@ export default function OccupationGraph({
 
   const getNodeRadius = useCallback(
     (node: GraphNode) => {
+      const base = tunerSizing?.base ?? NODE_RADIUS_BASE;
+      const scale = tunerSizing?.scale ?? NODE_RADIUS_SCALE;
+      const exp = tunerSizing?.exponent ?? NODE_RADIUS_EXPONENT;
+
       if (nodeSizeMetric === 'wage') {
-        if (node.wage === null || maxWage === 0) return NODE_RADIUS_BASE;
-        return NODE_RADIUS_BASE + (node.wage / maxWage) * NODE_RADIUS_SCALE;
+        if (node.wage === null || maxWage === 0) return base;
+        return base + Math.pow(node.wage / maxWage, exp) * scale;
       }
       if (nodeSizeMetric === 'workers') {
-        if (node.workers === null || maxWorkers === 0) return NODE_RADIUS_BASE;
+        if (node.workers === null || maxWorkers === 0) return base;
         const maxLog = Math.log(maxWorkers);
-        return NODE_RADIUS_BASE + (Math.log(node.workers) / maxLog) * NODE_RADIUS_SCALE;
+        return base + Math.pow(Math.log(node.workers) / maxLog, exp) * scale;
       }
-      return NODE_RADIUS_BASE + node.aiExposure * NODE_RADIUS_SCALE;
+      return base + Math.pow(node.aiExposure, exp) * scale;
     },
-    [nodeSizeMetric, maxWage, maxWorkers],
+    [nodeSizeMetric, maxWage, maxWorkers, tunerSizing],
   );
 
   const getNodeOpacity = useCallback(
@@ -549,7 +581,7 @@ export default function OccupationGraph({
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
 
-    const padding = 80;
+    const padding = 120;
     const xs = simNodes.map((n) => n.x);
     const ys = simNodes.map((n) => n.y);
     const boundsMinX = Math.min(...xs) - padding;
@@ -565,7 +597,7 @@ export default function OccupationGraph({
     const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
     const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-    const minScale = 0.2;
+    const minScale = 0.05;
     const maxScale = 3;
 
     // Expand translate extent for panning
@@ -653,8 +685,8 @@ export default function OccupationGraph({
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
       } else {
-        // Zoom to fit selected node + neighbours with 200px padding
-        const padding = 200;
+        // Zoom to fit selected node + neighbours with 250px padding
+        const padding = 250;
         const xs = neighbourNodes.map((n) => n.x);
         const ys = neighbourNodes.map((n) => n.y);
         const minX = Math.min(...xs) - padding;
@@ -679,7 +711,7 @@ export default function OccupationGraph({
       // Deselect — zoom back to fit entire graph
       preZoomTransformRef.current = null;
 
-      const padding = 80;
+      const padding = 120;
       const xs = simNodes.map((n) => n.x);
       const ys = simNodes.map((n) => n.y);
       const boundsMinX = Math.min(...xs) - padding;
@@ -793,11 +825,13 @@ export default function OccupationGraph({
       )}
 
       {/* Hover tooltip */}
-      {tooltip && (
+      {tooltip && (() => {
+        const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
+        return (
         <div
           className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
           style={{
-            left: tooltip.x + 14,
+            left: tooltip.x + tooltipR + 6,
             top: tooltip.y - 10,
             transform:
               tooltip.x > (dimensions.width ?? 0) - 240
@@ -823,15 +857,18 @@ export default function OccupationGraph({
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* Pair mode node labels — float independently when tooltip closed */}
-      {pairLabelPositions && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => (
+      {pairLabelPositions && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => {
+        const pairR = (NODE_RADIUS_BASE + Math.pow(pos.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * transformRef.current.k;
+        return (
         <div
           key={i}
           className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border"
           style={{
-            left: pos.x + 14,
+            left: pos.x + pairR + 6,
             top: pos.y - 10,
             borderColor: nodeColorRef.current,
             transform: pos.x > (dimensions.width ?? 0) - 240
@@ -850,7 +887,8 @@ export default function OccupationGraph({
             </div>
           </div>
         </div>
-      ))}
+        );
+      })}
 
       {/* Edge skills badge (always visible in pair mode) */}
       {badgePos && pairSkillsComparison && (
@@ -910,6 +948,13 @@ export default function OccupationGraph({
           document.body,
         );
       })()}
+
+      <TunerPanel
+        nodes={simNodes}
+        edges={edges}
+        onSizingChange={setTunerSizing}
+        onPositionsChange={setTunerPositions}
+      />
     </div>
   );
 }
