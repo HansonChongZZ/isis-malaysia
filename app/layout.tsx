@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} font-sans antialiased bg-background text-foreground flex flex-col h-screen overflow-hidden`}>
         <ThemeProvider>
           {/* Header */}
-          <header className="flex items-center gap-3 px-3 py-2 sm:px-4 sm:py-3 bg-card border-b border-border shrink-0">
+          <header className="flex items-center gap-3 px-3 py-2 sm:px-4 sm:py-3 bg-card/60 dark:bg-card/80 backdrop-blur-lg border-b border-border shrink-0">
             {/* Logo placeholder */}
             <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shrink-0">
               IS

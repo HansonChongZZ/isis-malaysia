@@ -58,9 +58,9 @@ export default function OccupationSearch({
             placeholder="Search any occupation in Malaysia…"
             showTrigger={false}
             showClear={!!selectedOccupation}
-            className="w-full h-12 text-base rounded-xl bg-card/90 backdrop-blur-md border-transparent [&_input]:pl-10"
+            className="w-full h-12 text-base rounded-xl bg-card/50 dark:bg-card/90 backdrop-blur-xl border-transparent [&_input]:pl-10"
           />
-          <ComboboxContent anchor={heroRef} className="rounded-xl">
+          <ComboboxContent anchor={heroRef} className="rounded-xl bg-card/50 dark:bg-card/90 backdrop-blur-xl">
             <ComboboxEmpty>No occupations found.</ComboboxEmpty>
             <ComboboxList>
               {(occ) => (
