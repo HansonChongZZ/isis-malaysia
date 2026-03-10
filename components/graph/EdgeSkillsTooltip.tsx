@@ -3,6 +3,8 @@ import { Badge } from '@/components/ui/badge';
 interface EdgeSkillsTooltipProps {
   labelA: string;
   labelB: string;
+  colorA?: string;
+  colorB?: string;
   shared: string[];
   onlyA: string[];
   onlyB: string[];
@@ -12,6 +14,8 @@ interface EdgeSkillsTooltipProps {
 export default function EdgeSkillsTooltip({
   labelA,
   labelB,
+  colorA,
+  colorB,
   shared,
   onlyA,
   onlyB,
@@ -22,7 +26,7 @@ export default function EdgeSkillsTooltip({
       {/* Header */}
       <div>
         <p className="font-semibold text-sm leading-tight">
-          {labelA} <span className="text-muted-foreground mx-1">↔</span> {labelB}
+          <span style={{ color: colorA }}>{labelA}</span> <span className="text-muted-foreground mx-1">↔</span> <span style={{ color: colorB }}>{labelB}</span>
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">
           {shared.length} of {totalUnique} skills in common
@@ -55,7 +59,7 @@ export default function EdgeSkillsTooltip({
         <div className="grid grid-cols-2 gap-3">
           {onlyA.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5" title={labelA}>
+              <p className="text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: colorA }} title={labelA}>
                 Only {labelA}
               </p>
               <div className="flex flex-wrap gap-1">
@@ -73,7 +77,7 @@ export default function EdgeSkillsTooltip({
           )}
           {onlyB.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5" title={labelB}>
+              <p className="text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: colorB }} title={labelB}>
                 Only {labelB}
               </p>
               <div className="flex flex-wrap gap-1">

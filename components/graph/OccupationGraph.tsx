@@ -222,12 +222,17 @@ export default function OccupationGraph({
       }
     }
 
+    const nodeA = nodeById.current.get(selectedNodeId);
+    const nodeB = nodeById.current.get(secondSelectedNodeId);
+
     return {
       shared,
       onlyA,
       onlyB,
       labelA: detailA.occupation,
       labelB: detailB.occupation,
+      colorA: mascoColors[nodeA?.group ?? -1] || '#888',
+      colorB: mascoColors[nodeB?.group ?? -1] || '#888',
       totalUnique: shared.length + onlyA.length + onlyB.length,
     };
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, occupations]);
@@ -814,6 +819,8 @@ export default function OccupationGraph({
               <EdgeSkillsTooltip
                 labelA={pairSkillsComparison.labelA}
                 labelB={pairSkillsComparison.labelB}
+                colorA={pairSkillsComparison.colorA}
+                colorB={pairSkillsComparison.colorB}
                 shared={pairSkillsComparison.shared}
                 onlyA={pairSkillsComparison.onlyA}
                 onlyB={pairSkillsComparison.onlyB}
