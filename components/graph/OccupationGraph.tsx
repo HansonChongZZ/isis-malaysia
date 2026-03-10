@@ -64,9 +64,6 @@ export default function OccupationGraph({
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null);
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
-  const stripLeftRef = useRef<HTMLDivElement>(null);
-  const stripRightRef = useRef<HTMLDivElement>(null);
-  const [stripLineEndpoints, setStripLineEndpoints] = useState<{ left: { x: number; y: number }; right: { x: number; y: number } } | null>(null);
   const [pairLabelPositions, setPairLabelPositions] = useState<{ a: { x: number; y: number; label: string; aiExposure: number; group: number }; b: { x: number; y: number; label: string; aiExposure: number; group: number } } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
   const selectionMode = !selectedNodeId
@@ -455,7 +452,6 @@ export default function OccupationGraph({
   // Reset edge tooltip on selection change
   useEffect(() => {
     setShowEdgeTooltip(false);
-    setStripLineEndpoints(null);
   }, [selectedNodeId, secondSelectedNodeId]);
 
   // Resize observer
@@ -746,7 +742,7 @@ export default function OccupationGraph({
       )}
 
       {/* Pair mode node labels — float independently when tooltip closed */}
-      {pairLabelPositions && !showEdgeTooltip && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => (
+      {pairLabelPositions && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => (
         <div
           key={i}
           className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border"
@@ -794,98 +790,37 @@ export default function OccupationGraph({
         </div>
       )}
 
-      {/* Horizontal strip: [Label A] — [Shared Skills] — [Label B] (portaled when tooltip open) */}
-      {showEdgeTooltip && pairLabelPositions && badgePos && pairSkillsComparison && (() => {
+      {/* Shared skills tooltip (portaled when tooltip open) */}
+      {showEdgeTooltip && badgePos && pairSkillsComparison && (() => {
         const rect = containerRef.current?.getBoundingClientRect();
-        const vx = (rect?.left ?? 0) + badgePos.x;
         const vy = (rect?.top ?? 0) + badgePos.y;
         const showAbove = vy > window.innerHeight / 2;
 
-        // Sort labels so left-most node is first in the strip
-        const a = pairLabelPositions.a;
-        const b = pairLabelPositions.b;
-        const [leftNode, rightNode] = a.x <= b.x ? [a, b] : [b, a];
-
-        // Connector line endpoints (viewport coords)
-        const leftNodeVx = (rect?.left ?? 0) + leftNode.x;
-        const leftNodeVy = (rect?.top ?? 0) + leftNode.y;
-        const rightNodeVx = (rect?.left ?? 0) + rightNode.x;
-        const rightNodeVy = (rect?.top ?? 0) + rightNode.y;
-
-        const nodeTooltip = (pos: typeof a, ref: React.RefObject<HTMLDivElement | null>) => (
-          <div ref={ref} className="bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg w-[200px] shrink-0 border" style={{ borderColor: mascoColors[pos.group] || '#888' }}>
-            <p className="font-semibold leading-tight">{pos.label}</p>
-            <div className="mt-2">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-muted-foreground text-[11px]">AI Exposure</span>
-                <span className="font-medium text-[11px]">{(pos.aiExposure * 100).toFixed(1)}%</span>
-              </div>
-              <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-                <div className="h-full rounded-full bg-foreground" style={{ width: `${pos.aiExposure * 100}%` }} />
-              </div>
-            </div>
-          </div>
-        );
-
-        // Measure label positions after render for connector lines
-        const measureLabels = () => {
-          requestAnimationFrame(() => {
-            const leftRect = stripLeftRef.current?.getBoundingClientRect();
-            const rightRect = stripRightRef.current?.getBoundingClientRect();
-            if (leftRect && rightRect) {
-              setStripLineEndpoints({
-                left: { x: leftRect.left + leftRect.width / 2, y: showAbove ? leftRect.bottom : leftRect.top },
-                right: { x: rightRect.left + rightRect.width / 2, y: showAbove ? rightRect.bottom : rightRect.top },
-              });
-            }
-          });
-        };
-
         return createPortal(
-          <>
-            {/* Connector lines from each label to its node */}
-            {stripLineEndpoints && (
-              <svg className="fixed inset-0 z-[60] pointer-events-none" style={{ width: '100%', height: '100%' }}>
-                <line
-                  x1={leftNodeVx} y1={leftNodeVy}
-                  x2={stripLineEndpoints.left.x} y2={stripLineEndpoints.left.y}
-                  stroke={mascoColors[leftNode.group] || '#888'} strokeWidth={1.5} strokeOpacity={0.6} strokeDasharray="3,3"
-                />
-                <line
-                  x1={rightNodeVx} y1={rightNodeVy}
-                  x2={stripLineEndpoints.right.x} y2={stripLineEndpoints.right.y}
-                  stroke={mascoColors[rightNode.group] || '#888'} strokeWidth={1.5} strokeOpacity={0.6} strokeDasharray="3,3"
-                />
-              </svg>
-            )}
-            <div
-              ref={(el) => { if (el) measureLabels(); }}
-              className="fixed z-50 flex items-start gap-3"
-              style={{
-                left: '50%',
-                transform: 'translateX(-50%)',
-                top: showAbove ? undefined : vy + 20,
-                bottom: showAbove ? window.innerHeight - vy + 20 : undefined,
-                maxHeight: showAbove ? `${vy - 40}px` : `${window.innerHeight - vy - 40}px`,
-                maxWidth: '95vw',
-              }}
-              onMouseEnter={() => setShowEdgeTooltip(true)}
-              onMouseLeave={() => setShowEdgeTooltip(false)}
-            >
-              {nodeTooltip(leftNode, stripLeftRef)}
-              <div className="shrink-0 overflow-y-auto" style={{ maxHeight: 'inherit' }}>
-                <EdgeSkillsTooltip
-                  labelA={pairSkillsComparison.labelA}
-                  labelB={pairSkillsComparison.labelB}
-                  shared={pairSkillsComparison.shared}
-                  onlyA={pairSkillsComparison.onlyA}
-                  onlyB={pairSkillsComparison.onlyB}
-                  totalUnique={pairSkillsComparison.totalUnique}
-                />
-              </div>
-              {nodeTooltip(rightNode, stripRightRef)}
+          <div
+            className="fixed z-50"
+            style={{
+              left: '50%',
+              transform: 'translateX(-50%)',
+              top: showAbove ? undefined : vy + 20,
+              bottom: showAbove ? window.innerHeight - vy + 20 : undefined,
+              maxHeight: showAbove ? `${vy - 40}px` : `${window.innerHeight - vy - 40}px`,
+              maxWidth: '95vw',
+            }}
+            onMouseEnter={() => setShowEdgeTooltip(true)}
+            onMouseLeave={() => setShowEdgeTooltip(false)}
+          >
+            <div className="overflow-y-auto" style={{ maxHeight: 'inherit' }}>
+              <EdgeSkillsTooltip
+                labelA={pairSkillsComparison.labelA}
+                labelB={pairSkillsComparison.labelB}
+                shared={pairSkillsComparison.shared}
+                onlyA={pairSkillsComparison.onlyA}
+                onlyB={pairSkillsComparison.onlyB}
+                totalUnique={pairSkillsComparison.totalUnique}
+              />
             </div>
-          </>,
+          </div>,
           document.body,
         );
       })()}
