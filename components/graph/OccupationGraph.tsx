@@ -78,6 +78,7 @@ export default function OccupationGraph({
   const isolateFillRef = useRef('#d1d5db');
   const isolateStrokeRef = useRef('#000000');
   const canvasGridRef = useRef('#C8E8D8');
+  const graphCenterRef = useRef({ cx: 0, cy: 0, radius: 1 });
 
   const selectionModeRef = useRef(selectionMode);
   const selectedNodeIdRef = useRef(selectedNodeId);
@@ -96,6 +97,19 @@ export default function OccupationGraph({
 
   useEffect(() => {
     nodeById.current = new Map(simNodes.map((n) => [n.id, n]));
+    // Compute graph center and radius for grid fade
+    if (simNodes.length) {
+      const xs = simNodes.map((n) => n.x);
+      const ys = simNodes.map((n) => n.y);
+      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+      let maxDist = 0;
+      for (const n of simNodes) {
+        const d = Math.hypot(n.x - cx, n.y - cy);
+        if (d > maxDist) maxDist = d;
+      }
+      graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
+    }
   }, [simNodes]);
 
   // Compute isolate set (nodes with no edges)
@@ -390,6 +404,18 @@ export default function OccupationGraph({
       ctx.lineTo(vr, gy);
     }
     ctx.stroke();
+
+    // Apply circular radial fade to the grid
+    const { cx: gcx, cy: gcy, radius: gRadius } = graphCenterRef.current;
+    const fadeRadius = gRadius * 1.2;
+    const grad = ctx.createRadialGradient(gcx, gcy, 0, gcx, gcy, fadeRadius);
+    grad.addColorStop(0, 'rgba(0,0,0,1)');
+    grad.addColorStop(0.5, 'rgba(0,0,0,1)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.fillStyle = grad;
+    ctx.fillRect(vl, vt, vr - vl, vb - vt);
+    ctx.globalCompositeOperation = 'source-over';
 
     // Draw selection edges (existing behavior)
     if (visibleEdges.length > 0) {
