@@ -7,6 +7,7 @@
 :root {
   --background: #EEFFF7;
   --canvas-background: #EEFFF7;
+  --canvas-grid: #C8E8D8;
   --foreground: #204D39;
   --card: #FFFFFF;
   --card-foreground: #204D39;
@@ -73,6 +74,7 @@
 .dark {
   --background: #142E23;
   --canvas-background: #142E23;
+  --canvas-grid: #1E3D2E;
   --foreground: #EEFFF7;
   --card: #1C3F30;
   --card-foreground: #EEFFF7;

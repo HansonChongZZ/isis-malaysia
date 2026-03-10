@@ -77,6 +77,7 @@ export default function OccupationGraph({
   const nodeColorRef = useRef('#034e37');
   const isolateFillRef = useRef('#d1d5db');
   const isolateStrokeRef = useRef('#000000');
+  const canvasGridRef = useRef('#C8E8D8');
 
   const selectionModeRef = useRef(selectionMode);
   const selectedNodeIdRef = useRef(selectedNodeId);
@@ -128,6 +129,8 @@ export default function OccupationGraph({
       style.getPropertyValue('--node-isolate-fill').trim() || '#d1d5db';
     isolateStrokeRef.current =
       style.getPropertyValue('--node-isolate-stroke').trim() || '#000';
+    canvasGridRef.current =
+      style.getPropertyValue('--canvas-grid').trim() || '#C8E8D8';
     drawEdgesRef.current();
   }, []);
 
@@ -364,6 +367,29 @@ export default function OccupationGraph({
 
     ctx.save();
     ctx.setTransform(k * dpr, 0, 0, k * dpr, x * dpr, y * dpr);
+
+    // Draw background grid
+    const gridSize = 80;
+    const vl = (-x / k);
+    const vt = (-y / k);
+    const vr = vl + canvas.width / (k * dpr);
+    const vb = vt + canvas.height / (k * dpr);
+    const startX = Math.floor(vl / gridSize) * gridSize;
+    const startY = Math.floor(vt / gridSize) * gridSize;
+
+    ctx.strokeStyle = canvasGridRef.current;
+    ctx.lineWidth = 1 / k;
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    for (let gx = startX; gx <= vr; gx += gridSize) {
+      ctx.moveTo(gx, vt);
+      ctx.lineTo(gx, vb);
+    }
+    for (let gy = startY; gy <= vb; gy += gridSize) {
+      ctx.moveTo(vl, gy);
+      ctx.lineTo(vr, gy);
+    }
+    ctx.stroke();
 
     // Draw selection edges (existing behavior)
     if (visibleEdges.length > 0) {
