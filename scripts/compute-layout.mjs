@@ -28,17 +28,17 @@ const nodesPath = resolve(__dirname, '../public/data/nodes.json');
 const edgesPath = resolve(__dirname, '../public/data/edges.json');
 
 // Constants matching lib/constants.ts
-const NODE_RADIUS_BASE = 46;
-const NODE_RADIUS_SCALE = 30;
-const NODE_RADIUS_EXPONENT = 1;
-const NODE_RADIUS_COLLIDE_PADDING = 57;
+const NODE_RADIUS_BASE = 100;
+const NODE_RADIUS_SCALE = 160;
+const NODE_RADIUS_EXPONENT = 0.5;
+const NODE_RADIUS_COLLIDE_PADDING = 204.5;
 
 // Reference viewport — scaled up to give larger nodes room to spread
 const VIEWPORT_W = 5000;
 const VIEWPORT_H = 3200;
 
 // Tuning params (matches the runtime defaults)
-const CHARGE = -800;
+const CHARGE = -4089;
 const ITERATIONS = 300;
 
 // Load data

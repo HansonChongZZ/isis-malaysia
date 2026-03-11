@@ -239,13 +239,7 @@ export default function OccupationGraph({
       result.add(node.id);
     }
     return result;
-  }, [
-    simNodes,
-    filterSkills,
-    allSkills,
-    sizeMetric,
-    sizeThreshold,
-  ]);
+  }, [simNodes, filterSkills, allSkills, sizeMetric, sizeThreshold]);
 
   // Build adjacency set for selected node
   const connectedIds = useMemo<Set<string> | null>(() => {
@@ -663,8 +657,8 @@ export default function OccupationGraph({
     const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
     const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-    const minScale = 0.1;
-    const maxScale = 3;
+    const minScale = 0.03;
+    const maxScale = 0.1;
 
     // Expand translate extent for panning
     let extMinX = boundsMinX;
@@ -765,7 +759,7 @@ export default function OccupationGraph({
 
         svg
           .transition()
-          .duration(500)
+          .duration(1000)
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
       } else {
