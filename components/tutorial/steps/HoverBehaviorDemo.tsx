@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react"
 import * as d3 from "d3"
 import { SAMPLE_NODES, SAMPLE_EDGES } from "../tutorialSteps"
-import { MASCO_GROUPS } from "@/lib/constants"
 
 const WIDTH = 300
 const HEIGHT = 200
@@ -67,7 +66,7 @@ export default function HoverBehaviorDemo() {
       .attr("cx", (d) => d.x)
       .attr("cy", (d) => d.y)
       .attr("r", 10)
-      .attr("fill", (d) => `var(${MASCO_GROUPS[d.group].colorVar})`)
+      .attr("fill", 'var(--node-color)')
       .attr("stroke", "none")
       .attr("stroke-width", 2)
 
