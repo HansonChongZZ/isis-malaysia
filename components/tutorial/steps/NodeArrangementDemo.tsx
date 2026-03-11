@@ -2,60 +2,48 @@
 
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { MASCO_GROUPS } from '@/lib/constants';
-
 const WIDTH = 340;
 const HEIGHT = 220;
 const CX = WIDTH / 2;
 const CY = HEIGHT / 2;
 
-// ~40 nodes across all 9 groups, varied sizes to mimic real graph density
-// Distribution roughly matches real data: heavier on groups 2, 3, 8
+// ~40 nodes with varied sizes to mimic real graph density
 const DEMO_NODES = [
-  // Group 1 — Managers (blue)
-  { id: '1a', group: 1, r: 10 },
-  { id: '1b', group: 1, r: 7 },
-  { id: '1c', group: 1, r: 13 },
-  { id: '1d', group: 1, r: 5 },
-  // Group 2 — Professionals (orange)
-  { id: '2a', group: 2, r: 12 },
-  { id: '2b', group: 2, r: 8 },
-  { id: '2c', group: 2, r: 14 },
-  { id: '2d', group: 2, r: 6 },
-  { id: '2e', group: 2, r: 10 },
-  { id: '2f', group: 2, r: 9 },
-  // Group 3 — Technicians (crimson)
-  { id: '3a', group: 3, r: 11 },
-  { id: '3b', group: 3, r: 7 },
-  { id: '3c', group: 3, r: 13 },
-  { id: '3d', group: 3, r: 8 },
-  { id: '3e', group: 3, r: 5 },
-  // Group 4 — Clerical (teal)
-  { id: '4a', group: 4, r: 9 },
-  { id: '4b', group: 4, r: 12 },
-  { id: '4c', group: 4, r: 6 },
-  // Group 5 — Services & Sales (green)
-  { id: '5a', group: 5, r: 8 },
-  { id: '5b', group: 5, r: 11 },
-  { id: '5c', group: 5, r: 6 },
-  { id: '5d', group: 5, r: 10 },
-  // Group 6 — Skilled Agricultural (gold)
-  { id: '6a', group: 6, r: 7 },
-  { id: '6b', group: 6, r: 5 },
-  // Group 7 — Craft & Trades (purple)
-  { id: '7a', group: 7, r: 9 },
-  { id: '7b', group: 7, r: 6 },
-  { id: '7c', group: 7, r: 11 },
-  // Group 8 — Plant & Machine (mauve)
-  { id: '8a', group: 8, r: 10 },
-  { id: '8b', group: 8, r: 7 },
-  { id: '8c', group: 8, r: 13 },
-  { id: '8d', group: 8, r: 8 },
-  { id: '8e', group: 8, r: 5 },
-  // Group 9 — Elementary (brown)
-  { id: '9a', group: 9, r: 7 },
-  { id: '9b', group: 9, r: 10 },
-  { id: '9c', group: 9, r: 5 },
+  { id: '1a', r: 10 },
+  { id: '1b', r: 7 },
+  { id: '1c', r: 13 },
+  { id: '1d', r: 5 },
+  { id: '2a', r: 12 },
+  { id: '2b', r: 8 },
+  { id: '2c', r: 14 },
+  { id: '2d', r: 6 },
+  { id: '2e', r: 10 },
+  { id: '2f', r: 9 },
+  { id: '3a', r: 11 },
+  { id: '3b', r: 7 },
+  { id: '3c', r: 13 },
+  { id: '3d', r: 8 },
+  { id: '3e', r: 5 },
+  { id: '4a', r: 9 },
+  { id: '4b', r: 12 },
+  { id: '4c', r: 6 },
+  { id: '5a', r: 8 },
+  { id: '5b', r: 11 },
+  { id: '5c', r: 6 },
+  { id: '5d', r: 10 },
+  { id: '6a', r: 7 },
+  { id: '6b', r: 5 },
+  { id: '7a', r: 9 },
+  { id: '7b', r: 6 },
+  { id: '7c', r: 11 },
+  { id: '8a', r: 10 },
+  { id: '8b', r: 7 },
+  { id: '8c', r: 13 },
+  { id: '8d', r: 8 },
+  { id: '8e', r: 5 },
+  { id: '9a', r: 7 },
+  { id: '9b', r: 10 },
+  { id: '9c', r: 5 },
 ];
 
 // Sparse, long-range edges that cross the graph — like the real app
@@ -69,22 +57,8 @@ const DEMO_EDGES = [
   { source: '8a', target: '5d' },
 ];
 
-// Cluster center targets — arranged like the real graph's CLUSTER_OFFSETS (scaled down)
-const GROUP_TARGETS: Record<number, { x: number; y: number }> = {
-  1: { x: CX - 45, y: CY - 40 },
-  2: { x: CX + 5, y: CY - 50 },
-  3: { x: CX + 50, y: CY - 35 },
-  4: { x: CX + 58, y: CY + 8 },
-  5: { x: CX + 35, y: CY + 48 },
-  6: { x: CX - 5, y: CY + 55 },
-  7: { x: CX - 35, y: CY + 48 },
-  8: { x: CX - 58, y: CY + 8 },
-  9: { x: CX - 20, y: CY - 5 },
-};
-
 interface SimNode extends d3.SimulationNodeDatum {
   id: string;
-  group: number;
   r: number;
 }
 
@@ -123,7 +97,7 @@ export default function NodeArrangementDemo() {
       .enter()
       .append('circle')
       .attr('r', (d) => d.r)
-      .attr('fill', (d) => `var(${MASCO_GROUPS[d.group].colorVar})`)
+      .attr('fill', 'var(--node-color)')
       .attr('cx', (d) => d.x!)
       .attr('cy', (d) => d.y!);
 
@@ -141,14 +115,6 @@ export default function NodeArrangementDemo() {
       .force(
         'collide',
         d3.forceCollide<SimNode>((d) => d.r + 2)
-      )
-      .force(
-        'x',
-        d3.forceX<SimNode>((d) => GROUP_TARGETS[d.group].x).strength(0.08)
-      )
-      .force(
-        'y',
-        d3.forceY<SimNode>((d) => GROUP_TARGETS[d.group].y).strength(0.08)
       )
       .alphaDecay(0.012)
       .on('tick', () => {
@@ -179,7 +145,7 @@ export default function NodeArrangementDemo() {
       className="w-full"
       style={{ height: 320 }}
       role="img"
-      aria-label="Animation showing nodes clustering together by occupation group"
+      aria-label="Animation showing nodes clustering by skill connections"
     />
   );
 }
