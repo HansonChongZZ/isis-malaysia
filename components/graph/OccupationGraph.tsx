@@ -753,6 +753,25 @@ export default function OccupationGraph({
             onNodeSelect(null);
           }}
         >
+          <defs>
+              <filter id="selected-glow" x="-300%" y="-300%" width="700%" height="700%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur1" />
+                <feColorMatrix in="blur1" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0" result="glow1" />
+                <feGaussianBlur in="SourceAlpha" stdDeviation="18" result="blur2" />
+                <feColorMatrix in="blur2" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0" result="glow2" />
+                <feGaussianBlur in="SourceAlpha" stdDeviation="40" result="blur3" />
+                <feColorMatrix in="blur3" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.8 0" result="glow3" />
+                <feGaussianBlur in="SourceAlpha" stdDeviation="80" result="blur4" />
+                <feColorMatrix in="blur4" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.5 0" result="glow4" />
+                <feMerge>
+                  <feMergeNode in="glow4" />
+                  <feMergeNode in="glow3" />
+                  <feMergeNode in="glow2" />
+                  <feMergeNode in="glow1" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
           <g ref={gRef}>
             <g className="nodes">
               {simNodes.map((node) => {
@@ -783,17 +802,20 @@ export default function OccupationGraph({
                     strokeWidth={
                       isIsolate
                         ? 0.8
-                        : isSelected || isHovered
-                          ? 2.5
-                          : isHoveredNeighbor
-                            ? 2
-                            : 0.8
+                        : isSelected
+                          ? 3.5
+                          : isHovered
+                            ? 2.5
+                            : isHoveredNeighbor
+                              ? 2
+                              : 0.8
                     }
                     strokeOpacity={opacity}
+                    filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
                       cursor: isIsolate ? 'default' : 'pointer',
                       transition:
-                        'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease',
+                        'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
                       if (isIsolate) return;
