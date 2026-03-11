@@ -2,38 +2,26 @@
 
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { MASCO_GROUPS } from '@/lib/constants';
 
 const WIDTH = 340;
 const HEIGHT = 220;
 
-// All 9 MASCO groups laid out in two rows
-const ALL_GROUPS = Object.entries(MASCO_GROUPS).map(([key, val]) => ({
-  group: Number(key),
-  label: val.label,
-  colorVar: val.colorVar,
-}));
+// Sample nodes with varied sizes to represent different occupations
+const DEMO_NODES = [
+  { label: 'Manager', r: 12 },
+  { label: 'Engineer', r: 16 },
+  { label: 'Technician', r: 10 },
+  { label: 'Clerk', r: 18 },
+  { label: 'Sales Worker', r: 8 },
+  { label: 'Farmer', r: 6 },
+  { label: 'Operator', r: 14 },
+];
 
-// Short labels that fit under small circles
-const SHORT_LABELS: Record<number, string> = {
-  1: 'Managers',
-  2: 'Professionals',
-  3: 'Technicians',
-  4: 'Clerical',
-  5: 'Services & Sales',
-  6: 'Skilled Agricultural',
-  7: 'Craft & Trades',
-  8: 'Plant & Machine Operators',
-  9: 'Elementary',
-};
-
-// 2 rows: 5 on top, 4 on bottom (centered)
-function getPosition(index: number) {
-  if (index < 5) {
-    return { cx: 35 + index * 70, cy: 72 };
-  }
-  const bottomIdx = index - 5;
-  return { cx: 70 + bottomIdx * 70, cy: 152 };
+function getPosition(index: number, total: number) {
+  const spacing = 44;
+  const totalWidth = (total - 1) * spacing;
+  const startX = WIDTH / 2 - totalWidth / 2;
+  return { cx: startX + index * spacing, cy: HEIGHT / 2 };
 }
 
 export default function NodeRepresentationDemo() {
@@ -45,9 +33,9 @@ export default function NodeRepresentationDemo() {
 
     const g = svg.append('g');
 
-    const nodes = ALL_GROUPS.map((n, i) => ({
+    const nodes = DEMO_NODES.map((n, i) => ({
       ...n,
-      ...getPosition(i),
+      ...getPosition(i, DEMO_NODES.length),
     }));
 
     // Circles
@@ -60,14 +48,14 @@ export default function NodeRepresentationDemo() {
       .attr('cx', (d) => d.cx)
       .attr('cy', (d) => d.cy)
       .attr('r', 0)
-      .attr('fill', (d) => `var(${d.colorVar})`)
+      .attr('fill', 'var(--node-color)')
       .attr('opacity', 0);
 
     circles
       .transition()
       .delay((_, i) => i * 150)
       .duration(400)
-      .attr('r', 11)
+      .attr('r', (d) => d.r)
       .attr('opacity', 1);
 
     // Labels
@@ -78,12 +66,12 @@ export default function NodeRepresentationDemo() {
       .append('text')
       .attr('class', 'label')
       .attr('x', (d) => d.cx)
-      .attr('y', (d) => d.cy + 22)
+      .attr('y', (d) => d.cy + d.r + 14)
       .attr('text-anchor', 'middle')
       .attr('font-size', 7)
-      .attr('fill', (d) => `var(${d.colorVar})`)
+      .attr('fill', 'var(--muted-foreground)')
       .attr('opacity', 0)
-      .text((d) => SHORT_LABELS[d.group]);
+      .text((d) => d.label);
 
     labels
       .transition()
@@ -91,28 +79,28 @@ export default function NodeRepresentationDemo() {
       .duration(300)
       .attr('opacity', 1);
 
-    // After all appear, pulse highlight on one node
-    const totalDelay = ALL_GROUPS.length * 150 + 600;
-    const pulseNode = nodes[1]; // Professionals
+    // Pulse on one node after all appear
+    const totalDelay = DEMO_NODES.length * 150 + 600;
+    const pulseNode = nodes[1]; // Engineer
 
     const pulseRing = g
       .append('circle')
       .attr('cx', pulseNode.cx)
       .attr('cy', pulseNode.cy)
-      .attr('r', 11)
+      .attr('r', pulseNode.r)
       .attr('fill', 'none')
-      .attr('stroke', `var(${pulseNode.colorVar})`)
+      .attr('stroke', 'var(--node-color)')
       .attr('stroke-width', 2)
       .attr('opacity', 0);
 
     function pulse() {
       pulseRing
-        .attr('r', 11)
+        .attr('r', pulseNode.r)
         .attr('opacity', 0.8)
         .attr('stroke-width', 2)
         .transition()
         .duration(1000)
-        .attr('r', 21)
+        .attr('r', pulseNode.r + 10)
         .attr('opacity', 0)
         .attr('stroke-width', 0.5)
         .on('end', pulse);
@@ -133,7 +121,7 @@ export default function NodeRepresentationDemo() {
       className="w-full"
       style={{ height: 320 }}
       role="img"
-      aria-label="Animation showing all 9 MASCO classification groups as colored circles"
+      aria-label="Animation showing occupations as circles of different sizes"
     />
   );
 }

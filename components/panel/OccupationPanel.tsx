@@ -28,7 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import type { OccupationDetail, GraphNode, GraphEdge } from "@/lib/types"
-import { MASCO_GROUPS, QUARTILE_COLORS } from "@/lib/constants"
+import { QUARTILE_COLORS } from "@/lib/constants"
 
 interface OccupationPanelProps {
   nodeId: string | null
@@ -134,8 +134,6 @@ export default function OccupationPanel({
   onClose,
   onNodeSelect,
 }: OccupationPanelProps) {
-  const group = nodeId ? parseInt(nodeId[0], 10) : null
-  const groupInfo = group ? MASCO_GROUPS[group] : null
   const quartileColor = detail ? QUARTILE_COLORS[detail.quartile] ?? "#888" : "#888"
 
   const transitions = useMemo<TransitionRow[]>(() => {
@@ -196,16 +194,7 @@ export default function OccupationPanel({
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    {groupInfo && (
-                      <span
-                        className="inline-block w-3 h-3 rounded-full shrink-0"
-                        style={{ backgroundColor: `var(${groupInfo.colorVar})` }}
-                      />
-                    )}
                     <span className="text-xs text-muted-foreground font-mono">{nodeId}</span>
-                    {groupInfo && (
-                      <span className="text-xs text-muted-foreground">· {groupInfo.label}</span>
-                    )}
                   </div>
                   <DialogTitle className="text-foreground text-lg leading-tight font-semibold">
                     {detail.occupation}

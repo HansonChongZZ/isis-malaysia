@@ -1,16 +1,20 @@
 'use client';
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  useMemo,
-} from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import * as d3 from 'd3';
-import type { GraphNode, GraphEdge, NodeSizeMetric, OccupationDetail, TunerSizingParams } from '@/lib/types';
-import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_EXPONENT } from '@/lib/constants';
+import type {
+  GraphNode,
+  GraphEdge,
+  NodeSizeMetric,
+  OccupationDetail,
+  TunerSizingParams,
+} from '@/lib/types';
+import {
+  NODE_RADIUS_BASE,
+  NODE_RADIUS_SCALE,
+  NODE_RADIUS_EXPONENT,
+} from '@/lib/constants';
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
 import TunerPanel from './TunerPanel';
 
@@ -25,7 +29,6 @@ interface OccupationGraphProps {
   edges: GraphEdge[];
   onNodeSelect: (nodeId: string | null) => void;
   selectedNodeId: string | null;
-  filterGroup: number | null;
   filterSkills: string[];
   allSkills: Map<string, Set<string>>; // nodeId -> skills set
   sizeMetric: 'aiExposure' | 'wage';
@@ -42,7 +45,6 @@ export default function OccupationGraph({
   edges,
   onNodeSelect,
   selectedNodeId: selectedNodeIdProp,
-  filterGroup,
   filterSkills,
   allSkills,
   sizeMetric,
@@ -63,12 +65,32 @@ export default function OccupationGraph({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
-  const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null);
+  const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
-  const [pairLabelPositions, setPairLabelPositions] = useState<{ a: { x: number; y: number; label: string; aiExposure: number; group: number }; b: { x: number; y: number; label: string; aiExposure: number; group: number } } | null>(null);
+  const [pairLabelPositions, setPairLabelPositions] = useState<{
+    a: {
+      x: number;
+      y: number;
+      label: string;
+      aiExposure: number;
+    };
+    b: {
+      x: number;
+      y: number;
+      label: string;
+      aiExposure: number;
+    };
+  } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
-  const [tunerSizing, setTunerSizing] = useState<TunerSizingParams | null>(null);
-  const [tunerPositions, setTunerPositions] = useState<Map<string, { x: number; y: number }> | null>(null);
+  const [tunerSizing, setTunerSizing] = useState<TunerSizingParams | null>(
+    null,
+  );
+  const [tunerPositions, setTunerPositions] = useState<Map<
+    string,
+    { x: number; y: number }
+  > | null>(null);
   const selectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
@@ -144,8 +166,10 @@ export default function OccupationGraph({
   const isolateIds = useMemo<Set<string>>(() => {
     const connected = new Set<string>();
     for (const e of edges) {
-      const src = typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
-      const tgt = typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
+      const src =
+        typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
+      const tgt =
+        typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
       connected.add(src);
       connected.add(tgt);
     }
@@ -188,17 +212,15 @@ export default function OccupationGraph({
 
   // Compute visible IDs based on filters
   const visibleIds = useMemo<Set<string> | null>(() => {
-    const hasGroupFilter = filterGroup !== null;
     const hasSkillFilter = filterSkills.length > 0;
     const hasThreshold = sizeThreshold > 0;
 
-    if (!hasGroupFilter && !hasSkillFilter && !hasThreshold) return null;
+    if (!hasSkillFilter && !hasThreshold) return null;
 
     const result = new Set<string>();
     const skillQueries = filterSkills.map((s) => s.toLowerCase());
 
     for (const node of simNodes) {
-      if (hasGroupFilter && node.group !== filterGroup) continue;
       if (hasSkillFilter) {
         const nodeSkills = allSkills.get(node.id);
         if (!nodeSkills) continue;
@@ -217,14 +239,7 @@ export default function OccupationGraph({
       result.add(node.id);
     }
     return result;
-  }, [
-    simNodes,
-    filterGroup,
-    filterSkills,
-    allSkills,
-    sizeMetric,
-    sizeThreshold,
-  ]);
+  }, [simNodes, filterSkills, allSkills, sizeMetric, sizeThreshold]);
 
   // Build adjacency set for selected node
   const connectedIds = useMemo<Set<string> | null>(() => {
@@ -242,25 +257,39 @@ export default function OccupationGraph({
   }, [selectedNodeId, edges]);
 
   const pairEdge = useMemo(() => {
-    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId) return null;
-    return edges.find((e) => {
-      const src = typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
-      const tgt = typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
-      return (
-        (src === selectedNodeId && tgt === secondSelectedNodeId) ||
-        (src === secondSelectedNodeId && tgt === selectedNodeId)
-      );
-    }) ?? null;
+    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId)
+      return null;
+    return (
+      edges.find((e) => {
+        const src =
+          typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
+        const tgt =
+          typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
+        return (
+          (src === selectedNodeId && tgt === secondSelectedNodeId) ||
+          (src === secondSelectedNodeId && tgt === selectedNodeId)
+        );
+      }) ?? null
+    );
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, edges]);
 
   const pairSkillsComparison = useMemo(() => {
-    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId) return null;
+    if (selectionMode !== 'pair' || !selectedNodeId || !secondSelectedNodeId)
+      return null;
     const detailA = occupations[selectedNodeId];
     const detailB = occupations[secondSelectedNodeId];
     if (!detailA || !detailB) return null;
 
-    const skillsA = new Set([...detailA.basicSkills, ...detailA.specificSkills].map(s => s.toLowerCase()));
-    const skillsB = new Set([...detailB.basicSkills, ...detailB.specificSkills].map(s => s.toLowerCase()));
+    const skillsA = new Set(
+      [...detailA.basicSkills, ...detailA.specificSkills].map((s) =>
+        s.toLowerCase(),
+      ),
+    );
+    const skillsB = new Set(
+      [...detailB.basicSkills, ...detailB.specificSkills].map((s) =>
+        s.toLowerCase(),
+      ),
+    );
 
     const shared: string[] = [];
     const onlyA: string[] = [];
@@ -273,9 +302,15 @@ export default function OccupationGraph({
     for (const skill of [...detailA.basicSkills, ...detailA.specificSkills]) {
       const lower = skill.toLowerCase();
       if (skillsB.has(lower)) {
-        if (!seenShared.has(lower)) { shared.push(skill); seenShared.add(lower); }
+        if (!seenShared.has(lower)) {
+          shared.push(skill);
+          seenShared.add(lower);
+        }
       } else {
-        if (!seenA.has(lower)) { onlyA.push(skill); seenA.add(lower); }
+        if (!seenA.has(lower)) {
+          onlyA.push(skill);
+          seenA.add(lower);
+        }
       }
     }
     for (const skill of [...detailB.basicSkills, ...detailB.specificSkills]) {
@@ -285,9 +320,6 @@ export default function OccupationGraph({
         seenB.add(lower);
       }
     }
-
-    const nodeA = nodeById.current.get(selectedNodeId);
-    const nodeB = nodeById.current.get(secondSelectedNodeId);
 
     return {
       shared,
@@ -357,7 +389,8 @@ export default function OccupationGraph({
       if (visibleIds && !visibleIds.has(node.id)) return 0.06;
       // Pair mode: only show the two selected nodes
       if (selectionMode === 'pair' && selectedNodeId && secondSelectedNodeId) {
-        if (node.id !== selectedNodeId && node.id !== secondSelectedNodeId) return 0.05;
+        if (node.id !== selectedNodeId && node.id !== secondSelectedNodeId)
+          return 0.05;
         return 1;
       }
       if (selectedNodeId && connectedIds && !connectedIds.has(node.id))
@@ -400,7 +433,14 @@ export default function OccupationGraph({
         return false;
       return true;
     });
-  }, [selectionMode, pairEdge, selectedNodeId, connectedIds, edges, visibleIds]);
+  }, [
+    selectionMode,
+    pairEdge,
+    selectedNodeId,
+    connectedIds,
+    edges,
+    visibleIds,
+  ]);
 
   const drawEdges = useCallback(() => {
     const canvas = canvasRef.current;
@@ -416,8 +456,8 @@ export default function OccupationGraph({
 
     // Draw background grid
     const gridSize = 80;
-    const vl = (-x / k);
-    const vt = (-y / k);
+    const vl = -x / k;
+    const vt = -y / k;
     const vr = vl + canvas.width / (k * dpr);
     const vb = vt + canvas.height / (k * dpr);
     const startX = Math.floor(vl / gridSize) * gridSize;
@@ -547,8 +587,18 @@ export default function OccupationGraph({
         const t = transformRef.current;
         setBadgePos({ x: t.applyX(mx), y: t.applyY(my) });
         setPairLabelPositions({
-          a: { x: t.applyX(nodeA.x), y: t.applyY(nodeA.y), label: nodeA.label, aiExposure: nodeA.aiExposure, group: nodeA.group },
-          b: { x: t.applyX(nodeB.x), y: t.applyY(nodeB.y), label: nodeB.label, aiExposure: nodeB.aiExposure, group: nodeB.group },
+          a: {
+            x: t.applyX(nodeA.x),
+            y: t.applyY(nodeA.y),
+            label: nodeA.label,
+            aiExposure: nodeA.aiExposure,
+          },
+          b: {
+            x: t.applyX(nodeB.x),
+            y: t.applyY(nodeB.y),
+            label: nodeB.label,
+            aiExposure: nodeB.aiExposure,
+          },
         });
       }
     } else {
@@ -576,7 +626,13 @@ export default function OccupationGraph({
 
   // Zoom + pan with auto-fit
   useEffect(() => {
-    if (!svgRef.current || !gRef.current || !dimensions.width || !dimensions.height) return;
+    if (
+      !svgRef.current ||
+      !gRef.current ||
+      !dimensions.width ||
+      !dimensions.height
+    )
+      return;
     if (!simNodes.length) return;
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
@@ -592,13 +648,17 @@ export default function OccupationGraph({
     const boundsH = boundsMaxY - boundsMinY;
 
     // Fit all nodes into viewport
-    const scale = Math.min(dimensions.width / boundsW, dimensions.height / boundsH, 2);
+    const scale = Math.min(
+      dimensions.width / boundsW,
+      dimensions.height / boundsH,
+      2,
+    );
     const tx = (dimensions.width - boundsW * scale) / 2 - boundsMinX * scale;
     const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
     const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-    const minScale = 0.05;
-    const maxScale = 3;
+    const minScale = 0.03;
+    const maxScale = 0.1;
 
     // Expand translate extent for panning
     let extMinX = boundsMinX;
@@ -628,19 +688,36 @@ export default function OccupationGraph({
       .on('zoom', (event) => {
         transformRef.current = event.transform;
         g.attr('transform', event.transform.toString());
-        setTooltip((prev) => prev === null ? prev : null);
+        setTooltip((prev) => (prev === null ? prev : null));
         drawEdgesRef.current();
 
-        if (selectionModeRef.current === 'pair' && selectedNodeIdRef.current && secondSelectedNodeIdRef.current) {
+        if (
+          selectionModeRef.current === 'pair' &&
+          selectedNodeIdRef.current &&
+          secondSelectedNodeIdRef.current
+        ) {
           const nodeA = nodeById.current.get(selectedNodeIdRef.current);
           const nodeB = nodeById.current.get(secondSelectedNodeIdRef.current);
           if (nodeA && nodeB) {
             const mx = (nodeA.x + nodeB.x) / 2;
             const my = (nodeA.y + nodeB.y) / 2;
-            setBadgePos({ x: event.transform.applyX(mx), y: event.transform.applyY(my) });
+            setBadgePos({
+              x: event.transform.applyX(mx),
+              y: event.transform.applyY(my),
+            });
             setPairLabelPositions({
-              a: { x: event.transform.applyX(nodeA.x), y: event.transform.applyY(nodeA.y), label: nodeA.label, aiExposure: nodeA.aiExposure, group: nodeA.group },
-              b: { x: event.transform.applyX(nodeB.x), y: event.transform.applyY(nodeB.y), label: nodeB.label, aiExposure: nodeB.aiExposure, group: nodeB.group },
+              a: {
+                x: event.transform.applyX(nodeA.x),
+                y: event.transform.applyY(nodeA.y),
+                label: nodeA.label,
+                aiExposure: nodeA.aiExposure,
+              },
+              b: {
+                x: event.transform.applyX(nodeB.x),
+                y: event.transform.applyY(nodeB.y),
+                label: nodeB.label,
+                aiExposure: nodeB.aiExposure,
+              },
             });
           }
         }
@@ -680,8 +757,9 @@ export default function OccupationGraph({
         const ty = dimensions.height / 2 - node.y * scale;
         const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-        svg.transition()
-          .duration(500)
+        svg
+          .transition()
+          .duration(1000)
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
       } else {
@@ -697,12 +775,17 @@ export default function OccupationGraph({
         const dy = maxY - minY;
         const cx = (minX + maxX) / 2;
         const cy = (minY + maxY) / 2;
-        const scale = Math.min(dimensions.width / dx, dimensions.height / dy, 3);
+        const scale = Math.min(
+          dimensions.width / dx,
+          dimensions.height / dy,
+          3,
+        );
         const tx = dimensions.width / 2 - cx * scale;
         const ty = dimensions.height / 2 - cy * scale;
         const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-        svg.transition()
+        svg
+          .transition()
           .duration(500)
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
@@ -720,17 +803,30 @@ export default function OccupationGraph({
       const boundsMaxY = Math.max(...ys) + padding;
       const boundsW = boundsMaxX - boundsMinX;
       const boundsH = boundsMaxY - boundsMinY;
-      const scale = Math.min(dimensions.width / boundsW, dimensions.height / boundsH, 2);
+      const scale = Math.min(
+        dimensions.width / boundsW,
+        dimensions.height / boundsH,
+        2,
+      );
       const tx = (dimensions.width - boundsW * scale) / 2 - boundsMinX * scale;
       const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
       const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-      svg.transition()
+      svg
+        .transition()
         .duration(500)
         .ease(d3.easeCubicInOut)
         .call(zoom.transform, fitTransform);
     }
-  }, [selectionMode, selectedNodeId, secondSelectedNodeId, connectedIds, simNodes, dimensions.width, dimensions.height]);
+  }, [
+    selectionMode,
+    selectedNodeId,
+    secondSelectedNodeId,
+    connectedIds,
+    simNodes,
+    dimensions.width,
+    dimensions.height,
+  ]);
 
   return (
     <div
@@ -754,30 +850,74 @@ export default function OccupationGraph({
           }}
         >
           <defs>
-              <filter id="selected-glow" x="-300%" y="-300%" width="700%" height="700%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur1" />
-                <feColorMatrix in="blur1" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0" result="glow1" />
-                <feGaussianBlur in="SourceAlpha" stdDeviation="18" result="blur2" />
-                <feColorMatrix in="blur2" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0" result="glow2" />
-                <feGaussianBlur in="SourceAlpha" stdDeviation="40" result="blur3" />
-                <feColorMatrix in="blur3" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.8 0" result="glow3" />
-                <feGaussianBlur in="SourceAlpha" stdDeviation="80" result="blur4" />
-                <feColorMatrix in="blur4" type="matrix" values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.5 0" result="glow4" />
-                <feMerge>
-                  <feMergeNode in="glow4" />
-                  <feMergeNode in="glow3" />
-                  <feMergeNode in="glow2" />
-                  <feMergeNode in="glow1" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+            <filter
+              id="selected-glow"
+              x="-300%"
+              y="-300%"
+              width="700%"
+              height="700%"
+            >
+              <feGaussianBlur
+                in="SourceAlpha"
+                stdDeviation="5"
+                result="blur1"
+              />
+              <feColorMatrix
+                in="blur1"
+                type="matrix"
+                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0"
+                result="glow1"
+              />
+              <feGaussianBlur
+                in="SourceAlpha"
+                stdDeviation="18"
+                result="blur2"
+              />
+              <feColorMatrix
+                in="blur2"
+                type="matrix"
+                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0"
+                result="glow2"
+              />
+              <feGaussianBlur
+                in="SourceAlpha"
+                stdDeviation="40"
+                result="blur3"
+              />
+              <feColorMatrix
+                in="blur3"
+                type="matrix"
+                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.8 0"
+                result="glow3"
+              />
+              <feGaussianBlur
+                in="SourceAlpha"
+                stdDeviation="80"
+                result="blur4"
+              />
+              <feColorMatrix
+                in="blur4"
+                type="matrix"
+                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.5 0"
+                result="glow4"
+              />
+              <feMerge>
+                <feMergeNode in="glow4" />
+                <feMergeNode in="glow3" />
+                <feMergeNode in="glow2" />
+                <feMergeNode in="glow1" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
           <g ref={gRef}>
             <g className="nodes">
               {simNodes.map((node) => {
                 const isIsolate = isolateIds.has(node.id);
                 const r = getNodeRadius(node);
-                const color = isIsolate ? isolateFillRef.current : nodeColorRef.current;
+                const color = isIsolate
+                  ? isolateFillRef.current
+                  : nodeColorRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
                 const isHovered = node.id === hoveredNodeId;
@@ -847,70 +987,86 @@ export default function OccupationGraph({
       )}
 
       {/* Hover tooltip */}
-      {tooltip && (() => {
-        const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
-        return (
-        <div
-          className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
-          style={{
-            left: tooltip.x + tooltipR + 6,
-            top: tooltip.y - 10,
-            transform:
-              tooltip.x > (dimensions.width ?? 0) - 240
-                ? 'translateX(-110%)'
-                : undefined,
-          }}
-        >
-          <p className="font-semibold leading-tight">{tooltip.node.label}</p>
-          <div className="mt-2">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-muted-foreground text-[11px]">
-                AI Exposure
-              </span>
-              <span className="font-medium text-[11px]">
-                {(tooltip.node.aiExposure * 100).toFixed(1)}%
-              </span>
+      {tooltip &&
+        (() => {
+          const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
+          return (
+            <div
+              className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
+              style={{
+                left: tooltip.x + tooltipR + 6,
+                top: tooltip.y - 10,
+                transform:
+                  tooltip.x > (dimensions.width ?? 0) - 240
+                    ? 'translateX(-110%)'
+                    : undefined,
+              }}
+            >
+              <p className="font-semibold leading-tight">
+                {tooltip.node.label}
+              </p>
+              <div className="mt-2">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-muted-foreground text-[11px]">
+                    AI Exposure
+                  </span>
+                  <span className="font-medium text-[11px]">
+                    {(tooltip.node.aiExposure * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-foreground"
+                    style={{ width: `${tooltip.node.aiExposure * 100}%` }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-              <div
-                className="h-full rounded-full bg-foreground"
-                style={{ width: `${tooltip.node.aiExposure * 100}%` }}
-              />
-            </div>
-          </div>
-        </div>
-        );
-      })()}
+          );
+        })()}
 
       {/* Pair mode node labels — float independently when tooltip closed */}
-      {pairLabelPositions && [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => {
-        const pairR = (NODE_RADIUS_BASE + Math.pow(pos.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * transformRef.current.k;
-        return (
-        <div
-          key={i}
-          className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border"
-          style={{
-            left: pos.x + pairR + 6,
-            top: pos.y - 10,
-            borderColor: nodeColorRef.current,
-            transform: pos.x > (dimensions.width ?? 0) - 240
-              ? 'translateX(-110%)'
-              : undefined,
-          }}
-        >
-          <p className="font-semibold leading-tight">{pos.label}</p>
-          <div className="mt-2">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-muted-foreground text-[11px]">AI Exposure</span>
-              <span className="font-medium text-[11px]">{(pos.aiExposure * 100).toFixed(1)}%</span>
+      {pairLabelPositions &&
+        [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => {
+          const pairR =
+            (NODE_RADIUS_BASE +
+              Math.pow(pos.aiExposure, NODE_RADIUS_EXPONENT) *
+                NODE_RADIUS_SCALE) *
+            transformRef.current.k;
+          return (
+            <div
+              key={i}
+              className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border"
+              style={{
+                left: pos.x + pairR + 6,
+                top: pos.y - 10,
+                borderColor: nodeColorRef.current,
+                transform:
+                  pos.x > (dimensions.width ?? 0) - 240
+                    ? 'translateX(-110%)'
+                    : undefined,
+              }}
+            >
+              <p className="font-semibold leading-tight">{pos.label}</p>
+              <div className="mt-2">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-muted-foreground text-[11px]">
+                    AI Exposure
+                  </span>
+                  <span className="font-medium text-[11px]">
+                    {(pos.aiExposure * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-foreground"
+                    style={{ width: `${pos.aiExposure * 100}%` }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-              <div className="h-full rounded-full bg-foreground" style={{ width: `${pos.aiExposure * 100}%` }} />
-            </div>
-          </div>
-        </div>
-        );
-      })}
+          );
+        })}
 
       {/* Edge skills badge (always visible in pair mode) */}
       {badgePos && pairSkillsComparison && (
@@ -935,41 +1091,46 @@ export default function OccupationGraph({
       )}
 
       {/* Shared skills tooltip (portaled when tooltip open) */}
-      {showEdgeTooltip && badgePos && pairSkillsComparison && (() => {
-        const rect = containerRef.current?.getBoundingClientRect();
-        const vy = (rect?.top ?? 0) + badgePos.y;
-        const showAbove = vy > window.innerHeight / 2;
+      {showEdgeTooltip &&
+        badgePos &&
+        pairSkillsComparison &&
+        (() => {
+          const rect = containerRef.current?.getBoundingClientRect();
+          const vy = (rect?.top ?? 0) + badgePos.y;
+          const showAbove = vy > window.innerHeight / 2;
 
-        return createPortal(
-          <div
-            className="fixed z-50"
-            style={{
-              left: '50%',
-              transform: 'translateX(-50%)',
-              top: showAbove ? undefined : vy + 20,
-              bottom: showAbove ? window.innerHeight - vy + 20 : undefined,
-              maxHeight: showAbove ? `${vy - 40}px` : `${window.innerHeight - vy - 40}px`,
-              maxWidth: '95vw',
-            }}
-            onMouseEnter={() => setShowEdgeTooltip(true)}
-            onMouseLeave={() => setShowEdgeTooltip(false)}
-          >
-            <div className="overflow-y-auto" style={{ maxHeight: 'inherit' }}>
-              <EdgeSkillsTooltip
-                labelA={pairSkillsComparison.labelA}
-                labelB={pairSkillsComparison.labelB}
-                colorA={pairSkillsComparison.colorA}
-                colorB={pairSkillsComparison.colorB}
-                shared={pairSkillsComparison.shared}
-                onlyA={pairSkillsComparison.onlyA}
-                onlyB={pairSkillsComparison.onlyB}
-                totalUnique={pairSkillsComparison.totalUnique}
-              />
-            </div>
-          </div>,
-          document.body,
-        );
-      })()}
+          return createPortal(
+            <div
+              className="fixed z-50"
+              style={{
+                left: '50%',
+                transform: 'translateX(-50%)',
+                top: showAbove ? undefined : vy + 20,
+                bottom: showAbove ? window.innerHeight - vy + 20 : undefined,
+                maxHeight: showAbove
+                  ? `${vy - 40}px`
+                  : `${window.innerHeight - vy - 40}px`,
+                maxWidth: '95vw',
+              }}
+              onMouseEnter={() => setShowEdgeTooltip(true)}
+              onMouseLeave={() => setShowEdgeTooltip(false)}
+            >
+              <div className="overflow-y-auto" style={{ maxHeight: 'inherit' }}>
+                <EdgeSkillsTooltip
+                  labelA={pairSkillsComparison.labelA}
+                  labelB={pairSkillsComparison.labelB}
+                  colorA={pairSkillsComparison.colorA}
+                  colorB={pairSkillsComparison.colorB}
+                  shared={pairSkillsComparison.shared}
+                  onlyA={pairSkillsComparison.onlyA}
+                  onlyB={pairSkillsComparison.onlyB}
+                  totalUnique={pairSkillsComparison.totalUnique}
+                />
+              </div>
+            </div>,
+            document.body,
+          );
+        })()}
 
       <TunerPanel
         nodes={simNodes}

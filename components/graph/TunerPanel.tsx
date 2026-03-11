@@ -28,9 +28,9 @@ const DEFAULTS = {
   scale: NODE_RADIUS_SCALE,
   exponent: NODE_RADIUS_EXPONENT,
   collidePadding: NODE_RADIUS_COLLIDE_PADDING,
-  charge: -60,
-  linkDistanceBase: 55,
-  linkDistanceScale: 16,
+  charge: -800,
+  linkDistanceBase: 600,
+  linkDistanceScale: 20,
 };
 
 const SLIDER_CONFIG = [
@@ -38,11 +38,18 @@ const SLIDER_CONFIG = [
     key: 'base',
     label: 'Base Radius',
     min: 2,
-    max: 200,
+    max: 2000,
     step: 1,
     group: 'sizing',
   },
-  { key: 'scale', label: 'Scale', min: 10, max: 150, step: 1, group: 'sizing' },
+  {
+    key: 'scale',
+    label: 'Scale',
+    min: 10,
+    max: 2000,
+    step: 1,
+    group: 'sizing',
+  },
   {
     key: 'exponent',
     label: 'Exponent',
@@ -55,14 +62,14 @@ const SLIDER_CONFIG = [
     key: 'collidePadding',
     label: 'Collision Padding',
     min: 0,
-    max: 80,
+    max: 1000,
     step: 0.5,
     group: 'layout',
   },
   {
     key: 'charge',
     label: 'Charge',
-    min: -800,
+    min: -80000,
     max: 400,
     step: 1,
     group: 'layout',
@@ -87,8 +94,6 @@ const SLIDER_CONFIG = [
 
 type ParamKey = (typeof SLIDER_CONFIG)[number]['key'];
 
-const INTRA_STRENGTH = 0.8;
-const INTER_STRENGTH = 0.001;
 const ITERATIONS = 300;
 
 export default function TunerPanel({
@@ -123,14 +128,11 @@ export default function TunerPanel({
 
       // Use requestAnimationFrame to avoid blocking the UI render
       requestAnimationFrame(() => {
-        const groupOf = new Map(nodes.map((n) => [n.id, n.group]));
-
         const simNodes = nodes.map((n) => {
           const orig = origPositions?.get(n.id);
           return {
             id: n.id,
             aiExposure: n.aiExposure,
-            group: n.group,
             x: orig?.x ?? n.x,
             y: orig?.y ?? n.y,
             vx: 0,
@@ -162,15 +164,7 @@ export default function TunerPanel({
                 (d: any) =>
                   p.linkDistanceBase + (7 - d.weight) * p.linkDistanceScale,
               )
-              .strength((d: any) => {
-                const srcId =
-                  typeof d.source === 'string' ? d.source : d.source.id;
-                const tgtId =
-                  typeof d.target === 'string' ? d.target : d.target.id;
-                return groupOf.get(srcId) === groupOf.get(tgtId)
-                  ? INTRA_STRENGTH
-                  : INTER_STRENGTH;
-              }),
+              .strength(0.3),
           )
           .force('charge', forceManyBody().strength(p.charge))
           .force(

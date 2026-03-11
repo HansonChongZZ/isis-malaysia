@@ -10,7 +10,6 @@ interface UseGraphInteractionProps {
 export function useGraphInteraction({ edges }: UseGraphInteractionProps) {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null)
-  const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [filterSkill, setFilterSkill] = useState("")
 
@@ -29,7 +28,7 @@ export function useGraphInteraction({ edges }: UseGraphInteractionProps) {
 
   const getNodeOpacity = useCallback(
     (node: GraphNode, visibleIds: Set<string> | null) => {
-      // If there's a visibility filter (search/group/skill), apply it
+      // If there's a visibility filter (search/skill), apply it
       if (visibleIds && !visibleIds.has(node.id)) return 0.08
 
       // If there's a selected node, dim non-connected nodes
@@ -77,8 +76,6 @@ export function useGraphInteraction({ edges }: UseGraphInteractionProps) {
     selectedNodeId,
     hoveredNodeId,
     connectedIds,
-    filterGroup,
-    setFilterGroup,
     searchQuery,
     setSearchQuery,
     filterSkill,

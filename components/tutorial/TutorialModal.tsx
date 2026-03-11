@@ -22,13 +22,13 @@ const STEPS: TutorialStep[] = [
   {
     title: 'Each circle is an occupation',
     description:
-      'Every node represents one of 456 Malaysian occupations. Colors indicate the MASCO classification group.',
+      'Every node represents one of 456 Malaysian occupations. Larger nodes have higher AI exposure.',
     component: NodeRepresentationDemo,
   },
   {
     title: 'Similar skills cluster together',
     description:
-      'Occupations sharing similar skills are positioned closer. Clusters form naturally by occupation group.',
+      'Occupations sharing similar skills are positioned closer together, forming natural clusters.',
     component: NodeArrangementDemo,
   },
   {
