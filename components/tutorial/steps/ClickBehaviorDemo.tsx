@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { SAMPLE_NODES, SAMPLE_EDGES } from '../tutorialSteps';
-import { MASCO_GROUPS } from '@/lib/constants';
 
 const WIDTH = 340;
 const HEIGHT = 200;
@@ -71,7 +70,7 @@ export default function ClickBehaviorDemo() {
       .attr('cx', (d) => d.x)
       .attr('cy', (d) => d.y)
       .attr('r', 10)
-      .attr('fill', (d) => `var(${MASCO_GROUPS[d.group].colorVar})`);
+      .attr('fill', 'var(--node-color)');
 
     // Selection ring (hidden)
     const selRing = g
@@ -111,10 +110,10 @@ export default function ClickBehaviorDemo() {
     const headerY = 14;
     panel.append('circle')
       .attr('cx', 10).attr('cy', headerY - 3).attr('r', 3)
-      .attr('fill', `var(${MASCO_GROUPS[targetNode.group].colorVar})`);
+      .attr('fill', 'var(--node-color)');
     panel.append('text')
       .attr('x', 16).attr('y', headerY).attr('font-size', 5).attr('fill', 'var(--muted-foreground)')
-      .text('2421 · Professionals');
+      .text('2421');
 
     // Occupation title
     panel.append('text')
@@ -132,7 +131,7 @@ export default function ClickBehaviorDemo() {
 
     panel.append('text')
       .attr('x', 8).attr('y', 56).attr('font-size', 10).attr('font-weight', 700)
-      .attr('fill', `var(${MASCO_GROUPS[targetNode.group].colorVar})`).text('72.0%');
+      .attr('fill', 'var(--node-color)').text('72.0%');
 
     // Exposure badge
     panel.append('rect')
@@ -149,7 +148,7 @@ export default function ClickBehaviorDemo() {
       .attr('fill', 'var(--muted)');
     panel.append('rect')
       .attr('x', 8).attr('y', 61).attr('width', (PANEL_W - 16) * 0.72).attr('height', 4).attr('rx', 2)
-      .attr('fill', `var(${MASCO_GROUPS[targetNode.group].colorVar})`);
+      .attr('fill', 'var(--node-color)');
 
     // Monthly wage
     panel.append('text')
