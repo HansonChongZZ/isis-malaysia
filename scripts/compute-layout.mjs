@@ -28,18 +28,16 @@ const nodesPath = resolve(__dirname, '../public/data/nodes.json');
 const edgesPath = resolve(__dirname, '../public/data/edges.json');
 
 // Constants matching lib/constants.ts
-const NODE_RADIUS_BASE = 9;
-const NODE_RADIUS_SCALE = 100;
-const NODE_RADIUS_EXPONENT = 1;
-const NODE_RADIUS_COLLIDE_PADDING = 8;
+const NODE_RADIUS_BASE = 16;
+const NODE_RADIUS_SCALE = 38;
+const NODE_RADIUS_EXPONENT = 0.9;
+const NODE_RADIUS_COLLIDE_PADDING = 32;
 
 // Reference viewport — scaled up to give larger nodes room to spread
 const VIEWPORT_W = 5000;
 const VIEWPORT_H = 3200;
 
 // Tuning params (matches the runtime defaults)
-const INTRA_STRENGTH = 0.8;
-const INTER_STRENGTH = 0.001;
 const CHARGE = -60;
 const ITERATIONS = 300;
 
@@ -48,13 +46,10 @@ const nodes = JSON.parse(readFileSync(nodesPath, 'utf-8'));
 const edges = JSON.parse(readFileSync(edgesPath, 'utf-8'));
 console.log(`Loaded ${nodes.length} nodes, ${edges.length} edges`);
 
-const groupOf = new Map(nodes.map((n) => [n.id, n.group]));
-
 // Use existing pixel positions as starting points
 const simNodes = nodes.map((n) => ({
   id: n.id,
   aiExposure: n.aiExposure,
-  group: n.group,
   x: n.x,
   y: n.y,
   vx: 0,
@@ -77,11 +72,7 @@ const sim = forceSimulation(simNodes)
     forceLink(simEdges)
       .id((d) => d.id)
       .distance((d) => 55 + (7 - d.weight) * 16)
-      .strength((d) => {
-        const srcId = typeof d.source === 'string' ? d.source : d.source.id;
-        const tgtId = typeof d.target === 'string' ? d.target : d.target.id;
-        return groupOf.get(srcId) === groupOf.get(tgtId) ? INTRA_STRENGTH : INTER_STRENGTH;
-      }),
+      .strength(0.3),
   )
   .force('charge', forceManyBody().strength(CHARGE))
   .force('center', forceCenter(
@@ -127,11 +118,3 @@ if (invalid.length > 0) {
   console.log('All nodes have valid pixel positions.');
 }
 
-console.log('\nGroup centers:');
-for (const g of [...new Set(nodes.map((n) => n.group))].sort((a, b) => a - b)) {
-  const gn = output.filter((n) => n.group === g);
-  const ax = gn.reduce((s, n) => s + n.x, 0) / gn.length;
-  const ay = gn.reduce((s, n) => s + n.y, 0) / gn.length;
-  const spread = Math.sqrt(gn.reduce((s, n) => s + (n.x - ax) ** 2 + (n.y - ay) ** 2, 0) / gn.length);
-  console.log(`  Group ${g} (n=${gn.length}): center=(${ax.toFixed(0)}, ${ay.toFixed(0)}) spread=${spread.toFixed(0)}`);
-}
