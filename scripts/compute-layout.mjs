@@ -28,17 +28,17 @@ const nodesPath = resolve(__dirname, '../public/data/nodes.json');
 const edgesPath = resolve(__dirname, '../public/data/edges.json');
 
 // Constants matching lib/constants.ts
-const NODE_RADIUS_BASE = 16;
-const NODE_RADIUS_SCALE = 38;
-const NODE_RADIUS_EXPONENT = 0.9;
-const NODE_RADIUS_COLLIDE_PADDING = 32;
+const NODE_RADIUS_BASE = 46;
+const NODE_RADIUS_SCALE = 30;
+const NODE_RADIUS_EXPONENT = 1;
+const NODE_RADIUS_COLLIDE_PADDING = 57;
 
 // Reference viewport — scaled up to give larger nodes room to spread
 const VIEWPORT_W = 5000;
 const VIEWPORT_H = 3200;
 
 // Tuning params (matches the runtime defaults)
-const CHARGE = -60;
+const CHARGE = -800;
 const ITERATIONS = 300;
 
 // Load data
@@ -71,7 +71,7 @@ const sim = forceSimulation(simNodes)
     'link',
     forceLink(simEdges)
       .id((d) => d.id)
-      .distance((d) => 55 + (7 - d.weight) * 16)
+      .distance((d) => 600 + (7 - d.weight) * 20)
       .strength(0.3),
   )
   .force('charge', forceManyBody().strength(CHARGE))

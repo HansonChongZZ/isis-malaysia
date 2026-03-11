@@ -28,9 +28,9 @@ const DEFAULTS = {
   scale: NODE_RADIUS_SCALE,
   exponent: NODE_RADIUS_EXPONENT,
   collidePadding: NODE_RADIUS_COLLIDE_PADDING,
-  charge: -60,
-  linkDistanceBase: 55,
-  linkDistanceScale: 16,
+  charge: -800,
+  linkDistanceBase: 600,
+  linkDistanceScale: 20,
 };
 
 const SLIDER_CONFIG = [

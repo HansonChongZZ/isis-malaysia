@@ -16,7 +16,7 @@ export const QUARTILE_COLORS: Record<string, string> = {
 // Visual radius = NODE_RADIUS_BASE + (metricValue ^ NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE
 // The power exponent compresses low values and amplifies high values,
 // making top-exposure/wage/worker nodes visually jump out.
-export const NODE_RADIUS_BASE = 16;
-export const NODE_RADIUS_SCALE = 38;
-export const NODE_RADIUS_EXPONENT = 0.9;
-export const NODE_RADIUS_COLLIDE_PADDING = 32;
+export const NODE_RADIUS_BASE = 46;
+export const NODE_RADIUS_SCALE = 30;
+export const NODE_RADIUS_EXPONENT = 1;
+export const NODE_RADIUS_COLLIDE_PADDING = 57;
