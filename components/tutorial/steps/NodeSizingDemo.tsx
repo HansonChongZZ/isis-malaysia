@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { SAMPLE_NODES } from '../tutorialSteps';
-import { MASCO_GROUPS, NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_EXPONENT } from '@/lib/constants';
+import { NODE_RADIUS_BASE, NODE_RADIUS_SCALE, NODE_RADIUS_EXPONENT } from '@/lib/constants';
 
 const WIDTH = 340;
 const HEIGHT = 220;
@@ -50,7 +50,7 @@ export default function NodeSizingDemo() {
       .attr('cx', (d) => d.x)
       .attr('cy', (d) => d.y)
       .attr('r', UNIFORM_R)
-      .attr('fill', (d) => `var(${MASCO_GROUPS[d.group].colorVar})`);
+      .attr('fill', 'var(--node-color)');
 
     // Scale axis line
     const axisLine = g
