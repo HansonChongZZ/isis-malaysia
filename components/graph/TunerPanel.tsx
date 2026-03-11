@@ -271,8 +271,6 @@ export default function TunerPanel({
     };
   }, []);
 
-  if (process.env.NODE_ENV !== 'development') return null;
-
   return (
     <div className="absolute bottom-0 right-0 z-30">
       {/* Toggle button */}
