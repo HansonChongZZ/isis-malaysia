@@ -87,8 +87,6 @@ const SLIDER_CONFIG = [
 
 type ParamKey = (typeof SLIDER_CONFIG)[number]['key'];
 
-const INTRA_STRENGTH = 0.8;
-const INTER_STRENGTH = 0.001;
 const ITERATIONS = 300;
 
 export default function TunerPanel({
@@ -123,14 +121,11 @@ export default function TunerPanel({
 
       // Use requestAnimationFrame to avoid blocking the UI render
       requestAnimationFrame(() => {
-        const groupOf = new Map(nodes.map((n) => [n.id, n.group]));
-
         const simNodes = nodes.map((n) => {
           const orig = origPositions?.get(n.id);
           return {
             id: n.id,
             aiExposure: n.aiExposure,
-            group: n.group,
             x: orig?.x ?? n.x,
             y: orig?.y ?? n.y,
             vx: 0,
@@ -162,15 +157,7 @@ export default function TunerPanel({
                 (d: any) =>
                   p.linkDistanceBase + (7 - d.weight) * p.linkDistanceScale,
               )
-              .strength((d: any) => {
-                const srcId =
-                  typeof d.source === 'string' ? d.source : d.source.id;
-                const tgtId =
-                  typeof d.target === 'string' ? d.target : d.target.id;
-                return groupOf.get(srcId) === groupOf.get(tgtId)
-                  ? INTRA_STRENGTH
-                  : INTER_STRENGTH;
-              }),
+              .strength(0.3),
           )
           .force('charge', forceManyBody().strength(p.charge))
           .force(
