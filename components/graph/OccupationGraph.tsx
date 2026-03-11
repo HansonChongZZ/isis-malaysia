@@ -327,9 +327,6 @@ export default function OccupationGraph({
       }
     }
 
-    const nodeA = nodeById.current.get(selectedNodeId);
-    const nodeB = nodeById.current.get(secondSelectedNodeId);
-
     return {
       shared,
       onlyA,
