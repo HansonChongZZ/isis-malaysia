@@ -30,7 +30,6 @@ export default function HomePage() {
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [secondSelectedNodeId, setSecondSelectedNodeId] = useState<string | null>(null)
   const [panelNodeId, setPanelNodeId] = useState<string | null>(null)
-  const [filterGroup, setFilterGroup] = useState<number | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
   const [sizeThreshold, setSizeThreshold] = useState(0)
@@ -98,15 +97,12 @@ export default function HomePage() {
     return max
   }, [nodes])
 
-  // Occupation list for combobox (sorted by label, filtered by active MASCO group)
+  // Occupation list for combobox (sorted by label)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
-    const filtered = filterGroup !== null
-      ? nodes.filter((n) => n.group === filterGroup)
-      : nodes
-    return filtered
+    return nodes
       .map((n) => ({ id: n.id, label: n.label }))
       .sort((a, b) => a.label.localeCompare(b.label))
-  }, [nodes, filterGroup])
+  }, [nodes])
 
   const panelDetail = panelNodeId ? occupations[panelNodeId] ?? null : null
 
@@ -202,8 +198,6 @@ export default function HomePage() {
         occupations={occupationList}
         selectedOccupation={selectedNodeId}
         onOccupationSelect={handleNodeSelect}
-        filterGroup={filterGroup}
-        setFilterGroup={setFilterGroup}
         filterSkills={filterSkills}
         setFilterSkills={setFilterSkills}
         uniqueSkills={uniqueSkills}
@@ -246,7 +240,6 @@ export default function HomePage() {
             selectedNodeId={selectedNodeId}
             secondSelectedNodeId={secondSelectedNodeId}
             occupations={occupations}
-            filterGroup={filterGroup}
             filterSkills={filterSkills}
             allSkills={allSkills}
             sizeMetric={sizeMetric}
