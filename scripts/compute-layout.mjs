@@ -41,6 +41,33 @@ const VIEWPORT_H = 3200;
 const CHARGE = -4089;
 const ITERATIONS = 300;
 
+// Maximum spanning forest — canonical implementation in lib/mst.ts
+function computeMaxSpanningTree(edges) {
+  const parent = new Map();
+  const rank = new Map();
+  function find(x) {
+    if (!parent.has(x)) { parent.set(x, x); rank.set(x, 0); }
+    let root = x;
+    while (parent.get(root) !== root) root = parent.get(root);
+    let curr = x;
+    while (curr !== root) { const next = parent.get(curr); parent.set(curr, root); curr = next; }
+    return root;
+  }
+  function union(a, b) {
+    const ra = find(a), rb = find(b);
+    if (ra === rb) return false;
+    const ka = rank.get(ra), kb = rank.get(rb);
+    if (ka < kb) parent.set(ra, rb);
+    else if (ka > kb) parent.set(rb, ra);
+    else { parent.set(rb, ra); rank.set(ra, ka + 1); }
+    return true;
+  }
+  const sorted = [...edges].sort((a, b) => b.weight - a.weight);
+  const result = [];
+  for (const e of sorted) { if (union(e.source, e.target)) result.push(e); }
+  return result;
+}
+
 // Load data
 const nodes = JSON.parse(readFileSync(nodesPath, 'utf-8'));
 const edges = JSON.parse(readFileSync(edgesPath, 'utf-8'));
@@ -56,8 +83,11 @@ const simNodes = nodes.map((n) => ({
   vy: 0,
 }));
 
-// Run tuning simulation (identical to useForceSimulation runtime code)
-const simEdges = edges.map((e) => ({
+// Compute maximum spanning forest
+const mstEdges = computeMaxSpanningTree(edges);
+console.log(`MST: ${mstEdges.length} edges (from ${edges.length})`);
+
+const simEdges = mstEdges.map((e) => ({
   source: e.source,
   target: e.target,
   weight: e.weight,
@@ -71,8 +101,8 @@ const sim = forceSimulation(simNodes)
     'link',
     forceLink(simEdges)
       .id((d) => d.id)
-      .distance((d) => 600 + (7 - d.weight) * 20)
-      .strength(0.3),
+      .distance((d) => 150 + (7 - d.weight) * 80)
+      .strength((d) => d.weight / 7),
   )
   .force('charge', forceManyBody().strength(CHARGE))
   .force('center', forceCenter(
