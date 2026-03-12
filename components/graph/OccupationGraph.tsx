@@ -471,8 +471,10 @@ export default function OccupationGraph({
     ctx.save();
     ctx.setTransform(k * dpr, 0, 0, k * dpr, x * dpr, y * dpr);
 
-    // Draw background grid
-    const gridSize = 80;
+    // Draw background grid — each square is ~50% of the largest node's diameter
+    const base = tunerSizing?.base ?? NODE_RADIUS_BASE;
+    const scale = tunerSizing?.scale ?? NODE_RADIUS_SCALE;
+    const gridSize = base + scale;
     const vl = -x / k;
     const vt = -y / k;
     const vr = vl + canvas.width / (k * dpr);
@@ -594,7 +596,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [selectionMode, visibleEdges, hoveredEdges, mstEdges, showMstEdges]);
+  }, [selectionMode, visibleEdges, hoveredEdges, mstEdges, showMstEdges, tunerSizing]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
