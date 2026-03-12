@@ -18,6 +18,19 @@ import {
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
 import TunerPanel from './TunerPanel';
 
+// Categorical palette for MASCO groups 1-9 (debug coloring)
+const GROUP_COLORS: Record<number, string> = {
+  1: '#e6194b',
+  2: '#3cb44b',
+  3: '#4363d8',
+  4: '#f58231',
+  5: '#911eb4',
+  6: '#42d4f4',
+  7: '#f032e6',
+  8: '#bfef45',
+  9: '#fabed4',
+};
+
 interface TooltipState {
   x: number;
   y: number;
@@ -27,6 +40,7 @@ interface TooltipState {
 interface OccupationGraphProps {
   nodes: GraphNode[];
   edges: GraphEdge[];
+  mstEdges: GraphEdge[];
   onNodeSelect: (nodeId: string | null) => void;
   selectedNodeId: string | null;
   filterSkills: string[];
@@ -43,6 +57,7 @@ interface OccupationGraphProps {
 export default function OccupationGraph({
   nodes,
   edges,
+  mstEdges,
   onNodeSelect,
   selectedNodeId: selectedNodeIdProp,
   filterSkills,
@@ -87,6 +102,7 @@ export default function OccupationGraph({
   const [tunerSizing, setTunerSizing] = useState<TunerSizingParams | null>(
     null,
   );
+  const [colorByGroup, setColorByGroup] = useState(false);
   const [tunerPositions, setTunerPositions] = useState<Map<
     string,
     { x: number; y: number }
@@ -489,6 +505,32 @@ export default function OccupationGraph({
     ctx.fillRect(vl, vt, vr - vl, vb - vt);
     ctx.globalCompositeOperation = 'source-over';
 
+    // Draw baseline MST edges — always visible, dimmed during hover/selection
+    {
+      const hasFocus = visibleEdges.length > 0 || hoveredEdges.length > 0;
+      ctx.strokeStyle = edgeColorRef.current;
+      ctx.lineWidth = 0.5 / k;
+      ctx.globalAlpha = hasFocus ? 0.04 : 0.15;
+      ctx.beginPath();
+      for (const edge of mstEdges) {
+        const src = nodeById.current.get(
+          typeof edge.source === 'string'
+            ? edge.source
+            : (edge.source as GraphNode).id,
+        );
+        const tgt = nodeById.current.get(
+          typeof edge.target === 'string'
+            ? edge.target
+            : (edge.target as GraphNode).id,
+        );
+        if (!src || !tgt) continue;
+        ctx.moveTo(src.x, src.y);
+        ctx.lineTo(tgt.x, tgt.y);
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
     // Draw selection edges (existing behavior)
     if (visibleEdges.length > 0) {
       ctx.strokeStyle = edgeColorRef.current;
@@ -551,7 +593,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [selectionMode, visibleEdges, hoveredEdges]);
+  }, [selectionMode, visibleEdges, hoveredEdges, mstEdges]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
@@ -657,7 +699,7 @@ export default function OccupationGraph({
     const ty = (dimensions.height - boundsH * scale) / 2 - boundsMinY * scale;
     const fitTransform = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
-    const minScale = 0.03;
+    const minScale = 0.01;
     const maxScale = 0.1;
 
     // Expand translate extent for panning
@@ -915,9 +957,11 @@ export default function OccupationGraph({
               {simNodes.map((node) => {
                 const isIsolate = isolateIds.has(node.id);
                 const r = getNodeRadius(node);
-                const color = isIsolate
-                  ? isolateFillRef.current
-                  : nodeColorRef.current;
+                const color = colorByGroup
+                  ? (GROUP_COLORS[node.group] ?? nodeColorRef.current)
+                  : isIsolate
+                    ? isolateFillRef.current
+                    : nodeColorRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
                 const isHovered = node.id === hoveredNodeId;
@@ -1135,8 +1179,11 @@ export default function OccupationGraph({
       <TunerPanel
         nodes={simNodes}
         edges={edges}
+        mstEdges={mstEdges}
         onSizingChange={setTunerSizing}
         onPositionsChange={setTunerPositions}
+        colorByGroup={colorByGroup}
+        onColorByGroupChange={setColorByGroup}
       />
     </div>
   );
