@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState, useEffect } from "react"
-import { ArrowLeftIcon, XIcon } from "lucide-react"
+import { XIcon } from "lucide-react"
 import {
   Dialog,
   DialogClose,
@@ -12,6 +12,7 @@ import {
 import type { OccupationDetail, GraphNode, GraphEdge } from "@/lib/types"
 import OccupationDetailPane from "./OccupationDetailPane"
 import TransitionCards, { type TransitionRow } from "./TransitionCards"
+import ComparisonGrid from "./ComparisonGrid"
 
 interface OccupationPanelProps {
   nodeId: string | null
@@ -161,22 +162,27 @@ export default function OccupationPanel({
               </div>
             </DialogHeader>
 
-            {/* Two-column body — 50/50 split */}
-            <div className="flex flex-1 min-h-0">
-              {/* Left pane — primary occupation details */}
-              <div className="w-1/2 border-r border-border min-h-0 overflow-hidden">
-                <OccupationDetailPane
-                  detail={detail}
-                  sharedSkills={sharedSkills}
-                />
-              </div>
+            {/* Body — cards mode: 50/50 split, comparison mode: shared-row grid */}
+            {isComparing && comparisonDetail && comparisonDeltas ? (
+              <ComparisonGrid
+                primary={detail}
+                primaryNodeId={nodeId}
+                comparison={comparisonDetail}
+                comparisonNodeId={comparisonNodeId!}
+                sharedSkills={sharedSkills ?? new Set()}
+                comparisonDeltas={comparisonDeltas}
+                skillsMatchWeight={comparisonWeight}
+                onBack={() => setComparisonNodeId(null)}
+              />
+            ) : (
+              <div className="flex flex-1 min-h-0">
+                {/* Left pane — primary occupation details */}
+                <div className="w-1/2 border-r border-border min-h-0 overflow-hidden">
+                  <OccupationDetailPane detail={detail} />
+                </div>
 
-              {/* Right pane — cards or comparison */}
-              <div className={`w-1/2 flex flex-col min-h-0 ${isComparing ? "border-l-[3px] border-l-blue-500" : ""}`}>
-                {/* TransitionCards — hidden (not unmounted) when comparing */}
-                <div
-                  className={isComparing ? "hidden" : "flex flex-col min-h-0 h-full"}
-                >
+                {/* Right pane — transition cards */}
+                <div className="w-1/2 flex flex-col min-h-0">
                   <TransitionCards
                     transitions={transitions}
                     occupations={occupations}
@@ -184,38 +190,8 @@ export default function OccupationPanel({
                     onCardClick={(id) => setComparisonNodeId(id)}
                   />
                 </div>
-
-                {/* Comparison detail pane */}
-                {isComparing && comparisonDetail && (
-                  <OccupationDetailPane
-                    detail={comparisonDetail}
-                    sharedSkills={sharedSkills}
-                    comparisonDeltas={comparisonDeltas}
-                    skillsMatchWeight={comparisonWeight}
-                    header={
-                      <div className="mb-2 space-y-1">
-                        <div className="flex items-center gap-3">
-                          <button
-                            type="button"
-                            onClick={() => setComparisonNodeId(null)}
-                            className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 transition-colors"
-                          >
-                            <ArrowLeftIcon className="size-3" />
-                            Back to pathways
-                          </button>
-                          <span className="text-xs text-muted-foreground font-mono">
-                            {comparisonNodeId}
-                          </span>
-                        </div>
-                        <div className="text-base font-semibold text-foreground leading-snug">
-                          {comparisonDetail.occupation}
-                        </div>
-                      </div>
-                    }
-                  />
-                )}
               </div>
-            </div>
+            )}
           </>
         )}
       </DialogContent>
