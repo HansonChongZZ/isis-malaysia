@@ -283,12 +283,12 @@ export default function HomePage() {
         detail={panelDetail}
         nodes={nodes}
         edges={edges}
+        occupations={occupations}
         isOpen={isPanelOpen}
         onClose={() => {
           setIsPanelOpen(false)
           setPanelNodeId(null)
         }}
-        onNodeSelect={handleNodeSelect}
       />
     </div>
   )
