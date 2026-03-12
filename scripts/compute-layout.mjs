@@ -29,16 +29,16 @@ const edgesPath = resolve(__dirname, '../public/data/edges.json');
 
 // Constants matching lib/constants.ts
 const NODE_RADIUS_BASE = 100;
-const NODE_RADIUS_SCALE = 160;
-const NODE_RADIUS_EXPONENT = 0.5;
-const NODE_RADIUS_COLLIDE_PADDING = 204.5;
+const NODE_RADIUS_SCALE = 501;
+const NODE_RADIUS_EXPONENT = 3;
+const NODE_RADIUS_COLLIDE_PADDING = 250.5;
 
 // Reference viewport — scaled up to give larger nodes room to spread
 const VIEWPORT_W = 5000;
 const VIEWPORT_H = 3200;
 
 // Tuning params (matches the runtime defaults)
-const CHARGE = -4089;
+const CHARGE = -800;
 const ITERATIONS = 300;
 
 // Maximum spanning forest — canonical implementation in lib/mst.ts
@@ -101,7 +101,7 @@ const sim = forceSimulation(simNodes)
     'link',
     forceLink(simEdges)
       .id((d) => d.id)
-      .distance((d) => 150 + (7 - d.weight) * 80)
+      .distance((d) => 600 + (7 - d.weight) * 20)
       .strength((d) => d.weight / 7),
   )
   .force('charge', forceManyBody().strength(CHARGE))

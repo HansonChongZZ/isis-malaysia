@@ -24,6 +24,8 @@ interface TunerPanelProps {
   onPositionsChange: (positions: Map<string, { x: number; y: number }>) => void;
   colorByGroup: boolean;
   onColorByGroupChange: (value: boolean) => void;
+  showMstEdges: boolean;
+  onShowMstEdgesChange: (value: boolean) => void;
 }
 
 const DEFAULTS = {
@@ -116,6 +118,8 @@ export default function TunerPanel({
   onPositionsChange,
   colorByGroup,
   onColorByGroupChange,
+  showMstEdges,
+  onShowMstEdgesChange,
 }: TunerPanelProps) {
   const [open, setOpen] = useState(false);
   const [params, setParams] = useState<Record<ParamKey, number>>({
@@ -373,6 +377,15 @@ export default function TunerPanel({
                 className="accent-foreground"
               />
               <span>Color by MASCO group</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer mt-1.5">
+              <input
+                type="checkbox"
+                checked={showMstEdges}
+                onChange={(e) => onShowMstEdgesChange(e.target.checked)}
+                className="accent-foreground"
+              />
+              <span>Show MST edges</span>
             </label>
           </div>
 

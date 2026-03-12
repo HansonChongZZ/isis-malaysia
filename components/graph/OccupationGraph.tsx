@@ -103,6 +103,7 @@ export default function OccupationGraph({
     null,
   );
   const [colorByGroup, setColorByGroup] = useState(false);
+  const [showMstEdges, setShowMstEdges] = useState(false);
   const [tunerPositions, setTunerPositions] = useState<Map<
     string,
     { x: number; y: number }
@@ -505,8 +506,8 @@ export default function OccupationGraph({
     ctx.fillRect(vl, vt, vr - vl, vb - vt);
     ctx.globalCompositeOperation = 'source-over';
 
-    // Draw baseline MST edges — always visible, dimmed during hover/selection
-    {
+    // Draw baseline MST edges — toggled from TunerPanel, dimmed during hover/selection
+    if (showMstEdges) {
       const hasFocus = visibleEdges.length > 0 || hoveredEdges.length > 0;
       ctx.strokeStyle = edgeColorRef.current;
       ctx.lineWidth = 0.5 / k;
@@ -593,7 +594,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [selectionMode, visibleEdges, hoveredEdges, mstEdges]);
+  }, [selectionMode, visibleEdges, hoveredEdges, mstEdges, showMstEdges]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
@@ -1184,6 +1185,8 @@ export default function OccupationGraph({
         onPositionsChange={setTunerPositions}
         colorByGroup={colorByGroup}
         onColorByGroupChange={setColorByGroup}
+        showMstEdges={showMstEdges}
+        onShowMstEdgesChange={setShowMstEdges}
       />
     </div>
   );
