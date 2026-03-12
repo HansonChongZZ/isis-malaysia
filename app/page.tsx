@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
+import { computeMaxSpanningTree } from "@/lib/mst"
 import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
 import OccupationPanel from "@/components/panel/OccupationPanel"
@@ -96,6 +97,8 @@ export default function HomePage() {
     }
     return max
   }, [nodes])
+
+  const mstEdges = useMemo(() => computeMaxSpanningTree(edges), [edges])
 
   // Occupation list for combobox (sorted by label)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
@@ -236,6 +239,7 @@ export default function HomePage() {
           <OccupationGraph
             nodes={nodes}
             edges={edges}
+            mstEdges={mstEdges}
             onNodeSelect={handleNodeSelect}
             selectedNodeId={selectedNodeId}
             secondSelectedNodeId={secondSelectedNodeId}
@@ -268,7 +272,7 @@ export default function HomePage() {
         {/* Node count badge */}
         {!loading && !error && (
           <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded">
-            {nodes.length} occupations · {edges.length} skill edges
+            {nodes.length} occupations · {mstEdges.length} skill edges ({edges.length.toLocaleString()} total)
           </div>
         )}
       </div>

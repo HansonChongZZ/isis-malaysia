@@ -19,8 +19,13 @@ import {
 interface TunerPanelProps {
   nodes: GraphNode[];
   edges: GraphEdge[];
+  mstEdges: GraphEdge[];
   onSizingChange: (params: TunerSizingParams) => void;
   onPositionsChange: (positions: Map<string, { x: number; y: number }>) => void;
+  colorByGroup: boolean;
+  onColorByGroupChange: (value: boolean) => void;
+  showMstEdges: boolean;
+  onShowMstEdgesChange: (value: boolean) => void;
 }
 
 const DEFAULTS = {
@@ -31,6 +36,7 @@ const DEFAULTS = {
   charge: -800,
   linkDistanceBase: 600,
   linkDistanceScale: 20,
+  linkStrengthDivisor: 7,
 };
 
 const SLIDER_CONFIG = [
@@ -90,6 +96,14 @@ const SLIDER_CONFIG = [
     step: 1,
     group: 'layout',
   },
+  {
+    key: 'linkStrengthDivisor',
+    label: 'Link Str Divisor',
+    min: 1,
+    max: 14,
+    step: 0.5,
+    group: 'layout',
+  },
 ] as const;
 
 type ParamKey = (typeof SLIDER_CONFIG)[number]['key'];
@@ -99,8 +113,13 @@ const ITERATIONS = 300;
 export default function TunerPanel({
   nodes,
   edges,
+  mstEdges,
   onSizingChange,
   onPositionsChange,
+  colorByGroup,
+  onColorByGroupChange,
+  showMstEdges,
+  onShowMstEdgesChange,
 }: TunerPanelProps) {
   const [open, setOpen] = useState(false);
   const [params, setParams] = useState<Record<ParamKey, number>>({
@@ -140,7 +159,7 @@ export default function TunerPanel({
           };
         });
 
-        const simEdges = edges.map((e) => ({
+        const simEdges = mstEdges.map((e) => ({
           source:
             typeof e.source === 'string'
               ? e.source
@@ -164,7 +183,7 @@ export default function TunerPanel({
                 (d: any) =>
                   p.linkDistanceBase + (7 - d.weight) * p.linkDistanceScale,
               )
-              .strength(0.3),
+              .strength((d: any) => d.weight / p.linkStrengthDivisor),
           )
           .force('charge', forceManyBody().strength(p.charge))
           .force(
@@ -197,7 +216,7 @@ export default function TunerPanel({
         setSimulating(false);
       });
     },
-    [nodes, edges, onPositionsChange],
+    [nodes, mstEdges, onPositionsChange],
   );
 
   const handleChange = useCallback(
@@ -221,6 +240,7 @@ export default function TunerPanel({
           'charge',
           'linkDistanceBase',
           'linkDistanceScale',
+          'linkStrengthDivisor',
         ];
         if (layoutKeys.includes(key)) {
           if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -342,6 +362,31 @@ export default function TunerPanel({
                 />
               </label>
             ))}
+          </div>
+
+          {/* Debug section */}
+          <div className="mb-3">
+            <div className="text-muted-foreground font-medium mb-1.5 uppercase tracking-wider text-[10px]">
+              Debug
+            </div>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={colorByGroup}
+                onChange={(e) => onColorByGroupChange(e.target.checked)}
+                className="accent-foreground"
+              />
+              <span>Color by MASCO group</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer mt-1.5">
+              <input
+                type="checkbox"
+                checked={showMstEdges}
+                onChange={(e) => onShowMstEdgesChange(e.target.checked)}
+                className="accent-foreground"
+              />
+              <span>Show MST edges</span>
+            </label>
           </div>
 
           {/* Export section */}
