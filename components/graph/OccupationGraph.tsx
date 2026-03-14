@@ -123,7 +123,7 @@ export default function OccupationGraph({
     setTunerSizingPerMode(prev => ({ ...prev, [viewMode]: params }));
   }, [viewMode]);
   const [colorByGroup, setColorByGroup] = useState(false);
-  const [showMstEdges, setShowMstEdges] = useState(false);
+  const [showMstEdges, setShowMstEdges] = useState(true);
   const [tunerPositions, setTunerPositions] = useState<Map<string, { x: number; y: number }> | null>(null);
   const [circularLayout, setCircularLayout] = useState<CircularLayoutParams>({
     ringRadiusFactor: 0.12,
