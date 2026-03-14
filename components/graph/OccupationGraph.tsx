@@ -10,6 +10,7 @@ import type {
   OccupationDetail,
   TunerSizingParams,
   LayoutMode,
+  ViewMode,
 } from '@/lib/types';
 import { computeRingPositions, computeRadialPositions } from '@/lib/layout';
 import type { LayoutPosition } from '@/lib/layout';
@@ -57,6 +58,7 @@ interface OccupationGraphProps {
   maxWorkers: number;
   secondSelectedNodeId: string | null;
   occupations: Record<string, OccupationDetail>;
+  viewMode: ViewMode;
   layoutMode: LayoutMode;
   specificSkillsMap: Map<string, Set<string>>;
 }
@@ -75,6 +77,7 @@ export default function OccupationGraph({
   maxWorkers,
   secondSelectedNodeId,
   occupations,
+  viewMode,
   layoutMode,
   specificSkillsMap,
 }: OccupationGraphProps) {
@@ -128,17 +131,29 @@ export default function OccupationGraph({
   const selectionModeRef = useRef(selectionMode);
   const selectedNodeIdRef = useRef(selectedNodeId);
   const secondSelectedNodeIdRef = useRef(secondSelectedNodeId);
+  const viewModeRef = useRef(viewMode);
   useEffect(() => {
     selectionModeRef.current = selectionMode;
     selectedNodeIdRef.current = selectedNodeId;
     secondSelectedNodeIdRef.current = secondSelectedNodeId;
-  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
+    viewModeRef.current = viewMode;
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, viewMode]);
 
   const simNodes = useMemo<GraphNode[]>(
     () => nodes.map((n) => ({ ...n })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [nodes.length],
   );
+
+  // Save original force-directed positions from nodes.json
+  const forcePositions = useMemo(() => {
+    const map = new Map<string, LayoutPosition>();
+    for (const n of nodes) {
+      map.set(n.id, { x: n.x, y: n.y });
+    }
+    return map;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodes.length]);
 
   const ringPositions = useMemo(
     () => computeRingPositions(simNodes, 20000, 20000),
@@ -381,7 +396,7 @@ export default function OccupationGraph({
         return 1;
       }
       if (selectedNodeId && connectedIds && !connectedIds.has(node.id))
-        return 0.06;
+        return viewMode === 'force' ? 0.12 : 0.06;
       if (
         hoveredNodeId &&
         !selectedNodeId &&
@@ -393,6 +408,7 @@ export default function OccupationGraph({
       return 1;
     },
     [
+      viewMode,
       nodeSizeMetric,
       visibleIds,
       selectionMode,
@@ -432,6 +448,7 @@ export default function OccupationGraph({
   const animatingRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
   const prevLayoutModeRef = useRef<LayoutMode>(layoutMode);
+  const prevViewModeRef = useRef<ViewMode>(viewMode);
 
   const animateToPositions = useCallback(
     (
@@ -508,10 +525,12 @@ export default function OccupationGraph({
     };
   }, []);
 
-  // --- Position effect with animation (replaces static position assignment) ---
+  // --- Position effect with animation ---
   useEffect(() => {
-    const prevMode = prevLayoutModeRef.current;
+    const prevLayout = prevLayoutModeRef.current;
+    const prevView = prevViewModeRef.current;
     prevLayoutModeRef.current = layoutMode;
+    prevViewModeRef.current = viewMode;
 
     const updateGraphCenter = () => {
       if (simNodes.length) {
@@ -528,8 +547,29 @@ export default function OccupationGraph({
       }
     };
 
+    const applyPositions = (positions: Map<string, LayoutPosition>) => {
+      for (const node of simNodes) {
+        const pos = positions.get(node.id);
+        if (pos) {
+          node.x = pos.x;
+          node.y = pos.y;
+        }
+      }
+      updateGraphCenter();
+      drawEdgesRef.current();
+    };
+
+    if (viewMode === 'force') {
+      // Force-directed mode: use original positions from nodes.json
+      applyPositions(forcePositions);
+      return;
+    }
+
+    // Circular mode: ring/radial with animation
+    const viewChanged = prevView !== viewMode;
+
     if (layoutMode === 'ring') {
-      if (prevMode === 'radial') {
+      if (prevLayout === 'radial' && !viewChanged) {
         // Animate radial → ring
         const targets = new Map<string, LayoutPosition>();
         for (const node of simNodes) {
@@ -541,16 +581,8 @@ export default function OccupationGraph({
           drawEdgesRef.current();
         });
       } else {
-        // Initial render or ring → ring: set directly
-        for (const node of simNodes) {
-          const pos = ringPositions.get(node.id);
-          if (pos) {
-            node.x = pos.x;
-            node.y = pos.y;
-          }
-        }
-        updateGraphCenter();
-        drawEdgesRef.current();
+        // Initial render, view mode switch, or ring → ring: set directly
+        applyPositions(ringPositions);
       }
     } else if (layoutMode === 'radial' && radialPositions) {
       // Build combined target: radial positions for center+neighbors, ring for rest
@@ -564,13 +596,17 @@ export default function OccupationGraph({
           if (ringPos) targets.set(node.id, ringPos);
         }
       }
-      animateToPositions(targets, 800, () => {
-        updateGraphCenter();
-        drawEdgesRef.current();
-      });
+      if (viewChanged) {
+        applyPositions(targets);
+      } else {
+        animateToPositions(targets, 800, () => {
+          updateGraphCenter();
+          drawEdgesRef.current();
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layoutMode, simNodes, ringPositions, radialPositions]);
+  }, [viewMode, layoutMode, simNodes, ringPositions, radialPositions, forcePositions]);
 
   const visibleEdges = useMemo(() => {
     if (selectionMode === 'pair') {
@@ -646,8 +682,8 @@ export default function OccupationGraph({
     ctx.fillRect(vl, vt, vr - vl, vb - vt);
     ctx.globalCompositeOperation = 'source-over';
 
-    // No edges in ring mode — clean overview
-    if (selectionModeRef.current === 'none') {
+    // No edges in circular ring mode (no selection) — clean overview
+    if (viewModeRef.current === 'circular' && selectionModeRef.current === 'none') {
       ctx.restore();
       return;
     }
@@ -656,9 +692,9 @@ export default function OccupationGraph({
     if (visibleEdges.length > 0) {
       ctx.strokeStyle = edgeColorRef.current;
 
-      if (selectionModeRef.current === 'pair') {
-        // Pair mode: straight lines grouped by weight
-        ctx.lineWidth = 2 / k;
+      if (selectionModeRef.current === 'pair' || viewModeRef.current === 'force') {
+        // Force mode + pair mode: straight lines grouped by weight
+        ctx.lineWidth = selectionModeRef.current === 'pair' ? 2 / k : 0.5 / k;
         const byWeight = new Map<number, typeof visibleEdges>();
         for (const edge of visibleEdges) {
           const w = edge.weight;
@@ -686,7 +722,7 @@ export default function OccupationGraph({
           ctx.stroke();
         }
       } else {
-        // Single selection: curved arcs with opacity based on skill distance
+        // Circular single selection: curved arcs with opacity based on skill distance
         ctx.lineWidth = 0.5 / k;
         for (const edge of visibleEdges) {
           const src = nodeById.current.get(

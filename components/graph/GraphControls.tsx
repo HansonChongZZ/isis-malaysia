@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useMemo, useEffect } from 'react';
-import type { NodeSizeMetric } from '@/lib/types';
+import type { NodeSizeMetric, ViewMode } from '@/lib/types';
 import { Search, Settings2, X } from 'lucide-react';
 import {
   Combobox,
@@ -35,6 +35,8 @@ interface GraphControlsProps {
   onNodeSizeMetricChange: (metric: NodeSizeMetric) => void;
   maxWorkers: number;
   onResetSettings: () => void;
+  viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
   hideSearchOnDesktop?: boolean;
   onShowHeroSearch?: () => void;
 }
@@ -55,6 +57,8 @@ export default function GraphControls({
   onNodeSizeMetricChange,
   maxWorkers,
   onResetSettings,
+  viewMode,
+  onViewModeChange,
   hideSearchOnDesktop,
   onShowHeroSearch,
 }: GraphControlsProps) {
@@ -192,6 +196,35 @@ export default function GraphControls({
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
+              </div>
+
+              {/* Layout Mode section */}
+              <div className="px-4 py-3 space-y-3 border-b border-border">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Layout</p>
+                <div className="flex rounded-md border border-border overflow-hidden text-xs">
+                  <button
+                    onClick={() => onViewModeChange('force')}
+                    aria-pressed={viewMode === 'force'}
+                    className={`flex-1 px-3 py-1.5 transition-colors ${
+                      viewMode === 'force'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Force
+                  </button>
+                  <button
+                    onClick={() => onViewModeChange('circular')}
+                    aria-pressed={viewMode === 'circular'}
+                    className={`flex-1 px-3 py-1.5 transition-colors border-l border-border ${
+                      viewMode === 'circular'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-muted/50 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Circular
+                  </button>
+                </div>
               </div>
 
               {/* Node Size section */}

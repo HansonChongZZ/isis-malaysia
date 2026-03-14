@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
-import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode } from "@/lib/types"
+import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
 import { buildSpecificSkillsMap } from "@/lib/skills"
 import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
@@ -36,6 +36,7 @@ export default function HomePage() {
   const [sizeThreshold, setSizeThreshold] = useState(0)
   const [nodeSizeMetric, setNodeSizeMetric] = useState<NodeSizeMetric>('aiExposure')
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
+  const [viewMode, setViewMode] = useState<ViewMode>('force')
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -114,14 +115,59 @@ export default function HomePage() {
   const panelDetail = panelNodeId ? occupations[panelNodeId] ?? null : null
 
   const handleNodeSelect = (id: string | null) => {
+    if (viewMode === 'force') {
+      // Force-directed: original click behavior
+      if (id === null) {
+        if (secondSelectedNodeId) {
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+          setIsPanelOpen(false)
+        } else {
+          setSelectedNodeId(null)
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+          setIsPanelOpen(false)
+        }
+        return
+      }
+
+      if (secondSelectedNodeId) {
+        if (id === selectedNodeId || id === secondSelectedNodeId) {
+          setPanelNodeId(id)
+          setIsPanelOpen(true)
+        } else {
+          setSelectedNodeId(id)
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+          setIsPanelOpen(false)
+        }
+        return
+      }
+
+      if (selectedNodeId) {
+        if (id === selectedNodeId) {
+          setPanelNodeId(id)
+          setIsPanelOpen(true)
+        } else if (firstNodeNeighbors.has(id)) {
+          setSecondSelectedNodeId(id)
+        } else {
+          setSelectedNodeId(id)
+          setSecondSelectedNodeId(null)
+        }
+        return
+      }
+
+      setSelectedNodeId(id)
+      return
+    }
+
+    // Circular mode: ring/radial behavior
     if (id === null) {
       if (secondSelectedNodeId) {
-        // Pair mode → step back to single mode (stay radial)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
       } else if (selectedNodeId) {
-        // Single/radial mode → clear everything, back to ring
         setSelectedNodeId(null)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
@@ -132,7 +178,6 @@ export default function HomePage() {
     }
 
     if (secondSelectedNodeId) {
-      // In pair mode
       if (id === selectedNodeId || id === secondSelectedNodeId) {
         setPanelNodeId(id)
         setIsPanelOpen(true)
@@ -147,7 +192,6 @@ export default function HomePage() {
     }
 
     if (selectedNodeId) {
-      // In single/radial mode
       if (id === selectedNodeId) {
         setPanelNodeId(id)
         setIsPanelOpen(true)
@@ -161,7 +205,6 @@ export default function HomePage() {
       return
     }
 
-    // No selection (ring mode) → first click → transition to radial
     setSelectedNodeId(id)
     setLayoutMode('radial')
   }
@@ -176,13 +219,13 @@ export default function HomePage() {
           setSelectedNodeId(null)
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
-          setLayoutMode('ring')
+          if (viewMode === 'circular') setLayoutMode('ring')
         }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isPanelOpen, secondSelectedNodeId])
+  }, [isPanelOpen, secondSelectedNodeId, viewMode])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
     setSizeMetric(metric)
@@ -198,10 +241,18 @@ export default function HomePage() {
     setNodeSizeMetric('aiExposure')
   }
 
+  const handleViewModeChange = (mode: ViewMode) => {
+    setViewMode(mode)
+    // When switching to circular, reset to ring layout
+    if (mode === 'circular') {
+      setLayoutMode(selectedNodeId ? 'radial' : 'ring')
+    }
+  }
+
   const handleSearchSelect = (id: string | null) => {
     if (id === null) return;
-    // If already in radial mode, reset to ring first, then select after animation
-    if (layoutMode === 'radial') {
+    // In circular mode with radial active, reset to ring first
+    if (viewMode === 'circular' && layoutMode === 'radial') {
       setSelectedNodeId(null);
       setSecondSelectedNodeId(null);
       setPanelNodeId(null);
@@ -236,6 +287,8 @@ export default function HomePage() {
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
         maxWorkers={maxWorkers}
         onResetSettings={handleResetSettings}
+        viewMode={viewMode}
+        onViewModeChange={handleViewModeChange}
         hideSearchOnDesktop={!selectedNodeId}
         onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
       />
@@ -273,6 +326,7 @@ export default function HomePage() {
             nodeSizeMetric={nodeSizeMetric}
             maxWage={maxWage}
             maxWorkers={maxWorkers}
+            viewMode={viewMode}
             layoutMode={layoutMode}
             specificSkillsMap={specificSkillsMap}
           />

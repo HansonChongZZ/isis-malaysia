@@ -41,3 +41,4 @@ export interface TunerSizingParams {
 }
 
 export type LayoutMode = 'ring' | 'radial';
+export type ViewMode = 'force' | 'circular';
