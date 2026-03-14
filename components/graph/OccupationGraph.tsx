@@ -1254,6 +1254,7 @@ export default function OccupationGraph({
                     strokeOpacity={opacity}
                     filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
+                      pointerEvents: (visibleIds && !visibleIds.has(node.id)) ? 'none' : 'auto',
                       cursor: isIsolate ? 'default'
                         : (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
                         : 'pointer',
@@ -1262,6 +1263,7 @@ export default function OccupationGraph({
                     }}
                     onClick={(e) => {
                       if (isIsolate) return;
+                      if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
                       // In radial mode, clicking outside the neighbourhood deselects
                       if (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) {
@@ -1272,6 +1274,7 @@ export default function OccupationGraph({
                     }}
                     onMouseEnter={() => {
                       if (isIsolate) return;
+                      if (visibleIds && !visibleIds.has(node.id)) return;
                       if (selectionMode === 'pair') return;
                       // In radial mode, disable hover on ring nodes outside the neighbourhood
                       if (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
