@@ -557,6 +557,18 @@ export default function OccupationGraph({
       }
       updateGraphCenter();
       drawEdgesRef.current();
+      // Force SVG circle positions to update (React doesn't see simNode mutations)
+      const g = gRef.current;
+      if (g) {
+        d3.select(g).selectAll<SVGCircleElement, null>('.node').each(function () {
+          const el = d3.select(this);
+          const id = el.attr('data-id');
+          const node = nodeById.current.get(id);
+          if (node) {
+            el.attr('cx', node.x).attr('cy', node.y);
+          }
+        });
+      }
     };
 
     if (viewMode === 'force') {
@@ -968,7 +980,7 @@ export default function OccupationGraph({
     return () => {
       svg.on('.zoom', null);
     };
-  }, [dimensions.width, dimensions.height, simNodes]);
+  }, [dimensions.width, dimensions.height, simNodes, viewMode, layoutMode]);
 
   // Auto-zoom to frame selection (single or pair mode)
   useEffect(() => {
