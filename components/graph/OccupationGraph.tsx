@@ -110,9 +110,14 @@ export default function OccupationGraph({
     };
   } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
-  const [tunerSizing, setTunerSizing] = useState<TunerSizingParams | null>(
-    null,
-  );
+  const [tunerSizingPerMode, setTunerSizingPerMode] = useState<Record<ViewMode, TunerSizingParams | null>>({
+    force: null,
+    circular: null,
+  });
+  const tunerSizing = tunerSizingPerMode[viewMode];
+  const setTunerSizing = useCallback((params: TunerSizingParams) => {
+    setTunerSizingPerMode(prev => ({ ...prev, [viewMode]: params }));
+  }, [viewMode]);
   const [colorByGroup, setColorByGroup] = useState(false);
   const selectionMode = !selectedNodeId
     ? 'none'
@@ -1440,6 +1445,7 @@ export default function OccupationGraph({
         })()}
 
       <TunerPanel
+        key={viewMode}
         onSizingChange={setTunerSizing}
         colorByGroup={colorByGroup}
         onColorByGroupChange={setColorByGroup}

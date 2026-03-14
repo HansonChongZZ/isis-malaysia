@@ -32,11 +32,29 @@ export default function HomePage() {
   const [secondSelectedNodeId, setSecondSelectedNodeId] = useState<string | null>(null)
   const [panelNodeId, setPanelNodeId] = useState<string | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
-  const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
-  const [sizeThreshold, setSizeThreshold] = useState(0)
-  const [nodeSizeMetric, setNodeSizeMetric] = useState<NodeSizeMetric>('aiExposure')
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
   const [viewMode, setViewMode] = useState<ViewMode>('force')
+
+  // Per-view-mode settings
+  type ModeSettings = {
+    sizeMetric: 'aiExposure' | 'wage'
+    sizeThreshold: number
+    nodeSizeMetric: NodeSizeMetric
+  }
+  const [settingsPerMode, setSettingsPerMode] = useState<Record<ViewMode, ModeSettings>>({
+    force: { sizeMetric: 'aiExposure', sizeThreshold: 0, nodeSizeMetric: 'aiExposure' },
+    circular: { sizeMetric: 'aiExposure', sizeThreshold: 0, nodeSizeMetric: 'aiExposure' },
+  })
+
+  // Active settings derived from current view mode
+  const { sizeMetric, sizeThreshold, nodeSizeMetric } = settingsPerMode[viewMode]
+
+  const updateSetting = <K extends keyof ModeSettings>(key: K, value: ModeSettings[K]) => {
+    setSettingsPerMode(prev => ({
+      ...prev,
+      [viewMode]: { ...prev[viewMode], [key]: value },
+    }))
+  }
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -228,17 +246,17 @@ export default function HomePage() {
   }, [isPanelOpen, secondSelectedNodeId, viewMode])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
-    setSizeMetric(metric)
-    setSizeThreshold(0)
+    updateSetting('sizeMetric', metric)
+    updateSetting('sizeThreshold', 0)
   }
 
   const handleNodeSizeMetricChange = (metric: NodeSizeMetric) => {
-    setNodeSizeMetric(metric)
+    updateSetting('nodeSizeMetric', metric)
   }
 
   const handleResetSettings = () => {
-    setSizeThreshold(0)
-    setNodeSizeMetric('aiExposure')
+    updateSetting('sizeThreshold', 0)
+    updateSetting('nodeSizeMetric', 'aiExposure')
   }
 
   const handleViewModeChange = (mode: ViewMode) => {
@@ -281,7 +299,7 @@ export default function HomePage() {
         sizeMetric={sizeMetric}
         onSizeMetricChange={handleSizeMetricChange}
         sizeThreshold={sizeThreshold}
-        onSizeThresholdChange={setSizeThreshold}
+        onSizeThresholdChange={(v: number) => updateSetting('sizeThreshold', v)}
         maxWage={maxWage}
         nodeSizeMetric={nodeSizeMetric}
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
