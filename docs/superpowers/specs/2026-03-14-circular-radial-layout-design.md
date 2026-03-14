@@ -54,11 +54,19 @@ lib/types.ts    — new types (extended)
 
 ### `lib/skills.ts`
 
-#### Data Loading
+#### Data Source
 
-- Parse `data/masco-4d_with_skills.csv` at startup
-- Filter to rows where `skill_type === "specific_skills"`
-- Store as `Map<string, Set<string>>` — occupation code → set of specific skill names
+Reuse the existing `occupations` data already loaded in `app/page.tsx` (from `public/data/occupations/*.json`). Each `OccupationDetail` already contains a `specificSkills: string[]` array. No CSV parsing needed — build the skills map from the `occupations` record:
+
+```typescript
+// In app/page.tsx or lib/skills.ts
+const specificSkillsMap = new Map<string, Set<string>>();
+for (const [id, occ] of Object.entries(occupations)) {
+  specificSkillsMap.set(id, new Set(occ.specificSkills));
+}
+```
+
+This avoids introducing a second data source and stays consistent with the existing data pipeline.
 
 #### `computeSkillDistance(sourceId: string, targetId: string, skillsMap: Map<string, Set<string>>): SkillComparison`
 
@@ -114,8 +122,8 @@ interface SkillComparison {
 - Selected node at center, full opacity
 - First-degree neighbor nodes at radial positions, full opacity
 - Non-neighbor nodes remain dimmed (opacity 0.06) at their ring positions
-- Curved arc edges from center to each neighbor (quadratic bezier, control point perpendicular to the line between nodes)
-- Edge opacity based on skill distance: closer neighbors have more opaque edges, farther neighbors have fainter edges
+- Curved arc edges from center to each neighbor — quadratic bezier with control point offset perpendicular to the midpoint of the straight line between nodes. Offset magnitude = `0.2 * lineLength` (20% of the straight-line distance). All arcs curve in the same clockwise direction for visual consistency.
+- Edge opacity based on skill distance: closer neighbors get higher opacity (0.6), farther neighbors get lower opacity (0.15)
 - Hover on neighbor: tooltip showing shared skills count + skills to develop count
 
 ### Node Sizing
@@ -125,9 +133,35 @@ Both layouts use the same metric-based sizing as current:
 radius = NODE_RADIUS_BASE + (metricValue ^ NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE
 ```
 
+## State Machine
+
+The system has two orthogonal state dimensions: `layoutMode` and `selectionMode`.
+
+```
+layoutMode: 'ring' | 'radial'
+selectionMode: 'none' | 'single' | 'pair'  (derived from selectedNodeId / secondSelectedNodeId)
+```
+
+**Valid combinations and transitions:**
+
+| From | Action | To |
+|------|--------|----|
+| ring + none | Click node | radial + single |
+| radial + single | Click neighbor | radial + pair |
+| radial + single | Click center node | Opens OccupationPanel (existing component, layoutMode stays radial) |
+| radial + single | Click background / Escape | ring + none |
+| radial + pair | Click either node | Opens OccupationPanel (layoutMode stays radial) |
+| radial + pair | Click background | radial + single (back to first-selected node as center) |
+| radial + pair | Click third node (non-pair) | Not possible — other nodes are dimmed and not interactive |
+| Any mode | Search submitted | ring + none (transition back to ring, highlight matches) |
+
+**Invalid combinations:** `ring + single`, `ring + pair` — selecting a node always transitions to radial mode.
+
+`layoutMode` is added to `useGraphInteraction` alongside the existing `selectedNodeId` and `secondSelectedNodeId`. When `layoutMode` changes, it triggers position recomputation and animation in OccupationGraph.
+
 ## Interaction Model
 
-### Ring Mode
+### Ring Mode (layoutMode: 'ring', selectionMode: 'none')
 
 | Action | Result |
 |--------|--------|
@@ -136,25 +170,26 @@ radius = NODE_RADIUS_BASE + (metricValue ^ NODE_RADIUS_EXPONENT) * NODE_RADIUS_S
 | Search | Highlight matching nodes on ring (glow) |
 | Skill filter / size threshold | Non-matching nodes dim to 0.06 |
 
-### Radial Mode
+### Radial Mode — Single (layoutMode: 'radial', selectionMode: 'single')
 
 | Action | Result |
 |--------|--------|
 | Hover neighbor | Tooltip: shared skills count + skills to develop count |
 | Click neighbor | Enter pair mode (same as current force-directed behavior) |
-| Click center node | Open OccupationDetailPane |
-| Click background | Animate back to ring mode |
-| Escape key | Animate back to ring mode |
+| Click center node | Open OccupationPanel (existing `components/panel/OccupationPanel.tsx`) |
+| Click background | Animate back to ring mode, clear selection |
+| Escape key | Animate back to ring mode, clear selection |
 | Search | Transition back to ring first, then highlight matches |
+| Skill filter / size threshold | Applied to visible nodes — non-matching neighbors dim, non-matching non-neighbors remain at 0.06 |
 
-### Pair Mode (Preserved)
+### Radial Mode — Pair (layoutMode: 'radial', selectionMode: 'pair')
 
-Same behavior as current implementation:
+Same behavior as current pair mode implementation:
 - Shows only the 2 selected nodes + edge between them
 - Skill badge at midpoint with shared skill count
 - Hover badge shows skill comparison tooltip
-- Click either node opens detail panel
-- Click third node or background exits pair mode → back to radial mode (single selection on the first-selected node)
+- Click either node opens OccupationPanel
+- Click background exits pair mode → back to radial single (first-selected node remains center)
 
 ## Animation
 
@@ -190,21 +225,20 @@ Easing: `d3.easeCubicInOut`
 
 ### Skills Data
 
-- Source: `data/masco-4d_with_skills.csv`
-- Columns: `code`, `skills`, `skill_type`
-- Filter: `skill_type === "specific_skills"` (1,652 entries across all occupations)
-- Loaded once at app startup, stored in memory as `Map<string, Set<string>>`
+- Source: existing `occupations` data (already loaded in `app/page.tsx` from `public/data/occupations/*.json`)
+- Each `OccupationDetail` has `specificSkills: string[]`
+- Build `Map<string, Set<string>>` from existing data — no new data loading needed
 
 ### Existing Data (Unchanged)
 
-- `nodes.json` — node positions (x, y fields ignored in favor of computed ring/radial positions, but other fields used)
+- `nodes.json` — node metadata (x, y fields from pre-computed force layout are ignored in favor of computed ring/radial positions, but `id`, `label`, `group`, `aiExposure`, `wage`, `workers` fields still used)
 - `edges.json` — edge weights (used to determine first-degree neighbors)
-- `occupations/*.json` — detail data (unchanged, used by detail panel)
+- `occupations/*.json` — detail data (unchanged, used by detail panel and as source for specific skills)
 
 ## Edge Cases
 
-- **Nodes with zero edges (isolates):** Rendered on ring with isolate styling, not clickable (same as current)
-- **Node with no specific skills data:** If a node has no entry in the skills CSV, treat it as having an empty skill set. Distance to all neighbors = 1.0 (maximum). Still appears in radial tree, just at maximum distance.
+- **Nodes with zero edges (isolates):** Rendered on ring with isolate styling, not clickable (same as current). Since isolates have no neighbors, clicking them would produce an empty radial view — so they remain non-interactive in both modes.
+- **Node with no specific skills data:** If a node has no entry in the occupations data, treat it as having an empty skill set. Distance to all neighbors = 1.0 (maximum). Still appears in radial tree, just at maximum distance.
 - **All neighbors at same distance:** Equal angular spacing still applies; they form a circle at the same radius
 - **Very many neighbors:** Some nodes may have hundreds of connections. Radial layout handles this naturally — nodes get tighter angular spacing. Zoom level adjusts to fit.
 - **Viewport resize:** Recompute ring/radial positions with new viewport dimensions. If in radial mode, maintain current selection.
@@ -216,10 +250,25 @@ Easing: `d3.easeCubicInOut`
 | `lib/layout.ts` | New file — ring and radial position computation |
 | `lib/skills.ts` | New file — skill comparison and distance calculation |
 | `lib/types.ts` | Add LayoutMode, LayoutPosition, SkillComparison types |
-| `lib/data.ts` | Add skills data loading from CSV |
-| `components/graph/OccupationGraph.tsx` | Replace force-directed positions with layout module, add animation logic, update edge rendering for curved arcs |
-| `hooks/useGraphInteraction.ts` | Add layoutMode state, update click handlers for ring/radial transitions |
-| `app/page.tsx` | Pass skills data down to graph component |
+| `components/graph/OccupationGraph.tsx` | Replace force-directed positions with layout module, add animation logic, update edge rendering for curved arcs, remove TunerPanel force simulation controls (sizing controls remain) |
+| `components/graph/TunerPanel.tsx` | Remove force layout sliders (charge, link distance, etc.) — only sizing controls (base, scale, exponent) and debug toggles remain |
+| `hooks/useGraphInteraction.ts` | Add `layoutMode` state, update click handlers for ring/radial transitions |
+| `app/page.tsx` | Build specificSkillsMap from existing occupations data, pass to graph component |
+
+## TunerPanel Changes
+
+The TunerPanel currently has force layout controls (charge, link distance, etc.) and sizing controls (base, scale, exponent). Since the force-directed layout is being replaced:
+
+- **Remove:** Force layout sliders and the runtime force simulation in TunerPanel
+- **Keep:** Sizing controls (base, scale, exponent) — these still affect node radii in both ring and radial modes
+- **Keep:** Debug toggles (color by group) — still useful for ring mode visualization
+- **Remove:** Show MST edges toggle — MST edges are not drawn in either new layout mode
+
+## Coordinate System
+
+Both layout functions operate in a graph-space coordinate system centered at `(0, 0)`. The ring and radial radii are computed relative to viewport dimensions but expressed in the same coordinate units that D3 zoom transforms. This is the same coordinate space the existing force-directed layout used, so the zoom/pan behavior works without changes.
+
+The `minRadius` for radial mode uses the computed node radius of the center node (not the constant `NODE_RADIUS_BASE`), multiplied by 3, to ensure no overlap regardless of the center node's metric-based size.
 
 ## Out of Scope
 
@@ -227,3 +276,4 @@ Easing: `d3.easeCubicInOut`
 - Edge labels or annotations in radial mode
 - Alternative distance formulas (basic skills, tasks)
 - New filter or search behaviors beyond current functionality
+- Changes to OccupationPanel or detail pane components
