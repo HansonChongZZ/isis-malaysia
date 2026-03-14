@@ -483,6 +483,7 @@ export default function OccupationGraph({
   const prevLayoutModeRef = useRef<LayoutMode>(layoutMode);
   const prevViewModeRef = useRef<ViewMode>(viewMode);
   const prevCircularLayoutRef = useRef(circularLayout);
+  const skipZoomRef = useRef(false);
 
   const animateToPositions = useCallback(
     (
@@ -617,6 +618,7 @@ export default function OccupationGraph({
     const viewChanged = prevView !== viewMode;
     // Detect circular slider change (no mode switch) — apply instantly
     const circularParamsChanged = prevCircular !== circularLayout && prevLayout === layoutMode && !viewChanged;
+    if (circularParamsChanged) skipZoomRef.current = true;
 
     if (layoutMode === 'ring') {
       if (prevLayout === 'radial' && !viewChanged && !circularParamsChanged) {
@@ -1049,6 +1051,11 @@ export default function OccupationGraph({
   // Auto-zoom to frame selection (single or pair mode)
   useEffect(() => {
     if (!svgRef.current || !zoomRef.current) return;
+    // Skip zoom when only circular layout params changed (slider drag)
+    if (skipZoomRef.current) {
+      skipZoomRef.current = false;
+      return;
+    }
     const svg = d3.select(svgRef.current);
     const zoom = zoomRef.current;
 

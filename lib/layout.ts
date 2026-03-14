@@ -26,15 +26,10 @@ export function computeRingPositions(
   const positions = new Map<string, LayoutPosition>();
   if (total === 0) return positions;
 
-  // Base radius from factor
-  let radius = Math.min(viewportWidth, viewportHeight) * ringRadiusFactor;
-
-  // If nodeSpacing requires a larger ring, scale up
-  if (nodeSpacing > 0 && total > 1) {
-    const requiredCircumference = total * nodeSpacing;
-    const minRadius = requiredCircumference / (2 * Math.PI);
-    radius = Math.max(radius, minRadius);
-  }
+  // Base radius from factor, plus additive spacing
+  const baseRadius = Math.min(viewportWidth, viewportHeight) * ringRadiusFactor;
+  const spacingRadius = total > 1 ? (total * nodeSpacing) / (2 * Math.PI) : 0;
+  const radius = baseRadius + spacingRadius;
 
   for (let i = 0; i < total; i++) {
     const angle = (i / total) * 2 * Math.PI - Math.PI / 2; // start from top
