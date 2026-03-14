@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { GraphNode, GraphEdge, TunerSizingParams } from '@/lib/types';
+import type { TunerSizingParams } from '@/lib/types';
 import {
   NODE_RADIUS_BASE,
   NODE_RADIUS_SCALE,
@@ -9,8 +9,6 @@ import {
 } from '@/lib/constants';
 
 interface TunerPanelProps {
-  nodes: GraphNode[];
-  edges: GraphEdge[];
   onSizingChange: (params: TunerSizingParams) => void;
   colorByGroup: boolean;
   onColorByGroupChange: (value: boolean) => void;
@@ -52,8 +50,6 @@ const SLIDER_CONFIG = [
 type ParamKey = (typeof SLIDER_CONFIG)[number]['key'];
 
 export default function TunerPanel({
-  nodes,
-  edges,
   onSizingChange,
   colorByGroup,
   onColorByGroupChange,
@@ -89,10 +85,6 @@ export default function TunerPanel({
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   }, [params]);
-
-  // Suppress unused variable warnings — nodes and edges may be needed by future tuner features
-  void nodes;
-  void edges;
 
   return (
     <div className="absolute bottom-0 right-0 z-30">

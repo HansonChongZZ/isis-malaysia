@@ -405,18 +405,6 @@ export default function OccupationGraph({
   );
 
   // --- Radial layout computation (Task 7) ---
-  const radialPositions = useMemo(() => {
-    if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds) return null;
-    const neighborNodes = simNodes.filter(
-      (n) => n.id !== selectedNodeId && connectedIds.has(n.id),
-    );
-    const neighborIds = neighborNodes.map((n) => n.id);
-    const distances = computeNeighborDistances(selectedNodeId, neighborIds, specificSkillsMap);
-    const centerNode = simNodes.find((n) => n.id === selectedNodeId);
-    const centerRadius = centerNode ? getNodeRadius(centerNode) : NODE_RADIUS_BASE;
-    return computeRadialPositions(selectedNodeId, neighborNodes, distances, centerRadius, 20000, 20000);
-  }, [layoutMode, selectedNodeId, connectedIds, simNodes, specificSkillsMap, getNodeRadius]);
-
   const neighborDistancesRef = useRef<Map<string, SkillComparison> | null>(null);
 
   const neighborDistances = useMemo(() => {
@@ -426,6 +414,16 @@ export default function OccupationGraph({
       .map((n) => n.id);
     return computeNeighborDistances(selectedNodeId, neighborIds, specificSkillsMap);
   }, [layoutMode, selectedNodeId, connectedIds, simNodes, specificSkillsMap]);
+
+  const radialPositions = useMemo(() => {
+    if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds || !neighborDistances) return null;
+    const neighborNodes = simNodes.filter(
+      (n) => n.id !== selectedNodeId && connectedIds.has(n.id),
+    );
+    const centerNode = simNodes.find((n) => n.id === selectedNodeId);
+    const centerRadius = centerNode ? getNodeRadius(centerNode) : NODE_RADIUS_BASE;
+    return computeRadialPositions(selectedNodeId, neighborNodes, neighborDistances, centerRadius, 20000, 20000);
+  }, [layoutMode, selectedNodeId, connectedIds, neighborDistances, simNodes, getNodeRadius]);
 
   // Keep ref in sync for canvas drawEdges callback
   useEffect(() => { neighborDistancesRef.current = neighborDistances; }, [neighborDistances]);
@@ -716,6 +714,7 @@ export default function OccupationGraph({
           const dx = tgt.x - src.x;
           const dy = tgt.y - src.y;
           const lineLength = Math.hypot(dx, dy);
+          if (lineLength === 0) continue;
           const offset = lineLength * 0.2;
           const px = -dy / lineLength * offset;
           const py = dx / lineLength * offset;
@@ -1393,8 +1392,6 @@ export default function OccupationGraph({
         })()}
 
       <TunerPanel
-        nodes={simNodes}
-        edges={edges}
         onSizingChange={setTunerSizing}
         colorByGroup={colorByGroup}
         onColorByGroupChange={setColorByGroup}
