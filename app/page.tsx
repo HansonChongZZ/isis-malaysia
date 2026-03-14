@@ -198,13 +198,32 @@ export default function HomePage() {
     setNodeSizeMetric('aiExposure')
   }
 
+  const handleSearchSelect = (id: string | null) => {
+    if (id === null) return;
+    // If already in radial mode, reset to ring first, then select after animation
+    if (layoutMode === 'radial') {
+      setSelectedNodeId(null);
+      setSecondSelectedNodeId(null);
+      setPanelNodeId(null);
+      setIsPanelOpen(false);
+      setLayoutMode('ring');
+      // Known fragility: hardcoded delay must match animation duration (600ms).
+      setTimeout(() => {
+        setSelectedNodeId(id);
+        setLayoutMode('radial');
+      }, 650);
+      return;
+    }
+    handleNodeSelect(id);
+  };
+
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-background text-foreground overflow-hidden">
       {/* Graph controls */}
       <GraphControls
         occupations={occupationList}
         selectedOccupation={selectedNodeId}
-        onOccupationSelect={handleNodeSelect}
+        onOccupationSelect={handleSearchSelect}
         filterSkills={filterSkills}
         setFilterSkills={setFilterSkills}
         uniqueSkills={uniqueSkills}
@@ -266,7 +285,7 @@ export default function HomePage() {
               <OccupationSearch
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
-                onOccupationSelect={handleNodeSelect}
+                onOccupationSelect={handleSearchSelect}
                 onDismiss={() => setHeroDismissed(true)}
                 hero
               />
