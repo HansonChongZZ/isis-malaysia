@@ -70,7 +70,8 @@ export function computeRadialPositions(
 
   // Floor: prevent overlap regardless of slider value
   const minRadius = Math.max(radialMinDistance, centerNodeRadius + maxNeighborRadius);
-  const maxRadius = radialMaxDistance;
+  // Guard: ensure maxRadius > minRadius even with low radialMaxDistance slider values
+  const maxRadius = Math.max(radialMaxDistance, minRadius + 1);
 
   // Sort neighbors by distance ascending (closest first)
   const sorted = [...neighbors].sort((a, b) => {
