@@ -40,9 +40,4 @@ export interface TunerSizingParams {
   exponent: number;
 }
 
-export interface TunerLayoutParams {
-  collidePadding: number;
-  charge: number;
-  linkDistanceBase: number;
-  linkDistanceScale: number;
-}
+export type LayoutMode = 'ring' | 'radial';
