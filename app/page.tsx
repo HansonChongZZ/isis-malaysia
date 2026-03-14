@@ -3,8 +3,8 @@
 import { useEffect, useState, useMemo } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
-import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
-import { computeMaxSpanningTree } from "@/lib/mst"
+import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode } from "@/lib/types"
+import { buildSpecificSkillsMap } from "@/lib/skills"
 import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
 import OccupationPanel from "@/components/panel/OccupationPanel"
@@ -35,6 +35,7 @@ export default function HomePage() {
   const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
   const [sizeThreshold, setSizeThreshold] = useState(0)
   const [nodeSizeMetric, setNodeSizeMetric] = useState<NodeSizeMetric>('aiExposure')
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -49,6 +50,11 @@ export default function HomePage() {
         setLoading(false)
       })
   }, [])
+
+  const specificSkillsMap = useMemo(
+    () => buildSpecificSkillsMap(occupations),
+    [occupations],
+  )
 
   // Build skills map: nodeId -> Set of all skills
   const allSkills = useMemo<Map<string, Set<string>>>(() => {
@@ -98,8 +104,6 @@ export default function HomePage() {
     return max
   }, [nodes])
 
-  const mstEdges = useMemo(() => computeMaxSpanningTree(edges), [edges])
-
   // Occupation list for combobox (sorted by label)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
     return nodes
@@ -112,16 +116,17 @@ export default function HomePage() {
   const handleNodeSelect = (id: string | null) => {
     if (id === null) {
       if (secondSelectedNodeId) {
-        // Pair mode → step back to single mode (show first node + neighbourhood)
+        // Pair mode → step back to single mode (stay radial)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
-      } else {
-        // Single mode (or none) → clear everything
+      } else if (selectedNodeId) {
+        // Single/radial mode → clear everything, back to ring
         setSelectedNodeId(null)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setLayoutMode('ring')
       }
       return
     }
@@ -129,38 +134,36 @@ export default function HomePage() {
     if (secondSelectedNodeId) {
       // In pair mode
       if (id === selectedNodeId || id === secondSelectedNodeId) {
-        // Click either selected node → open panel
         setPanelNodeId(id)
         setIsPanelOpen(true)
       } else {
-        // Click third node → reset to single
         setSelectedNodeId(id)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setLayoutMode('radial')
       }
       return
     }
 
     if (selectedNodeId) {
-      // In single mode
+      // In single/radial mode
       if (id === selectedNodeId) {
-        // Click same node → open panel
         setPanelNodeId(id)
         setIsPanelOpen(true)
       } else if (firstNodeNeighbors.has(id)) {
-        // Click connected neighbor → pair mode
         setSecondSelectedNodeId(id)
       } else {
-        // Click unconnected node → new single selection
         setSelectedNodeId(id)
         setSecondSelectedNodeId(null)
+        setLayoutMode('radial')
       }
       return
     }
 
-    // No selection → first click
+    // No selection (ring mode) → first click → transition to radial
     setSelectedNodeId(id)
+    setLayoutMode('radial')
   }
 
   useEffect(() => {
@@ -173,6 +176,7 @@ export default function HomePage() {
           setSelectedNodeId(null)
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
+          setLayoutMode('ring')
         }
       }
     }
@@ -239,7 +243,6 @@ export default function HomePage() {
           <OccupationGraph
             nodes={nodes}
             edges={edges}
-            mstEdges={mstEdges}
             onNodeSelect={handleNodeSelect}
             selectedNodeId={selectedNodeId}
             secondSelectedNodeId={secondSelectedNodeId}
@@ -251,6 +254,8 @@ export default function HomePage() {
             nodeSizeMetric={nodeSizeMetric}
             maxWage={maxWage}
             maxWorkers={maxWorkers}
+            layoutMode={layoutMode}
+            specificSkillsMap={specificSkillsMap}
           />
         )}
 
@@ -272,7 +277,7 @@ export default function HomePage() {
         {/* Node count badge */}
         {!loading && !error && (
           <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded">
-            {nodes.length} occupations · {mstEdges.length} skill edges ({edges.length.toLocaleString()} total)
+            {nodes.length} occupations · {edges.length.toLocaleString()} skill edges
           </div>
         )}
       </div>
