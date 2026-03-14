@@ -18,12 +18,23 @@ export function computeRingPositions(
   nodes: GraphNode[],
   viewportWidth: number,
   viewportHeight: number,
+  ringRadiusFactor: number = RING_RADIUS_FACTOR,
+  nodeSpacing: number = 0,
 ): Map<string, LayoutPosition> {
   const sorted = [...nodes].sort((a, b) => a.label.localeCompare(b.label));
-  // Small ring so nodes appear large after zoom-to-fit (overlap is intentional)
-  const radius = Math.min(viewportWidth, viewportHeight) * RING_RADIUS_FACTOR;
   const total = sorted.length;
   const positions = new Map<string, LayoutPosition>();
+  if (total === 0) return positions;
+
+  // Base radius from factor
+  let radius = Math.min(viewportWidth, viewportHeight) * ringRadiusFactor;
+
+  // If nodeSpacing requires a larger ring, scale up
+  if (nodeSpacing > 0 && total > 1) {
+    const requiredCircumference = total * nodeSpacing;
+    const minRadius = requiredCircumference / (2 * Math.PI);
+    radius = Math.max(radius, minRadius);
+  }
 
   for (let i = 0; i < total; i++) {
     const angle = (i / total) * 2 * Math.PI - Math.PI / 2; // start from top
@@ -47,7 +58,8 @@ export function computeRadialPositions(
   distances: Map<string, SkillComparison>,
   centerNodeRadius: number,
   maxNeighborRadius: number,
-  ringRadius: number,
+  radialMinDistance: number,
+  radialMaxDistance: number,
 ): Map<string, LayoutPosition> {
   const positions = new Map<string, LayoutPosition>();
 
@@ -56,11 +68,9 @@ export function computeRadialPositions(
 
   if (neighbors.length === 0) return positions;
 
-  // Radial tree must fit inside the ring circle
-  const maxRadius = ringRadius;
-  // Minimum clearance from center so nodes don't overlap the selected node
-  const clearanceRadius = centerNodeRadius + maxNeighborRadius * 2;
-  const minRadius = Math.min(clearanceRadius, maxRadius * 0.4);
+  // Floor: prevent overlap regardless of slider value
+  const minRadius = Math.max(radialMinDistance, centerNodeRadius + maxNeighborRadius);
+  const maxRadius = radialMaxDistance;
 
   // Sort neighbors by distance ascending (closest first)
   const sorted = [...neighbors].sort((a, b) => {

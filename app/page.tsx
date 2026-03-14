@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
 import { buildSpecificSkillsMap } from "@/lib/skills"
+import { computeMaxSpanningTree } from "@/lib/mst"
 import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
 import OccupationPanel from "@/components/panel/OccupationPanel"
@@ -74,6 +75,8 @@ export default function HomePage() {
     () => buildSpecificSkillsMap(occupations),
     [occupations],
   )
+
+  const mstEdges = useMemo(() => computeMaxSpanningTree(edges), [edges])
 
   // Build skills map: nodeId -> Set of all skills
   const allSkills = useMemo<Map<string, Set<string>>>(() => {
@@ -333,6 +336,7 @@ export default function HomePage() {
           <OccupationGraph
             nodes={nodes}
             edges={edges}
+            mstEdges={mstEdges}
             onNodeSelect={handleNodeSelect}
             selectedNodeId={selectedNodeId}
             secondSelectedNodeId={secondSelectedNodeId}

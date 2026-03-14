@@ -40,5 +40,20 @@ export interface TunerSizingParams {
   exponent: number;
 }
 
+export interface CircularLayoutParams {
+  ringRadiusFactor: number;
+  nodeSpacing: number;
+  radialMinDistance: number;
+  radialMaxDistance: number;
+}
+
+export interface ForceLayoutParams {
+  collidePadding: number;
+  charge: number;
+  linkDistanceBase: number;
+  linkDistanceScale: number;
+  linkStrengthDivisor: number;
+}
+
 export type LayoutMode = 'ring' | 'radial';
 export type ViewMode = 'force' | 'circular';
