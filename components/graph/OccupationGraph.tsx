@@ -103,11 +103,6 @@ export default function OccupationGraph({
     null,
   );
   const [colorByGroup, setColorByGroup] = useState(false);
-  const [showMstEdges, setShowMstEdges] = useState(false);
-  const [tunerPositions, setTunerPositions] = useState<Map<
-    string,
-    { x: number; y: number }
-  > | null>(null);
   const selectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
@@ -153,31 +148,6 @@ export default function OccupationGraph({
       graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
     }
   }, [simNodes]);
-
-  // Apply tuner position overrides
-  useEffect(() => {
-    if (!tunerPositions) return;
-    for (const node of simNodes) {
-      const pos = tunerPositions.get(node.id);
-      if (pos) {
-        node.x = pos.x;
-        node.y = pos.y;
-      }
-    }
-    if (simNodes.length) {
-      const xs = simNodes.map((n) => n.x);
-      const ys = simNodes.map((n) => n.y);
-      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
-      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-      let maxDist = 0;
-      for (const n of simNodes) {
-        const d = Math.hypot(n.x - cx, n.y - cy);
-        if (d > maxDist) maxDist = d;
-      }
-      graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
-    }
-    drawEdgesRef.current();
-  }, [tunerPositions, simNodes]);
 
   // Compute isolate set (nodes with no edges)
   const isolateIds = useMemo<Set<string>>(() => {
@@ -508,32 +478,6 @@ export default function OccupationGraph({
     ctx.fillRect(vl, vt, vr - vl, vb - vt);
     ctx.globalCompositeOperation = 'source-over';
 
-    // Draw baseline MST edges — toggled from TunerPanel, dimmed during hover/selection
-    if (showMstEdges) {
-      const hasFocus = visibleEdges.length > 0 || hoveredEdges.length > 0;
-      ctx.strokeStyle = edgeColorRef.current;
-      ctx.lineWidth = 0.5 / k;
-      ctx.globalAlpha = hasFocus ? 0.04 : 0.15;
-      ctx.beginPath();
-      for (const edge of mstEdges) {
-        const src = nodeById.current.get(
-          typeof edge.source === 'string'
-            ? edge.source
-            : (edge.source as GraphNode).id,
-        );
-        const tgt = nodeById.current.get(
-          typeof edge.target === 'string'
-            ? edge.target
-            : (edge.target as GraphNode).id,
-        );
-        if (!src || !tgt) continue;
-        ctx.moveTo(src.x, src.y);
-        ctx.lineTo(tgt.x, tgt.y);
-      }
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-    }
-
     // Draw selection edges (existing behavior)
     if (visibleEdges.length > 0) {
       ctx.strokeStyle = edgeColorRef.current;
@@ -596,7 +540,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [selectionMode, visibleEdges, hoveredEdges, mstEdges, showMstEdges, tunerSizing]);
+  }, [selectionMode, visibleEdges, hoveredEdges, tunerSizing]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
@@ -1182,13 +1126,9 @@ export default function OccupationGraph({
       <TunerPanel
         nodes={simNodes}
         edges={edges}
-        mstEdges={mstEdges}
         onSizingChange={setTunerSizing}
-        onPositionsChange={setTunerPositions}
         colorByGroup={colorByGroup}
         onColorByGroupChange={setColorByGroup}
-        showMstEdges={showMstEdges}
-        onShowMstEdgesChange={setShowMstEdges}
       />
     </div>
   );
