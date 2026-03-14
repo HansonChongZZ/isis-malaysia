@@ -3,7 +3,8 @@
 import { useEffect, useState, useMemo } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
-import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric } from "@/lib/types"
+import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
+import { buildSpecificSkillsMap } from "@/lib/skills"
 import { computeMaxSpanningTree } from "@/lib/mst"
 import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
@@ -32,9 +33,29 @@ export default function HomePage() {
   const [secondSelectedNodeId, setSecondSelectedNodeId] = useState<string | null>(null)
   const [panelNodeId, setPanelNodeId] = useState<string | null>(null)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
-  const [sizeMetric, setSizeMetric] = useState<'aiExposure' | 'wage'>('aiExposure')
-  const [sizeThreshold, setSizeThreshold] = useState(0)
-  const [nodeSizeMetric, setNodeSizeMetric] = useState<NodeSizeMetric>('aiExposure')
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
+  const [viewMode, setViewMode] = useState<ViewMode>('force')
+
+  // Per-view-mode settings
+  type ModeSettings = {
+    sizeMetric: 'aiExposure' | 'wage'
+    sizeThreshold: number
+    nodeSizeMetric: NodeSizeMetric
+  }
+  const [settingsPerMode, setSettingsPerMode] = useState<Record<ViewMode, ModeSettings>>({
+    force: { sizeMetric: 'aiExposure', sizeThreshold: 0, nodeSizeMetric: 'aiExposure' },
+    circular: { sizeMetric: 'aiExposure', sizeThreshold: 0, nodeSizeMetric: 'aiExposure' },
+  })
+
+  // Active settings derived from current view mode
+  const { sizeMetric, sizeThreshold, nodeSizeMetric } = settingsPerMode[viewMode]
+
+  const updateSetting = <K extends keyof ModeSettings>(key: K, value: ModeSettings[K]) => {
+    setSettingsPerMode(prev => ({
+      ...prev,
+      [viewMode]: { ...prev[viewMode], [key]: value },
+    }))
+  }
 
   useEffect(() => {
     Promise.all([loadNodes(), loadEdges(), loadOccupations()])
@@ -49,6 +70,13 @@ export default function HomePage() {
         setLoading(false)
       })
   }, [])
+
+  const specificSkillsMap = useMemo(
+    () => buildSpecificSkillsMap(occupations),
+    [occupations],
+  )
+
+  const mstEdges = useMemo(() => computeMaxSpanningTree(edges), [edges])
 
   // Build skills map: nodeId -> Set of all skills
   const allSkills = useMemo<Map<string, Set<string>>>(() => {
@@ -98,8 +126,6 @@ export default function HomePage() {
     return max
   }, [nodes])
 
-  const mstEdges = useMemo(() => computeMaxSpanningTree(edges), [edges])
-
   // Occupation list for combobox (sorted by label)
   const occupationList = useMemo<{ id: string; label: string }[]>(() => {
     return nodes
@@ -110,57 +136,98 @@ export default function HomePage() {
   const panelDetail = panelNodeId ? occupations[panelNodeId] ?? null : null
 
   const handleNodeSelect = (id: string | null) => {
+    if (viewMode === 'force') {
+      // Force-directed: original click behavior
+      if (id === null) {
+        if (secondSelectedNodeId) {
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+          setIsPanelOpen(false)
+        } else {
+          setSelectedNodeId(null)
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+          setIsPanelOpen(false)
+        }
+        return
+      }
+
+      if (secondSelectedNodeId) {
+        if (id === selectedNodeId || id === secondSelectedNodeId) {
+          setPanelNodeId(id)
+          setIsPanelOpen(true)
+        } else {
+          setSelectedNodeId(id)
+          setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+          setIsPanelOpen(false)
+        }
+        return
+      }
+
+      if (selectedNodeId) {
+        if (id === selectedNodeId) {
+          setPanelNodeId(id)
+          setIsPanelOpen(true)
+        } else if (firstNodeNeighbors.has(id)) {
+          setSecondSelectedNodeId(id)
+        } else {
+          setSelectedNodeId(id)
+          setSecondSelectedNodeId(null)
+        }
+        return
+      }
+
+      setSelectedNodeId(id)
+      return
+    }
+
+    // Circular mode: ring/radial behavior
     if (id === null) {
       if (secondSelectedNodeId) {
-        // Pair mode → step back to single mode (show first node + neighbourhood)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
-      } else {
-        // Single mode (or none) → clear everything
+      } else if (selectedNodeId) {
         setSelectedNodeId(null)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setLayoutMode('ring')
       }
       return
     }
 
     if (secondSelectedNodeId) {
-      // In pair mode
       if (id === selectedNodeId || id === secondSelectedNodeId) {
-        // Click either selected node → open panel
         setPanelNodeId(id)
         setIsPanelOpen(true)
       } else {
-        // Click third node → reset to single
         setSelectedNodeId(id)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setLayoutMode('radial')
       }
       return
     }
 
     if (selectedNodeId) {
-      // In single mode
       if (id === selectedNodeId) {
-        // Click same node → open panel
         setPanelNodeId(id)
         setIsPanelOpen(true)
       } else if (firstNodeNeighbors.has(id)) {
-        // Click connected neighbor → pair mode
         setSecondSelectedNodeId(id)
       } else {
-        // Click unconnected node → new single selection
         setSelectedNodeId(id)
         setSecondSelectedNodeId(null)
+        setLayoutMode('radial')
       }
       return
     }
 
-    // No selection → first click
     setSelectedNodeId(id)
+    setLayoutMode('radial')
   }
 
   useEffect(() => {
@@ -173,26 +240,54 @@ export default function HomePage() {
           setSelectedNodeId(null)
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
+          if (viewMode === 'circular') setLayoutMode('ring')
         }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isPanelOpen, secondSelectedNodeId])
+  }, [isPanelOpen, secondSelectedNodeId, viewMode])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
-    setSizeMetric(metric)
-    setSizeThreshold(0)
+    updateSetting('sizeMetric', metric)
+    updateSetting('sizeThreshold', 0)
   }
 
   const handleNodeSizeMetricChange = (metric: NodeSizeMetric) => {
-    setNodeSizeMetric(metric)
+    updateSetting('nodeSizeMetric', metric)
   }
 
   const handleResetSettings = () => {
-    setSizeThreshold(0)
-    setNodeSizeMetric('aiExposure')
+    updateSetting('sizeThreshold', 0)
+    updateSetting('nodeSizeMetric', 'aiExposure')
   }
+
+  const handleViewModeChange = (mode: ViewMode) => {
+    setViewMode(mode)
+    // When switching to circular, reset to ring layout
+    if (mode === 'circular') {
+      setLayoutMode(selectedNodeId ? 'radial' : 'ring')
+    }
+  }
+
+  const handleSearchSelect = (id: string | null) => {
+    if (id === null) return;
+    // In circular mode with radial active, reset to ring first
+    if (viewMode === 'circular' && layoutMode === 'radial') {
+      setSelectedNodeId(null);
+      setSecondSelectedNodeId(null);
+      setPanelNodeId(null);
+      setIsPanelOpen(false);
+      setLayoutMode('ring');
+      // Known fragility: hardcoded delay must match animation duration (600ms).
+      setTimeout(() => {
+        setSelectedNodeId(id);
+        setLayoutMode('radial');
+      }, 650);
+      return;
+    }
+    handleNodeSelect(id);
+  };
 
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-background text-foreground overflow-hidden">
@@ -200,19 +295,21 @@ export default function HomePage() {
       <GraphControls
         occupations={occupationList}
         selectedOccupation={selectedNodeId}
-        onOccupationSelect={handleNodeSelect}
+        onOccupationSelect={handleSearchSelect}
         filterSkills={filterSkills}
         setFilterSkills={setFilterSkills}
         uniqueSkills={uniqueSkills}
         sizeMetric={sizeMetric}
         onSizeMetricChange={handleSizeMetricChange}
         sizeThreshold={sizeThreshold}
-        onSizeThresholdChange={setSizeThreshold}
+        onSizeThresholdChange={(v: number) => updateSetting('sizeThreshold', v)}
         maxWage={maxWage}
         nodeSizeMetric={nodeSizeMetric}
         onNodeSizeMetricChange={handleNodeSizeMetricChange}
         maxWorkers={maxWorkers}
         onResetSettings={handleResetSettings}
+        viewMode={viewMode}
+        onViewModeChange={handleViewModeChange}
         hideSearchOnDesktop={!selectedNodeId}
         onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
       />
@@ -251,6 +348,9 @@ export default function HomePage() {
             nodeSizeMetric={nodeSizeMetric}
             maxWage={maxWage}
             maxWorkers={maxWorkers}
+            viewMode={viewMode}
+            layoutMode={layoutMode}
+            specificSkillsMap={specificSkillsMap}
           />
         )}
 
@@ -261,7 +361,7 @@ export default function HomePage() {
               <OccupationSearch
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
-                onOccupationSelect={handleNodeSelect}
+                onOccupationSelect={handleSearchSelect}
                 onDismiss={() => setHeroDismissed(true)}
                 hero
               />
@@ -272,7 +372,7 @@ export default function HomePage() {
         {/* Node count badge */}
         {!loading && !error && (
           <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded">
-            {nodes.length} occupations · {mstEdges.length} skill edges ({edges.length.toLocaleString()} total)
+            {nodes.length} occupations · {edges.length.toLocaleString()} skill edges
           </div>
         )}
       </div>

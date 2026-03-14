@@ -9,7 +9,15 @@ import type {
   NodeSizeMetric,
   OccupationDetail,
   TunerSizingParams,
+  CircularLayoutParams,
+  ForceLayoutParams,
+  LayoutMode,
+  ViewMode,
 } from '@/lib/types';
+import { computeRingPositions, computeRadialPositions } from '@/lib/layout';
+import type { LayoutPosition } from '@/lib/layout';
+import { computeNeighborDistances } from '@/lib/skills';
+import type { SkillComparison } from '@/lib/skills';
 import {
   NODE_RADIUS_BASE,
   NODE_RADIUS_SCALE,
@@ -35,6 +43,7 @@ interface TooltipState {
   x: number;
   y: number;
   node: GraphNode;
+  skillComparison?: SkillComparison;
 }
 
 interface OccupationGraphProps {
@@ -52,6 +61,9 @@ interface OccupationGraphProps {
   maxWorkers: number;
   secondSelectedNodeId: string | null;
   occupations: Record<string, OccupationDetail>;
+  viewMode: ViewMode;
+  layoutMode: LayoutMode;
+  specificSkillsMap: Map<string, Set<string>>;
 }
 
 export default function OccupationGraph({
@@ -69,6 +81,9 @@ export default function OccupationGraph({
   maxWorkers,
   secondSelectedNodeId,
   occupations,
+  viewMode,
+  layoutMode,
+  specificSkillsMap,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -99,15 +114,30 @@ export default function OccupationGraph({
     };
   } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
-  const [tunerSizing, setTunerSizing] = useState<TunerSizingParams | null>(
-    null,
-  );
+  const [tunerSizingPerMode, setTunerSizingPerMode] = useState<Record<ViewMode, TunerSizingParams | null>>({
+    force: null,
+    circular: { base: 80, scale: 40, exponent: 1 },
+  });
+  const tunerSizing = tunerSizingPerMode[viewMode];
+  const setTunerSizing = useCallback((params: TunerSizingParams) => {
+    setTunerSizingPerMode(prev => ({ ...prev, [viewMode]: params }));
+  }, [viewMode]);
   const [colorByGroup, setColorByGroup] = useState(false);
-  const [showMstEdges, setShowMstEdges] = useState(false);
-  const [tunerPositions, setTunerPositions] = useState<Map<
-    string,
-    { x: number; y: number }
-  > | null>(null);
+  const [showMstEdges, setShowMstEdges] = useState(true);
+  const [tunerPositions, setTunerPositions] = useState<Map<string, { x: number; y: number }> | null>(null);
+  const [circularLayout, setCircularLayout] = useState<CircularLayoutParams>({
+    ringRadiusFactor: 0.12,
+    nodeSpacing: 0,
+    radialMinDistance: 200,
+    radialMaxDistance: 2400,
+  });
+  const [forceLayout, setForceLayout] = useState<ForceLayoutParams>({
+    collidePadding: 250.5,
+    charge: -800,
+    linkDistanceBase: 600,
+    linkDistanceScale: 20,
+    linkStrengthDivisor: 7,
+  });
   const selectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
@@ -125,11 +155,13 @@ export default function OccupationGraph({
   const selectionModeRef = useRef(selectionMode);
   const selectedNodeIdRef = useRef(selectedNodeId);
   const secondSelectedNodeIdRef = useRef(secondSelectedNodeId);
+  const viewModeRef = useRef(viewMode);
   useEffect(() => {
     selectionModeRef.current = selectionMode;
     selectedNodeIdRef.current = selectedNodeId;
     secondSelectedNodeIdRef.current = secondSelectedNodeId;
-  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
+    viewModeRef.current = viewMode;
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, viewMode]);
 
   const simNodes = useMemo<GraphNode[]>(
     () => nodes.map((n) => ({ ...n })),
@@ -137,47 +169,24 @@ export default function OccupationGraph({
     [nodes.length],
   );
 
+  // Save original force-directed positions from nodes.json
+  const forcePositions = useMemo(() => {
+    const map = new Map<string, LayoutPosition>();
+    for (const n of nodes) {
+      map.set(n.id, { x: n.x, y: n.y });
+    }
+    return map;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodes.length]);
+
+  const ringPositions = useMemo(
+    () => computeRingPositions(simNodes, 20000, 20000, circularLayout.ringRadiusFactor, circularLayout.nodeSpacing),
+    [simNodes, circularLayout.ringRadiusFactor, circularLayout.nodeSpacing],
+  );
+
   useEffect(() => {
     nodeById.current = new Map(simNodes.map((n) => [n.id, n]));
-    // Compute graph center and radius for grid fade
-    if (simNodes.length) {
-      const xs = simNodes.map((n) => n.x);
-      const ys = simNodes.map((n) => n.y);
-      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
-      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-      let maxDist = 0;
-      for (const n of simNodes) {
-        const d = Math.hypot(n.x - cx, n.y - cy);
-        if (d > maxDist) maxDist = d;
-      }
-      graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
-    }
   }, [simNodes]);
-
-  // Apply tuner position overrides
-  useEffect(() => {
-    if (!tunerPositions) return;
-    for (const node of simNodes) {
-      const pos = tunerPositions.get(node.id);
-      if (pos) {
-        node.x = pos.x;
-        node.y = pos.y;
-      }
-    }
-    if (simNodes.length) {
-      const xs = simNodes.map((n) => n.x);
-      const ys = simNodes.map((n) => n.y);
-      const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
-      const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-      let maxDist = 0;
-      for (const n of simNodes) {
-        const d = Math.hypot(n.x - cx, n.y - cy);
-        if (d > maxDist) maxDist = d;
-      }
-      graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
-    }
-    drawEdgesRef.current();
-  }, [tunerPositions, simNodes]);
 
   // Compute isolate set (nodes with no edges)
   const isolateIds = useMemo<Set<string>>(() => {
@@ -411,7 +420,7 @@ export default function OccupationGraph({
         return 1;
       }
       if (selectedNodeId && connectedIds && !connectedIds.has(node.id))
-        return 0.12;
+        return viewMode === 'force' ? 0.12 : 0.06;
       if (
         hoveredNodeId &&
         !selectedNodeId &&
@@ -423,6 +432,7 @@ export default function OccupationGraph({
       return 1;
     },
     [
+      viewMode,
       nodeSizeMetric,
       visibleIds,
       selectionMode,
@@ -433,6 +443,222 @@ export default function OccupationGraph({
       hoveredNeighborIds,
     ],
   );
+
+  // --- Radial layout computation (Task 7) ---
+  const neighborDistancesRef = useRef<Map<string, SkillComparison> | null>(null);
+
+  const neighborDistances = useMemo(() => {
+    if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds) return null;
+    const neighborIds = simNodes
+      .filter((n) => n.id !== selectedNodeId && connectedIds.has(n.id))
+      .map((n) => n.id);
+    return computeNeighborDistances(selectedNodeId, neighborIds, specificSkillsMap);
+  }, [layoutMode, selectedNodeId, connectedIds, simNodes, specificSkillsMap]);
+
+  const radialPositions = useMemo(() => {
+    if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds || !neighborDistances) return null;
+    const neighborNodes = simNodes.filter(
+      (n) => n.id !== selectedNodeId && connectedIds.has(n.id),
+    );
+    const centerNode = simNodes.find((n) => n.id === selectedNodeId);
+    const centerRadius = centerNode ? getNodeRadius(centerNode) : NODE_RADIUS_BASE;
+    const maxNeighborRadius = neighborNodes.length > 0
+      ? Math.max(...neighborNodes.map(getNodeRadius))
+      : NODE_RADIUS_BASE;
+    return computeRadialPositions(
+      selectedNodeId, neighborNodes, neighborDistances,
+      centerRadius, maxNeighborRadius,
+      circularLayout.radialMinDistance,
+      circularLayout.radialMaxDistance,
+    );
+  }, [layoutMode, selectedNodeId, connectedIds, neighborDistances, simNodes, getNodeRadius,
+      circularLayout.radialMinDistance, circularLayout.radialMaxDistance]);
+
+  // Keep ref in sync for canvas drawEdges callback
+  useEffect(() => { neighborDistancesRef.current = neighborDistances; }, [neighborDistances]);
+
+  // --- Animation refs (Task 8) ---
+  const animatingRef = useRef(false);
+  const animationFrameRef = useRef<number | null>(null);
+  const prevLayoutModeRef = useRef<LayoutMode>(layoutMode);
+  const prevViewModeRef = useRef<ViewMode>(viewMode);
+  const prevCircularLayoutRef = useRef(circularLayout);
+  const skipZoomRef = useRef(false);
+
+  const animateToPositions = useCallback(
+    (
+      targets: Map<string, LayoutPosition>,
+      duration: number,
+      onComplete?: () => void,
+    ) => {
+      // Capture start positions
+      const startPositions = new Map<string, LayoutPosition>();
+      for (const node of simNodes) {
+        startPositions.set(node.id, { x: node.x, y: node.y });
+      }
+
+      animatingRef.current = true;
+      const startTime = performance.now();
+
+      const tick = (now: number) => {
+        const elapsed = now - startTime;
+        const rawT = Math.min(elapsed / duration, 1);
+        // Cubic ease-in-out
+        const t =
+          rawT < 0.5
+            ? 4 * rawT * rawT * rawT
+            : 1 - Math.pow(-2 * rawT + 2, 3) / 2;
+
+        for (const node of simNodes) {
+          const start = startPositions.get(node.id);
+          const target = targets.get(node.id);
+          if (start && target) {
+            node.x = start.x + (target.x - start.x) * t;
+            node.y = start.y + (target.y - start.y) * t;
+          }
+        }
+
+        // Update SVG node positions
+        if (gRef.current) {
+          d3.select(gRef.current)
+            .selectAll<SVGCircleElement, unknown>('.node')
+            .each(function () {
+              const el = d3.select(this);
+              const id = el.attr('data-id');
+              const n = nodeById.current.get(id);
+              if (n) {
+                el.attr('cx', n.x).attr('cy', n.y);
+              }
+            });
+        }
+
+        drawEdgesRef.current();
+
+        if (rawT < 1) {
+          animationFrameRef.current = requestAnimationFrame(tick);
+        } else {
+          animatingRef.current = false;
+          animationFrameRef.current = null;
+          onComplete?.();
+        }
+      };
+
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      animationFrameRef.current = requestAnimationFrame(tick);
+    },
+    [simNodes],
+  );
+
+  // Cleanup animation on unmount
+  useEffect(() => {
+    return () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  // --- Position effect with animation ---
+  useEffect(() => {
+    const prevLayout = prevLayoutModeRef.current;
+    const prevView = prevViewModeRef.current;
+    const prevCircular = prevCircularLayoutRef.current;
+    prevLayoutModeRef.current = layoutMode;
+    prevViewModeRef.current = viewMode;
+    prevCircularLayoutRef.current = circularLayout;
+
+    const updateGraphCenter = () => {
+      if (simNodes.length) {
+        const xs = simNodes.map((n) => n.x);
+        const ys = simNodes.map((n) => n.y);
+        const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+        const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+        let maxDist = 0;
+        for (const n of simNodes) {
+          const d = Math.hypot(n.x - cx, n.y - cy);
+          if (d > maxDist) maxDist = d;
+        }
+        graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
+      }
+    };
+
+    const applyPositions = (positions: Map<string, LayoutPosition>) => {
+      for (const node of simNodes) {
+        const pos = positions.get(node.id);
+        if (pos) {
+          node.x = pos.x;
+          node.y = pos.y;
+        }
+      }
+      updateGraphCenter();
+      drawEdgesRef.current();
+      // Force SVG circle positions to update (React doesn't see simNode mutations)
+      const g = gRef.current;
+      if (g) {
+        d3.select(g).selectAll<SVGCircleElement, null>('.node').each(function () {
+          const el = d3.select(this);
+          const id = el.attr('data-id');
+          const node = nodeById.current.get(id);
+          if (node) {
+            el.attr('cx', node.x).attr('cy', node.y);
+          }
+        });
+      }
+    };
+
+    if (viewMode === 'force') {
+      const positions = tunerPositions ?? forcePositions;
+      applyPositions(positions);
+      return;
+    }
+
+    // Circular mode: ring/radial with animation
+    const viewChanged = prevView !== viewMode;
+    // Detect circular slider change (no mode switch) — apply instantly
+    const circularParamsChanged = prevCircular !== circularLayout && prevLayout === layoutMode && !viewChanged;
+    if (circularParamsChanged) skipZoomRef.current = true;
+
+    if (layoutMode === 'ring') {
+      if (prevLayout === 'radial' && !viewChanged && !circularParamsChanged) {
+        // Animate radial → ring
+        const targets = new Map<string, LayoutPosition>();
+        for (const node of simNodes) {
+          const pos = ringPositions.get(node.id);
+          if (pos) targets.set(node.id, pos);
+        }
+        animateToPositions(targets, 600, () => {
+          updateGraphCenter();
+          drawEdgesRef.current();
+        });
+      } else {
+        // Initial render, view mode switch, slider change, or ring → ring: set directly
+        applyPositions(ringPositions);
+      }
+    } else if (layoutMode === 'radial' && radialPositions) {
+      // Build combined target: radial positions for center+neighbors, ring for rest
+      const targets = new Map<string, LayoutPosition>();
+      for (const node of simNodes) {
+        const radialPos = radialPositions.get(node.id);
+        if (radialPos) {
+          targets.set(node.id, radialPos);
+        } else {
+          const ringPos = ringPositions.get(node.id);
+          if (ringPos) targets.set(node.id, ringPos);
+        }
+      }
+      if (viewChanged || circularParamsChanged) {
+        applyPositions(targets);
+      } else {
+        animateToPositions(targets, 800, () => {
+          updateGraphCenter();
+          drawEdgesRef.current();
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewMode, layoutMode, simNodes, ringPositions, radialPositions, forcePositions, tunerPositions, circularLayout]);
 
   const visibleEdges = useMemo(() => {
     if (selectionMode === 'pair') {
@@ -508,8 +734,8 @@ export default function OccupationGraph({
     ctx.fillRect(vl, vt, vr - vl, vb - vt);
     ctx.globalCompositeOperation = 'source-over';
 
-    // Draw baseline MST edges — toggled from TunerPanel, dimmed during hover/selection
-    if (showMstEdges) {
+    // Draw baseline MST edges — toggled from TunerPanel, force mode only
+    if (showMstEdges && viewModeRef.current === 'force') {
       const hasFocus = visibleEdges.length > 0 || hoveredEdges.length > 0;
       ctx.strokeStyle = edgeColorRef.current;
       ctx.lineWidth = 0.5 / k;
@@ -534,25 +760,49 @@ export default function OccupationGraph({
       ctx.globalAlpha = 1;
     }
 
-    // Draw selection edges (existing behavior)
+    // No edges in circular ring mode (no selection) — clean overview
+    if (viewModeRef.current === 'circular' && selectionModeRef.current === 'none') {
+      ctx.restore();
+      return;
+    }
+
+    // Draw selection edges
     if (visibleEdges.length > 0) {
       ctx.strokeStyle = edgeColorRef.current;
-      ctx.lineWidth = 0.5 / k;
-      if (selectionMode === 'pair') {
-        ctx.lineWidth = 2 / k;
-      }
 
-      const byWeight = new Map<number, typeof visibleEdges>();
-      for (const edge of visibleEdges) {
-        const w = edge.weight;
-        if (!byWeight.has(w)) byWeight.set(w, []);
-        byWeight.get(w)!.push(edge);
-      }
-
-      for (const [weight, group] of byWeight) {
-        ctx.globalAlpha = Math.min(0.05 + (weight / 7) * 0.3 + 0.25, 0.8);
-        ctx.beginPath();
-        for (const edge of group) {
+      if (selectionModeRef.current === 'pair' || viewModeRef.current === 'force') {
+        // Force mode + pair mode: straight lines grouped by weight
+        ctx.lineWidth = selectionModeRef.current === 'pair' ? 2 / k : 0.5 / k;
+        const byWeight = new Map<number, typeof visibleEdges>();
+        for (const edge of visibleEdges) {
+          const w = edge.weight;
+          if (!byWeight.has(w)) byWeight.set(w, []);
+          byWeight.get(w)!.push(edge);
+        }
+        for (const [weight, group] of byWeight) {
+          ctx.globalAlpha = Math.min(0.05 + (weight / 7) * 0.3 + 0.25, 0.8);
+          ctx.beginPath();
+          for (const edge of group) {
+            const src = nodeById.current.get(
+              typeof edge.source === 'string'
+                ? edge.source
+                : (edge.source as GraphNode).id,
+            );
+            const tgt = nodeById.current.get(
+              typeof edge.target === 'string'
+                ? edge.target
+                : (edge.target as GraphNode).id,
+            );
+            if (!src || !tgt) continue;
+            ctx.moveTo(src.x, src.y);
+            ctx.lineTo(tgt.x, tgt.y);
+          }
+          ctx.stroke();
+        }
+      } else {
+        // Circular single selection: curved arcs with opacity based on skill distance
+        ctx.lineWidth = 0.5 / k;
+        for (const edge of visibleEdges) {
           const src = nodeById.current.get(
             typeof edge.source === 'string'
               ? edge.source
@@ -564,10 +814,29 @@ export default function OccupationGraph({
               : (edge.target as GraphNode).id,
           );
           if (!src || !tgt) continue;
+
+          // Look up skill distance from neighborDistancesRef
+          const neighborId = src.id === selectedNodeIdRef.current ? tgt.id : src.id;
+          const comparison = neighborDistancesRef.current?.get(neighborId);
+          const skillDist = comparison?.distance ?? 1;
+          // Invert: distance 0 → opacity 0.6, distance 1 → opacity 0.15
+          ctx.globalAlpha = 0.6 - skillDist * 0.45;
+
+          // Quadratic bezier with 20% perpendicular offset (clockwise direction)
+          const mx = (src.x + tgt.x) / 2;
+          const my = (src.y + tgt.y) / 2;
+          const dx = tgt.x - src.x;
+          const dy = tgt.y - src.y;
+          const lineLength = Math.hypot(dx, dy);
+          if (lineLength === 0) continue;
+          const offset = lineLength * 0.2;
+          const px = -dy / lineLength * offset;
+          const py = dx / lineLength * offset;
+          ctx.beginPath();
           ctx.moveTo(src.x, src.y);
-          ctx.lineTo(tgt.x, tgt.y);
+          ctx.quadraticCurveTo(mx + px, my + py, tgt.x, tgt.y);
+          ctx.stroke();
         }
-        ctx.stroke();
       }
     }
 
@@ -596,7 +865,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [selectionMode, visibleEdges, hoveredEdges, mstEdges, showMstEdges, tunerSizing]);
+  }, [visibleEdges, hoveredEdges, tunerSizing, showMstEdges, mstEdges]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
@@ -777,11 +1046,16 @@ export default function OccupationGraph({
     return () => {
       svg.on('.zoom', null);
     };
-  }, [dimensions.width, dimensions.height, simNodes]);
+  }, [dimensions.width, dimensions.height, simNodes, viewMode, layoutMode]);
 
   // Auto-zoom to frame selection (single or pair mode)
   useEffect(() => {
     if (!svgRef.current || !zoomRef.current) return;
+    // Skip zoom when only circular layout params changed (slider drag)
+    if (skipZoomRef.current) {
+      skipZoomRef.current = false;
+      return;
+    }
     const svg = d3.select(svgRef.current);
     const zoom = zoomRef.current;
 
@@ -807,8 +1081,36 @@ export default function OccupationGraph({
           .duration(1000)
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
+      } else if (radialPositions) {
+        // Radial mode: zoom to fit all radial positions with 250px padding
+        const padding = 250;
+        const positions = Array.from(radialPositions.values());
+        const xs = positions.map((p) => p.x);
+        const ys = positions.map((p) => p.y);
+        const minX = Math.min(...xs) - padding;
+        const minY = Math.min(...ys) - padding;
+        const maxX = Math.max(...xs) + padding;
+        const maxY = Math.max(...ys) + padding;
+        const dx = maxX - minX;
+        const dy = maxY - minY;
+        const cx = (minX + maxX) / 2;
+        const cy = (minY + maxY) / 2;
+        const scale = Math.min(
+          dimensions.width / dx,
+          dimensions.height / dy,
+          3,
+        );
+        const tx = dimensions.width / 2 - cx * scale;
+        const ty = dimensions.height / 2 - cy * scale;
+        const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
+
+        svg
+          .transition()
+          .duration(800)
+          .ease(d3.easeCubicInOut)
+          .call(zoom.transform, target);
       } else {
-        // Zoom to fit selected node + neighbours with 250px padding
+        // Ring mode: zoom to fit selected node + neighbours with 250px padding
         const padding = 250;
         const xs = neighbourNodes.map((n) => n.x);
         const ys = neighbourNodes.map((n) => n.y);
@@ -869,6 +1171,7 @@ export default function OccupationGraph({
     secondSelectedNodeId,
     connectedIds,
     simNodes,
+    radialPositions,
     dimensions.width,
     dimensions.height,
   ]);
@@ -957,7 +1260,15 @@ export default function OccupationGraph({
           </defs>
           <g ref={gRef}>
             <g className="nodes">
-              {simNodes.map((node) => {
+              {(layoutMode === 'radial' && selectedNodeId && connectedIds
+                ? [...simNodes].sort((a, b) => {
+                    // Render neighbourhood last so it sits on top of ring nodes
+                    const aInNeighbourhood = a.id === selectedNodeId || connectedIds.has(a.id) ? 1 : 0;
+                    const bInNeighbourhood = b.id === selectedNodeId || connectedIds.has(b.id) ? 1 : 0;
+                    return aInNeighbourhood - bInNeighbourhood;
+                  })
+                : simNodes
+              ).map((node) => {
                 const isIsolate = isolateIds.has(node.id);
                 const r = getNodeRadius(node);
                 const color = colorByGroup
@@ -1000,24 +1311,43 @@ export default function OccupationGraph({
                     strokeOpacity={opacity}
                     filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
-                      cursor: isIsolate ? 'default' : 'pointer',
+                      pointerEvents: (visibleIds && !visibleIds.has(node.id)) ? 'none' : 'auto',
+                      cursor: isIsolate ? 'default'
+                        : (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
+                        : 'pointer',
                       transition:
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
                       if (isIsolate) return;
+                      if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
+                      // In radial mode, clicking outside the neighbourhood deselects
+                      if (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) {
+                        onNodeSelect(null);
+                        return;
+                      }
                       onNodeSelect(node.id);
                     }}
                     onMouseEnter={() => {
                       if (isIsolate) return;
+                      if (visibleIds && !visibleIds.has(node.id)) return;
                       if (selectionMode === 'pair') return;
+                      // In radial mode, disable hover on ring nodes outside the neighbourhood
+                      if (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
+                      // In radial mode, show skill comparison for neighbor nodes
+                      const sc =
+                        layoutMode === 'radial' &&
+                        selectedNodeId &&
+                        node.id !== selectedNodeId &&
+                        neighborDistancesRef.current?.get(node.id);
                       setTooltip({
                         x: t.applyX(node.x),
                         y: t.applyY(node.y),
                         node,
+                        skillComparison: sc || undefined,
                       });
                     }}
                     onMouseLeave={() => {
@@ -1052,22 +1382,43 @@ export default function OccupationGraph({
               <p className="font-semibold leading-tight">
                 {tooltip.node.label}
               </p>
-              <div className="mt-2">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-muted-foreground text-[11px]">
-                    AI Exposure
-                  </span>
-                  <span className="font-medium text-[11px]">
-                    {(tooltip.node.aiExposure * 100).toFixed(1)}%
-                  </span>
+              {tooltip.skillComparison ? (
+                <div className="mt-2 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground text-[11px]">
+                      Shared skills
+                    </span>
+                    <span className="font-medium text-[11px]">
+                      {tooltip.skillComparison.shared.length}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground text-[11px]">
+                      Skills to develop
+                    </span>
+                    <span className="font-medium text-[11px]">
+                      {tooltip.skillComparison.toDevelop.length}
+                    </span>
+                  </div>
                 </div>
-                <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-foreground"
-                    style={{ width: `${tooltip.node.aiExposure * 100}%` }}
-                  />
+              ) : (
+                <div className="mt-2">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-muted-foreground text-[11px]">
+                      AI Exposure
+                    </span>
+                    <span className="font-medium text-[11px]">
+                      {(tooltip.node.aiExposure * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-foreground"
+                      style={{ width: `${tooltip.node.aiExposure * 100}%` }}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           );
         })()}
@@ -1180,15 +1531,22 @@ export default function OccupationGraph({
         })()}
 
       <TunerPanel
+        key={viewMode}
+        viewMode={viewMode}
         nodes={simNodes}
         edges={edges}
         mstEdges={mstEdges}
         onSizingChange={setTunerSizing}
         onPositionsChange={setTunerPositions}
+        onCircularLayoutChange={setCircularLayout}
+        onForceLayoutChange={setForceLayout}
         colorByGroup={colorByGroup}
         onColorByGroupChange={setColorByGroup}
         showMstEdges={showMstEdges}
         onShowMstEdgesChange={setShowMstEdges}
+        initialSizing={tunerSizing ?? undefined}
+        initialCircularLayout={circularLayout}
+        initialForceLayout={forceLayout}
       />
     </div>
   );

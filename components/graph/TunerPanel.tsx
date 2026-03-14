@@ -8,7 +8,14 @@ import {
   forceCenter,
   forceCollide,
 } from 'd3-force';
-import type { GraphNode, GraphEdge, TunerSizingParams } from '@/lib/types';
+import type {
+  GraphNode,
+  GraphEdge,
+  TunerSizingParams,
+  ViewMode,
+  CircularLayoutParams,
+  ForceLayoutParams,
+} from '@/lib/types';
 import {
   NODE_RADIUS_BASE,
   NODE_RADIUS_SCALE,
@@ -17,21 +24,30 @@ import {
 } from '@/lib/constants';
 
 interface TunerPanelProps {
+  viewMode: ViewMode;
   nodes: GraphNode[];
   edges: GraphEdge[];
   mstEdges: GraphEdge[];
   onSizingChange: (params: TunerSizingParams) => void;
   onPositionsChange: (positions: Map<string, { x: number; y: number }>) => void;
+  onCircularLayoutChange: (params: CircularLayoutParams) => void;
+  onForceLayoutChange: (params: ForceLayoutParams) => void;
   colorByGroup: boolean;
   onColorByGroupChange: (value: boolean) => void;
   showMstEdges: boolean;
   onShowMstEdgesChange: (value: boolean) => void;
+  initialSizing?: TunerSizingParams;
+  initialCircularLayout?: CircularLayoutParams;
+  initialForceLayout?: ForceLayoutParams;
 }
 
-const DEFAULTS = {
+const SIZING_DEFAULTS = {
   base: NODE_RADIUS_BASE,
   scale: NODE_RADIUS_SCALE,
   exponent: NODE_RADIUS_EXPONENT,
+};
+
+const FORCE_DEFAULTS: ForceLayoutParams = {
   collidePadding: NODE_RADIUS_COLLIDE_PADDING,
   charge: -800,
   linkDistanceBase: 600,
@@ -39,100 +55,69 @@ const DEFAULTS = {
   linkStrengthDivisor: 7,
 };
 
-const SLIDER_CONFIG = [
-  {
-    key: 'base',
-    label: 'Base Radius',
-    min: 2,
-    max: 2000,
-    step: 1,
-    group: 'sizing',
-  },
-  {
-    key: 'scale',
-    label: 'Scale',
-    min: 10,
-    max: 2000,
-    step: 1,
-    group: 'sizing',
-  },
-  {
-    key: 'exponent',
-    label: 'Exponent',
-    min: 0.5,
-    max: 3.0,
-    step: 0.1,
-    group: 'sizing',
-  },
-  {
-    key: 'collidePadding',
-    label: 'Collision Padding',
-    min: 0,
-    max: 1000,
-    step: 0.5,
-    group: 'layout',
-  },
-  {
-    key: 'charge',
-    label: 'Charge',
-    min: -80000,
-    max: 400,
-    step: 1,
-    group: 'layout',
-  },
-  {
-    key: 'linkDistanceBase',
-    label: 'Link Dist Base',
-    min: -60,
-    max: 600,
-    step: 1,
-    group: 'layout',
-  },
-  {
-    key: 'linkDistanceScale',
-    label: 'Link Dist Scale',
-    min: -20,
-    max: 160,
-    step: 1,
-    group: 'layout',
-  },
-  {
-    key: 'linkStrengthDivisor',
-    label: 'Link Str Divisor',
-    min: 1,
-    max: 14,
-    step: 0.5,
-    group: 'layout',
-  },
-] as const;
+const CIRCULAR_DEFAULTS: CircularLayoutParams = {
+  ringRadiusFactor: 0.12,
+  nodeSpacing: 0,
+  radialMinDistance: 200,
+  radialMaxDistance: 2400,
+};
 
-type ParamKey = (typeof SLIDER_CONFIG)[number]['key'];
+const SIZING_SLIDERS = [
+  { key: 'base' as const, label: 'Base Radius', min: 2, max: 2000, step: 1 },
+  { key: 'scale' as const, label: 'Scale', min: 10, max: 2000, step: 1 },
+  { key: 'exponent' as const, label: 'Exponent', min: 0.5, max: 3.0, step: 0.1 },
+];
+
+const FORCE_SLIDERS = [
+  { key: 'collidePadding' as const, label: 'Collision Padding', min: 0, max: 1000, step: 0.5 },
+  { key: 'charge' as const, label: 'Charge', min: -80000, max: 400, step: 1 },
+  { key: 'linkDistanceBase' as const, label: 'Link Dist Base', min: -60, max: 600, step: 1 },
+  { key: 'linkDistanceScale' as const, label: 'Link Dist Scale', min: -20, max: 160, step: 1 },
+  { key: 'linkStrengthDivisor' as const, label: 'Link Str Divisor', min: 1, max: 14, step: 0.5 },
+];
+
+const CIRCULAR_SLIDERS = [
+  { key: 'ringRadiusFactor' as const, label: 'Ring Radius Factor', min: 0.02, max: 0.5, step: 0.01 },
+  { key: 'nodeSpacing' as const, label: 'Node Spacing', min: 0, max: 200, step: 5 },
+  { key: 'radialMinDistance' as const, label: 'Radial Min Distance', min: 50, max: 2000, step: 10 },
+  { key: 'radialMaxDistance' as const, label: 'Radial Max Distance', min: 500, max: 10000, step: 50 },
+];
 
 const ITERATIONS = 300;
 
 export default function TunerPanel({
+  viewMode,
   nodes,
   edges,
   mstEdges,
   onSizingChange,
   onPositionsChange,
+  onCircularLayoutChange,
+  onForceLayoutChange,
   colorByGroup,
   onColorByGroupChange,
   showMstEdges,
   onShowMstEdgesChange,
+  initialSizing,
+  initialCircularLayout,
+  initialForceLayout,
 }: TunerPanelProps) {
   const [open, setOpen] = useState(false);
-  const [params, setParams] = useState<Record<ParamKey, number>>({
-    ...DEFAULTS,
-  });
+  const [sizingParams, setSizingParams] = useState(
+    initialSizing ?? { ...SIZING_DEFAULTS },
+  );
+  const [forceParams, setForceParams] = useState<ForceLayoutParams>(
+    initialForceLayout ?? { ...FORCE_DEFAULTS },
+  );
+  const [circularParams, setCircularParams] = useState<CircularLayoutParams>(
+    initialCircularLayout ?? { ...CIRCULAR_DEFAULTS },
+  );
   const [simulating, setSimulating] = useState(false);
   const [copied, setCopied] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // Snapshot original positions so every simulation starts from the same baseline
-  const originalPositionsRef = useRef<Map<
-    string,
-    { x: number; y: number }
-  > | null>(null);
+  const originalPositionsRef = useRef<Map<string, { x: number; y: number }> | null>(null);
   if (!originalPositionsRef.current && nodes.length > 0) {
     originalPositionsRef.current = new Map(
       nodes.map((n) => [n.id, { x: n.x, y: n.y }]),
@@ -141,11 +126,10 @@ export default function TunerPanel({
 
   // Run force simulation when layout params change
   const runSimulation = useCallback(
-    (p: Record<ParamKey, number>) => {
+    (sizing: typeof sizingParams, force: ForceLayoutParams) => {
       setSimulating(true);
       const origPositions = originalPositionsRef.current;
 
-      // Use requestAnimationFrame to avoid blocking the UI render
       requestAnimationFrame(() => {
         const simNodes = nodes.map((n) => {
           const orig = origPositions?.get(n.id);
@@ -181,11 +165,11 @@ export default function TunerPanel({
               .id((d: any) => d.id)
               .distance(
                 (d: any) =>
-                  p.linkDistanceBase + (7 - d.weight) * p.linkDistanceScale,
+                  force.linkDistanceBase + (7 - d.weight) * force.linkDistanceScale,
               )
-              .strength((d: any) => d.weight / p.linkStrengthDivisor),
+              .strength((d: any) => d.weight / force.linkStrengthDivisor),
           )
-          .force('charge', forceManyBody().strength(p.charge))
+          .force('charge', forceManyBody().strength(force.charge))
           .force(
             'center',
             forceCenter(
@@ -196,8 +180,8 @@ export default function TunerPanel({
           .force(
             'collide',
             forceCollide((d: any) => {
-              const r = p.base + Math.pow(d.aiExposure, p.exponent) * p.scale;
-              return r + p.collidePadding;
+              const r = sizing.base + Math.pow(d.aiExposure, sizing.exponent) * sizing.scale;
+              return r + force.collidePadding;
             }).strength(0.7),
           );
 
@@ -219,38 +203,39 @@ export default function TunerPanel({
     [nodes, mstEdges, onPositionsChange],
   );
 
-  const handleChange = useCallback(
-    (key: ParamKey, value: number) => {
-      setParams((prev) => {
+  const handleSizingChange = useCallback(
+    (key: string, value: number) => {
+      setSizingParams((prev) => {
         const next = { ...prev, [key]: value };
-
-        // Sizing params update instantly
-        const sizingKeys: ParamKey[] = ['base', 'scale', 'exponent'];
-        if (sizingKeys.includes(key)) {
-          onSizingChange({
-            base: next.base,
-            scale: next.scale,
-            exponent: next.exponent,
-          });
-        }
-
-        // Layout params trigger debounced simulation
-        const layoutKeys: ParamKey[] = [
-          'collidePadding',
-          'charge',
-          'linkDistanceBase',
-          'linkDistanceScale',
-          'linkStrengthDivisor',
-        ];
-        if (layoutKeys.includes(key)) {
-          if (debounceRef.current) clearTimeout(debounceRef.current);
-          debounceRef.current = setTimeout(() => runSimulation(next), 200);
-        }
-
+        onSizingChange(next);
         return next;
       });
     },
-    [onSizingChange, runSimulation],
+    [onSizingChange],
+  );
+
+  const handleForceChange = useCallback(
+    (key: string, value: number) => {
+      setForceParams((prev) => {
+        const next = { ...prev, [key]: value } as ForceLayoutParams;
+        onForceLayoutChange(next);
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => runSimulation(sizingParams, next), 200);
+        return next;
+      });
+    },
+    [onForceLayoutChange, runSimulation, sizingParams],
+  );
+
+  const handleCircularChange = useCallback(
+    (key: string, value: number) => {
+      setCircularParams((prev) => {
+        const next = { ...prev, [key]: value } as CircularLayoutParams;
+        onCircularLayoutChange(next);
+        return next;
+      });
+    },
+    [onCircularLayoutChange],
   );
 
   const handleDownload = useCallback(() => {
@@ -268,15 +253,14 @@ export default function TunerPanel({
 
   const handleCopyConstants = useCallback(() => {
     const text = [
-      `export const NODE_RADIUS_BASE = ${params.base};`,
-      `export const NODE_RADIUS_SCALE = ${params.scale};`,
-      `export const NODE_RADIUS_EXPONENT = ${params.exponent};`,
-      `export const NODE_RADIUS_COLLIDE_PADDING = ${params.collidePadding};`,
+      `export const NODE_RADIUS_BASE = ${sizingParams.base};`,
+      `export const NODE_RADIUS_SCALE = ${sizingParams.scale};`,
+      `export const NODE_RADIUS_EXPONENT = ${sizingParams.exponent};`,
     ].join('\n');
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
-  }, [params]);
+  }, [sizingParams]);
 
   // Cleanup debounce on unmount
   useEffect(() => {
@@ -284,6 +268,30 @@ export default function TunerPanel({
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, []);
+
+  function renderSlider(
+    cfg: { key: string; label: string; min: number; max: number; step: number },
+    value: number,
+    onChange: (key: string, value: number) => void,
+  ) {
+    return (
+      <label key={cfg.key} className="block mb-2">
+        <div className="flex justify-between mb-0.5">
+          <span>{cfg.label}</span>
+          <span className="font-mono text-muted-foreground">{value}</span>
+        </div>
+        <input
+          type="range"
+          min={cfg.min}
+          max={cfg.max}
+          step={cfg.step}
+          value={value}
+          onChange={(e) => onChange(cfg.key, parseFloat(e.target.value))}
+          className="w-full accent-foreground"
+        />
+      </label>
+    );
+  }
 
   return (
     <div className="absolute bottom-0 right-0 z-30">
@@ -313,56 +321,28 @@ export default function TunerPanel({
             <div className="text-muted-foreground font-medium mb-1.5 uppercase tracking-wider text-[10px]">
               Node Sizing
             </div>
-            {SLIDER_CONFIG.filter((s) => s.group === 'sizing').map((cfg) => (
-              <label key={cfg.key} className="block mb-2">
-                <div className="flex justify-between mb-0.5">
-                  <span>{cfg.label}</span>
-                  <span className="font-mono text-muted-foreground">
-                    {params[cfg.key]}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={cfg.min}
-                  max={cfg.max}
-                  step={cfg.step}
-                  value={params[cfg.key]}
-                  onChange={(e) =>
-                    handleChange(cfg.key, parseFloat(e.target.value))
-                  }
-                  className="w-full accent-foreground"
-                />
-              </label>
-            ))}
+            {SIZING_SLIDERS.map((cfg) => renderSlider(cfg, sizingParams[cfg.key], handleSizingChange))}
           </div>
 
-          {/* Layout section */}
-          <div className="mb-3">
-            <div className="text-muted-foreground font-medium mb-1.5 uppercase tracking-wider text-[10px]">
-              Layout Forces
+          {/* Force layout section */}
+          {viewMode === 'force' && (
+            <div className="mb-3">
+              <div className="text-muted-foreground font-medium mb-1.5 uppercase tracking-wider text-[10px]">
+                Layout Forces
+              </div>
+              {FORCE_SLIDERS.map((cfg) => renderSlider(cfg, forceParams[cfg.key], handleForceChange))}
             </div>
-            {SLIDER_CONFIG.filter((s) => s.group === 'layout').map((cfg) => (
-              <label key={cfg.key} className="block mb-2">
-                <div className="flex justify-between mb-0.5">
-                  <span>{cfg.label}</span>
-                  <span className="font-mono text-muted-foreground">
-                    {params[cfg.key]}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={cfg.min}
-                  max={cfg.max}
-                  step={cfg.step}
-                  value={params[cfg.key]}
-                  onChange={(e) =>
-                    handleChange(cfg.key, parseFloat(e.target.value))
-                  }
-                  className="w-full accent-foreground"
-                />
-              </label>
-            ))}
-          </div>
+          )}
+
+          {/* Circular layout section */}
+          {viewMode === 'circular' && (
+            <div className="mb-3">
+              <div className="text-muted-foreground font-medium mb-1.5 uppercase tracking-wider text-[10px]">
+                Circular Layout
+              </div>
+              {CIRCULAR_SLIDERS.map((cfg) => renderSlider(cfg, circularParams[cfg.key], handleCircularChange))}
+            </div>
+          )}
 
           {/* Debug section */}
           <div className="mb-3">
@@ -378,15 +358,17 @@ export default function TunerPanel({
               />
               <span>Color by MASCO group</span>
             </label>
-            <label className="flex items-center gap-2 cursor-pointer mt-1.5">
-              <input
-                type="checkbox"
-                checked={showMstEdges}
-                onChange={(e) => onShowMstEdgesChange(e.target.checked)}
-                className="accent-foreground"
-              />
-              <span>Show MST edges</span>
-            </label>
+            {viewMode === 'force' && (
+              <label className="flex items-center gap-2 cursor-pointer mt-1.5">
+                <input
+                  type="checkbox"
+                  checked={showMstEdges}
+                  onChange={(e) => onShowMstEdgesChange(e.target.checked)}
+                  className="accent-foreground"
+                />
+                <span>Show MST edges</span>
+              </label>
+            )}
           </div>
 
           {/* Export section */}
