@@ -40,7 +40,6 @@ interface TooltipState {
 interface OccupationGraphProps {
   nodes: GraphNode[];
   edges: GraphEdge[];
-  mstEdges: GraphEdge[];
   onNodeSelect: (nodeId: string | null) => void;
   selectedNodeId: string | null;
   filterSkills: string[];
@@ -57,7 +56,6 @@ interface OccupationGraphProps {
 export default function OccupationGraph({
   nodes,
   edges,
-  mstEdges,
   onNodeSelect,
   selectedNodeId: selectedNodeIdProp,
   filterSkills,
