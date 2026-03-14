@@ -9,7 +9,10 @@ import type {
   NodeSizeMetric,
   OccupationDetail,
   TunerSizingParams,
+  LayoutMode,
 } from '@/lib/types';
+import { computeRingPositions } from '@/lib/layout';
+import type { SkillComparison } from '@/lib/skills';
 import {
   NODE_RADIUS_BASE,
   NODE_RADIUS_SCALE,
@@ -51,6 +54,8 @@ interface OccupationGraphProps {
   maxWorkers: number;
   secondSelectedNodeId: string | null;
   occupations: Record<string, OccupationDetail>;
+  layoutMode: LayoutMode;
+  specificSkillsMap: Map<string, Set<string>>;
 }
 
 export default function OccupationGraph({
@@ -67,6 +72,8 @@ export default function OccupationGraph({
   maxWorkers,
   secondSelectedNodeId,
   occupations,
+  layoutMode,
+  specificSkillsMap,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -130,9 +137,26 @@ export default function OccupationGraph({
     [nodes.length],
   );
 
+  const ringPositions = useMemo(
+    () => computeRingPositions(simNodes, 20000, 20000),
+    [simNodes],
+  );
+
   useEffect(() => {
     nodeById.current = new Map(simNodes.map((n) => [n.id, n]));
-    // Compute graph center and radius for grid fade
+  }, [simNodes]);
+
+  useEffect(() => {
+    if (layoutMode === 'ring') {
+      for (const node of simNodes) {
+        const pos = ringPositions.get(node.id);
+        if (pos) {
+          node.x = pos.x;
+          node.y = pos.y;
+        }
+      }
+    }
+    // Update graph center for grid background
     if (simNodes.length) {
       const xs = simNodes.map((n) => n.x);
       const ys = simNodes.map((n) => n.y);
@@ -145,7 +169,8 @@ export default function OccupationGraph({
       }
       graphCenterRef.current = { cx, cy, radius: maxDist + 80 };
     }
-  }, [simNodes]);
+    drawEdgesRef.current();
+  }, [layoutMode, simNodes, ringPositions]);
 
   // Compute isolate set (nodes with no edges)
   const isolateIds = useMemo<Set<string>>(() => {
@@ -475,6 +500,12 @@ export default function OccupationGraph({
     ctx.fillStyle = grad;
     ctx.fillRect(vl, vt, vr - vl, vb - vt);
     ctx.globalCompositeOperation = 'source-over';
+
+    // No edges in ring mode — clean overview
+    if (selectionModeRef.current === 'none') {
+      ctx.restore();
+      return;
+    }
 
     // Draw selection edges (existing behavior)
     if (visibleEdges.length > 0) {
