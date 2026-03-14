@@ -8,6 +8,8 @@ export interface LayoutPosition {
   y: number;
 }
 
+export const RING_RADIUS_FACTOR = 0.12;
+
 /**
  * Compute ring positions for all nodes, sorted alphabetically by label.
  * Nodes are placed evenly on a circle centered at (0, 0).
@@ -18,7 +20,8 @@ export function computeRingPositions(
   viewportHeight: number,
 ): Map<string, LayoutPosition> {
   const sorted = [...nodes].sort((a, b) => a.label.localeCompare(b.label));
-  const radius = Math.min(viewportWidth, viewportHeight) * 0.4;
+  // Small ring so nodes appear large after zoom-to-fit (overlap is intentional)
+  const radius = Math.min(viewportWidth, viewportHeight) * RING_RADIUS_FACTOR;
   const total = sorted.length;
   const positions = new Map<string, LayoutPosition>();
 
@@ -43,8 +46,8 @@ export function computeRadialPositions(
   neighbors: GraphNode[],
   distances: Map<string, SkillComparison>,
   centerNodeRadius: number,
-  viewportWidth: number,
-  viewportHeight: number,
+  maxNeighborRadius: number,
+  ringRadius: number,
 ): Map<string, LayoutPosition> {
   const positions = new Map<string, LayoutPosition>();
 
@@ -53,8 +56,11 @@ export function computeRadialPositions(
 
   if (neighbors.length === 0) return positions;
 
-  const maxRadius = Math.min(viewportWidth, viewportHeight) * 0.4;
-  const minRadius = centerNodeRadius * 3;
+  // Radial tree must fit inside the ring circle
+  const maxRadius = ringRadius;
+  // Minimum clearance from center so nodes don't overlap the selected node
+  const clearanceRadius = centerNodeRadius + maxNeighborRadius * 2;
+  const minRadius = Math.min(clearanceRadius, maxRadius * 0.4);
 
   // Sort neighbors by distance ascending (closest first)
   const sorted = [...neighbors].sort((a, b) => {

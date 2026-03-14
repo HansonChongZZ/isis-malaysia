@@ -12,7 +12,7 @@ import type {
   LayoutMode,
   ViewMode,
 } from '@/lib/types';
-import { computeRingPositions, computeRadialPositions } from '@/lib/layout';
+import { computeRingPositions, computeRadialPositions, RING_RADIUS_FACTOR } from '@/lib/layout';
 import type { LayoutPosition } from '@/lib/layout';
 import { computeNeighborDistances } from '@/lib/skills';
 import type { SkillComparison } from '@/lib/skills';
@@ -112,7 +112,7 @@ export default function OccupationGraph({
   const selectedNodeId = selectedNodeIdProp;
   const [tunerSizingPerMode, setTunerSizingPerMode] = useState<Record<ViewMode, TunerSizingParams | null>>({
     force: null,
-    circular: { base: 42, scale: 10, exponent: 1 },
+    circular: { base: 80, scale: 40, exponent: 1 },
   });
   const tunerSizing = tunerSizingPerMode[viewMode];
   const setTunerSizing = useCallback((params: TunerSizingParams) => {
@@ -159,6 +159,14 @@ export default function OccupationGraph({
     return map;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodes.length]);
+
+  // Compute the max node radius for layout sizing
+  const maxNodeRadius = useMemo(() => {
+    const base = tunerSizing?.base ?? NODE_RADIUS_BASE;
+    const scale = tunerSizing?.scale ?? NODE_RADIUS_SCALE;
+    // Max possible radius: base + scale (when metric value = 1, exponent >= 1)
+    return base + scale;
+  }, [tunerSizing]);
 
   const ringPositions = useMemo(
     () => computeRingPositions(simNodes, 20000, 20000),
@@ -443,8 +451,9 @@ export default function OccupationGraph({
     );
     const centerNode = simNodes.find((n) => n.id === selectedNodeId);
     const centerRadius = centerNode ? getNodeRadius(centerNode) : NODE_RADIUS_BASE;
-    return computeRadialPositions(selectedNodeId, neighborNodes, neighborDistances, centerRadius, 20000, 20000);
-  }, [layoutMode, selectedNodeId, connectedIds, neighborDistances, simNodes, getNodeRadius]);
+    const ringRadius = Math.min(20000, 20000) * RING_RADIUS_FACTOR;
+    return computeRadialPositions(selectedNodeId, neighborNodes, neighborDistances, centerRadius, maxNodeRadius, ringRadius);
+  }, [layoutMode, selectedNodeId, connectedIds, neighborDistances, simNodes, getNodeRadius, maxNodeRadius]);
 
   // Keep ref in sync for canvas drawEdges callback
   useEffect(() => { neighborDistancesRef.current = neighborDistances; }, [neighborDistances]);
@@ -1194,7 +1203,15 @@ export default function OccupationGraph({
           </defs>
           <g ref={gRef}>
             <g className="nodes">
-              {simNodes.map((node) => {
+              {(layoutMode === 'radial' && selectedNodeId && connectedIds
+                ? [...simNodes].sort((a, b) => {
+                    // Render neighbourhood last so it sits on top of ring nodes
+                    const aInNeighbourhood = a.id === selectedNodeId || connectedIds.has(a.id) ? 1 : 0;
+                    const bInNeighbourhood = b.id === selectedNodeId || connectedIds.has(b.id) ? 1 : 0;
+                    return aInNeighbourhood - bInNeighbourhood;
+                  })
+                : simNodes
+              ).map((node) => {
                 const isIsolate = isolateIds.has(node.id);
                 const r = getNodeRadius(node);
                 const color = colorByGroup
@@ -1237,18 +1254,27 @@ export default function OccupationGraph({
                     strokeOpacity={opacity}
                     filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
-                      cursor: isIsolate ? 'default' : 'pointer',
+                      cursor: isIsolate ? 'default'
+                        : (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
+                        : 'pointer',
                       transition:
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
                       if (isIsolate) return;
                       e.stopPropagation();
+                      // In radial mode, clicking outside the neighbourhood deselects
+                      if (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) {
+                        onNodeSelect(null);
+                        return;
+                      }
                       onNodeSelect(node.id);
                     }}
                     onMouseEnter={() => {
                       if (isIsolate) return;
                       if (selectionMode === 'pair') return;
+                      // In radial mode, disable hover on ring nodes outside the neighbourhood
+                      if (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
                       // In radial mode, show skill comparison for neighbor nodes
