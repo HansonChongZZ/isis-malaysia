@@ -752,7 +752,7 @@ export default function OccupationGraph({
     }
 
     ctx.restore();
-  }, [selectionMode, visibleEdges, hoveredEdges, tunerSizing]);
+  }, [visibleEdges, hoveredEdges, tunerSizing]);
 
   // Stable ref so zoom/drag handlers always call the latest drawEdges
   const drawEdgesRef = useRef(drawEdges);
