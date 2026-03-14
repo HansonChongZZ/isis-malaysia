@@ -112,7 +112,7 @@ export default function OccupationGraph({
   const selectedNodeId = selectedNodeIdProp;
   const [tunerSizingPerMode, setTunerSizingPerMode] = useState<Record<ViewMode, TunerSizingParams | null>>({
     force: null,
-    circular: null,
+    circular: { base: 42, scale: 10, exponent: 1 },
   });
   const tunerSizing = tunerSizingPerMode[viewMode];
   const setTunerSizing = useCallback((params: TunerSizingParams) => {
@@ -1449,6 +1449,7 @@ export default function OccupationGraph({
         onSizingChange={setTunerSizing}
         colorByGroup={colorByGroup}
         onColorByGroupChange={setColorByGroup}
+        initialSizing={tunerSizing ?? undefined}
       />
     </div>
   );

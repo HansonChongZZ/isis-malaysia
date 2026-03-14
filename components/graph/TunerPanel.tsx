@@ -12,6 +12,7 @@ interface TunerPanelProps {
   onSizingChange: (params: TunerSizingParams) => void;
   colorByGroup: boolean;
   onColorByGroupChange: (value: boolean) => void;
+  initialSizing?: TunerSizingParams;
 }
 
 const DEFAULTS = {
@@ -53,11 +54,14 @@ export default function TunerPanel({
   onSizingChange,
   colorByGroup,
   onColorByGroupChange,
+  initialSizing,
 }: TunerPanelProps) {
   const [open, setOpen] = useState(false);
-  const [params, setParams] = useState<Record<ParamKey, number>>({
-    ...DEFAULTS,
-  });
+  const [params, setParams] = useState<Record<ParamKey, number>>(
+    initialSizing
+      ? { base: initialSizing.base, scale: initialSizing.scale, exponent: initialSizing.exponent }
+      : { ...DEFAULTS },
+  );
   const [copied, setCopied] = useState(false);
 
   const handleChange = useCallback(
