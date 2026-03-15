@@ -167,6 +167,12 @@ export default function OccupationPanel({
                 comparisonDeltas={comparisonDeltas}
                 onBack={() => setComparisonNodeId(null)}
               />
+            ) : transitions.length === 0 ? (
+              <div className="flex flex-1 min-h-0">
+                <div className="w-full min-h-0 overflow-hidden">
+                  <OccupationDetailPane detail={detail} />
+                </div>
+              </div>
             ) : (
               <div className="flex flex-1 min-h-0">
                 {/* Left pane — primary occupation details */}

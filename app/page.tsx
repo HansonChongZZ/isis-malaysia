@@ -88,6 +88,20 @@ export default function HomePage() {
     return map
   }, [occupations])
 
+  // Nodes that appear in no edge
+  const isolateIds = useMemo<Set<string>>(() => {
+    const connected = new Set<string>()
+    for (const e of edges) {
+      connected.add(e.source)
+      connected.add(e.target)
+    }
+    const isolates = new Set<string>()
+    for (const n of nodes) {
+      if (!connected.has(n.id)) isolates.add(n.id)
+    }
+    return isolates
+  }, [nodes, edges])
+
   const firstNodeNeighbors = useMemo<Set<string>>(() => {
     if (!selectedNodeId) return new Set()
     const set = new Set<string>()
@@ -136,6 +150,16 @@ export default function HomePage() {
   const panelDetail = panelNodeId ? occupations[panelNodeId] ?? null : null
 
   const handleNodeSelect = (id: string | null) => {
+    // Isolated nodes have no neighbours — open detail panel immediately
+    if (id && isolateIds.has(id)) {
+      setSelectedNodeId(id)
+      setSecondSelectedNodeId(null)
+      setPanelNodeId(id)
+      setIsPanelOpen(true)
+      if (viewMode !== 'force') setLayoutMode('radial')
+      return
+    }
+
     if (viewMode === 'force') {
       // Force-directed: original click behavior
       if (id === null) {

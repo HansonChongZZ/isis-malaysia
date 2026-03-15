@@ -1068,17 +1068,18 @@ export default function OccupationGraph({
       const neighbourNodes = simNodes.filter((n) => connectedIds.has(n.id));
 
       if (neighbourNodes.length <= 1) {
-        // Isolated node (only itself in connectedIds) — zoom to scale 2 centered on node
+        // Isolated node (only itself in connectedIds) — gently centre on node
         const node = nodeById.current.get(selectedNodeId);
         if (!node) return;
-        const scale = 2;
+        // Zoom to max allowed scale, centred on the node
+        const scale = zoomRef.current!.scaleExtent()[1];
         const tx = dimensions.width / 2 - node.x * scale;
         const ty = dimensions.height / 2 - node.y * scale;
         const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
         svg
           .transition()
-          .duration(1000)
+          .duration(600)
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
       } else if (radialPositions) {
@@ -1291,35 +1292,31 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isIsolate
-                        ? isolateStrokeRef.current
-                        : isSelected || isHovered || isHoveredNeighbor
-                          ? 'var(--foreground)'
+                      isSelected || isHovered || isHoveredNeighbor
+                        ? 'var(--foreground)'
+                        : isIsolate
+                          ? isolateStrokeRef.current
                           : 'var(--background)'
                     }
                     strokeWidth={
-                      isIsolate
-                        ? 0.8
-                        : isSelected
-                          ? 3.5
-                          : isHovered
-                            ? 2.5
-                            : isHoveredNeighbor
-                              ? 2
-                              : 0.8
+                      isSelected
+                        ? 3.5
+                        : isHovered
+                          ? 2.5
+                          : isHoveredNeighbor
+                            ? 2
+                            : 0.8
                     }
                     strokeOpacity={opacity}
                     filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
                       pointerEvents: (visibleIds && !visibleIds.has(node.id)) ? 'none' : 'auto',
-                      cursor: isIsolate ? 'default'
-                        : (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
+                      cursor: (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
                         : 'pointer',
                       transition:
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
-                      if (isIsolate) return;
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
                       // In radial mode, clicking outside the neighbourhood deselects
@@ -1330,7 +1327,6 @@ export default function OccupationGraph({
                       onNodeSelect(node.id);
                     }}
                     onMouseEnter={() => {
-                      if (isIsolate) return;
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       if (selectionMode === 'pair') return;
                       // In radial mode, disable hover on ring nodes outside the neighbourhood
@@ -1351,7 +1347,6 @@ export default function OccupationGraph({
                       });
                     }}
                     onMouseLeave={() => {
-                      if (isIsolate) return;
                       setHoveredNodeId(null);
                       setTooltip(null);
                     }}
