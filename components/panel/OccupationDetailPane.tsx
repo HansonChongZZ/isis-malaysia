@@ -1,23 +1,24 @@
-"use client"
+'use client';
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from '@/components/ui/badge';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import type { OccupationDetail } from "@/lib/types"
-import { QUARTILE_COLORS } from "@/lib/constants"
+} from '@/components/ui/accordion';
+import type { OccupationDetail } from '@/lib/types';
+import { QUARTILE_COLORS } from '@/lib/constants';
+
 
 interface OccupationDetailPaneProps {
-  detail: OccupationDetail
+  detail: OccupationDetail;
   comparisonDeltas?: {
-    aiExposure: number
-    wage: number | null
-  }
-  skillsMatchWeight?: number
-  header?: React.ReactNode
+    aiExposure: number;
+    wage: number | null;
+  };
+  skillsMatchWeight?: number;
+  header?: React.ReactNode;
 }
 
 function SkillBadge({ skill }: { skill: string }) {
@@ -26,14 +27,14 @@ function SkillBadge({ skill }: { skill: string }) {
       variant="secondary"
       className="text-xs"
       style={{
-        backgroundColor: "rgba(34,197,94,0.15)",
-        color: "#16a34a",
-        border: "1px solid rgba(34,197,94,0.3)",
+        backgroundColor: 'rgba(34,197,94,0.15)',
+        color: '#16a34a',
+        border: '1px solid rgba(34,197,94,0.3)',
       }}
     >
       {skill}
     </Badge>
-  )
+  );
 }
 
 export default function OccupationDetailPane({
@@ -42,17 +43,17 @@ export default function OccupationDetailPane({
   skillsMatchWeight,
   header,
 }: OccupationDetailPaneProps) {
-  const quartileColor = QUARTILE_COLORS[detail.quartile] ?? "#888"
+  const quartileColor = QUARTILE_COLORS[detail.quartile] ?? '#888';
 
   return (
     <div className="h-full overflow-y-auto px-5 pb-5 pt-3 space-y-6">
       {/* Optional header slot (used by comparison pane for back button + name) */}
       {header}
 
-      {/* Skills match indicator (comparison pane only) */}
+      {/* Match indicator (comparison pane only) */}
       {skillsMatchWeight != null && (
         <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground">Skills match:</span>
+          <span className="text-xs text-muted-foreground">Match:</span>
           <div className="flex items-center gap-1">
             {Array.from({ length: 7 }, (_, i) => (
               <span
@@ -61,8 +62,8 @@ export default function OccupationDetailPane({
                 style={{
                   backgroundColor:
                     i < skillsMatchWeight
-                      ? "var(--primary)"
-                      : "rgba(128,128,128,0.2)",
+                      ? 'var(--primary)'
+                      : 'rgba(128,128,128,0.2)',
                 }}
               />
             ))}
@@ -92,10 +93,10 @@ export default function OccupationDetailPane({
                   className="text-xs font-medium"
                   style={{
                     color:
-                      comparisonDeltas.aiExposure < 0 ? "#22c55e" : "#ef4444",
+                      comparisonDeltas.aiExposure < 0 ? '#22c55e' : '#ef4444',
                   }}
                 >
-                  {comparisonDeltas.aiExposure < 0 ? "▼" : "▲"}{" "}
+                  {comparisonDeltas.aiExposure < 0 ? '▼' : '▲'}{' '}
                   {Math.abs(comparisonDeltas.aiExposure * 100).toFixed(1)}%
                 </span>
               )}
@@ -137,10 +138,10 @@ export default function OccupationDetailPane({
               <span
                 className="text-xs font-medium"
                 style={{
-                  color: comparisonDeltas.wage > 0 ? "#22c55e" : "#ef4444",
+                  color: comparisonDeltas.wage > 0 ? '#22c55e' : '#ef4444',
                 }}
               >
-                {comparisonDeltas.wage > 0 ? "▲" : "▼"} MYR{" "}
+                {comparisonDeltas.wage > 0 ? '▲' : '▼'} MYR{' '}
                 {Math.abs(comparisonDeltas.wage).toLocaleString()}
               </span>
             )}
@@ -218,5 +219,5 @@ export default function OccupationDetailPane({
         </section>
       )}
     </div>
-  )
+  );
 }

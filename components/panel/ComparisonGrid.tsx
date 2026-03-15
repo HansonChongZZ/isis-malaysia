@@ -1,25 +1,25 @@
-"use client"
+'use client';
 
-import { ArrowLeftIcon } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { ArrowLeftIcon } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import type { OccupationDetail } from "@/lib/types"
-import { QUARTILE_COLORS } from "@/lib/constants"
+} from '@/components/ui/accordion';
+import type { OccupationDetail } from '@/lib/types';
+import { QUARTILE_COLORS } from '@/lib/constants';
 
 interface ComparisonGridProps {
-  primary: OccupationDetail
-  primaryNodeId: string
-  comparison: OccupationDetail
-  comparisonNodeId: string
-  sharedSkills: Set<string>
-  comparisonDeltas: { aiExposure: number; wage: number | null }
-  skillsMatchWeight?: number
-  onBack: () => void
+  primary: OccupationDetail;
+  primaryNodeId: string;
+  comparison: OccupationDetail;
+  comparisonNodeId: string;
+  sharedSkills: Set<string>;
+  comparisonDeltas: { aiExposure: number; wage: number | null };
+  skillsMatchWeight?: number;
+  onBack: () => void;
 }
 
 function SkillBadge({
@@ -27,25 +27,25 @@ function SkillBadge({
   side,
   isShared,
 }: {
-  skill: string
-  side: "left" | "right"
-  isShared: boolean
+  skill: string;
+  side: 'left' | 'right';
+  isShared: boolean;
 }) {
   // Left pane: all green, no ticks
-  if (side === "left") {
+  if (side === 'left') {
     return (
       <Badge
         variant="secondary"
         className="text-xs"
         style={{
-          backgroundColor: "rgba(34,197,94,0.15)",
-          color: "#16a34a",
-          border: "1px solid rgba(34,197,94,0.3)",
+          backgroundColor: 'rgba(34,197,94,0.15)',
+          color: '#16a34a',
+          border: '1px solid rgba(34,197,94,0.3)',
         }}
       >
         {skill}
       </Badge>
-    )
+    );
   }
 
   // Right pane: shared = green + tick, non-shared = blue no tick
@@ -55,14 +55,14 @@ function SkillBadge({
         variant="secondary"
         className="text-xs"
         style={{
-          backgroundColor: "rgba(34,197,94,0.15)",
-          color: "#16a34a",
-          border: "1px solid rgba(34,197,94,0.3)",
+          backgroundColor: 'rgba(34,197,94,0.15)',
+          color: '#16a34a',
+          border: '1px solid rgba(34,197,94,0.3)',
         }}
       >
         {skill} ✓
       </Badge>
-    )
+    );
   }
 
   return (
@@ -70,34 +70,25 @@ function SkillBadge({
       variant="secondary"
       className="text-xs"
       style={{
-        backgroundColor: "rgba(59,130,246,0.15)",
-        color: "#60a5fa",
-        border: "1px solid rgba(59,130,246,0.3)",
+        backgroundColor: 'rgba(59,130,246,0.15)',
+        color: '#60a5fa',
+        border: '1px solid rgba(59,130,246,0.3)',
       }}
     >
       {skill}
     </Badge>
-  )
+  );
 }
 
-function QuartileBadge({ quartile }: { quartile: string }) {
-  const color = QUARTILE_COLORS[quartile] ?? "#888"
-  return (
-    <Badge
-      className="text-xs"
-      style={{
-        backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`,
-        color,
-        border: `1px solid color-mix(in srgb, ${color} 40%, transparent)`,
-      }}
-    >
-      {quartile}
-    </Badge>
-  )
-}
 
-function TaskAccordion({ tasks, prefix }: { tasks: OccupationDetail["tasks"]; prefix: string }) {
-  if (tasks.length === 0) return null
+function TaskAccordion({
+  tasks,
+  prefix,
+}: {
+  tasks: OccupationDetail['tasks'];
+  prefix: string;
+}) {
+  if (tasks.length === 0) return null;
   return (
     <Accordion type="multiple" className="space-y-1">
       {tasks.map((task, i) => (
@@ -126,7 +117,7 @@ function TaskAccordion({ tasks, prefix }: { tasks: OccupationDetail["tasks"]; pr
         </AccordionItem>
       ))}
     </Accordion>
-  )
+  );
 }
 
 export default function ComparisonGrid({
@@ -139,15 +130,17 @@ export default function ComparisonGrid({
   skillsMatchWeight,
   onBack,
 }: ComparisonGridProps) {
-  const primaryColor = QUARTILE_COLORS[primary.quartile] ?? "#888"
-  const comparisonColor = QUARTILE_COLORS[comparison.quartile] ?? "#888"
+  const primaryColor = QUARTILE_COLORS[primary.quartile] ?? '#888';
+  const comparisonColor = 'var(--primary)';
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto">
       {/* Header row */}
       <div className="flex border-b border-border">
         <div className="w-1/2 px-5 py-4">
-          <div className="text-xs text-muted-foreground font-mono mb-1">{primaryNodeId}</div>
+          <div className="text-xs text-muted-foreground font-mono mb-1">
+            {primaryNodeId}
+          </div>
           <div className="text-base font-semibold text-foreground leading-snug">
             {primary.occupation}
           </div>
@@ -171,7 +164,7 @@ export default function ComparisonGrid({
           </div>
           {skillsMatchWeight != null && (
             <div className="flex items-center gap-1.5 mt-2">
-              <span className="text-xs text-muted-foreground">Skills match:</span>
+              <span className="text-xs text-muted-foreground">Match:</span>
               <div className="flex items-center gap-1">
                 {Array.from({ length: 7 }, (_, i) => (
                   <span
@@ -180,8 +173,8 @@ export default function ComparisonGrid({
                     style={{
                       backgroundColor:
                         i < skillsMatchWeight
-                          ? "var(--primary)"
-                          : "rgba(128,128,128,0.2)",
+                          ? 'var(--primary)'
+                          : 'rgba(128,128,128,0.2)',
                     }}
                   />
                 ))}
@@ -201,15 +194,20 @@ export default function ComparisonGrid({
             AI Exposure Index
           </h3>
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-2xl font-bold" style={{ color: primaryColor }}>
+            <span
+              className="text-2xl font-bold"
+              style={{ color: primaryColor }}
+            >
               {(primary.aiExposure * 100).toFixed(1)}%
             </span>
-            <QuartileBadge quartile={primary.quartile} />
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all"
-              style={{ width: `${primary.aiExposure * 100}%`, backgroundColor: primaryColor }}
+              style={{
+                width: `${primary.aiExposure * 100}%`,
+                backgroundColor: primaryColor,
+              }}
             />
           </div>
         </div>
@@ -219,25 +217,25 @@ export default function ComparisonGrid({
           </h3>
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold" style={{ color: comparisonColor }}>
+              <span
+                className="text-2xl font-bold"
+                style={{ color: comparisonColor }}
+              >
                 {(comparison.aiExposure * 100).toFixed(1)}%
               </span>
-              <span
-                className="text-xs font-medium"
-                style={{
-                  color: comparisonDeltas.aiExposure < 0 ? "#22c55e" : "#ef4444",
-                }}
-              >
-                {comparisonDeltas.aiExposure < 0 ? "▼" : "▲"}{" "}
+              <span className="text-xs font-medium">
+                {comparisonDeltas.aiExposure < 0 ? '▼' : '▲'}{' '}
                 {Math.abs(comparisonDeltas.aiExposure * 100).toFixed(1)}%
               </span>
             </div>
-            <QuartileBadge quartile={comparison.quartile} />
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all"
-              style={{ width: `${comparison.aiExposure * 100}%`, backgroundColor: comparisonColor }}
+              style={{
+                width: `${comparison.aiExposure * 100}%`,
+                backgroundColor: comparisonColor,
+              }}
             />
           </div>
         </div>
@@ -254,7 +252,9 @@ export default function ComparisonGrid({
               MYR {primary.wage.toLocaleString()}
             </p>
           ) : (
-            <p className="text-sm text-muted-foreground italic">Data not available</p>
+            <p className="text-sm text-muted-foreground italic">
+              Data not available
+            </p>
           )}
         </div>
         <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
@@ -263,29 +263,33 @@ export default function ComparisonGrid({
           </h3>
           {comparison.wage !== null ? (
             <div className="flex items-center gap-2">
-              <p className="text-lg font-semibold text-foreground">
+              <p
+                className="text-lg font-semibold"
+                style={{ color: comparisonColor }}
+              >
                 MYR {comparison.wage.toLocaleString()}
               </p>
               {comparisonDeltas.wage != null && (
                 <span
                   className="text-xs font-medium"
-                  style={{
-                    color: comparisonDeltas.wage > 0 ? "#22c55e" : "#ef4444",
-                  }}
+                  style={{ color: comparisonColor }}
                 >
-                  {comparisonDeltas.wage > 0 ? "▲" : "▼"} MYR{" "}
+                  {comparisonDeltas.wage > 0 ? '▲' : '▼'} MYR{' '}
                   {Math.abs(comparisonDeltas.wage).toLocaleString()}
                 </span>
               )}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground italic">Data not available</p>
+            <p className="text-sm text-muted-foreground italic">
+              Data not available
+            </p>
           )}
         </div>
       </div>
 
       {/* Skills legend + Basic Skills row */}
-      {(primary.basicSkills.length > 0 || comparison.basicSkills.length > 0) && (
+      {(primary.basicSkills.length > 0 ||
+        comparison.basicSkills.length > 0) && (
         <div className="flex border-b border-border">
           <div className="w-1/2 px-5 py-4">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
@@ -309,9 +313,9 @@ export default function ComparisonGrid({
                   variant="secondary"
                   className="text-xs"
                   style={{
-                    backgroundColor: "rgba(34,197,94,0.15)",
-                    color: "#16a34a",
-                    border: "1px solid rgba(34,197,94,0.3)",
+                    backgroundColor: 'rgba(34,197,94,0.15)',
+                    color: '#16a34a',
+                    border: '1px solid rgba(34,197,94,0.3)',
                   }}
                 >
                   ✓
@@ -323,14 +327,16 @@ export default function ComparisonGrid({
                   variant="secondary"
                   className="text-xs"
                   style={{
-                    backgroundColor: "rgba(59,130,246,0.15)",
-                    color: "#60a5fa",
-                    border: "1px solid rgba(59,130,246,0.3)",
+                    backgroundColor: 'rgba(59,130,246,0.15)',
+                    color: '#60a5fa',
+                    border: '1px solid rgba(59,130,246,0.3)',
                   }}
                 >
                   &bull;
                 </Badge>
-                <span className="text-xs text-muted-foreground">To develop</span>
+                <span className="text-xs text-muted-foreground">
+                  To develop
+                </span>
               </span>
             </div>
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
@@ -351,7 +357,8 @@ export default function ComparisonGrid({
       )}
 
       {/* Specific Skills row */}
-      {(primary.specificSkills.length > 0 || comparison.specificSkills.length > 0) && (
+      {(primary.specificSkills.length > 0 ||
+        comparison.specificSkills.length > 0) && (
         <div className="flex border-b border-border">
           <div className="w-1/2 px-5 py-4">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
@@ -404,5 +411,5 @@ export default function ComparisonGrid({
         </div>
       )}
     </div>
-  )
+  );
 }
