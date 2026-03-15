@@ -1,102 +1,52 @@
-"use client"
+'use client';
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from '@/components/ui/badge';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import type { OccupationDetail } from "@/lib/types"
-import { QUARTILE_COLORS } from "@/lib/constants"
+} from '@/components/ui/accordion';
+import type { OccupationDetail } from '@/lib/types';
+import { QUARTILE_COLORS } from '@/lib/constants';
+
 
 interface OccupationDetailPaneProps {
-  detail: OccupationDetail
-  sharedSkills?: Set<string>
+  detail: OccupationDetail;
   comparisonDeltas?: {
-    aiExposure: number
-    wage: number | null
-  }
-  skillsMatchWeight?: number
-  header?: React.ReactNode
+    aiExposure: number;
+    wage: number | null;
+  };
+  header?: React.ReactNode;
 }
 
-function SkillBadge({
-  skill,
-  variant,
-  isShared,
-}: {
-  skill: string
-  variant: "basic" | "specific"
-  isShared: boolean
-}) {
-  if (isShared) {
-    return (
-      <Badge
-        variant="secondary"
-        className="text-xs"
-        style={{
-          backgroundColor: "rgba(59,130,246,0.15)",
-          color: "#60a5fa",
-          border: "1px solid rgba(59,130,246,0.3)",
-        }}
-      >
-        {skill} ✓
-      </Badge>
-    )
-  }
-
+function SkillBadge({ skill }: { skill: string }) {
   return (
     <Badge
       variant="secondary"
-      className={
-        variant === "basic"
-          ? "text-xs bg-secondary text-secondary-foreground border-border"
-          : "text-xs bg-accent text-accent-foreground border-border"
-      }
+      className="text-xs"
+      style={{
+        backgroundColor: 'rgba(34,197,94,0.15)',
+        color: '#16a34a',
+        border: '1px solid rgba(34,197,94,0.3)',
+      }}
     >
       {skill}
     </Badge>
-  )
+  );
 }
 
 export default function OccupationDetailPane({
   detail,
-  sharedSkills,
   comparisonDeltas,
-  skillsMatchWeight,
   header,
 }: OccupationDetailPaneProps) {
-  const quartileColor = QUARTILE_COLORS[detail.quartile] ?? "#888"
+  const quartileColor = QUARTILE_COLORS[detail.quartile] ?? '#888';
 
   return (
     <div className="h-full overflow-y-auto px-5 pb-5 pt-3 space-y-6">
       {/* Optional header slot (used by comparison pane for back button + name) */}
       {header}
-
-      {/* Skills match indicator (comparison pane only) */}
-      {skillsMatchWeight != null && (
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground">Skills match:</span>
-          <div className="flex items-center gap-1">
-            {Array.from({ length: 7 }, (_, i) => (
-              <span
-                key={i}
-                className="inline-block w-2 h-2 rounded-full"
-                style={{
-                  backgroundColor:
-                    i < skillsMatchWeight
-                      ? "var(--primary)"
-                      : "rgba(128,128,128,0.2)",
-                }}
-              />
-            ))}
-            <span className="ml-1 text-muted-foreground text-xs">
-              {Math.round((skillsMatchWeight / 7) * 100)}%
-            </span>
-          </div>
-        </div>
-      )}
 
       {/* AI Exposure */}
       <section>
@@ -117,10 +67,10 @@ export default function OccupationDetailPane({
                   className="text-xs font-medium"
                   style={{
                     color:
-                      comparisonDeltas.aiExposure < 0 ? "#22c55e" : "#ef4444",
+                      comparisonDeltas.aiExposure < 0 ? '#22c55e' : '#ef4444',
                   }}
                 >
-                  {comparisonDeltas.aiExposure < 0 ? "▼" : "▲"}{" "}
+                  {comparisonDeltas.aiExposure < 0 ? '▼' : '▲'}{' '}
                   {Math.abs(comparisonDeltas.aiExposure * 100).toFixed(1)}%
                 </span>
               )}
@@ -162,10 +112,10 @@ export default function OccupationDetailPane({
               <span
                 className="text-xs font-medium"
                 style={{
-                  color: comparisonDeltas.wage > 0 ? "#22c55e" : "#ef4444",
+                  color: comparisonDeltas.wage > 0 ? '#22c55e' : '#ef4444',
                 }}
               >
-                {comparisonDeltas.wage > 0 ? "▲" : "▼"} MYR{" "}
+                {comparisonDeltas.wage > 0 ? '▲' : '▼'} MYR{' '}
                 {Math.abs(comparisonDeltas.wage).toLocaleString()}
               </span>
             )}
@@ -185,12 +135,7 @@ export default function OccupationDetailPane({
           </h3>
           <div className="flex flex-wrap gap-1.5">
             {detail.basicSkills.map((skill) => (
-              <SkillBadge
-                key={skill}
-                skill={skill}
-                variant="basic"
-                isShared={sharedSkills?.has(skill.toLowerCase()) ?? false}
-              />
+              <SkillBadge key={skill} skill={skill} />
             ))}
           </div>
         </section>
@@ -204,12 +149,7 @@ export default function OccupationDetailPane({
           </h3>
           <div className="flex flex-wrap gap-1.5">
             {detail.specificSkills.map((skill) => (
-              <SkillBadge
-                key={skill}
-                skill={skill}
-                variant="specific"
-                isShared={sharedSkills?.has(skill.toLowerCase()) ?? false}
-              />
+              <SkillBadge key={skill} skill={skill} />
             ))}
           </div>
         </section>
@@ -253,5 +193,5 @@ export default function OccupationDetailPane({
         </section>
       )}
     </div>
-  )
+  );
 }

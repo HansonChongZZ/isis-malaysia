@@ -87,12 +87,6 @@ export default function OccupationPanel({
     ? occupations[comparisonNodeId] ?? null
     : null
 
-  // Edge weight for comparison pair
-  const comparisonWeight = useMemo(() => {
-    if (!comparisonNodeId) return undefined
-    return transitions.find((t) => t.id === comparisonNodeId)?.weight
-  }, [comparisonNodeId, transitions])
-
   // Shared skills (lowercase) between primary and comparison
   const sharedSkills = useMemo<Set<string> | undefined>(() => {
     if (!detail || !comparisonDetail) return undefined
@@ -171,7 +165,6 @@ export default function OccupationPanel({
                 comparisonNodeId={comparisonNodeId!}
                 sharedSkills={sharedSkills ?? new Set()}
                 comparisonDeltas={comparisonDeltas}
-                skillsMatchWeight={comparisonWeight}
                 onBack={() => setComparisonNodeId(null)}
               />
             ) : (
