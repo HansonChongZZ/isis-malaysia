@@ -1311,7 +1311,7 @@ export default function OccupationGraph({
                     filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
                       pointerEvents: (visibleIds && !visibleIds.has(node.id)) ? 'none' : 'auto',
-                      cursor: (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
+                      cursor: (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
                         : 'pointer',
                       transition:
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
@@ -1329,8 +1329,8 @@ export default function OccupationGraph({
                     onMouseEnter={() => {
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       if (selectionMode === 'pair') return;
-                      // In radial mode, disable hover on ring nodes outside the neighbourhood
-                      if (layoutMode === 'radial' && selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
+                      // Disable hover on nodes outside the neighbourhood when a node is selected
+                      if (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
                       // In radial mode, show skill comparison for neighbor nodes

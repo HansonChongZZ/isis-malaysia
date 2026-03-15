@@ -196,8 +196,11 @@ export default function HomePage() {
         } else if (firstNodeNeighbors.has(id)) {
           setSecondSelectedNodeId(id)
         } else {
-          setSelectedNodeId(id)
+          // Clicking outside the node and its neighbours → deselect
+          setSelectedNodeId(null)
           setSecondSelectedNodeId(null)
+          setPanelNodeId(null)
+          setIsPanelOpen(false)
         }
         return
       }
