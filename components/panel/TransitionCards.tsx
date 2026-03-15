@@ -52,22 +52,32 @@ export default function TransitionCards({
     setFilterQuery("")
   }, [transitions])
 
-  // Compute shared skills preview per transition row
+  // Compute shared/develop specific skill counts per transition row
+  // Compute specific skill preview per transition row, sorted shared-first
   const cardPreviews = useMemo(() => {
-    const map = new Map<string, { preview: string[]; total: number }>()
+    const map = new Map<
+      string,
+      { preview: string[]; sharedSpecific: number; totalSpecific: number }
+    >()
     for (const t of transitions) {
       const occ = occupations[t.id]
       if (!occ) {
-        map.set(t.id, { preview: [], total: 0 })
+        map.set(t.id, { preview: [], sharedSpecific: 0, totalSpecific: 0 })
         continue
       }
-      const skills = [...occ.basicSkills, ...occ.specificSkills]
-      const shared = skills.filter((s) =>
+      const sharedSpecific = occ.specificSkills.filter((s) =>
         primarySkills.has(s.toLowerCase())
-      )
+      ).length
+      // Sort shared first, then to-develop
+      const sorted = [...occ.specificSkills].sort((a, b) => {
+        const aShared = primarySkills.has(a.toLowerCase()) ? 0 : 1
+        const bShared = primarySkills.has(b.toLowerCase()) ? 0 : 1
+        return aShared - bShared
+      })
       map.set(t.id, {
-        preview: shared.slice(0, 3),
-        total: shared.length,
+        preview: sorted.slice(0, 4),
+        sharedSpecific,
+        totalSpecific: occ.specificSkills.length,
       })
     }
     return map
@@ -128,12 +138,12 @@ export default function TransitionCards({
                 key={t.id}
                 id={t.id}
                 label={t.label}
-                weight={t.weight}
-                aiExposure={t.aiExposure}
                 quartile={t.quartile}
                 wage={t.wage}
-                sharedSkillsPreview={preview?.preview ?? []}
-                totalSharedSkills={preview?.total ?? 0}
+                skillsPreview={preview?.preview ?? []}
+                sharedSpecificCount={preview?.sharedSpecific ?? 0}
+                totalSpecificCount={preview?.totalSpecific ?? 0}
+                primarySkills={primarySkills}
                 onClick={() => onCardClick(t.id)}
               />
             )

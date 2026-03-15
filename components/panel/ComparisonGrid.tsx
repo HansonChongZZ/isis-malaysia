@@ -169,7 +169,7 @@ export default function ComparisonGrid({
             return (
               <div className="flex items-center gap-1.5 mt-2">
                 <span className="text-xs text-muted-foreground">Match:</span>
-                <div className="flex items-center gap-1">
+                <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1">
                   {[...comparison.specificSkills]
                     .sort((a, b) => {
                       const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
