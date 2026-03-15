@@ -284,7 +284,7 @@ export default function ComparisonGrid({
         </div>
       </div>
 
-      {/* Basic Skills row */}
+      {/* Skills legend + Basic Skills row */}
       {(primary.basicSkills.length > 0 || comparison.basicSkills.length > 0) && (
         <div className="flex border-b border-border">
           <div className="w-1/2 px-5 py-4">
@@ -303,6 +303,36 @@ export default function ComparisonGrid({
             </div>
           </div>
           <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
+            <div className="flex items-center gap-3 mb-3 pb-2 border-b border-border">
+              <span className="flex items-center gap-1.5">
+                <Badge
+                  variant="secondary"
+                  className="text-xs"
+                  style={{
+                    backgroundColor: "rgba(34,197,94,0.15)",
+                    color: "#16a34a",
+                    border: "1px solid rgba(34,197,94,0.3)",
+                  }}
+                >
+                  ✓
+                </Badge>
+                <span className="text-xs text-muted-foreground">Shared</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Badge
+                  variant="secondary"
+                  className="text-xs"
+                  style={{
+                    backgroundColor: "rgba(59,130,246,0.15)",
+                    color: "#60a5fa",
+                    border: "1px solid rgba(59,130,246,0.3)",
+                  }}
+                >
+                  &bull;
+                </Badge>
+                <span className="text-xs text-muted-foreground">To develop</span>
+              </span>
+            </div>
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
               Basic Skills
             </h3>
