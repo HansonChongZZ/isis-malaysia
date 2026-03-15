@@ -17,7 +17,6 @@ interface OccupationDetailPaneProps {
     aiExposure: number;
     wage: number | null;
   };
-  skillsMatchWeight?: number;
   header?: React.ReactNode;
 }
 
@@ -40,7 +39,6 @@ function SkillBadge({ skill }: { skill: string }) {
 export default function OccupationDetailPane({
   detail,
   comparisonDeltas,
-  skillsMatchWeight,
   header,
 }: OccupationDetailPaneProps) {
   const quartileColor = QUARTILE_COLORS[detail.quartile] ?? '#888';
@@ -49,30 +47,6 @@ export default function OccupationDetailPane({
     <div className="h-full overflow-y-auto px-5 pb-5 pt-3 space-y-6">
       {/* Optional header slot (used by comparison pane for back button + name) */}
       {header}
-
-      {/* Match indicator (comparison pane only) */}
-      {skillsMatchWeight != null && (
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground">Match:</span>
-          <div className="flex items-center gap-1">
-            {Array.from({ length: 7 }, (_, i) => (
-              <span
-                key={i}
-                className="inline-block w-2 h-2 rounded-full"
-                style={{
-                  backgroundColor:
-                    i < skillsMatchWeight
-                      ? 'var(--primary)'
-                      : 'rgba(128,128,128,0.2)',
-                }}
-              />
-            ))}
-            <span className="ml-1 text-muted-foreground text-xs">
-              {Math.round((skillsMatchWeight / 7) * 100)}%
-            </span>
-          </div>
-        </div>
-      )}
 
       {/* AI Exposure */}
       <section>

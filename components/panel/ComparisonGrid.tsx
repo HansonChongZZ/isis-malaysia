@@ -18,7 +18,6 @@ interface ComparisonGridProps {
   comparisonNodeId: string;
   sharedSkills: Set<string>;
   comparisonDeltas: { aiExposure: number; wage: number | null };
-  skillsMatchWeight?: number;
   onBack: () => void;
 }
 
@@ -80,7 +79,6 @@ function SkillBadge({
   );
 }
 
-
 function TaskAccordion({
   tasks,
   prefix,
@@ -127,7 +125,6 @@ export default function ComparisonGrid({
   comparisonNodeId,
   sharedSkills,
   comparisonDeltas,
-  skillsMatchWeight,
   onBack,
 }: ComparisonGridProps) {
   const primaryColor = QUARTILE_COLORS[primary.quartile] ?? '#888';
@@ -162,28 +159,41 @@ export default function ComparisonGrid({
           <div className="text-base font-semibold text-foreground leading-snug">
             {comparison.occupation}
           </div>
-          {skillsMatchWeight != null && (
-            <div className="flex items-center gap-1.5 mt-2">
-              <span className="text-xs text-muted-foreground">Match:</span>
-              <div className="flex items-center gap-1">
-                {Array.from({ length: 7 }, (_, i) => (
-                  <span
-                    key={i}
-                    className="inline-block w-2 h-2 rounded-full"
-                    style={{
-                      backgroundColor:
-                        i < skillsMatchWeight
-                          ? 'var(--primary)'
-                          : 'rgba(128,128,128,0.2)',
-                    }}
-                  />
-                ))}
-                <span className="ml-1 text-muted-foreground text-xs">
-                  {Math.round((skillsMatchWeight / 7) * 100)}%
+          {(() => {
+            const sharedCount = comparison.specificSkills.filter((s) =>
+              sharedSkills.has(s.toLowerCase()),
+            ).length;
+            const developCount = comparison.specificSkills.length - sharedCount;
+            const total = comparison.specificSkills.length;
+            if (total === 0) return null;
+            return (
+              <div className="flex items-center gap-1.5 mt-2">
+                <span className="text-xs text-muted-foreground">Match:</span>
+                <div className="flex items-center gap-1">
+                  {[...comparison.specificSkills]
+                    .sort((a, b) => {
+                      const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                      const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                      return aShared - bShared;
+                    })
+                    .map((skill, i) => (
+                      <span
+                        key={i}
+                        className="inline-block w-2 h-2 rounded-full"
+                        style={{
+                          backgroundColor: sharedSkills.has(skill.toLowerCase())
+                            ? '#22c55e'
+                            : 'rgba(59,130,246,0.4)',
+                        }}
+                      />
+                    ))}
+                </div>
+                <span className="text-muted-foreground text-xs">
+                  {sharedCount} in common, {developCount} to develop
                 </span>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
       </div>
 
@@ -343,14 +353,20 @@ export default function ComparisonGrid({
               Basic Skills
             </h3>
             <div className="flex flex-wrap gap-1.5">
-              {comparison.basicSkills.map((skill) => (
-                <SkillBadge
-                  key={skill}
-                  skill={skill}
-                  side="right"
-                  isShared={sharedSkills.has(skill.toLowerCase())}
-                />
-              ))}
+              {[...comparison.basicSkills]
+                .sort((a, b) => {
+                  const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                  const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                  return aShared - bShared;
+                })
+                .map((skill) => (
+                  <SkillBadge
+                    key={skill}
+                    skill={skill}
+                    side="right"
+                    isShared={sharedSkills.has(skill.toLowerCase())}
+                  />
+                ))}
             </div>
           </div>
         </div>
@@ -380,13 +396,19 @@ export default function ComparisonGrid({
               Specific Skills
             </h3>
             <div className="flex flex-wrap gap-1.5">
-              {comparison.specificSkills.map((skill) => (
-                <SkillBadge
-                  key={skill}
-                  skill={skill}
-                  side="right"
-                  isShared={sharedSkills.has(skill.toLowerCase())}
-                />
+              {[...comparison.specificSkills]
+                .sort((a, b) => {
+                  const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                  const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                  return aShared - bShared;
+                })
+                .map((skill) => (
+                  <SkillBadge
+                    key={skill}
+                    skill={skill}
+                    side="right"
+                    isShared={sharedSkills.has(skill.toLowerCase())}
+                  />
               ))}
             </div>
           </div>
