@@ -59,9 +59,11 @@ export default function TransitionCard({
 
       {/* Middle row: match dots + wage */}
       <div className="flex items-start gap-2 mb-2">
-        <div className="flex-1 min-w-0">
+        <div className="flex-3 min-w-0">
           <div className="flex items-center gap-1.5">
-            <span className="text-xs text-muted-foreground shrink-0">Match:</span>
+            <span className="text-xs text-muted-foreground shrink-0">
+              Match:
+            </span>
             <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1">
               {Array.from({ length: sharedSpecificCount }, (_, i) => (
                 <span
@@ -83,8 +85,9 @@ export default function TransitionCard({
             </div>
           </div>
           <span className="text-muted-foreground text-xs">
-            {sharedSpecificCount} in common,{' '}
-            {totalSpecificCount - sharedSpecificCount} to develop
+            {sharedSpecificCount} specific skills in common,{' '}
+            {totalSpecificCount - sharedSpecificCount} specific skills to
+            develop
           </span>
         </div>
         <div className="flex-1 min-w-0 text-right">

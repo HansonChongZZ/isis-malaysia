@@ -189,7 +189,8 @@ export default function ComparisonGrid({
                     ))}
                 </div>
                 <span className="text-muted-foreground text-xs">
-                  {sharedCount} in common, {developCount} to develop
+                  {sharedCount} specific skills in common, {developCount}{' '}
+                  specific skills to develop
                 </span>
               </div>
             );
@@ -409,7 +410,7 @@ export default function ComparisonGrid({
                     side="right"
                     isShared={sharedSkills.has(skill.toLowerCase())}
                   />
-              ))}
+                ))}
             </div>
           </div>
         </div>
