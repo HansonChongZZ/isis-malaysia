@@ -24,22 +24,40 @@ interface ComparisonGridProps {
 
 function SkillBadge({
   skill,
-  variant,
+  side,
   isShared,
 }: {
   skill: string
-  variant: "basic" | "specific"
+  side: "left" | "right"
   isShared: boolean
 }) {
+  // Left pane: all green, no ticks
+  if (side === "left") {
+    return (
+      <Badge
+        variant="secondary"
+        className="text-xs"
+        style={{
+          backgroundColor: "rgba(34,197,94,0.15)",
+          color: "#16a34a",
+          border: "1px solid rgba(34,197,94,0.3)",
+        }}
+      >
+        {skill}
+      </Badge>
+    )
+  }
+
+  // Right pane: shared = green + tick, non-shared = blue no tick
   if (isShared) {
     return (
       <Badge
         variant="secondary"
         className="text-xs"
         style={{
-          backgroundColor: "rgba(59,130,246,0.15)",
-          color: "#60a5fa",
-          border: "1px solid rgba(59,130,246,0.3)",
+          backgroundColor: "rgba(34,197,94,0.15)",
+          color: "#16a34a",
+          border: "1px solid rgba(34,197,94,0.3)",
         }}
       >
         {skill} ✓
@@ -50,11 +68,12 @@ function SkillBadge({
   return (
     <Badge
       variant="secondary"
-      className={
-        variant === "basic"
-          ? "text-xs bg-secondary text-secondary-foreground border-border"
-          : "text-xs bg-accent text-accent-foreground border-border"
-      }
+      className="text-xs"
+      style={{
+        backgroundColor: "rgba(59,130,246,0.15)",
+        color: "#60a5fa",
+        border: "1px solid rgba(59,130,246,0.3)",
+      }}
     >
       {skill}
     </Badge>
@@ -277,8 +296,8 @@ export default function ComparisonGrid({
                 <SkillBadge
                   key={skill}
                   skill={skill}
-                  variant="basic"
-                  isShared={sharedSkills.has(skill.toLowerCase())}
+                  side="left"
+                  isShared={false}
                 />
               ))}
             </div>
@@ -292,7 +311,7 @@ export default function ComparisonGrid({
                 <SkillBadge
                   key={skill}
                   skill={skill}
-                  variant="basic"
+                  side="right"
                   isShared={sharedSkills.has(skill.toLowerCase())}
                 />
               ))}
@@ -313,8 +332,8 @@ export default function ComparisonGrid({
                 <SkillBadge
                   key={skill}
                   skill={skill}
-                  variant="specific"
-                  isShared={sharedSkills.has(skill.toLowerCase())}
+                  side="left"
+                  isShared={false}
                 />
               ))}
             </div>
@@ -328,7 +347,7 @@ export default function ComparisonGrid({
                 <SkillBadge
                   key={skill}
                   skill={skill}
-                  variant="specific"
+                  side="right"
                   isShared={sharedSkills.has(skill.toLowerCase())}
                 />
               ))}
