@@ -99,6 +99,7 @@ export default function OccupationGraph({
     null,
   );
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
+  const tooltipLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [pairLabelPositions, setPairLabelPositions] = useState<{
     a: {
       x: number;
@@ -1327,6 +1328,7 @@ export default function OccupationGraph({
                       onNodeSelect(node.id);
                     }}
                     onMouseEnter={() => {
+                      if (tooltipLeaveTimer.current) clearTimeout(tooltipLeaveTimer.current);
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       if (selectionMode === 'pair') return;
                       // Disable hover on nodes outside the neighbourhood when a node is selected
@@ -1347,8 +1349,10 @@ export default function OccupationGraph({
                       });
                     }}
                     onMouseLeave={() => {
-                      setHoveredNodeId(null);
-                      setTooltip(null);
+                      tooltipLeaveTimer.current = setTimeout(() => {
+                        setHoveredNodeId(null);
+                        setTooltip(null);
+                      }, 150);
                     }}
                   />
                 );
@@ -1364,7 +1368,21 @@ export default function OccupationGraph({
           const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
           return (
             <div
-              className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px]"
+              className="absolute z-20 bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] cursor-pointer"
+              onClick={() => {
+                if (tooltipLeaveTimer.current) clearTimeout(tooltipLeaveTimer.current);
+                const id = tooltip.node.id;
+                setTooltip(null);
+                setHoveredNodeId(null);
+                onNodeSelect(id);
+              }}
+              onMouseEnter={() => {
+                if (tooltipLeaveTimer.current) clearTimeout(tooltipLeaveTimer.current);
+              }}
+              onMouseLeave={() => {
+                setTooltip(null);
+                setHoveredNodeId(null);
+              }}
               style={{
                 left: tooltip.x + tooltipR + 6,
                 top: tooltip.y - 10,
@@ -1429,7 +1447,11 @@ export default function OccupationGraph({
           return (
             <div
               key={i}
-              className="absolute z-20 pointer-events-none bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border"
+              className="absolute z-20 bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border cursor-pointer"
+              onClick={() => {
+                const id = i === 0 ? selectedNodeId : secondSelectedNodeId;
+                if (id) onNodeSelect(id);
+              }}
               style={{
                 left: pos.x + pairR + 6,
                 top: pos.y - 10,
