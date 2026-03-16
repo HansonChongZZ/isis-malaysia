@@ -35,7 +35,7 @@ export default function HomePage() {
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
   const [viewMode, setViewMode] = useState<ViewMode>('force')
-  const [colorByGroup, setColorByGroup] = useState(false)
+  const [colourByGroup, setColourByGroup] = useState(false)
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -103,7 +103,7 @@ export default function HomePage() {
     return isolates
   }, [nodes, edges])
 
-  const firstNodeNeighbors = useMemo<Set<string>>(() => {
+  const firstNodeNeighbours = useMemo<Set<string>>(() => {
     if (!selectedNodeId) return new Set()
     const set = new Set<string>()
     for (const e of edges) {
@@ -162,7 +162,7 @@ export default function HomePage() {
     }
 
     if (viewMode === 'force') {
-      // Force-directed: original click behavior
+      // Force-directed: original click behaviour
       if (id === null) {
         if (secondSelectedNodeId) {
           setSecondSelectedNodeId(null)
@@ -194,7 +194,7 @@ export default function HomePage() {
         if (id === selectedNodeId) {
           setPanelNodeId(id)
           setIsPanelOpen(true)
-        } else if (firstNodeNeighbors.has(id)) {
+        } else if (firstNodeNeighbours.has(id)) {
           setSecondSelectedNodeId(id)
         } else {
           // Clicking outside the node and its neighbours → deselect
@@ -210,7 +210,7 @@ export default function HomePage() {
       return
     }
 
-    // Circular mode: ring/radial behavior
+    // Circular mode: ring/radial behaviour
     if (id === null) {
       if (secondSelectedNodeId) {
         setSecondSelectedNodeId(null)
@@ -244,7 +244,7 @@ export default function HomePage() {
       if (id === selectedNodeId) {
         setPanelNodeId(id)
         setIsPanelOpen(true)
-      } else if (firstNodeNeighbors.has(id)) {
+      } else if (firstNodeNeighbours.has(id)) {
         setSecondSelectedNodeId(id)
       } else {
         setSelectedNodeId(id)
@@ -340,8 +340,8 @@ export default function HomePage() {
         onViewModeChange={handleViewModeChange}
         hideSearchOnDesktop={!selectedNodeId}
         onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
-        colorByGroup={colorByGroup}
-        onColorByGroupChange={setColorByGroup}
+        colourByGroup={colourByGroup}
+        onColourByGroupChange={setColourByGroup}
       />
 
       {/* Main graph area */}
@@ -381,7 +381,7 @@ export default function HomePage() {
             viewMode={viewMode}
             layoutMode={layoutMode}
             specificSkillsMap={specificSkillsMap}
-            colorByGroup={colorByGroup}
+            colourByGroup={colourByGroup}
           />
         )}
 

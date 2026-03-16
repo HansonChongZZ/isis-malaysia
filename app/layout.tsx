@@ -12,7 +12,7 @@ const fontMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "700
 export const metadata: Metadata = {
   title: "Malaysia Occupational Space | ISIS Malaysia",
   description:
-    "Interactive visualization of Malaysian occupational skill similarity network, MASCO classification, and AI exposure analysis.",
+    "Interactive visualisation of Malaysian occupational skill similarity network, MASCO classification, and AI exposure analysis.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

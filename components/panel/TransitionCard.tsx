@@ -1,7 +1,7 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { QUARTILE_COLORS } from '@/lib/constants';
+import { QUARTILE_COLOURS } from '@/lib/constants';
 
 interface TransitionCardProps {
   id: string;
@@ -26,7 +26,7 @@ export default function TransitionCard({
   primarySkills,
   onClick,
 }: TransitionCardProps) {
-  const color = QUARTILE_COLORS[quartile] ?? '#888';
+  const color = QUARTILE_COLOURS[quartile] ?? '#888';
   const remaining = totalSpecificCount - skillsPreview.length;
 
   return (

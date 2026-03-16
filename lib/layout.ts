@@ -43,39 +43,39 @@ export function computeRingPositions(
 }
 
 /**
- * Compute radial positions for a selected node and its neighbors.
- * Center node at (0, 0). Neighbors placed radially by skill distance.
+ * Compute radial positions for a selected node and its neighbours.
+ * Centre node at (0, 0). Neighbours placed radially by skill distance.
  * Sorted by distance ascending (most similar = clockwise first from top).
  */
 export function computeRadialPositions(
-  centerNodeId: string,
-  neighbors: GraphNode[],
+  centreNodeId: string,
+  neighbours: GraphNode[],
   distances: Map<string, SkillComparison>,
-  centerNodeRadius: number,
-  maxNeighborRadius: number,
+  centreNodeRadius: number,
+  maxNeighbourRadius: number,
   radialMinDistance: number,
   radialMaxDistance: number,
 ): Map<string, LayoutPosition> {
   const positions = new Map<string, LayoutPosition>();
 
-  // Center node at origin
-  positions.set(centerNodeId, { x: 0, y: 0 });
+  // Centre node at origin
+  positions.set(centreNodeId, { x: 0, y: 0 });
 
-  if (neighbors.length === 0) return positions;
+  if (neighbours.length === 0) return positions;
 
   // Floor: prevent overlap regardless of slider value
-  const minRadius = Math.max(radialMinDistance, centerNodeRadius + maxNeighborRadius);
+  const minRadius = Math.max(radialMinDistance, centreNodeRadius + maxNeighbourRadius);
   // Guard: ensure maxRadius > minRadius even with low radialMaxDistance slider values
   const maxRadius = Math.max(radialMaxDistance, minRadius + 1);
 
-  // Sort neighbors by distance ascending (closest first)
-  const sorted = [...neighbors].sort((a, b) => {
+  // Sort neighbours by distance ascending (closest first)
+  const sorted = [...neighbours].sort((a, b) => {
     const da = distances.get(a.id)?.distance ?? 1;
     const db = distances.get(b.id)?.distance ?? 1;
     return da - db;
   });
 
-  // Find min/max distances for normalization
+  // Find min/max distances for normalisation
   const distValues = sorted.map((n) => distances.get(n.id)?.distance ?? 1);
   const minDist = Math.min(...distValues);
   const maxDist = Math.max(...distValues);
@@ -85,7 +85,7 @@ export function computeRadialPositions(
     const node = sorted[i];
     const dist = distances.get(node.id)?.distance ?? 1;
 
-    // Normalize distance to [minRadius, maxRadius]
+    // Normalise distance to [minRadius, maxRadius]
     const normalizedRadius =
       distRange === 0
         ? (minRadius + maxRadius) / 2

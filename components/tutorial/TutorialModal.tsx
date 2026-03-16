@@ -15,8 +15,8 @@ import type { TutorialStep } from './tutorialSteps';
 import NodeRepresentationDemo from './steps/NodeRepresentationDemo';
 import NodeArrangementDemo from './steps/NodeArrangementDemo';
 import NodeSizingDemo from './steps/NodeSizingDemo';
-import HoverBehaviorDemo from './steps/HoverBehaviorDemo';
-import ClickBehaviorDemo from './steps/ClickBehaviorDemo';
+import HoverBehaviourDemo from './steps/HoverBehaviourDemo';
+import ClickBehaviourDemo from './steps/ClickBehaviourDemo';
 
 const STEPS: TutorialStep[] = [
   {
@@ -41,13 +41,13 @@ const STEPS: TutorialStep[] = [
     title: 'Hover to explore connections',
     description:
       'Move your cursor over any node to see its name, AI exposure, and connected occupations.',
-    component: HoverBehaviorDemo,
+    component: HoverBehaviourDemo,
   },
   {
     title: 'Click for full details',
     description:
       'Click any occupation to open its detailed profile with skills, tasks, and career transition pathways.',
-    component: ClickBehaviorDemo,
+    component: ClickBehaviourDemo,
   },
 ];
 

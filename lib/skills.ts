@@ -53,16 +53,16 @@ export function computeSkillDistance(
 }
 
 /**
- * Compute skill distances from a source node to all its neighbors.
+ * Compute skill distances from a source node to all its neighbours.
  */
-export function computeNeighborDistances(
+export function computeNeighbourDistances(
   sourceId: string,
-  neighborIds: string[],
+  neighbourIds: string[],
   skillsMap: Map<string, Set<string>>,
 ): Map<string, SkillComparison> {
   const result = new Map<string, SkillComparison>();
-  for (const neighborId of neighborIds) {
-    result.set(neighborId, computeSkillDistance(sourceId, neighborId, skillsMap));
+  for (const neighbourId of neighbourIds) {
+    result.set(neighbourId, computeSkillDistance(sourceId, neighbourId, skillsMap));
   }
   return result;
 }

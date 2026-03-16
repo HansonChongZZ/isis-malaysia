@@ -24,7 +24,7 @@ const PANEL_Y = 8;
 const PANEL_W = 148;
 const PANEL_H = 184;
 
-export default function ClickBehaviorDemo() {
+export default function ClickBehaviourDemo() {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function ClickBehaviorDemo() {
       .attr('rx', 4).attr('width', PANEL_W).attr('height', PANEL_H)
       .attr('fill', 'var(--card)').attr('stroke', 'var(--border)').attr('stroke-width', 1);
 
-    // Header: color dot + code + group
+    // Header: colour dot + code + group
     const headerY = 14;
     panel.append('circle')
       .attr('cx', 10).attr('cy', headerY - 3).attr('r', 3)

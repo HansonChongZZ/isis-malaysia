@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import type { OccupationDetail } from '@/lib/types';
-import { QUARTILE_COLORS } from '@/lib/constants';
+import { QUARTILE_COLOURS } from '@/lib/constants';
 
 
 interface OccupationDetailPaneProps {
@@ -41,7 +41,7 @@ export default function OccupationDetailPane({
   comparisonDeltas,
   header,
 }: OccupationDetailPaneProps) {
-  const quartileColor = QUARTILE_COLORS[detail.quartile] ?? '#888';
+  const quartileColour = QUARTILE_COLOURS[detail.quartile] ?? '#888';
 
   return (
     <div className="h-full overflow-y-auto px-5 pb-5 pt-3 space-y-6">
@@ -58,7 +58,7 @@ export default function OccupationDetailPane({
             <div className="flex items-center gap-2">
               <span
                 className="text-2xl font-bold"
-                style={{ color: quartileColor }}
+                style={{ color: quartileColour }}
               >
                 {(detail.aiExposure * 100).toFixed(1)}%
               </span>
@@ -78,9 +78,9 @@ export default function OccupationDetailPane({
             <Badge
               className="text-xs"
               style={{
-                backgroundColor: `color-mix(in srgb, ${quartileColor} 20%, transparent)`,
-                color: quartileColor,
-                border: `1px solid color-mix(in srgb, ${quartileColor} 40%, transparent)`,
+                backgroundColor: `color-mix(in srgb, ${quartileColour} 20%, transparent)`,
+                color: quartileColour,
+                border: `1px solid color-mix(in srgb, ${quartileColour} 40%, transparent)`,
               }}
             >
               {detail.quartile}
@@ -91,7 +91,7 @@ export default function OccupationDetailPane({
               className="h-full rounded-full transition-all"
               style={{
                 width: `${detail.aiExposure * 100}%`,
-                backgroundColor: quartileColor,
+                backgroundColor: quartileColour,
               }}
             />
           </div>

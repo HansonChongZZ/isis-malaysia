@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import type { OccupationDetail } from '@/lib/types';
-import { QUARTILE_COLORS } from '@/lib/constants';
+import { QUARTILE_COLOURS } from '@/lib/constants';
 
 interface ComparisonGridProps {
   primary: OccupationDetail;
@@ -127,8 +127,8 @@ export default function ComparisonGrid({
   comparisonDeltas,
   onBack,
 }: ComparisonGridProps) {
-  const primaryColor = QUARTILE_COLORS[primary.quartile] ?? '#888';
-  const comparisonColor = 'var(--primary)';
+  const primaryColour = QUARTILE_COLOURS[primary.quartile] ?? '#888';
+  const comparisonColour = 'var(--primary)';
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto">
@@ -207,7 +207,7 @@ export default function ComparisonGrid({
           <div className="flex items-center justify-between mb-1.5">
             <span
               className="text-2xl font-bold"
-              style={{ color: primaryColor }}
+              style={{ color: primaryColour }}
             >
               {(primary.aiExposure * 100).toFixed(1)}%
             </span>
@@ -217,7 +217,7 @@ export default function ComparisonGrid({
               className="h-full rounded-full transition-all"
               style={{
                 width: `${primary.aiExposure * 100}%`,
-                backgroundColor: primaryColor,
+                backgroundColor: primaryColour,
               }}
             />
           </div>
@@ -230,7 +230,7 @@ export default function ComparisonGrid({
             <div className="flex items-center gap-2">
               <span
                 className="text-2xl font-bold"
-                style={{ color: comparisonColor }}
+                style={{ color: comparisonColour }}
               >
                 {(comparison.aiExposure * 100).toFixed(1)}%
               </span>
@@ -245,7 +245,7 @@ export default function ComparisonGrid({
               className="h-full rounded-full transition-all"
               style={{
                 width: `${comparison.aiExposure * 100}%`,
-                backgroundColor: comparisonColor,
+                backgroundColor: comparisonColour,
               }}
             />
           </div>
@@ -276,14 +276,14 @@ export default function ComparisonGrid({
             <div className="flex items-center gap-2">
               <p
                 className="text-lg font-semibold"
-                style={{ color: comparisonColor }}
+                style={{ color: comparisonColour }}
               >
                 MYR {comparison.wage.toLocaleString()}
               </p>
               {comparisonDeltas.wage != null && (
                 <span
                   className="text-xs font-medium"
-                  style={{ color: comparisonColor }}
+                  style={{ color: comparisonColour }}
                 >
                   {comparisonDeltas.wage > 0 ? '▲' : '▼'} MYR{' '}
                   {Math.abs(comparisonDeltas.wage).toLocaleString()}

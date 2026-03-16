@@ -16,7 +16,7 @@ import type {
 } from '@/lib/types';
 import { computeRingPositions, computeRadialPositions } from '@/lib/layout';
 import type { LayoutPosition } from '@/lib/layout';
-import { computeNeighborDistances } from '@/lib/skills';
+import { computeNeighbourDistances } from '@/lib/skills';
 import type { SkillComparison } from '@/lib/skills';
 import {
   NODE_RADIUS_BASE,
@@ -26,8 +26,8 @@ import {
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
 import TunerPanel from './TunerPanel';
 
-// Categorical palette for MASCO groups 1-9 (debug coloring)
-const GROUP_COLORS: Record<number, string> = {
+// Categorical palette for MASCO groups 1-9 (debug colouring)
+const GROUP_COLOURS: Record<number, string> = {
   1: '#e6194b',
   2: '#3cb44b',
   3: '#4363d8',
@@ -64,7 +64,7 @@ interface OccupationGraphProps {
   viewMode: ViewMode;
   layoutMode: LayoutMode;
   specificSkillsMap: Map<string, Set<string>>;
-  colorByGroup: boolean;
+  colourByGroup: boolean;
 }
 
 export default function OccupationGraph({
@@ -85,7 +85,7 @@ export default function OccupationGraph({
   viewMode,
   layoutMode,
   specificSkillsMap,
-  colorByGroup,
+  colourByGroup,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -148,7 +148,7 @@ export default function OccupationGraph({
   const nodeById = useRef<Map<string, GraphNode>>(new Map());
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
-  const nodeColorRef = useRef('#034e37');
+  const nodeColourRef = useRef('#034e37');
   const isolateFillRef = useRef('#d1d5db');
   const isolateStrokeRef = useRef('#000000');
   const canvasGridRef = useRef('#C8E8D8');
@@ -217,7 +217,7 @@ export default function OccupationGraph({
       style.getPropertyValue('--muted-foreground').trim() || '#888';
     foregroundColorRef.current =
       style.getPropertyValue('--foreground').trim() || '#000';
-    nodeColorRef.current =
+    nodeColourRef.current =
       style.getPropertyValue('--node-color').trim() || '#034e37';
     isolateFillRef.current =
       style.getPropertyValue('--node-isolate-fill').trim() || '#d1d5db';
@@ -355,14 +355,14 @@ export default function OccupationGraph({
       onlyB,
       labelA: detailA.occupation,
       labelB: detailB.occupation,
-      colorA: nodeColorRef.current,
-      colorB: nodeColorRef.current,
+      colourA: nodeColourRef.current,
+      colourB: nodeColourRef.current,
       totalUnique: shared.length + onlyA.length + onlyB.length,
     };
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, occupations]);
 
   // Build adjacency set for hovered node (suppressed when a node is selected)
-  const hoveredNeighborIds = useMemo<Set<string> | null>(() => {
+  const hoveredNeighbourIds = useMemo<Set<string> | null>(() => {
     if (!hoveredNodeId || selectedNodeId) return null;
     const set = new Set<string>();
     for (const e of edges) {
@@ -377,7 +377,7 @@ export default function OccupationGraph({
   }, [hoveredNodeId, selectedNodeId, edges]);
 
   const hoveredEdges = useMemo(() => {
-    if (!hoveredNodeId || selectedNodeId || !hoveredNeighborIds) return [];
+    if (!hoveredNodeId || selectedNodeId || !hoveredNeighbourIds) return [];
     return edges.filter((e) => {
       const src =
         typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
@@ -388,7 +388,7 @@ export default function OccupationGraph({
         return false;
       return true;
     });
-  }, [hoveredNodeId, selectedNodeId, hoveredNeighborIds, edges, visibleIds]);
+  }, [hoveredNodeId, selectedNodeId, hoveredNeighbourIds, edges, visibleIds]);
 
   const getNodeRadius = useCallback(
     (node: GraphNode) => {
@@ -427,8 +427,8 @@ export default function OccupationGraph({
         hoveredNodeId &&
         !selectedNodeId &&
         node.id !== hoveredNodeId &&
-        hoveredNeighborIds &&
-        !hoveredNeighborIds.has(node.id)
+        hoveredNeighbourIds &&
+        !hoveredNeighbourIds.has(node.id)
       )
         return 0.6;
       return 1;
@@ -442,42 +442,42 @@ export default function OccupationGraph({
       secondSelectedNodeId,
       connectedIds,
       hoveredNodeId,
-      hoveredNeighborIds,
+      hoveredNeighbourIds,
     ],
   );
 
   // --- Radial layout computation (Task 7) ---
-  const neighborDistancesRef = useRef<Map<string, SkillComparison> | null>(null);
+  const neighbourDistancesRef = useRef<Map<string, SkillComparison> | null>(null);
 
-  const neighborDistances = useMemo(() => {
+  const neighbourDistances = useMemo(() => {
     if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds) return null;
-    const neighborIds = simNodes
+    const neighbourIds = simNodes
       .filter((n) => n.id !== selectedNodeId && connectedIds.has(n.id))
       .map((n) => n.id);
-    return computeNeighborDistances(selectedNodeId, neighborIds, specificSkillsMap);
+    return computeNeighbourDistances(selectedNodeId, neighbourIds, specificSkillsMap);
   }, [layoutMode, selectedNodeId, connectedIds, simNodes, specificSkillsMap]);
 
   const radialPositions = useMemo(() => {
-    if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds || !neighborDistances) return null;
-    const neighborNodes = simNodes.filter(
+    if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds || !neighbourDistances) return null;
+    const neighbourNodes = simNodes.filter(
       (n) => n.id !== selectedNodeId && connectedIds.has(n.id),
     );
-    const centerNode = simNodes.find((n) => n.id === selectedNodeId);
-    const centerRadius = centerNode ? getNodeRadius(centerNode) : NODE_RADIUS_BASE;
-    const maxNeighborRadius = neighborNodes.length > 0
-      ? Math.max(...neighborNodes.map(getNodeRadius))
+    const centreNode = simNodes.find((n) => n.id === selectedNodeId);
+    const centreRadius = centreNode ? getNodeRadius(centreNode) : NODE_RADIUS_BASE;
+    const maxNeighbourRadius = neighbourNodes.length > 0
+      ? Math.max(...neighbourNodes.map(getNodeRadius))
       : NODE_RADIUS_BASE;
     return computeRadialPositions(
-      selectedNodeId, neighborNodes, neighborDistances,
-      centerRadius, maxNeighborRadius,
+      selectedNodeId, neighbourNodes, neighbourDistances,
+      centreRadius, maxNeighbourRadius,
       circularLayout.radialMinDistance,
       circularLayout.radialMaxDistance,
     );
-  }, [layoutMode, selectedNodeId, connectedIds, neighborDistances, simNodes, getNodeRadius,
+  }, [layoutMode, selectedNodeId, connectedIds, neighbourDistances, simNodes, getNodeRadius,
       circularLayout.radialMinDistance, circularLayout.radialMaxDistance]);
 
   // Keep ref in sync for canvas drawEdges callback
-  useEffect(() => { neighborDistancesRef.current = neighborDistances; }, [neighborDistances]);
+  useEffect(() => { neighbourDistancesRef.current = neighbourDistances; }, [neighbourDistances]);
 
   // --- Animation refs (Task 8) ---
   const animatingRef = useRef(false);
@@ -639,7 +639,7 @@ export default function OccupationGraph({
         applyPositions(ringPositions);
       }
     } else if (layoutMode === 'radial' && radialPositions) {
-      // Build combined target: radial positions for center+neighbors, ring for rest
+      // Build combined target: radial positions for centre+neighbours, ring for rest
       const targets = new Map<string, LayoutPosition>();
       for (const node of simNodes) {
         const radialPos = radialPositions.get(node.id);
@@ -817,9 +817,9 @@ export default function OccupationGraph({
           );
           if (!src || !tgt) continue;
 
-          // Look up skill distance from neighborDistancesRef
-          const neighborId = src.id === selectedNodeIdRef.current ? tgt.id : src.id;
-          const comparison = neighborDistancesRef.current?.get(neighborId);
+          // Look up skill distance from neighbourDistancesRef
+          const neighbourId = src.id === selectedNodeIdRef.current ? tgt.id : src.id;
+          const comparison = neighbourDistancesRef.current?.get(neighbourId);
           const skillDist = comparison?.distance ?? 1;
           // Invert: distance 0 → opacity 0.6, distance 1 → opacity 0.15
           ctx.globalAlpha = 0.6 - skillDist * 0.45;
@@ -1274,15 +1274,15 @@ export default function OccupationGraph({
               ).map((node) => {
                 const isIsolate = isolateIds.has(node.id);
                 const r = getNodeRadius(node);
-                const color = colorByGroup
-                  ? (GROUP_COLORS[node.group] ?? nodeColorRef.current)
+                const color = colourByGroup
+                  ? (GROUP_COLOURS[node.group] ?? nodeColourRef.current)
                   : isIsolate
                     ? isolateFillRef.current
-                    : nodeColorRef.current;
+                    : nodeColourRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
                 const isHovered = node.id === hoveredNodeId;
-                const isHoveredNeighbor = !!hoveredNeighborIds?.has(node.id);
+                const isHoveredNeighbour = !!hoveredNeighbourIds?.has(node.id);
                 return (
                   <circle
                     key={node.id}
@@ -1294,7 +1294,7 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isSelected || isHovered || isHoveredNeighbor
+                      isSelected || isHovered || isHoveredNeighbour
                         ? 'var(--foreground)'
                         : isIsolate
                           ? isolateStrokeRef.current
@@ -1305,7 +1305,7 @@ export default function OccupationGraph({
                         ? 3.5
                         : isHovered
                           ? 2.5
-                          : isHoveredNeighbor
+                          : isHoveredNeighbour
                             ? 2
                             : 0.8
                     }
@@ -1336,12 +1336,12 @@ export default function OccupationGraph({
                       if (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
-                      // In radial mode, show skill comparison for neighbor nodes
+                      // In radial mode, show skill comparison for neighbour nodes
                       const sc =
                         layoutMode === 'radial' &&
                         selectedNodeId &&
                         node.id !== selectedNodeId &&
-                        neighborDistancesRef.current?.get(node.id);
+                        neighbourDistancesRef.current?.get(node.id);
                       setTooltip({
                         x: t.applyX(node.x),
                         y: t.applyY(node.y),
@@ -1456,7 +1456,7 @@ export default function OccupationGraph({
               style={{
                 left: pos.x + pairR + 6,
                 top: pos.y - 10,
-                borderColor: nodeColorRef.current,
+                borderColor: nodeColourRef.current,
                 transform:
                   pos.x > (dimensions.width ?? 0) - 240
                     ? 'translateX(-110%)'
@@ -1535,8 +1535,8 @@ export default function OccupationGraph({
                 <EdgeSkillsTooltip
                   labelA={pairSkillsComparison.labelA}
                   labelB={pairSkillsComparison.labelB}
-                  colorA={pairSkillsComparison.colorA}
-                  colorB={pairSkillsComparison.colorB}
+                  colourA={pairSkillsComparison.colourA}
+                  colourB={pairSkillsComparison.colourB}
                   shared={pairSkillsComparison.shared}
                   onlyA={pairSkillsComparison.onlyA}
                   onlyB={pairSkillsComparison.onlyB}

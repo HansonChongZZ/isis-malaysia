@@ -20,7 +20,7 @@ const POSITIONS = [
 
 const HOVER_TARGET = 1 // Engineer (index 1)
 
-export default function HoverBehaviorDemo() {
+export default function HoverBehaviourDemo() {
   const svgRef = useRef<SVGSVGElement>(null)
 
   useEffect(() => {

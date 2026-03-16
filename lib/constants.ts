@@ -5,14 +5,14 @@ export const QUARTILE_LABELS: Record<string, string> = {
   High: 'High',
 };
 
-export const QUARTILE_COLORS: Record<string, string> = {
+export const QUARTILE_COLOURS: Record<string, string> = {
   Low: 'var(--quartile-low)',
   'Medium low': 'var(--quartile-medium-low)',
   'Medium high': 'var(--quartile-medium-high)',
   High: 'var(--quartile-high)',
 };
 
-// Node radius configuration for graph visualization
+// Node radius configuration for graph visualisation
 // Visual radius = NODE_RADIUS_BASE + (metricValue ^ NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE
 // The power exponent compresses low values and amplifies high values,
 // making top-exposure/wage/worker nodes visually jump out.

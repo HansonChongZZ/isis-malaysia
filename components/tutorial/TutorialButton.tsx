@@ -34,7 +34,7 @@ export default function TutorialButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Learn how to use this visualization"
+        aria-label="Learn how to use this visualisation"
         className="w-8 h-8 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent transition-colors shrink-0"
       >
         <CircleHelp size={16} />

@@ -39,8 +39,8 @@ interface GraphControlsProps {
   onViewModeChange: (mode: ViewMode) => void;
   hideSearchOnDesktop?: boolean;
   onShowHeroSearch?: () => void;
-  colorByGroup: boolean;
-  onColorByGroupChange: (value: boolean) => void;
+  colourByGroup: boolean;
+  onColourByGroupChange: (value: boolean) => void;
 }
 
 export default function GraphControls({
@@ -63,8 +63,8 @@ export default function GraphControls({
   onViewModeChange,
   hideSearchOnDesktop,
   onShowHeroSearch,
-  colorByGroup,
-  onColorByGroupChange,
+  colourByGroup,
+  onColourByGroupChange,
 }: GraphControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
@@ -178,12 +178,12 @@ export default function GraphControls({
           </button>
         )}
 
-        {/* Visualization Settings */}
+        {/* Visualisation Settings */}
         <div className="relative ml-auto shrink-0" ref={settingsRef}>
           <button
             onClick={() => setSettingsOpen((o) => !o)}
             className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            aria-label="Visualization settings"
+            aria-label="Visualisation settings"
           >
             <Settings2 className="w-4 h-4" />
           </button>
@@ -192,7 +192,7 @@ export default function GraphControls({
             <div className="absolute right-0 top-full mt-1 z-50 w-72 bg-popover text-popover-foreground border border-border rounded-lg shadow-lg">
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2.5 border-b border-border">
-                <span className="text-sm font-semibold">Visualization Settings</span>
+                <span className="text-sm font-semibold">Visualisation Settings</span>
                 <button
                   onClick={() => setSettingsOpen(false)}
                   className="text-muted-foreground hover:text-foreground"
@@ -282,8 +282,8 @@ export default function GraphControls({
                 <label className="flex items-center gap-2 cursor-pointer text-xs">
                   <input
                     type="checkbox"
-                    checked={colorByGroup}
-                    onChange={(e) => onColorByGroupChange(e.target.checked)}
+                    checked={colourByGroup}
+                    onChange={(e) => onColourByGroupChange(e.target.checked)}
                     className="accent-primary"
                   />
                   <span>Colour by MASCO group</span>
