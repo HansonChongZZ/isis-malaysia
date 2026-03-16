@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useMemo, useRef, useCallback } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
@@ -37,7 +37,7 @@ export default function HomePage() {
   const [viewMode, setViewMode] = useState<ViewMode>('force')
   const [colourByGroup, setColourByGroup] = useState(false)
   const heroSearchRef = useRef<HTMLDivElement>(null)
-  const [focusHeroSearch, setFocusHeroSearch] = useState(false)
+  const pendingFocusRef = useRef(false)
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -283,7 +283,7 @@ export default function HomePage() {
         setIsPanelOpen(false)
         setHeroDismissed(false)
         if (viewMode === 'circular') setLayoutMode('ring')
-        setFocusHeroSearch(true)
+        pendingFocusRef.current = true
       }
     }
     window.addEventListener('keydown', handleKeyDown)
@@ -292,13 +292,13 @@ export default function HomePage() {
 
   // Focus hero search input after it becomes visible
   useEffect(() => {
-    if (!focusHeroSearch) return
-    setFocusHeroSearch(false)
+    if (!pendingFocusRef.current) return
+    pendingFocusRef.current = false
     requestAnimationFrame(() => {
       const input = heroSearchRef.current?.querySelector('input')
       input?.focus()
     })
-  }, [focusHeroSearch])
+  })
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
     updateSetting('sizeMetric', metric)
