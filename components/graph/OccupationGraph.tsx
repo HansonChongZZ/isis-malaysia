@@ -70,6 +70,7 @@ interface OccupationGraphProps {
   forceSelectionMode?: 'single' | null;
   disableInteraction?: boolean; // Disable zoom, pan, click, and hover (pointer-events: none)
   disableZoom?: boolean; // Disable zoom/pan only (hover and click still work)
+  disableClick?: boolean; // Disable node click only (hover still works)
 }
 
 export default function OccupationGraph({
@@ -96,6 +97,7 @@ export default function OccupationGraph({
   forceSelectionMode,
   disableInteraction,
   disableZoom,
+  disableClick,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -1227,6 +1229,7 @@ export default function OccupationGraph({
           height={dimensions.height}
           style={{ position: 'absolute', top: 0, left: 0, cursor: disableInteraction ? 'default' : 'grab', pointerEvents: disableInteraction ? 'none' : undefined }}
           onClick={() => {
+            if (disableClick) return;
             onNodeSelect(null);
           }}
         >
@@ -1349,6 +1352,7 @@ export default function OccupationGraph({
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
+                      if (disableClick) return;
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
                       // In radial mode, clicking outside the neighbourhood deselects

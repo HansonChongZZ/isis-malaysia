@@ -469,6 +469,7 @@ export default function HomePage() {
             onReady={handleGraphReady}
             forceSelectionMode={tutorial.isActive && tutorial.currentStep <= 2 ? 'single' : null}
             disableInteraction={tutorial.isActive && tutorial.currentStep <= 1}
+            disableClick={tutorial.isActive && tutorial.currentStep <= 2}
             disableZoom={tutorial.isActive}
           />
         )}
