@@ -32,7 +32,9 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     completionEvent: 'manual',
     resolveSpotlight: ({ graphContainerRect }) => {
       if (!graphContainerRect) return null
-      const size = Math.max(graphContainerRect.width, graphContainerRect.height)
+      // Match the circular layout ring radius: min(w,h) * 0.12, doubled for diameter + padding
+      const ringRadius = Math.min(graphContainerRect.width, graphContainerRect.height) * 0.12
+      const size = ringRadius * 2 + 80
       return {
         x: graphContainerRect.left + graphContainerRect.width / 2,
         y: graphContainerRect.top + graphContainerRect.height / 2,
