@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef, useCallback } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
@@ -36,6 +36,8 @@ export default function HomePage() {
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
   const [viewMode, setViewMode] = useState<ViewMode>('force')
   const [colourByGroup, setColourByGroup] = useState(false)
+  const heroSearchRef = useRef<HTMLDivElement>(null)
+  const [focusHeroSearch, setFocusHeroSearch] = useState(false)
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -271,10 +273,32 @@ export default function HomePage() {
           if (viewMode === 'circular') setLayoutMode('ring')
         }
       }
+
+      // Ctrl+F / Cmd+F → open and focus hero search
+      if (e.key === 'f' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setSelectedNodeId(null)
+        setSecondSelectedNodeId(null)
+        setPanelNodeId(null)
+        setIsPanelOpen(false)
+        setHeroDismissed(false)
+        if (viewMode === 'circular') setLayoutMode('ring')
+        setFocusHeroSearch(true)
+      }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isPanelOpen, secondSelectedNodeId, viewMode])
+
+  // Focus hero search input after it becomes visible
+  useEffect(() => {
+    if (!focusHeroSearch) return
+    setFocusHeroSearch(false)
+    requestAnimationFrame(() => {
+      const input = heroSearchRef.current?.querySelector('input')
+      input?.focus()
+    })
+  }, [focusHeroSearch])
 
   const handleSizeMetricChange = (metric: 'aiExposure' | 'wage') => {
     updateSetting('sizeMetric', metric)
@@ -388,7 +412,7 @@ export default function HomePage() {
         {/* Hero search bar — floating over graph when no occupation selected (desktop only) */}
         {!selectedNodeId && !heroDismissed && (
           <div className="hidden sm:flex absolute inset-x-0 top-[20%] z-10 justify-center px-4 pointer-events-none">
-            <div className="w-full max-w-xl pointer-events-auto hero-search-enter">
+            <div ref={heroSearchRef} className="w-full max-w-xl pointer-events-auto hero-search-enter">
               <OccupationSearch
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
