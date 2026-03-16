@@ -59,11 +59,9 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     resolveSpotlight: ({ nodeToScreenCoords, allNodeIds, graphContainerRect }) => {
       if (!nodeToScreenCoords || allNodeIds.length === 0 || !graphContainerRect) return null
 
-      // Sample node positions to compute bounding circle (sample for performance)
-      const step = Math.max(1, Math.floor(allNodeIds.length / 80))
       const points: { x: number; y: number }[] = []
-      for (let i = 0; i < allNodeIds.length; i += step) {
-        const pos = nodeToScreenCoords(allNodeIds[i])
+      for (const id of allNodeIds) {
+        const pos = nodeToScreenCoords(id)
         if (pos) points.push(pos)
       }
       if (points.length === 0) {
@@ -79,7 +77,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       const cx = points.reduce((s, p) => s + p.x, 0) / points.length
       const cy = points.reduce((s, p) => s + p.y, 0) / points.length
       const maxDist = Math.max(...points.map(p => Math.hypot(p.x - cx, p.y - cy)))
-      const diameter = (maxDist + 30) * 2
+      const diameter = (maxDist + 50) * 2
 
       return { x: cx, y: cy, width: diameter, height: diameter, shape: 'circle' }
     },
