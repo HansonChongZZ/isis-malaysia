@@ -43,9 +43,17 @@ export function useTutorial({
 
   const stepConfig = isActive ? TUTORIAL_STEPS[currentStep] ?? null : null
 
+  // nodeToScreenCoords returns positions relative to the graph SVG container.
+  // The overlay is position:fixed (viewport-relative), so we add the container's
+  // viewport offset to convert from container-local to viewport coordinates.
   const getNodeScreenCoords = useCallback((nodeId: string) => {
-    return graphHandleRef.current?.nodeToScreenCoords(nodeId) ?? null
-  }, [graphHandleRef])
+    const pos = graphHandleRef.current?.nodeToScreenCoords(nodeId)
+    if (!pos || !graphContainerRect) return null
+    return {
+      x: pos.x + graphContainerRect.left,
+      y: pos.y + graphContainerRect.top,
+    }
+  }, [graphHandleRef, graphContainerRect])
 
   // All neighbour IDs for the selected node
   const allNeighbourIds = useMemo(() => {
