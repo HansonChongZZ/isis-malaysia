@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import { type SpotlightTarget } from './tutorialConfig'
 
 interface TutorialOverlayProps {
@@ -32,6 +32,9 @@ export default function TutorialOverlay({
     return () => window.removeEventListener('resize', update)
   }, [])
 
+  const id = useId()
+  const maskId = `spotlight-mask-${id}`
+  const filterId = `spotlight-blur-${id}`
   const tooltipStyle = computeTooltipPosition(spotlight, viewport.w, viewport.h)
 
   return (
@@ -45,10 +48,10 @@ export default function TutorialOverlay({
       {/* SVG dim layer with spotlight cutout */}
       <svg className="absolute inset-0 w-full h-full">
         <defs>
-          <filter id="spotlight-blur">
+          <filter id={filterId}>
             <feGaussianBlur stdDeviation="8" />
           </filter>
-          <mask id="spotlight-mask">
+          <mask id={maskId}>
             <rect width="100%" height="100%" fill="white" />
             {spotlight && (
               spotlight.shape === 'circle' ? (
@@ -57,7 +60,7 @@ export default function TutorialOverlay({
                   cy={spotlight.y}
                   r={spotlight.width / 2}
                   fill="black"
-                  filter="url(#spotlight-blur)"
+                  filter={`url(#${filterId})`}
                   className="transition-all duration-300 ease-out"
                 />
               ) : (
@@ -68,7 +71,7 @@ export default function TutorialOverlay({
                   height={spotlight.height}
                   rx={12}
                   fill="black"
-                  filter="url(#spotlight-blur)"
+                  filter={`url(#${filterId})`}
                   className="transition-all duration-300 ease-out"
                 />
               )
@@ -79,7 +82,7 @@ export default function TutorialOverlay({
           width="100%"
           height="100%"
           fill="rgba(0,0,0,0.6)"
-          mask="url(#spotlight-mask)"
+          mask={`url(#${maskId})`}
         />
       </svg>
 
@@ -143,18 +146,19 @@ function computeTooltipPosition(
   }
 
   const pad = 20
+  const tooltipWidth = 300 // max-w-[280px] + padding
   const style: React.CSSProperties = {}
 
   if (spotlight.x < vw / 2) {
-    style.left = spotlight.x + spotlight.width / 2 + pad
+    style.left = Math.min(spotlight.x + spotlight.width / 2 + pad, vw - tooltipWidth)
   } else {
-    style.right = vw - spotlight.x + spotlight.width / 2 + pad
+    style.right = Math.max(vw - spotlight.x + spotlight.width / 2 + pad, 0)
   }
 
   if (spotlight.y < vh / 2) {
-    style.top = spotlight.y + spotlight.height / 2 + pad
+    style.top = Math.min(spotlight.y + spotlight.height / 2 + pad, vh - 200)
   } else {
-    style.bottom = vh - spotlight.y + spotlight.height / 2 + pad
+    style.bottom = Math.max(vh - spotlight.y + spotlight.height / 2 + pad, 0)
   }
 
   return style

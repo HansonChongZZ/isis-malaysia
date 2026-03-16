@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useMemo, useRef } from "react"
+import { useCallback, useEffect, useState, useMemo, useRef } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
@@ -71,6 +71,10 @@ export default function HomePage() {
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
   }, [tutorial.isActive, tutorial.currentStep])
+
+  const handleGraphReady = useCallback((handle: OccupationGraphHandle) => {
+    graphHandleRef.current = handle
+  }, [])
 
   const handleTutorialSkip = () => {
     tutorial.skip()
@@ -459,7 +463,7 @@ export default function HomePage() {
             specificSkillsMap={specificSkillsMap}
             colourByGroup={colourByGroup}
             onNodeHover={setHoveredNodeId}
-            onReady={(handle) => { graphHandleRef.current = handle }}
+            onReady={handleGraphReady}
             forceSelectionMode={tutorial.isActive && tutorial.currentStep <= 2 ? 'single' : null}
           />
         )}
