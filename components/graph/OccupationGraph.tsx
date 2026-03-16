@@ -68,6 +68,7 @@ interface OccupationGraphProps {
   onNodeHover?: (nodeId: string | null) => void;
   onReady?: (handle: { nodeToScreenCoords: (nodeId: string) => { x: number; y: number } | null }) => void;
   forceSelectionMode?: 'single' | null;
+  disableInteraction?: boolean; // Disable zoom, pan, and click
 }
 
 export default function OccupationGraph({
@@ -92,6 +93,7 @@ export default function OccupationGraph({
   onNodeHover,
   onReady,
   forceSelectionMode,
+  disableInteraction,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -1067,6 +1069,17 @@ export default function OccupationGraph({
       svg.on('.zoom', null);
     };
   }, [dimensions.width, dimensions.height, simNodes, viewMode, layoutMode]);
+
+  // Disable zoom/pan when disableInteraction is true
+  useEffect(() => {
+    const svg = svgRef.current ? d3.select(svgRef.current) : null
+    if (!svg || !zoomRef.current) return
+    if (disableInteraction) {
+      svg.on('.zoom', null)
+    } else {
+      svg.call(zoomRef.current)
+    }
+  }, [disableInteraction])
 
   // Auto-zoom to frame selection (single or pair mode)
   useEffect(() => {

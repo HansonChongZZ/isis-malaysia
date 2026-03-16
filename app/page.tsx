@@ -468,6 +468,7 @@ export default function HomePage() {
             onNodeHover={setHoveredNodeId}
             onReady={handleGraphReady}
             forceSelectionMode={tutorial.isActive && tutorial.currentStep <= 2 ? 'single' : null}
+            disableInteraction={tutorial.isActive && tutorial.currentStep === 0}
           />
         )}
 
