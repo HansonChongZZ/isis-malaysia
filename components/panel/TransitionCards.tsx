@@ -5,7 +5,6 @@ import {
   useReactTable,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   type FilterFn,
 } from "@tanstack/react-table"
 import type { OccupationDetail } from "@/lib/types"
@@ -97,9 +96,6 @@ export default function TransitionCards({
     onGlobalFilterChange: setFilterQuery,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    autoResetPageIndex: true,
-    initialState: { pagination: { pageSize: 10 } },
   })
 
   const filteredCount = table.getFilteredRowModel().rows.length
@@ -129,8 +125,8 @@ export default function TransitionCards({
 
       {/* Card grid */}
       <div className="flex-1 min-h-0 overflow-y-auto px-5 pb-3 space-y-2">
-        {table.getRowModel().rows.length ? (
-          table.getRowModel().rows.map((row) => {
+        {table.getFilteredRowModel().rows.length ? (
+          table.getFilteredRowModel().rows.map((row) => {
             const t = row.original
             const preview = cardPreviews.get(t.id)
             return (
@@ -157,51 +153,6 @@ export default function TransitionCards({
         )}
       </div>
 
-      {/* Pagination */}
-      {transitions.length > 0 && (
-        <div className="flex items-center justify-between px-5 py-3 border-t border-border shrink-0 text-xs">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <span>Rows per page</span>
-            <select
-              value={table.getState().pagination.pageSize}
-              onChange={(e) => table.setPageSize(Number(e.target.value))}
-              className="bg-background border border-border rounded px-1.5 py-0.5 text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
-            >
-              {[10, 25, 50].map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex items-center gap-3 text-muted-foreground">
-            <span>
-              {(() => {
-                const { pageIndex, pageSize } = table.getState().pagination
-                const total = filteredCount
-                if (total === 0) return "0 results"
-                const from = pageIndex * pageSize + 1
-                const to = Math.min((pageIndex + 1) * pageSize, total)
-                return `${from}–${to} of ${total}`
-              })()}
-            </span>
-            <button
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-              className="px-2 py-0.5 rounded border border-border disabled:opacity-30 hover:bg-muted/50 transition-colors"
-            >
-              ←
-            </button>
-            <button
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-              className="px-2 py-0.5 rounded border border-border disabled:opacity-30 hover:bg-muted/50 transition-colors"
-            >
-              →
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
