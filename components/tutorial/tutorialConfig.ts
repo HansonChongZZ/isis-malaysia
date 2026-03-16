@@ -1,4 +1,4 @@
-export type CompletionEvent = 'manual' | 'nodeSelected' | 'nodeHovered' | 'secondNodeSelected'
+export type CompletionEvent = 'manual' | 'nodeSelected' | 'nodeHovered' | 'secondNodeSelected' | 'badgeInteracted' | 'panelOpened'
 
 export type SpotlightShape = 'circle' | 'rect'
 
@@ -15,7 +15,7 @@ export interface TutorialStep {
   prompt: string
   completionEvent: CompletionEvent
   autoAdvance?: boolean // Skip confirmation, advance immediately on completion
-  resolveSpotlight: (context: SpotlightContext) => SpotlightTarget | null
+  resolveSpotlight: ((context: SpotlightContext) => SpotlightTarget | null) | null // null = keep previous spotlight
 }
 
 export interface SpotlightContext {
@@ -26,6 +26,7 @@ export interface SpotlightContext {
   neighbourNodeId: string | null
   neighbourIds: string[]
   allNodeIds: string[]
+  badgeScreenPos: { x: number; y: number } | null
 }
 
 /** Compute a spotlight circle that encloses the selected node and all its neighbours. */
@@ -108,6 +109,21 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     id: 'click',
     prompt: 'Click a connected occupation to compare skills and see transition pathways.',
     completionEvent: 'secondNodeSelected',
-    resolveSpotlight: neighbourhoodSpotlight,
+    autoAdvance: true,
+    resolveSpotlight: null,
+  },
+  {
+    id: 'badge',
+    prompt: 'Hover or click the shared skills badge in the middle to see shared skills.',
+    completionEvent: 'badgeInteracted',
+    autoAdvance: true,
+    resolveSpotlight: null,
+  },
+  {
+    id: 'detail',
+    prompt: 'Click on one of the occupation nodes for further details.',
+    completionEvent: 'panelOpened',
+    autoAdvance: true,
+    resolveSpotlight: null,
   },
 ]

@@ -15,6 +15,9 @@ interface UseTutorialProps {
   graphContainerRect: DOMRect | null
   heroSearchRect: DOMRect | null
   graphHandleRef: React.RefObject<OccupationGraphHandle | null>
+  badgePos: { x: number; y: number } | null
+  badgeInteracted: boolean
+  isPanelOpen: boolean
 }
 
 interface UseTutorialReturn {
@@ -37,6 +40,9 @@ export function useTutorial({
   graphContainerRect,
   heroSearchRect,
   graphHandleRef,
+  badgePos,
+  badgeInteracted,
+  isPanelOpen,
 }: UseTutorialProps): UseTutorialReturn {
   const [currentStep, setCurrentStep] = useState(0)
   const [isActive, setIsActive] = useState(true)
@@ -119,8 +125,10 @@ export function useTutorial({
     if (prevStepRef.current !== currentStep) {
       const prevStep = prevStepRef.current
       prevStepRef.current = currentStep
-      // Step 2→3 triggers a zoom animation (~500ms in OccupationGraph)
-      if (prevStep === 1 && currentStep === 2) {
+      // Steps that trigger zoom animations (~500ms in OccupationGraph):
+      // Step 2→3: selecting a node zooms to neighbourhood
+      // Step 3→4: clicking second node zooms to pair view
+      if ((prevStep === 1 && currentStep === 2) || (prevStep === 3 && currentStep === 4)) {
         setSpotlightReady(false)
         const timer = setTimeout(() => setSpotlightReady(true), 600)
         return () => clearTimeout(timer)
@@ -128,8 +136,11 @@ export function useTutorial({
     }
   }, [currentStep])
 
+  const prevSpotlightRef = useRef<SpotlightTarget | null>(null)
   const spotlight = useMemo(() => {
-    if (!stepConfig || !spotlightReady) return null
+    if (!stepConfig || !spotlightReady) return prevSpotlightRef.current
+    // null resolveSpotlight = keep previous spotlight
+    if (!stepConfig.resolveSpotlight) return prevSpotlightRef.current
     const context: SpotlightContext = {
       graphContainerRect,
       heroSearchRect,
@@ -138,9 +149,14 @@ export function useTutorial({
       neighbourNodeId: resolvedNeighbourId,
       neighbourIds: allNeighbourIds,
       allNodeIds,
+      badgeScreenPos: badgePos && graphContainerRect
+        ? { x: badgePos.x + graphContainerRect.left, y: badgePos.y + graphContainerRect.top }
+        : null,
     }
-    return stepConfig.resolveSpotlight(context)
-  }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds])
+    const result = stepConfig.resolveSpotlight(context)
+    if (result) prevSpotlightRef.current = result
+    return result
+  }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
 
   // Detect completion events
   useEffect(() => {
@@ -160,6 +176,10 @@ export function useTutorial({
       }
     } else if (event === 'secondNodeSelected' && secondSelectedNodeId) {
       triggered = true
+    } else if (event === 'badgeInteracted' && badgeInteracted) {
+      triggered = true
+    } else if (event === 'panelOpened' && isPanelOpen) {
+      triggered = true
     }
 
     if (triggered) {
@@ -175,7 +195,7 @@ export function useTutorial({
         setIsConfirming(true)
       }
     }
-  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges])
+  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen])
 
   useEffect(() => {
     if (!isActive && isVisible) {

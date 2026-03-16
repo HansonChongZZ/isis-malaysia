@@ -71,6 +71,8 @@ interface OccupationGraphProps {
   disableInteraction?: boolean; // Disable zoom, pan, click, and hover (pointer-events: none)
   disableZoom?: boolean; // Disable zoom/pan only (hover and click still work)
   disableClick?: boolean; // Disable node click only (hover still works)
+  onBadgePosChange?: (pos: { x: number; y: number } | null) => void;
+  onBadgeInteract?: () => void;
 }
 
 export default function OccupationGraph({
@@ -98,6 +100,8 @@ export default function OccupationGraph({
   disableInteraction,
   disableZoom,
   disableClick,
+  onBadgePosChange,
+  onBadgeInteract,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -112,6 +116,7 @@ export default function OccupationGraph({
   const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(
     null,
   );
+  useEffect(() => { onBadgePosChange?.(badgePos) }, [badgePos, onBadgePosChange]);
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
   const tooltipLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [pairLabelPositions, setPairLabelPositions] = useState<{
@@ -1532,8 +1537,9 @@ export default function OccupationGraph({
         >
           <div
             className="cursor-pointer select-none"
-            onMouseEnter={() => setShowEdgeTooltip(true)}
+            onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.() }}
             onMouseLeave={() => setShowEdgeTooltip(false)}
+            onClick={() => onBadgeInteract?.()}
           >
             <div className="bg-popover text-popover-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap">
               {pairSkillsComparison.shared.length} shared skills

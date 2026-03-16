@@ -46,6 +46,8 @@ export default function HomePage() {
   const graphContainerRef = useRef<HTMLDivElement>(null)
   const [graphContainerRect, setGraphContainerRect] = useState<DOMRect | null>(null)
   const [heroSearchRectState, setHeroSearchRectState] = useState<DOMRect | null>(null)
+  const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null)
+  const [badgeInteracted, setBadgeInteracted] = useState(false)
 
   const allNodeIds = useMemo(() => nodes.map(n => n.id), [nodes])
 
@@ -58,6 +60,9 @@ export default function HomePage() {
     graphContainerRect,
     heroSearchRect: heroSearchRectState,
     graphHandleRef,
+    badgePos,
+    badgeInteracted,
+    isPanelOpen,
   })
 
   useEffect(() => {
@@ -470,6 +475,8 @@ export default function HomePage() {
             forceSelectionMode={tutorial.isActive && tutorial.currentStep <= 2 ? 'single' : null}
             disableInteraction={tutorial.isActive && tutorial.currentStep <= 1}
             disableClick={tutorial.isActive && tutorial.currentStep <= 2}
+            onBadgePosChange={setBadgePos}
+            onBadgeInteract={() => setBadgeInteracted(true)}
             disableZoom={tutorial.isActive}
           />
         )}
