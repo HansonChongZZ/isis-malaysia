@@ -14,27 +14,23 @@ The viewport always centres on the **selected node's position**, with scale comp
 
 ### Algorithm
 
-For both radial and ring mode branches:
+#### Radial mode (800ms transition)
 
-1. Look up the selected node's position (`selectedPos`)
-   - Radial mode: from `radialPositions`
-   - Ring mode: from `nodeById` (sim positions)
-2. Compute the maximum distance from the selected node to any neighbour:
-   ```
-   maxDist = max(distance(selectedPos, neighbourPos)) for all neighbours
-   ```
-3. Add padding (250px in world-space) to `maxDist`
-4. Compute scale to fit the circle of radius `maxDist + padding` in the viewport:
-   ```
-   scale = min(viewportWidth, viewportHeight) / (2 * (maxDist + padding))
-   ```
-   Capped at max scale of 3 to avoid over-zoom.
-5. Compute translate to place selected node at viewport centre:
-   ```
-   tx = viewportWidth / 2 - selectedPos.x * scale
-   ty = viewportHeight / 2 - selectedPos.y * scale
-   ```
-6. Animate with existing `d3.easeCubicInOut` transition.
+In radial layout, `computeRadialPositions` always places the selected node at the origin `{x: 0, y: 0}`. Therefore the translate simplifies:
+
+1. Compute `maxDist` = max distance from origin to any position in `radialPositions.values()`. The selected node (distance 0) is included but benign.
+2. `scale = min(viewportWidth, viewportHeight) / (2 * (maxDist + 250))`, capped at 3.
+3. `tx = viewportWidth / 2`, `ty = viewportHeight / 2` (since selected node is at origin).
+4. Animate with `d3.easeCubicInOut`, duration 800ms.
+
+#### Ring mode (500ms transition)
+
+1. Look up the selected node's position from `nodeById.current.get(selectedNodeId)`.
+2. `neighbourNodes` (from `connectedIds`) includes the selected node itself — its distance-to-self is 0, which is harmless.
+3. Compute `maxDist` = max distance from selected node to any node in `neighbourNodes`.
+4. `scale = min(viewportWidth, viewportHeight) / (2 * (maxDist + 250))`, capped at 3.
+5. `tx = viewportWidth / 2 - selectedNode.x * scale`, `ty = viewportHeight / 2 - selectedNode.y * scale`.
+6. Animate with `d3.easeCubicInOut`, duration 500ms.
 
 ### Branches Affected
 
@@ -50,6 +46,7 @@ For both radial and ring mode branches:
 - **Single neighbour:** `maxDist` is small; scale capped at 3 prevents over-zoom.
 - **Very spread neighbourhood:** Scale naturally reduces; all neighbours remain visible.
 - **Isolated node:** Existing branch handles this — no neighbours to fit.
+- **`maxDist === 0`** (degenerate layout / simulation settling): Padding of 250 ensures a finite scale of `min(w, h) / 500`.
 
 ## Files Changed
 
