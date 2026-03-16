@@ -24,6 +24,30 @@ export interface SpotlightContext {
   nodeToScreenCoords: ((nodeId: string) => { x: number; y: number } | null) | null
   selectedNodeId: string | null
   neighbourNodeId: string | null
+  neighbourIds: string[]
+}
+
+/** Compute a spotlight circle that encloses the selected node and all its neighbours. */
+function neighbourhoodSpotlight({ nodeToScreenCoords, selectedNodeId, neighbourIds }: SpotlightContext): SpotlightTarget | null {
+  if (!nodeToScreenCoords || !selectedNodeId || neighbourIds.length === 0) return null
+
+  // Gather screen positions of selected node + all neighbours
+  const points: { x: number; y: number }[] = []
+  const selectedPos = nodeToScreenCoords(selectedNodeId)
+  if (selectedPos) points.push(selectedPos)
+  for (const id of neighbourIds) {
+    const pos = nodeToScreenCoords(id)
+    if (pos) points.push(pos)
+  }
+  if (points.length === 0) return null
+
+  // Compute bounding circle: centre is centroid, radius is max distance from centroid + padding
+  const cx = points.reduce((s, p) => s + p.x, 0) / points.length
+  const cy = points.reduce((s, p) => s + p.y, 0) / points.length
+  const maxDist = Math.max(...points.map(p => Math.hypot(p.x - cx, p.y - cy)))
+  const diameter = (maxDist + 40) * 2 // 40px padding beyond outermost node
+
+  return { x: cx, y: cy, width: diameter, height: diameter, shape: 'circle' }
 }
 
 export const TUTORIAL_STEPS: TutorialStep[] = [
@@ -65,22 +89,12 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     id: 'hover',
     prompt: 'Hover over connected nodes to see how they relate.',
     completionEvent: 'nodeHovered',
-    resolveSpotlight: ({ nodeToScreenCoords, neighbourNodeId }) => {
-      if (!nodeToScreenCoords || !neighbourNodeId) return null
-      const pos = nodeToScreenCoords(neighbourNodeId)
-      if (!pos) return null
-      return { x: pos.x, y: pos.y, width: 120, height: 120, shape: 'circle' }
-    },
+    resolveSpotlight: neighbourhoodSpotlight,
   },
   {
     id: 'click',
     prompt: 'Click a connected occupation to compare skills and see transition pathways.',
     completionEvent: 'secondNodeSelected',
-    resolveSpotlight: ({ nodeToScreenCoords, neighbourNodeId }) => {
-      if (!nodeToScreenCoords || !neighbourNodeId) return null
-      const pos = nodeToScreenCoords(neighbourNodeId)
-      if (!pos) return null
-      return { x: pos.x, y: pos.y, width: 120, height: 120, shape: 'circle' }
-    },
+    resolveSpotlight: neighbourhoodSpotlight,
   },
 ]

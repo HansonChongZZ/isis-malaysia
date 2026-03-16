@@ -47,6 +47,14 @@ export function useTutorial({
     return graphHandleRef.current?.nodeToScreenCoords(nodeId) ?? null
   }, [graphHandleRef])
 
+  // All neighbour IDs for the selected node
+  const allNeighbourIds = useMemo(() => {
+    if (!selectedNodeId) return [] as string[]
+    return edges
+      .filter(e => e.source === selectedNodeId || e.target === selectedNodeId)
+      .map(e => (e.source === selectedNodeId ? e.target : e.source))
+  }, [selectedNodeId, edges])
+
   const neighbourNodeId = useMemo(() => {
     if (!selectedNodeId) return null
     const neighbours = edges
@@ -100,9 +108,10 @@ export function useTutorial({
       nodeToScreenCoords: getNodeScreenCoords,
       selectedNodeId,
       neighbourNodeId: resolvedNeighbourId,
+      neighbourIds: allNeighbourIds,
     }
     return stepConfig.resolveSpotlight(context)
-  }, [stepConfig, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId])
+  }, [stepConfig, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds])
 
   // Detect completion events
   useEffect(() => {
