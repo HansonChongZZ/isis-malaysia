@@ -32,7 +32,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     completionEvent: 'manual',
     resolveSpotlight: ({ graphContainerRect }) => {
       if (!graphContainerRect) return null
-      const size = Math.min(graphContainerRect.width, graphContainerRect.height) * 0.4
+      const size = Math.max(graphContainerRect.width, graphContainerRect.height)
       return {
         x: graphContainerRect.left + graphContainerRect.width / 2,
         y: graphContainerRect.top + graphContainerRect.height / 2,
