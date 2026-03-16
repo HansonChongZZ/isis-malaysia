@@ -1192,6 +1192,11 @@ export default function OccupationGraph({
         .ease(d3.easeCubicInOut)
         .call(zoom.transform, fitTransform);
     }
+    // Re-disable zoom handlers after any zoom transition if disableZoom is active.
+    // D3's zoom.transform re-attaches handlers as a side effect.
+    if (disableZoom) {
+      svg.on('.zoom', null)
+    }
   }, [
     selectionMode,
     selectedNodeId,
@@ -1201,6 +1206,7 @@ export default function OccupationGraph({
     radialPositions,
     dimensions.width,
     dimensions.height,
+    disableZoom,
   ]);
 
   return (
