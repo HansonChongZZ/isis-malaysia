@@ -108,8 +108,26 @@ export function useTutorial({
 
   const resolvedNeighbourId = lockedNeighbourRef.current ?? neighbourNodeId
 
+  // Delay spotlight after steps that trigger graph zoom animations.
+  // When step 2 auto-advances to step 3, the graph zooms to the selected node
+  // (500ms animation). We wait for it to settle before computing spotlight positions.
+  const [spotlightReady, setSpotlightReady] = useState(true)
+  const prevStepRef = useRef(currentStep)
+  useEffect(() => {
+    if (prevStepRef.current !== currentStep) {
+      const prevStep = prevStepRef.current
+      prevStepRef.current = currentStep
+      // Step 2→3 triggers a zoom animation (~500ms in OccupationGraph)
+      if (prevStep === 1 && currentStep === 2) {
+        setSpotlightReady(false)
+        const timer = setTimeout(() => setSpotlightReady(true), 600)
+        return () => clearTimeout(timer)
+      }
+    }
+  }, [currentStep])
+
   const spotlight = useMemo(() => {
-    if (!stepConfig) return null
+    if (!stepConfig || !spotlightReady) return null
     const context: SpotlightContext = {
       graphContainerRect,
       heroSearchRect,
@@ -119,7 +137,7 @@ export function useTutorial({
       neighbourIds: allNeighbourIds,
     }
     return stepConfig.resolveSpotlight(context)
-  }, [stepConfig, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds])
+  }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds])
 
   // Detect completion events
   useEffect(() => {
