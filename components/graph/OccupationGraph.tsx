@@ -1085,26 +1085,19 @@ export default function OccupationGraph({
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
       } else if (radialPositions) {
-        // Radial mode: zoom to fit all radial positions with 250px padding
+        // Radial mode: centre on selected node (always at origin in radial layout)
         const padding = 250;
         const positions = Array.from(radialPositions.values());
-        const xs = positions.map((p) => p.x);
-        const ys = positions.map((p) => p.y);
-        const minX = Math.min(...xs) - padding;
-        const minY = Math.min(...ys) - padding;
-        const maxX = Math.max(...xs) + padding;
-        const maxY = Math.max(...ys) + padding;
-        const dx = maxX - minX;
-        const dy = maxY - minY;
-        const cx = (minX + maxX) / 2;
-        const cy = (minY + maxY) / 2;
+        const maxDist = Math.max(
+          ...positions.map((p) => Math.hypot(p.x, p.y)),
+        );
         const scale = Math.min(
-          dimensions.width / dx,
-          dimensions.height / dy,
+          Math.min(dimensions.width, dimensions.height) /
+            (2 * (maxDist + padding)),
           3,
         );
-        const tx = dimensions.width / 2 - cx * scale;
-        const ty = dimensions.height / 2 - cy * scale;
+        const tx = dimensions.width / 2;
+        const ty = dimensions.height / 2;
         const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
         svg
@@ -1113,25 +1106,23 @@ export default function OccupationGraph({
           .ease(d3.easeCubicInOut)
           .call(zoom.transform, target);
       } else {
-        // Ring mode: zoom to fit selected node + neighbours with 250px padding
+        // Ring mode: centre on selected node, scale to fit neighbours
         const padding = 250;
-        const xs = neighbourNodes.map((n) => n.x);
-        const ys = neighbourNodes.map((n) => n.y);
-        const minX = Math.min(...xs) - padding;
-        const minY = Math.min(...ys) - padding;
-        const maxX = Math.max(...xs) + padding;
-        const maxY = Math.max(...ys) + padding;
-        const dx = maxX - minX;
-        const dy = maxY - minY;
-        const cx = (minX + maxX) / 2;
-        const cy = (minY + maxY) / 2;
+        const node = nodeById.current.get(selectedNodeId);
+        if (!node) return;
+        const maxDist = Math.max(
+          0,
+          ...neighbourNodes.map((n) =>
+            Math.hypot(n.x - node.x, n.y - node.y),
+          ),
+        );
         const scale = Math.min(
-          dimensions.width / dx,
-          dimensions.height / dy,
+          Math.min(dimensions.width, dimensions.height) /
+            (2 * (maxDist + padding)),
           3,
         );
-        const tx = dimensions.width / 2 - cx * scale;
-        const ty = dimensions.height / 2 - cy * scale;
+        const tx = dimensions.width / 2 - node.x * scale;
+        const ty = dimensions.height / 2 - node.y * scale;
         const target = d3.zoomIdentity.translate(tx, ty).scale(scale);
 
         svg

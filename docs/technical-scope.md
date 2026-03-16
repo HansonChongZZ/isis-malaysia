@@ -38,12 +38,14 @@ All data is provided by ISIS Malaysia, derived from the **2021 Labour Force Surv
 
 **Datasets:**
 
-| File | Description | Records |
-|---|---|---|
-| Occupation nodelist | Occupations with AI exposure index, quartile, wage, worker count | ~456 rows |
+
+| File                              | Description                                                                                                                                       | Records      |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| Occupation nodelist               | Occupations with AI exposure index, quartile, wage, worker count                                                                                  | ~456 rows    |
 | Occupation edgelist (conditional) | Skill-based connections between occupations, pre-filtered: edges exist only where the target occupation has **lower AI exposure AND higher wage** | ~9,580 edges |
-| MASCO-4D with skills | Occupation-to-skill mappings (basic + specific skills) | ~3,659 pairs |
-| MASCO-4D with tasks + scores | Occupation tasks scored for AI automation potential (GPT-4o) | ~3,476 pairs |
+| MASCO-4D with skills              | Occupation-to-skill mappings (basic + specific skills)                                                                                            | ~3,659 pairs |
+| MASCO-4D with tasks + scores      | Occupation tasks scored for AI automation potential (GPT-4o)                                                                                      | ~3,476 pairs |
+
 
 ### Timeline
 
@@ -59,17 +61,19 @@ Single release. Post-delivery, ISIS Malaysia may choose to maintain and extend t
 
 ### Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (React 19, TypeScript 5) |
-| Visualization | D3.js 7 (force simulation, SVG nodes, Canvas edges) |
-| Styling | Tailwind CSS 4, CSS custom properties (OkLCh color space) |
-| UI Components | shadcn/ui (Radix UI primitives, Base UI) |
-| Data Tables | @tanstack/react-table 8 |
-| Data Validation | Zod 4 |
-| Data Pipeline | PapaParse (CSV parsing), custom `process-csv.ts` script |
-| Theming | next-themes (light/dark mode) |
-| Deployment | Vercel (staging), ISIS Malaysia infrastructure (production) |
+
+| Layer           | Technology                                                  |
+| --------------- | ----------------------------------------------------------- |
+| Framework       | Next.js 16 (React 19, TypeScript 5)                         |
+| Visualization   | D3.js 7 (force simulation, SVG nodes, Canvas edges)         |
+| Styling         | Tailwind CSS 4, CSS custom properties (OkLCh color space)   |
+| UI Components   | shadcn/ui (Radix UI primitives, Base UI)                    |
+| Data Tables     | @tanstack/react-table 8                                     |
+| Data Validation | Zod 4                                                       |
+| Data Pipeline   | PapaParse (CSV parsing), custom `process-csv.ts` script     |
+| Theming         | next-themes (light/dark mode)                               |
+| Deployment      | Vercel (staging), ISIS Malaysia infrastructure (production) |
+
 
 ### Data Pipeline
 
@@ -88,15 +92,18 @@ All data is pre-processed at build time into optimized JSON files served as stat
 **Two layout modes** rendering ~456 occupation nodes connected by skill-similarity edges.
 
 **Layout mode 1 — Force-directed network (default):**
+
 - **Node positioning:** Force simulation with minimal cluster guidance (intra-cluster strength ≈ 0, as MASCO 1-digit grouping is not central to this research). Nodes with stronger skill overlap are pulled closer. Charge: 200. Collision padding: 200–300 to avoid overlaps. Positions stabilize after initial simulation (300 ticks pre-computed).
 - **Default edges:** MST (minimum spanning tree) edges shown by default. Full 1-degree connections shown on hover or selection.
 
 **Layout mode 2 — Circular / radial tree (on node selection):**
+
 - On clicking a node, transitions to a radial tree layout centred on the selected occupation.
 - Distance between the selected node and its neighbours is determined by: number of specific skills to develop + number of specific skills in common.
 - Users can toggle between the two layout modes.
 
 **Shared rendering properties (both modes):**
+
 - **Node coloring:** Single color scheme — connected (non-isolated) nodes are **CERT green**; isolated nodes (no connected occupations) are **light grey with a black outline**.
 - **Isolated nodes:** Not clickable, do not open a detail panel. Display a tooltip on hover with basic occupation info.
 - **Node sizing:** Toggleable between three metrics:
@@ -139,6 +146,7 @@ When hovering over a node (and no node is currently selected):
 Triggered by clicking a connected (non-isolated) node, or by clicking a tooltip. Opens as a **full-screen modal dialog** (desktop) or **bottom sheet** (mobile). Uses a **first-click / second-click** interaction model: first click highlights the node and its neighbourhood on the graph; second click (or tooltip click) opens the detail panel.
 
 **Left column — Occupation profile:**
+
 - MASCO code, group badge, occupation name
 - AI Exposure Index with progress bar and quartile badge
 - Median monthly wage (MYR)
@@ -148,6 +156,7 @@ Triggered by clicking a connected (non-isolated) node, or by clicking a tooltip.
 - Tasks with AI automation scores (expandable accordion, each task showing a score bar)
 
 **Right column — Transition pathways table:**
+
 - Lists connected occupations as potential transition targets
 - **Sorted by:** (1) most shared skills first (edge weight), (2) lower AI exposure preferred, (3) higher wage preferred
 - Column header: **"Match"** (not "Skill match")
@@ -163,188 +172,143 @@ Triggered by clicking a connected (non-isolated) node, or by clicking a tooltip.
 ### 3.5 UI Chrome
 
 **Header (fixed, top):**
+
 - ISIS Malaysia logo
 - MCMC logo (Malaysian Communications and Multimedia Commission)
 - Third partner logo (asset to be provided by ISIS Malaysia)
 - Application title: "Malaysia Occupational Space" (or as specified by client)
 
 **Legend bar (fixed, bottom):**
+
 - MASCO group labels as clickable filter buttons
 - Node size metric indicator
 
 **"How to Read" widget:**
+
 - Persistent, always-visible element explaining what the visualization represents
 - Static content (does not change with interaction)
 - Simple step-by-step guide to reading the network
 
 **"Learn How to Use" tutorial:**
+
 - **Appears by default** on first page load (not behind a button click)
 - Button in header area to re-trigger the tutorial at any time
 - **Based on the actual network** — tutorial walkthrough uses real nodes and interactions from the live graph, not abstract illustrations
 - Animated guide showing how to search, hover, click, filter, and adjust settings
 
 **Credits / Attribution:**
+
 - Accessible via button (header or footer placement)
 - Content: "This visualization is made using methodology from ISIS Malaysia and using labour force survey data from the Department of Statistics Malaysia (DOSM)."
 - Lists data sources, methodology, and development credits
 
 **Theme toggle:**
+
 - Light/dark mode switch following ISIS Malaysia branding guidelines (hex codes provided by client)
 
 ---
 
 ## 4. User Stories
 
-### US-1: Search for an Occupation
-> As a **policymaker**, I want to search for a specific occupation by name or MASCO code, so I can quickly locate it in the network and view its details.
 
-**Acceptance criteria:**
-- Autocomplete shows matching results as user types
-- Matching by both occupation name and 4-digit code
-- Selecting a result highlights the node and opens the detail panel
 
-### US-2: Explore AI Exposure
-> As a **policymaker**, I want to see which occupations face the highest AI exposure, so I can prioritize reskilling policy interventions.
 
-**Acceptance criteria:**
-- Node size visually communicates AI exposure level (default sizing)
-- Hovering shows AI exposure percentage in tooltip
-- Detail panel displays exposure index with progress bar and quartile
-
-### US-3: Discover Transition Pathways
-> As a **retrenched worker**, I want to see which occupations I could transition to based on my current skills, so I can identify viable career moves with lower AI risk and higher wages.
-
-**Acceptance criteria:**
-- Clicking an occupation shows a transition table sorted by shared skills, lower exposure, and higher wage
-- Table rows are clickable to explore target occupations
-- Sorting criteria reflect the pre-filtered edgelist logic
-
-### US-4: Hover to Discover Connections
-> As a **user**, I want to hover over an occupation and see its skill-connected neighbors, so I can understand how occupations relate to each other.
-
-**Acceptance criteria:**
-- Hovering highlights 1-degree neighbors and shows connecting edges
-- Non-connected nodes fade out
-- Tooltip appears with key occupation data
-
-### US-5: Filter by Skill
-> As a **policymaker**, I want to filter occupations by specific skills, so I can identify clusters of occupations that share common competencies.
-
-**Acceptance criteria:**
-- Multi-select skill filter with chip display
-- Only occupations possessing all selected skills remain fully visible
-- Clear filter button resets the view
-
-### US-6: Compare Occupations by Metric
-> As a **user**, I want to toggle node sizing between AI exposure, wage, and number of workers, so I can compare occupations across different dimensions.
-
-**Acceptance criteria:**
-- Three-way toggle in visualization settings
-- Node sizes update smoothly; positions remain fixed
-- Legend updates to reflect active metric
-
-### US-7: Adjust Visibility Thresholds
-> As a **policymaker**, I want to use threshold sliders to reduce visual noise, so I can focus on occupations or connections above a certain level.
-
-**Acceptance criteria:**
-- Node threshold slider filters by selected metric (AI exposure or wage)
-- Edge weight threshold slider filters by number of shared skills
-- Defaults show all nodes and all edges
-
-### US-8: Access Help & Credits
-> As a **first-time user**, I want to understand how to read the visualization and how to interact with it, so I can use the tool effectively.
-
-**Acceptance criteria:**
-- "How to Read" widget is persistently visible and explains the visualization
-- "Learn How to Use" tutorial appears automatically on first page load
-- Tutorial uses real network nodes and interactions, not abstract illustrations
-- Credits section attributes ISIS Malaysia methodology and DOSM data source
 
 ---
 
 ## 5. Acceptance Criteria & Quality
 
 ### Data Integrity
-- [ ] All ~456 occupations from the nodelist render as nodes on the graph
-- [ ] Edge count matches the provided edgelist
-- [ ] Occupation details (skills, tasks, scores) match source CSVs exactly
-- [ ] No duplicate nodes or orphaned edges
-- [ ] Zod schema validation passes on all data files
+
+- All ~456 occupations from the nodelist render as nodes on the graph
+- Edge count matches the provided edgelist
+- Occupation details (skills, tasks, scores) match source CSVs exactly
+- No duplicate nodes or orphaned edges
+- Zod schema validation passes on all data files
 
 ### Graph Rendering
-- [ ] Connected nodes are CERT green; isolated nodes are light grey with black outline
-- [ ] Force simulation produces a stable, readable layout (collision padding 200–300, charge 200)
-- [ ] Node sizing correctly reflects the selected metric with sufficient variability (base=50, scale=300, exponent=3)
-- [ ] Top 10 highest-worker + 100% AI exposure nodes vibrate every 5 seconds
-- [ ] Switching size metric does not change node positions
-- [ ] Edges render only when contextually appropriate (MST default in force-directed mode; full 1-degree on hover/selection)
-- [ ] Zoom and pan function smoothly; initial zoom fits the entire network in the viewport
-- [ ] Force-directed and circular/radial tree layout modes both function correctly
-- [ ] Selected node is visually distinct and viewport centres on it
+
+- Connected nodes are CERT green; isolated nodes are light grey with black outline
+- Force simulation produces a stable, readable layout (collision padding 200–300, charge 200)
+- Node sizing correctly reflects the selected metric with sufficient variability (base=50, scale=300, exponent=3)
+- Top 10 highest-worker + 100% AI exposure nodes vibrate every 5 seconds
+- Switching size metric does not change node positions
+- Edges render only when contextually appropriate (MST default in force-directed mode; full 1-degree on hover/selection)
+- Zoom and pan function smoothly; initial zoom fits the entire network in the viewport
+- Force-directed and circular/radial tree layout modes both function correctly
+- Selected node is visually distinct and viewport centres on it
 
 ### Search & Filtering
-- [ ] Occupation search returns results within 100ms of typing
-- [ ] Search matches both name and 4-digit MASCO code
-- [ ] MASCO group filter correctly dims non-matching nodes
-- [ ] Skill filter correctly identifies nodes possessing all selected skills
-- [ ] Threshold sliders produce immediate visual feedback
-- [ ] Clear/reset buttons restore default state
+
+- Occupation search returns results within 100ms of typing
+- Search matches both name and 4-digit MASCO code
+- MASCO group filter correctly dims non-matching nodes
+- Skill filter correctly identifies nodes possessing all selected skills
+- Threshold sliders produce immediate visual feedback
+- Clear/reset buttons restore default state
 
 ### Hover & Selection
-- [ ] Hover tooltip appears near cursor with correct occupation data
-- [ ] Tooltip repositions to avoid viewport edges
-- [ ] Tooltip is clickable and opens the detail panel
-- [ ] Shared skills tooltip can be pinned by clicking
-- [ ] Isolated nodes show tooltip but are not clickable for detail panel
-- [ ] 1-degree neighbor highlighting is accurate (based on edgelist)
-- [ ] Non-connected nodes dim to reduced opacity on hover
-- [ ] First click highlights node + neighbourhood; second click opens detail panel
-- [ ] Deselection only occurs when clicking empty canvas, not when clicking near other nodes
+
+- Hover tooltip appears near cursor with correct occupation data
+- Tooltip repositions to avoid viewport edges
+- Tooltip is clickable and opens the detail panel
+- Shared skills tooltip can be pinned by clicking
+- Isolated nodes show tooltip but are not clickable for detail panel
+- 1-degree neighbor highlighting is accurate (based on edgelist)
+- Non-connected nodes dim to reduced opacity on hover
+- First click highlights node + neighbourhood; second click opens detail panel
+- Deselection only occurs when clicking empty canvas, not when clicking near other nodes
 
 ### Occupation Detail Panel
-- [ ] AI exposure index, wage, skills, and tasks display correctly
-- [ ] "Skills to develop" is featured more prominently than "skills in common"
-- [ ] Transition table column header reads "Match" (not "Skill match")
-- [ ] Transition table copy shows "# specific skills in common, # specific skills to develop"
-- [ ] Transition table sorts by: (1) shared skills, (2) lower AI exposure, (3) higher wage
-- [ ] Transition table supports fuzzy search, column sorting, and pagination
-- [ ] Clicking a transition row navigates to that occupation's panel
-- [ ] Panel closes cleanly and returns graph to default state
+
+- AI exposure index, wage, skills, and tasks display correctly
+- "Skills to develop" is featured more prominently than "skills in common"
+- Transition table column header reads "Match" (not "Skill match")
+- Transition table copy shows "# specific skills in common, # specific skills to develop"
+- Transition table sorts by: (1) shared skills, (2) lower AI exposure, (3) higher wage
+- Transition table supports fuzzy search, column sorting, and pagination
+- Clicking a transition row navigates to that occupation's panel
+- Panel closes cleanly and returns graph to default state
 
 ### UI Chrome & Branding
-- [ ] Header displays all required logos (ISIS Malaysia, MCMC, partner)
-- [ ] Branding colors match ISIS Malaysia guidelines
-- [ ] Legend bar shows MASCO groups with correct labels
-- [ ] "How to Read" widget is persistently visible
-- [ ] "Learn How to Use" tutorial appears by default on first load
-- [ ] Tutorial walkthrough uses actual network nodes and interactions
-- [ ] Credits section contains correct attribution text
-- [ ] Light and dark themes both render correctly
-- [ ] `Ctrl+F` / `Cmd+F` focuses the search bar
+
+- Header displays all required logos (ISIS Malaysia, MCMC, partner)
+- Branding colors match ISIS Malaysia guidelines
+- Legend bar shows MASCO groups with correct labels
+- "How to Read" widget is persistently visible
+- "Learn How to Use" tutorial appears by default on first load
+- Tutorial walkthrough uses actual network nodes and interactions
+- Credits section contains correct attribution text
+- Light and dark themes both render correctly
+- `Ctrl+F` / `Cmd+F` focuses the search bar
 
 ### Responsive Layout
-- [ ] Desktop-first design with mobile-aware adaptations
-- [ ] Detail panel renders as side panel (desktop) or bottom sheet (mobile)
-- [ ] Graph controls are usable on smaller screens
-- [ ] Touch interactions work on mobile (tap = select, pinch = zoom)
+
+- Desktop-first design with mobile-aware adaptations
+- Detail panel renders as side panel (desktop) or bottom sheet (mobile)
+- Graph controls are usable on smaller screens
+- Touch interactions work on mobile (tap = select, pinch = zoom)
 
 ### Performance
-- [ ] Initial page load under 3 seconds on broadband
-- [ ] Force simulation pre-computes before rendering (no visible jitter)
-- [ ] Canvas edge rendering handles full edgeset without frame drops
-- [ ] Static data served with appropriate cache headers
+
+- Initial page load under 3 seconds on broadband
+- Force simulation pre-computes before rendering (no visible jitter)
+- Canvas edge rendering handles full edgeset without frame drops
+- Static data served with appropriate cache headers
 
 ---
 
 ## 6. Deployment & Handover
 
 ### Staging Environment
+
 - **Platform:** Vercel (managed by Shortcut Asia)
 - **Purpose:** Development, iteration, and client review
 - **Access:** Shareable preview link provided to ISIS Malaysia team for feedback
 - **Timeline:** Staging draft available within the first week
 
 ### Production Environment
+
 - **Platform:** ISIS Malaysia-owned infrastructure
 - **Options under consideration:**
   - **Cloud (AWS):** ISIS Malaysia creates and owns the AWS account; dev team receives temporary access for deployment. Credentials and costs borne by ISIS Malaysia.
@@ -353,15 +317,18 @@ Triggered by clicking a connected (non-isolated) node, or by clicking a tooltip.
 - **Decision:** To be finalized by ISIS Malaysia
 
 ### Redirect & Integration
+
 - The visualization will be accessible via a click-through button from the ISIS Malaysia website
 - Bidirectional navigation: users can navigate from the ISIS website to the tool, and from the tool back to the associated publication/report
 
 ### Handover
+
 - Full source code repository transferred to ISIS Malaysia
 - Documentation covering: setup, build, deployment, data pipeline, and architecture
 - ISIS Malaysia assumes full ownership post-delivery; dev team access can be revoked at their discretion
 
 ### Static Data Caching
+
 - All data files (`nodes.json`, `edges.json`, `occupations.json`) served as static assets
 - Cache headers configured for optimal performance (currently 24-hour cache on Vercel)
 - No server-side rendering required for data; client-side fetch with validation
@@ -386,16 +353,18 @@ The following are explicitly **not** included in this release:
 
 ## 8. Open Items
 
-| # | Item | Owner | Status |
-|---|---|---|---|
-| 1 | Provide updated edgelist CSV | Hanson Chong | Pending |
-| 2 | Provide logo assets (ISIS Malaysia, MCMC, partner) | Hanson Chong | Pending |
-| 3 | Share branding guidelines document (hex codes) | Hanson Chong | Pending |
-| 4 | Confirm production hosting choice (AWS vs physical server) | Hanson Chong / Shahkir | Pending |
-| 5 | Provide Number of Workers data per occupation | Hanson Chong | Pending |
-| 6 | Confirm "How to Read" and tutorial content/copy | Hanson Chong | Pending |
-| 7 | Confirm credits/attribution text | Hanson Chong | Pending |
-| 8 | Coordinate server access with Shahkir | Alika Choo | Pending |
+
+| #   | Item                                                       | Owner                  | Status  |
+| --- | ---------------------------------------------------------- | ---------------------- | ------- |
+| 1   | Provide updated edgelist CSV                               | Hanson Chong           | Pending |
+| 2   | Provide logo assets (ISIS Malaysia, MCMC, partner)         | Hanson Chong           | Pending |
+| 3   | Share branding guidelines document (hex codes)             | Hanson Chong           | Pending |
+| 4   | Confirm production hosting choice (AWS vs physical server) | Hanson Chong / Shahkir | Pending |
+| 5   | Provide Number of Workers data per occupation              | Hanson Chong           | Pending |
+| 6   | Confirm "How to Read" and tutorial content/copy            | Hanson Chong           | Pending |
+| 7   | Confirm credits/attribution text                           | Hanson Chong           | Pending |
+| 8   | Coordinate server access with Shahkir                      | Alika Choo             | Pending |
+
 
 ---
 
@@ -408,3 +377,4 @@ The following are explicitly **not** included in this release:
 5. Browser support targets modern evergreen browsers (Chrome, Firefox, Safari, Edge)
 6. The development team has temporary access to the production environment for initial deployment
 7. Content for "How to Read," tutorial, and credits will be provided or approved by ISIS Malaysia
+

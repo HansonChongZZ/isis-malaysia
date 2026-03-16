@@ -316,9 +316,12 @@ export default function HomePage() {
 
   const handleViewModeChange = (mode: ViewMode) => {
     setViewMode(mode)
-    // When switching to circular, reset to ring layout
     if (mode === 'circular') {
+      // When switching to circular, restore radial if a node is selected
       setLayoutMode(selectedNodeId ? 'radial' : 'ring')
+    } else {
+      // When switching to force, reset layout so radialPositions clears
+      setLayoutMode('ring')
     }
   }
 
