@@ -35,6 +35,7 @@ export default function HomePage() {
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
   const [viewMode, setViewMode] = useState<ViewMode>('force')
+  const [colorByGroup, setColorByGroup] = useState(false)
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -339,6 +340,8 @@ export default function HomePage() {
         onViewModeChange={handleViewModeChange}
         hideSearchOnDesktop={!selectedNodeId}
         onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
+        colorByGroup={colorByGroup}
+        onColorByGroupChange={setColorByGroup}
       />
 
       {/* Main graph area */}
@@ -378,6 +381,7 @@ export default function HomePage() {
             viewMode={viewMode}
             layoutMode={layoutMode}
             specificSkillsMap={specificSkillsMap}
+            colorByGroup={colorByGroup}
           />
         )}
 

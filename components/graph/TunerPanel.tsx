@@ -32,8 +32,6 @@ interface TunerPanelProps {
   onPositionsChange: (positions: Map<string, { x: number; y: number }>) => void;
   onCircularLayoutChange: (params: CircularLayoutParams) => void;
   onForceLayoutChange: (params: ForceLayoutParams) => void;
-  colorByGroup: boolean;
-  onColorByGroupChange: (value: boolean) => void;
   showMstEdges: boolean;
   onShowMstEdgesChange: (value: boolean) => void;
   initialSizing?: TunerSizingParams;
@@ -94,8 +92,6 @@ export default function TunerPanel({
   onPositionsChange,
   onCircularLayoutChange,
   onForceLayoutChange,
-  colorByGroup,
-  onColorByGroupChange,
   showMstEdges,
   onShowMstEdgesChange,
   initialSizing,
@@ -349,17 +345,8 @@ export default function TunerPanel({
             <div className="text-muted-foreground font-medium mb-1.5 uppercase tracking-wider text-[10px]">
               Debug
             </div>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={colorByGroup}
-                onChange={(e) => onColorByGroupChange(e.target.checked)}
-                className="accent-foreground"
-              />
-              <span>Color by MASCO group</span>
-            </label>
             {viewMode === 'force' && (
-              <label className="flex items-center gap-2 cursor-pointer mt-1.5">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showMstEdges}

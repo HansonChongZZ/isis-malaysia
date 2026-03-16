@@ -64,6 +64,7 @@ interface OccupationGraphProps {
   viewMode: ViewMode;
   layoutMode: LayoutMode;
   specificSkillsMap: Map<string, Set<string>>;
+  colorByGroup: boolean;
 }
 
 export default function OccupationGraph({
@@ -84,6 +85,7 @@ export default function OccupationGraph({
   viewMode,
   layoutMode,
   specificSkillsMap,
+  colorByGroup,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -123,7 +125,6 @@ export default function OccupationGraph({
   const setTunerSizing = useCallback((params: TunerSizingParams) => {
     setTunerSizingPerMode(prev => ({ ...prev, [viewMode]: params }));
   }, [viewMode]);
-  const [colorByGroup, setColorByGroup] = useState(false);
   const [showMstEdges, setShowMstEdges] = useState(true);
   const [tunerPositions, setTunerPositions] = useState<Map<string, { x: number; y: number }> | null>(null);
   const [circularLayout, setCircularLayout] = useState<CircularLayoutParams>({
@@ -1557,8 +1558,6 @@ export default function OccupationGraph({
         onPositionsChange={setTunerPositions}
         onCircularLayoutChange={setCircularLayout}
         onForceLayoutChange={setForceLayout}
-        colorByGroup={colorByGroup}
-        onColorByGroupChange={setColorByGroup}
         showMstEdges={showMstEdges}
         onShowMstEdgesChange={setShowMstEdges}
         initialSizing={tunerSizing ?? undefined}

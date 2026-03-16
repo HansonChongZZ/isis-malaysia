@@ -39,6 +39,8 @@ interface GraphControlsProps {
   onViewModeChange: (mode: ViewMode) => void;
   hideSearchOnDesktop?: boolean;
   onShowHeroSearch?: () => void;
+  colorByGroup: boolean;
+  onColorByGroupChange: (value: boolean) => void;
 }
 
 export default function GraphControls({
@@ -61,6 +63,8 @@ export default function GraphControls({
   onViewModeChange,
   hideSearchOnDesktop,
   onShowHeroSearch,
+  colorByGroup,
+  onColorByGroupChange,
 }: GraphControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
@@ -273,7 +277,18 @@ export default function GraphControls({
                 </div>
               </div>
 
-              <div className="border-t border-border" />
+              {/* Colour section */}
+              <div className="px-4 py-3 border-b border-border">
+                <label className="flex items-center gap-2 cursor-pointer text-xs">
+                  <input
+                    type="checkbox"
+                    checked={colorByGroup}
+                    onChange={(e) => onColorByGroupChange(e.target.checked)}
+                    className="accent-primary"
+                  />
+                  <span>Colour by MASCO group</span>
+                </label>
+              </div>
 
               {/* Node Filter section */}
               <div className="px-4 py-3 space-y-3">
