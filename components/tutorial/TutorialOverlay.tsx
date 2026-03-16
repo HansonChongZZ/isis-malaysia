@@ -145,20 +145,38 @@ function computeTooltipPosition(
     return { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
   }
 
-  const pad = 20
-  const tooltipWidth = 300 // max-w-[280px] + padding
+  const pad = 16
+  const tooltipWidth = 300
+  const tooltipHeight = 160
+  const r = spotlight.shape === 'circle' ? spotlight.width / 2 : 0
+
+  // Find which side of the spotlight has the most space
+  const spaceRight = vw - (spotlight.x + r)
+  const spaceLeft = spotlight.x - r
+  const spaceBottom = vh - (spotlight.y + r)
   const style: React.CSSProperties = {}
 
-  if (spotlight.x < vw / 2) {
-    style.left = Math.min(spotlight.x + spotlight.width / 2 + pad, vw - tooltipWidth)
+  // Horizontal: place on the side with more room
+  if (spaceRight >= tooltipWidth + pad) {
+    // Right of spotlight edge
+    style.left = spotlight.x + r + pad
+  } else if (spaceLeft >= tooltipWidth + pad) {
+    // Left of spotlight edge
+    style.right = vw - (spotlight.x - r - pad)
   } else {
-    style.right = Math.max(vw - spotlight.x + spotlight.width / 2 + pad, 0)
+    // Not enough horizontal space — centre horizontally, will go above/below
+    style.left = Math.max(pad, Math.min(spotlight.x - tooltipWidth / 2, vw - tooltipWidth - pad))
   }
 
-  if (spotlight.y < vh / 2) {
-    style.top = Math.min(spotlight.y + spotlight.height / 2 + pad, vh - 200)
+  // Vertical: centre on spotlight, clamped to viewport
+  if (style.left !== undefined || style.right !== undefined) {
+    // Tooltip is beside the spotlight — vertically centre on spotlight
+    const centredTop = spotlight.y - tooltipHeight / 2
+    style.top = Math.max(pad, Math.min(centredTop, vh - tooltipHeight - pad))
+  } else if (spaceBottom >= tooltipHeight + pad) {
+    style.top = spotlight.y + r + pad
   } else {
-    style.bottom = Math.max(vh - spotlight.y + spotlight.height / 2 + pad, 0)
+    style.bottom = vh - (spotlight.y - r - pad)
   }
 
   return style
