@@ -104,11 +104,13 @@ export function useTutorial({
     return stepConfig.resolveSpotlight(context)
   }, [stepConfig, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId])
 
+  // Detect completion events
   useEffect(() => {
     if (!isActive || isConfirming) return
     const event = stepConfig?.completionEvent
+    let triggered = false
     if (event === 'nodeSelected' && selectedNodeId) {
-      setIsConfirming(true)
+      triggered = true
     } else if (event === 'nodeHovered' && hoveredNodeId && resolvedNeighbourId) {
       const neighbourIds = new Set(
         edges
@@ -116,12 +118,26 @@ export function useTutorial({
           .map(e => (e.source === selectedNodeId ? e.target : e.source))
       )
       if (neighbourIds.has(hoveredNodeId)) {
-        setIsConfirming(true)
+        triggered = true
       }
     } else if (event === 'secondNodeSelected' && secondSelectedNodeId) {
-      setIsConfirming(true)
+      triggered = true
     }
-  }, [isActive, isConfirming, stepConfig, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges])
+
+    if (triggered) {
+      if (stepConfig?.autoAdvance) {
+        // Auto-advance: skip confirmation, go straight to next step
+        setIsConfirming(false)
+        if (currentStep < TUTORIAL_STEPS.length - 1) {
+          setCurrentStep(prev => prev + 1)
+        } else {
+          setIsActive(false)
+        }
+      } else {
+        setIsConfirming(true)
+      }
+    }
+  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges])
 
   useEffect(() => {
     if (!isActive && isVisible) {

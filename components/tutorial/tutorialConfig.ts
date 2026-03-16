@@ -14,6 +14,7 @@ export interface TutorialStep {
   id: string
   prompt: string
   completionEvent: CompletionEvent
+  autoAdvance?: boolean // Skip confirmation, advance immediately on completion
   resolveSpotlight: (context: SpotlightContext) => SpotlightTarget | null
 }
 
@@ -48,6 +49,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     id: 'search',
     prompt: 'Search for any occupation — try typing a job title (e.g. "Pharmacists").',
     completionEvent: 'nodeSelected',
+    autoAdvance: true,
     resolveSpotlight: ({ heroSearchRect }) => {
       if (!heroSearchRect) return null
       return {
