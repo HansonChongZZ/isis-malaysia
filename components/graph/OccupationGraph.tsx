@@ -65,6 +65,9 @@ interface OccupationGraphProps {
   layoutMode: LayoutMode;
   specificSkillsMap: Map<string, Set<string>>;
   colourByGroup: boolean;
+  onNodeHover?: (nodeId: string | null) => void;
+  onReady?: (handle: { nodeToScreenCoords: (nodeId: string) => { x: number; y: number } | null }) => void;
+  forceSelectionMode?: 'single' | null;
 }
 
 export default function OccupationGraph({
@@ -86,6 +89,9 @@ export default function OccupationGraph({
   layoutMode,
   specificSkillsMap,
   colourByGroup,
+  onNodeHover,
+  onReady,
+  forceSelectionMode,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -140,11 +146,12 @@ export default function OccupationGraph({
     linkDistanceScale: 20,
     linkStrengthDivisor: 7,
   });
-  const selectionMode = !selectedNodeId
+  const derivedSelectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
       ? 'pair'
       : 'single';
+  const selectionMode = forceSelectionMode ?? derivedSelectionMode;
   const nodeById = useRef<Map<string, GraphNode>>(new Map());
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
@@ -164,6 +171,17 @@ export default function OccupationGraph({
     secondSelectedNodeIdRef.current = secondSelectedNodeId;
     viewModeRef.current = viewMode;
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, viewMode]);
+
+  useEffect(() => {
+    onReady?.({
+      nodeToScreenCoords: (nodeId: string) => {
+        const node = nodeById.current.get(nodeId)
+        if (!node) return null
+        const t = transformRef.current
+        return { x: t.applyX(node.x), y: t.applyY(node.y) }
+      },
+    })
+  }, [onReady])
 
   const simNodes = useMemo<GraphNode[]>(
     () => nodes.map((n) => ({ ...n })),
@@ -1327,6 +1345,7 @@ export default function OccupationGraph({
                       if (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
+                      onNodeHover?.(node.id);
                       // In radial mode, show skill comparison for neighbour nodes
                       const sc =
                         layoutMode === 'radial' &&
@@ -1343,6 +1362,7 @@ export default function OccupationGraph({
                     onMouseLeave={() => {
                       tooltipLeaveTimer.current = setTimeout(() => {
                         setHoveredNodeId(null);
+                        onNodeHover?.(null);
                         setTooltip(null);
                       }, 150);
                     }}
