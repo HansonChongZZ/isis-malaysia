@@ -11,6 +11,7 @@ interface UseTutorialProps {
   secondSelectedNodeId: string | null
   hoveredNodeId: string | null
   edges: GraphEdge[]
+  allNodeIds: string[]
   graphContainerRect: DOMRect | null
   heroSearchRect: DOMRect | null
   graphHandleRef: React.RefObject<OccupationGraphHandle | null>
@@ -32,6 +33,7 @@ export function useTutorial({
   secondSelectedNodeId,
   hoveredNodeId,
   edges,
+  allNodeIds,
   graphContainerRect,
   heroSearchRect,
   graphHandleRef,
@@ -135,6 +137,7 @@ export function useTutorial({
       selectedNodeId,
       neighbourNodeId: resolvedNeighbourId,
       neighbourIds: allNeighbourIds,
+      allNodeIds,
     }
     return stepConfig.resolveSpotlight(context)
   }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds])

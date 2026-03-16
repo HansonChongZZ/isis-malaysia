@@ -25,6 +25,7 @@ export interface SpotlightContext {
   selectedNodeId: string | null
   neighbourNodeId: string | null
   neighbourIds: string[]
+  allNodeIds: string[]
 }
 
 /** Compute a spotlight circle that encloses the selected node and all its neighbours. */
@@ -55,18 +56,32 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     id: 'orient',
     prompt: 'Each circle is a Malaysian occupation. Lines connect jobs that share skills. Bigger circles = higher AI exposure.',
     completionEvent: 'manual',
-    resolveSpotlight: ({ graphContainerRect }) => {
-      if (!graphContainerRect) return null
-      // Match the circular layout ring radius: min(w,h) * 0.12, doubled for diameter + padding
-      const ringRadius = Math.min(graphContainerRect.width, graphContainerRect.height) * 0.12
-      const size = ringRadius * 2 + 80
-      return {
-        x: graphContainerRect.left + graphContainerRect.width / 2,
-        y: graphContainerRect.top + graphContainerRect.height / 2,
-        width: size,
-        height: size,
-        shape: 'circle',
+    resolveSpotlight: ({ nodeToScreenCoords, allNodeIds, graphContainerRect }) => {
+      if (!nodeToScreenCoords || allNodeIds.length === 0 || !graphContainerRect) return null
+
+      // Sample node positions to compute bounding circle (sample for performance)
+      const step = Math.max(1, Math.floor(allNodeIds.length / 80))
+      const points: { x: number; y: number }[] = []
+      for (let i = 0; i < allNodeIds.length; i += step) {
+        const pos = nodeToScreenCoords(allNodeIds[i])
+        if (pos) points.push(pos)
       }
+      if (points.length === 0) {
+        // Fallback: centre of graph container
+        const size = Math.min(graphContainerRect.width, graphContainerRect.height) * 0.6
+        return {
+          x: graphContainerRect.left + graphContainerRect.width / 2,
+          y: graphContainerRect.top + graphContainerRect.height / 2,
+          width: size, height: size, shape: 'circle',
+        }
+      }
+
+      const cx = points.reduce((s, p) => s + p.x, 0) / points.length
+      const cy = points.reduce((s, p) => s + p.y, 0) / points.length
+      const maxDist = Math.max(...points.map(p => Math.hypot(p.x - cx, p.y - cy)))
+      const diameter = (maxDist + 30) * 2
+
+      return { x: cx, y: cy, width: diameter, height: diameter, shape: 'circle' }
     },
   },
   {

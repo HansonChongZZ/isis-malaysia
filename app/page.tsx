@@ -47,11 +47,14 @@ export default function HomePage() {
   const [graphContainerRect, setGraphContainerRect] = useState<DOMRect | null>(null)
   const [heroSearchRectState, setHeroSearchRectState] = useState<DOMRect | null>(null)
 
+  const allNodeIds = useMemo(() => nodes.map(n => n.id), [nodes])
+
   const tutorial = useTutorial({
     selectedNodeId,
     secondSelectedNodeId,
     hoveredNodeId,
     edges,
+    allNodeIds,
     graphContainerRect,
     heroSearchRect: heroSearchRectState,
     graphHandleRef,
