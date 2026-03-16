@@ -17,15 +17,18 @@ Replace the current modal-based tutorial with an interactive overlay that guides
 | 1 | Orient | Centre of graph (wide, ~40% viewport) | "Each circle is a Malaysian occupation. Lines connect jobs that share skills. Bigger circles = higher AI exposure." | Manual "Next" button |
 | 2 | Search & Select | Hero search bar (rectangular cutout) | "Search for any occupation — try typing a job title (e.g. "Pharmacists")." | `selectedNodeId` changes from null → value, then user confirms |
 | 3 | Hover | Nearest visible neighbour of selected node | "Hover over connected nodes to see how they relate." | `hoveredNodeId` fires on a neighbour, then user confirms |
-| 4 | Click to Compare | Connected neighbour nodes area | "Click a connected occupation to compare skills and see transition pathways." | Panel opens (`panelNodeId` set), then user confirms |
+| 4 | Click to Compare | Connected neighbour nodes area | "Click a connected occupation to compare skills and see transition pathways." | `secondSelectedNodeId` changes from null → value, then user confirms |
 
-After step 4, the overlay fades out. The graph retains whatever state the user created — they have a panel open with a real comparison.
+After step 4, the overlay fades out. The user has two nodes selected with the detail panel showing a real skill comparison — the natural starting point for exploration.
+
+**Note on step 4:** In the current app, clicking a neighbour of the selected node sets `secondSelectedNodeId` and opens the occupation panel. The tutorial detects `secondSelectedNodeId` being set (not `panelNodeId`) as the completion trigger.
 
 ## Constraints
 
-- Force-directed layout only. Tutorial does not support circular/radial layout modes.
+- Force-directed layout only. On tutorial start, force `viewMode` to `'force'` and disable the view mode toggle while the tutorial is active.
 - No persistence — tutorial auto-shows every visit, skip button always available.
-- Overlay observes graph state but never controls it. The graph behaves normally at all times.
+- Overlay observes graph state but never controls it — with one exception: the tutorial sets `selectionMode` to `'single'` during steps 2-3 to prevent pair-selection mode from suppressing hover events. Normal selection mode resumes at step 4.
+- Hero search bar dismissal is prevented while the tutorial is active (hide the "X" dismiss button during step 2).
 
 ## Component Architecture
 
@@ -45,7 +48,7 @@ Step definitions array. Each step contains:
 - `title`: short name
 - `prompt`: display text
 - `spotlightTarget`: function that resolves to screen coordinates and dimensions given current graph state
-- `completionEvent`: what state change to watch for (`'manual'` | `'nodeSelected'` | `'nodeHovered'` | `'panelOpened'`)
+- `completionEvent`: what state change to watch for (`'manual'` | `'nodeSelected'` | `'nodeHovered'` | `'secondNodeSelected'`)
 
 #### `components/tutorial/useTutorial.ts`
 Hook managing tutorial state:
@@ -66,7 +69,8 @@ Hook managing tutorial state:
 
 #### `components/graph/OccupationGraph.tsx`
 - Expose a method or ref to convert node data coordinates to screen coordinates using the current D3 zoom transform
-- Expose `hoveredNodeId` state (currently internal) via callback prop
+- Add new callback prop `onNodeHover?: (nodeId: string | null) => void` — called when the user hovers/unhovers a node. This fires the existing internal hover logic and additionally calls the callback.
+- `page.tsx` adds a new `hoveredNodeId` state, updated by this callback, and passed to `TutorialOverlay`
 
 ### Deleted Files
 
@@ -83,10 +87,12 @@ Hook managing tutorial state:
 
 ### Spotlight
 
-SVG overlay with `<mask>`:
+SVG overlay with `<mask>`. The overlay SVG has `pointer-events: none` globally, with `pointer-events: auto` only on the tooltip and its buttons. The spotlight cutout area passes pointer events through to the graph beneath, allowing the user to interact with the real graph. The dimmed area also passes events through — this is acceptable since the dim layer is just a visual guide, not a barrier.
+
+Targets:
 - **Step 1:** Large circle (~40% viewport) centred on graph. General orientation.
 - **Step 2:** Rectangular cutout over the hero search bar. Use `getBoundingClientRect()`.
-- **Step 3:** Circle centred on the nearest visible neighbour node. Convert D3 data coords → screen coords via zoom transform.
+- **Step 3:** Circle centred on the neighbour node with the highest edge weight to the selected node (strongest skill connection). If weights are tied, pick the one closest in screen-pixel distance. Lock the spotlight to this node once resolved — do not update if the force simulation shifts positions. Convert D3 data coords → screen coords via zoom transform.
 - **Step 4:** Same area as step 3 — connected nodes region.
 
 ### Tooltip
@@ -111,14 +117,15 @@ The overlay observes existing state managed by `page.tsx`. It never dispatches a
 | 1 | None | Manual "Next" button click |
 | 2 | `selectedNodeId` | Transitions from `null` to any value |
 | 3 | `hoveredNodeId` (new callback) | Fires with a node ID that is a neighbour of `selectedNodeId` |
-| 4 | `panelNodeId` | Transitions from `null` to any value |
+| 4 | `secondSelectedNodeId` | Transitions from `null` to any value |
 
 On detection, the overlay shows a "Got it, next" confirmation button. The user clicks it to advance. This gives them time to absorb what just happened before moving on.
 
 ## Skip & Completion Behaviour
 
-- **Skip:** Visible on every step as "Skip tutorial" text link. Fades out overlay immediately. Resets graph state to defaults (deselects nodes, closes panel).
-- **Completion:** After step 4 confirmation, overlay fades out (~300ms). Graph retains current state — the user has a panel open showing a real occupation comparison. This is the natural starting point for free exploration.
+- **Skip:** Visible on every step as "Skip tutorial" text link. Fades out overlay immediately. Resets graph state to defaults (deselects nodes, closes panel). Restores view mode toggle and hero search dismiss button.
+- **Completion:** After step 4 confirmation, overlay fades out (~300ms). Graph retains current state — the user has two nodes selected with the comparison panel open. View mode toggle and hero search dismiss are restored.
+- **Replay:** No explicit replay button. Since there's no persistence, refreshing the page restarts the tutorial. This is intentionally minimal per SLC — a replay button can be added later if users request it.
 
 ## Visual Design
 
