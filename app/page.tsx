@@ -141,15 +141,6 @@ export default function HomePage() {
 
   const mstEdges = useMemo(() => computeMaxSpanningTree(edges), [edges])
 
-  // Build skills map: nodeId -> Set of all skills
-  const allSkills = useMemo<Map<string, Set<string>>>(() => {
-    const map = new Map<string, Set<string>>()
-    for (const [id, occ] of Object.entries(occupations)) {
-      const skills = new Set([...occ.basicSkills, ...occ.specificSkills])
-      map.set(id, skills)
-    }
-    return map
-  }, [occupations])
 
   // Nodes that appear in no edge
   const isolateIds = useMemo<Set<string>>(() => {
@@ -175,11 +166,10 @@ export default function HomePage() {
     return set
   }, [selectedNodeId, edges])
 
-  // Unique sorted skills list for autocomplete
+  // Unique sorted specific skills list for autocomplete
   const uniqueSkills = useMemo<string[]>(() => {
     const all = new Set<string>()
     for (const occ of Object.values(occupations)) {
-      occ.basicSkills.forEach((s) => all.add(s))
       occ.specificSkills.forEach((s) => all.add(s))
     }
     return [...all].sort()
@@ -460,7 +450,7 @@ export default function HomePage() {
             secondSelectedNodeId={secondSelectedNodeId}
             occupations={occupations}
             filterSkills={filterSkills}
-            allSkills={allSkills}
+            allSkills={specificSkillsMap}
             sizeMetric={sizeMetric}
             sizeThreshold={sizeThreshold}
             nodeSizeMetric={nodeSizeMetric}
