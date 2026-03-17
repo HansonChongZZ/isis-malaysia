@@ -1264,60 +1264,43 @@ export default function OccupationGraph({
           }}
         >
           <defs>
+            {/* Radial gradient for selected node — colors from CSS vars via refs */}
+            <radialGradient id="selected-node-gradient" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stopColor={selectedGradientStartRef.current} />
+              <stop offset="100%" stopColor={selectedGradientEndRef.current} />
+            </radialGradient>
+
+            {/* Enhanced 2-layer glow for selected node */}
             <filter
               id="selected-glow"
-              x="-300%"
-              y="-300%"
-              width="700%"
-              height="700%"
+              x="-200%"
+              y="-200%"
+              width="500%"
+              height="500%"
             >
               <feGaussianBlur
                 in="SourceAlpha"
-                stdDeviation="5"
+                stdDeviation="10"
                 result="blur1"
               />
               <feColorMatrix
                 in="blur1"
                 type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0"
+                values="0 0 0 0 0.2  0 0 0 0 0.83  0 0 0 0 0.6  0 0 0 1 0"
                 result="glow1"
               />
               <feGaussianBlur
                 in="SourceAlpha"
-                stdDeviation="18"
+                stdDeviation="25"
                 result="blur2"
               />
               <feColorMatrix
                 in="blur2"
                 type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0"
+                values="0 0 0 0 0.2  0 0 0 0 0.83  0 0 0 0 0.6  0 0 0 0.5 0"
                 result="glow2"
               />
-              <feGaussianBlur
-                in="SourceAlpha"
-                stdDeviation="40"
-                result="blur3"
-              />
-              <feColorMatrix
-                in="blur3"
-                type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.8 0"
-                result="glow3"
-              />
-              <feGaussianBlur
-                in="SourceAlpha"
-                stdDeviation="80"
-                result="blur4"
-              />
-              <feColorMatrix
-                in="blur4"
-                type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.5 0"
-                result="glow4"
-              />
               <feMerge>
-                <feMergeNode in="glow4" />
-                <feMergeNode in="glow3" />
                 <feMergeNode in="glow2" />
                 <feMergeNode in="glow1" />
                 <feMergeNode in="SourceGraphic" />
