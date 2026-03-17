@@ -20,3 +20,6 @@ export const NODE_RADIUS_BASE = 50;
 export const NODE_RADIUS_SCALE = 300;
 export const NODE_RADIUS_EXPONENT = 3;
 export const NODE_RADIUS_COLLIDE_PADDING = 250.5;
+
+// Scale factor applied to the selected (primary) node's radius at render time
+export const SELECTED_NODE_SCALE = 1.6;

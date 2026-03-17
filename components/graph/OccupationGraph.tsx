@@ -22,6 +22,7 @@ import {
   NODE_RADIUS_BASE,
   NODE_RADIUS_SCALE,
   NODE_RADIUS_EXPONENT,
+  SELECTED_NODE_SCALE,
 } from '@/lib/constants';
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
 import TunerPanel from './TunerPanel';
@@ -157,6 +158,8 @@ export default function OccupationGraph({
     linkDistanceScale: 20,
     linkStrengthDivisor: 7,
   });
+  // Bumped in readThemeColors to force re-render so SVG <defs> (gradient stops, aura) pick up new ref values
+  const [, setThemeRevision] = useState(0);
   const derivedSelectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
@@ -169,6 +172,9 @@ export default function OccupationGraph({
   const nodeColourRef = useRef('#034e37');
   const isolateFillRef = useRef('#d1d5db');
   const isolateStrokeRef = useRef('#000000');
+  const selectedGradientStartRef = useRef('#6EE7B7');
+  const selectedGradientEndRef = useRef('#10B981');
+  const selectedAuraRef = useRef('#10B981');
   const canvasGridRef = useRef('#C8E8D8');
   const graphCenterRef = useRef({ cx: 0, cy: 0, radius: 1 });
 
@@ -252,9 +258,16 @@ export default function OccupationGraph({
       style.getPropertyValue('--node-isolate-fill').trim() || '#d1d5db';
     isolateStrokeRef.current =
       style.getPropertyValue('--node-isolate-stroke').trim() || '#000';
+    selectedGradientStartRef.current =
+      style.getPropertyValue('--node-selected-gradient-start').trim() || '#6EE7B7';
+    selectedGradientEndRef.current =
+      style.getPropertyValue('--node-selected-gradient-end').trim() || '#10B981';
+    selectedAuraRef.current =
+      style.getPropertyValue('--node-selected-aura').trim() || '#10B981';
     canvasGridRef.current =
       style.getPropertyValue('--canvas-grid').trim() || '#C8E8D8';
     drawEdgesRef.current();
+    setThemeRevision(r => r + 1);
   }, []);
 
   useEffect(() => {
@@ -1253,60 +1266,45 @@ export default function OccupationGraph({
           }}
         >
           <defs>
+            {/* Radial gradient for selected node — colors from CSS vars via refs */}
+            <radialGradient id="selected-node-gradient" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stopColor={selectedGradientStartRef.current} />
+              <stop offset="100%" stopColor={selectedGradientEndRef.current} />
+            </radialGradient>
+
+            {/* Enhanced 2-layer glow for selected node.
+                Color matrix uses a universal green tint (~#33D499) that works
+                in both themes — SVG filters can't reference CSS vars. */}
             <filter
               id="selected-glow"
-              x="-300%"
-              y="-300%"
-              width="700%"
-              height="700%"
+              x="-200%"
+              y="-200%"
+              width="500%"
+              height="500%"
             >
               <feGaussianBlur
                 in="SourceAlpha"
-                stdDeviation="5"
+                stdDeviation="10"
                 result="blur1"
               />
               <feColorMatrix
                 in="blur1"
                 type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0"
+                values="0 0 0 0 0.2  0 0 0 0 0.83  0 0 0 0 0.6  0 0 0 1 0"
                 result="glow1"
               />
               <feGaussianBlur
                 in="SourceAlpha"
-                stdDeviation="18"
+                stdDeviation="25"
                 result="blur2"
               />
               <feColorMatrix
                 in="blur2"
                 type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 1 0"
+                values="0 0 0 0 0.2  0 0 0 0 0.83  0 0 0 0 0.6  0 0 0 0.5 0"
                 result="glow2"
               />
-              <feGaussianBlur
-                in="SourceAlpha"
-                stdDeviation="40"
-                result="blur3"
-              />
-              <feColorMatrix
-                in="blur3"
-                type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.8 0"
-                result="glow3"
-              />
-              <feGaussianBlur
-                in="SourceAlpha"
-                stdDeviation="80"
-                result="blur4"
-              />
-              <feColorMatrix
-                in="blur4"
-                type="matrix"
-                values="0 0 0 0 0.3  0 0 0 0 1  0 0 0 0 0.5  0 0 0 0.5 0"
-                result="glow4"
-              />
               <feMerge>
-                <feMergeNode in="glow4" />
-                <feMergeNode in="glow3" />
                 <feMergeNode in="glow2" />
                 <feMergeNode in="glow1" />
                 <feMergeNode in="SourceGraphic" />
@@ -1314,6 +1312,25 @@ export default function OccupationGraph({
             </filter>
           </defs>
           <g ref={gRef}>
+            {/* Aura circle behind selected node */}
+            {selectedNodeId && (() => {
+              const selectedNode = simNodes.find(n => n.id === selectedNodeId);
+              if (!selectedNode) return null;
+              const auraBaseR = getNodeRadius(selectedNode) * SELECTED_NODE_SCALE * 1.5;
+              return (
+                <circle
+                  cx={selectedNode.x}
+                  cy={selectedNode.y}
+                  r={auraBaseR}
+                  fill={selectedAuraRef.current}
+                  opacity={0.15}
+                  style={{ pointerEvents: 'none' }}
+                >
+                  <animate attributeName="r" values={`${auraBaseR};${auraBaseR + 4};${auraBaseR}`} dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.15;0.25;0.15" dur="3s" repeatCount="indefinite" />
+                </circle>
+              );
+            })()}
             <g className="nodes">
               {(layoutMode === 'radial' && selectedNodeId && connectedIds
                 ? [...simNodes].sort((a, b) => {
@@ -1333,9 +1350,59 @@ export default function OccupationGraph({
                     : nodeColourRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
+                const displayR = isSelected ? r * SELECTED_NODE_SCALE : r;
                 const isHovered = node.id === hoveredNodeId;
                 const isHoveredNeighbour = !!hoveredNeighbourIds?.has(node.id);
-                return (
+                return isSelected ? (
+                  <circle
+                    key={node.id}
+                    className="node"
+                    data-id={node.id}
+                    cx={node.x}
+                    cy={node.y}
+                    r={displayR}
+                    fill="url(#selected-node-gradient)"
+                    fillOpacity={opacity}
+                    stroke="var(--foreground)"
+                    strokeWidth={3}
+                    strokeOpacity={opacity}
+                    filter="url(#selected-glow)"
+                    style={{
+                      pointerEvents: 'auto',
+                      cursor: 'pointer',
+                      transition:
+                        'r 250ms ease, fill-opacity 250ms ease, fill 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
+                    }}
+                    onClick={(e) => {
+                      if (disableClick) return;
+                      e.stopPropagation();
+                      onNodeSelect(node.id);
+                    }}
+                    onMouseEnter={() => {
+                      if (tooltipLeaveTimer.current) clearTimeout(tooltipLeaveTimer.current);
+                      if (visibleIds && !visibleIds.has(node.id)) return;
+                      if (selectionMode === 'pair') return;
+                      const t = transformRef.current;
+                      setHoveredNodeId(node.id);
+                      onNodeHover?.(node.id);
+                      setTooltip({
+                        x: t.applyX(node.x),
+                        y: t.applyY(node.y),
+                        node,
+                        skillComparison: undefined,
+                      });
+                    }}
+                    onMouseLeave={() => {
+                      tooltipLeaveTimer.current = setTimeout(() => {
+                        setHoveredNodeId(null);
+                        onNodeHover?.(null);
+                        setTooltip(null);
+                      }, 150);
+                    }}
+                  >
+                    <animate attributeName="r" values={`${displayR};${displayR + 1};${displayR}`} dur="3s" repeatCount="indefinite" />
+                  </circle>
+                ) : (
                   <circle
                     key={node.id}
                     className="node"
@@ -1346,30 +1413,27 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isSelected || isHovered || isHoveredNeighbour
+                      isHovered || isHoveredNeighbour
                         ? 'var(--foreground)'
                         : isIsolate
                           ? isolateStrokeRef.current
                           : 'var(--background)'
                     }
                     strokeWidth={
-                      isSelected
-                        ? 3.5
-                        : isHovered
-                          ? 2.5
-                          : isHoveredNeighbour
-                            ? 2
-                            : 0.8
+                      isHovered
+                        ? 2.5
+                        : isHoveredNeighbour
+                          ? 2
+                          : 0.8
                     }
                     strokeOpacity={opacity}
-                    filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
                       pointerEvents: (visibleIds && !visibleIds.has(node.id)) ? 'none' : 'auto',
                       cursor: isIsolate ? 'default'
                         : (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
                         : 'pointer',
                       transition:
-                        'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
+                        'r 250ms ease, fill-opacity 250ms ease, fill 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
                       if (disableClick) return;
@@ -1422,7 +1486,8 @@ export default function OccupationGraph({
       {/* Hover tooltip */}
       {tooltip &&
         (() => {
-          const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
+          const isTooltipSelected = tooltip.node.id === selectedNodeId;
+          const tooltipR = getNodeRadius(tooltip.node) * (isTooltipSelected ? SELECTED_NODE_SCALE : 1) * transformRef.current.k;
           const isTooltipIsolate = isolateIds.has(tooltip.node.id);
           return (
             <div

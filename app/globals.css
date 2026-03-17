@@ -42,6 +42,9 @@
   --node-color: #6AD19C;
   --node-isolate-fill: #B5DEC8;
   --node-isolate-stroke: #204D39;
+  --node-selected-gradient-start: #6EE7B7;
+  --node-selected-gradient-end: #10B981;
+  --node-selected-aura: #10B981;
   --quartile-low: #2D8A4E;
   --quartile-medium-low: #6B9A2E;
   --quartile-medium-high: #D4762C;
@@ -109,6 +112,9 @@
   --node-color: #6AD19C;
   --node-isolate-fill: #2E5A46;
   --node-isolate-stroke: #8BBFA5;
+  --node-selected-gradient-start: #A7F3D0;
+  --node-selected-gradient-end: #34D399;
+  --node-selected-aura: #34D399;
   --quartile-low: #4DB875;
   --quartile-medium-low: #92BE5A;
   --quartile-medium-high: #E8A05C;
