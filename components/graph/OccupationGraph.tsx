@@ -1346,9 +1346,59 @@ export default function OccupationGraph({
                     : nodeColourRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
+                const displayR = isSelected ? r * 1.6 : r;
                 const isHovered = node.id === hoveredNodeId;
                 const isHoveredNeighbour = !!hoveredNeighbourIds?.has(node.id);
-                return (
+                return isSelected ? (
+                  <circle
+                    key={node.id}
+                    className="node"
+                    data-id={node.id}
+                    cx={node.x}
+                    cy={node.y}
+                    r={displayR}
+                    fill="url(#selected-node-gradient)"
+                    fillOpacity={opacity}
+                    stroke="var(--foreground)"
+                    strokeWidth={3}
+                    strokeOpacity={opacity}
+                    filter="url(#selected-glow)"
+                    style={{
+                      pointerEvents: 'auto',
+                      cursor: 'pointer',
+                      transition:
+                        'r 250ms ease, fill-opacity 250ms ease, fill 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
+                    }}
+                    onClick={(e) => {
+                      if (disableClick) return;
+                      e.stopPropagation();
+                      onNodeSelect(node.id);
+                    }}
+                    onMouseEnter={() => {
+                      if (tooltipLeaveTimer.current) clearTimeout(tooltipLeaveTimer.current);
+                      if (visibleIds && !visibleIds.has(node.id)) return;
+                      if (selectionMode === 'pair') return;
+                      const t = transformRef.current;
+                      setHoveredNodeId(node.id);
+                      onNodeHover?.(node.id);
+                      setTooltip({
+                        x: t.applyX(node.x),
+                        y: t.applyY(node.y),
+                        node,
+                        skillComparison: undefined,
+                      });
+                    }}
+                    onMouseLeave={() => {
+                      tooltipLeaveTimer.current = setTimeout(() => {
+                        setHoveredNodeId(null);
+                        onNodeHover?.(null);
+                        setTooltip(null);
+                      }, 150);
+                    }}
+                  >
+                    <animate attributeName="r" values={`${displayR};${displayR + 1};${displayR}`} dur="3s" repeatCount="indefinite" />
+                  </circle>
+                ) : (
                   <circle
                     key={node.id}
                     className="node"
@@ -1359,30 +1409,27 @@ export default function OccupationGraph({
                     fill={color}
                     fillOpacity={opacity}
                     stroke={
-                      isSelected || isHovered || isHoveredNeighbour
+                      isHovered || isHoveredNeighbour
                         ? 'var(--foreground)'
                         : isIsolate
                           ? isolateStrokeRef.current
                           : 'var(--background)'
                     }
                     strokeWidth={
-                      isSelected
-                        ? 3.5
-                        : isHovered
-                          ? 2.5
-                          : isHoveredNeighbour
-                            ? 2
-                            : 0.8
+                      isHovered
+                        ? 2.5
+                        : isHoveredNeighbour
+                          ? 2
+                          : 0.8
                     }
                     strokeOpacity={opacity}
-                    filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
                       pointerEvents: (visibleIds && !visibleIds.has(node.id)) ? 'none' : 'auto',
                       cursor: isIsolate ? 'default'
                         : (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
                         : 'pointer',
                       transition:
-                        'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
+                        'r 250ms ease, fill-opacity 250ms ease, fill 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
                       if (disableClick) return;
