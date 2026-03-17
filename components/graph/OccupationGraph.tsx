@@ -157,6 +157,7 @@ export default function OccupationGraph({
     linkDistanceScale: 20,
     linkStrengthDivisor: 7,
   });
+  const [, setThemeRevision] = useState(0);
   const derivedSelectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
@@ -169,6 +170,9 @@ export default function OccupationGraph({
   const nodeColourRef = useRef('#034e37');
   const isolateFillRef = useRef('#d1d5db');
   const isolateStrokeRef = useRef('#000000');
+  const selectedGradientStartRef = useRef('#6EE7B7');
+  const selectedGradientEndRef = useRef('#10B981');
+  const selectedAuraRef = useRef('#10B981');
   const canvasGridRef = useRef('#C8E8D8');
   const graphCenterRef = useRef({ cx: 0, cy: 0, radius: 1 });
 
@@ -252,9 +256,16 @@ export default function OccupationGraph({
       style.getPropertyValue('--node-isolate-fill').trim() || '#d1d5db';
     isolateStrokeRef.current =
       style.getPropertyValue('--node-isolate-stroke').trim() || '#000';
+    selectedGradientStartRef.current =
+      style.getPropertyValue('--node-selected-gradient-start').trim() || '#6EE7B7';
+    selectedGradientEndRef.current =
+      style.getPropertyValue('--node-selected-gradient-end').trim() || '#10B981';
+    selectedAuraRef.current =
+      style.getPropertyValue('--node-selected-aura').trim() || '#10B981';
     canvasGridRef.current =
       style.getPropertyValue('--canvas-grid').trim() || '#C8E8D8';
     drawEdgesRef.current();
+    setThemeRevision(r => r + 1);
   }, []);
 
   useEffect(() => {
