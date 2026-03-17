@@ -57,9 +57,10 @@ if (id === selectedNodeId) {
 Reset `openedViaSecondary` to `false` wherever the panel is closed. All close paths:
 - The `onClose` callback passed to OccupationPanel (line ~528)
 - Deselection paths in `handleNodeSelect` (clicking null / clicking outside)
-- Escape key handler (`handleKeyDown`)
+- Escape key handler (note: Escape when panel is open is handled by Dialog's `onOpenChange`, not `handleKeyDown` — so the `onClose` callback covers this)
 - `handleTutorialSkip` (line ~87, closes panel and clears node IDs)
 - `handleSearchSelect` circular/radial early-return path (line ~397, closes panel)
+- `handleKeyDown` Ctrl+F/Cmd+F branch (line ~338, closes panel to focus search)
 
 Reset `openedViaSecondary` in the same state batch as `setIsPanelOpen(false)` to avoid brief prop inconsistency during React batched updates.
 
@@ -99,7 +100,7 @@ No changes needed. Isolated nodes clear `secondSelectedNodeId` and open the pane
 
 When the panel opens in comparison mode (via secondary click) and the user clicks "Back":
 - `comparisonNodeId` is set to `null` by `onBack`, showing the card list view
-- The `useEffect` won't re-trigger as long as its dependencies (`nodeId`, `isOpen`, `initialComparisonId`) remain unchanged. If any dependency changes (e.g., panel close+reopen cycling `isOpen`), the effect will re-fire and restore comparison mode. This is acceptable because a close+reopen is a new panel session. Within a single open session, Back is stable.
+- The `useEffect` won't re-trigger as long as its dependencies (`nodeId`, `isOpen`, `initialComparisonId`) remain unchanged. If any dependency changes (e.g., panel close+reopen cycling `isOpen`), the effect will re-fire and restore comparison mode. This is acceptable because a close+reopen is a new panel session. Within a single open session, Back is stable. Note: `initialComparisonId` cannot change while the panel is open because `openedViaSecondary` and `secondSelectedNodeId` are only modified through `handleNodeSelect`, which doesn't run while the panel dialog is open (clicks go to the dialog, not the graph).
 - The user sees the primary occupation's detail + transition cards and can freely browse or click another card to compare
 - This is intentional: after "Back", the user is in the primary occupation's context
 
