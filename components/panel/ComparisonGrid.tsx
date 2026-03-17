@@ -142,59 +142,69 @@ export default function ComparisonGrid({
             {primary.occupation}
           </div>
         </div>
-        <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
-          <div className="flex items-center gap-3 mb-1">
-            <button
-              type="button"
-              onClick={onBack}
-              className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 transition-colors"
-            >
-              <ArrowLeftIcon className="size-3" />
-              Back to pathways
-            </button>
-            <span className="text-xs text-muted-foreground font-mono">
-              {comparisonNodeId}
-            </span>
-          </div>
-          <div className="text-base font-semibold text-foreground leading-snug">
-            {comparison.occupation}
-          </div>
-          {(() => {
-            const sharedCount = comparison.specificSkills.filter((s) =>
-              sharedSkills.has(s.toLowerCase()),
-            ).length;
-            const developCount = comparison.specificSkills.length - sharedCount;
-            const total = comparison.specificSkills.length;
-            if (total === 0) return null;
-            return (
-              <div className="flex items-center gap-1.5 mt-2">
-                <span className="text-xs text-muted-foreground">Match:</span>
-                <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1">
-                  {[...comparison.specificSkills]
-                    .sort((a, b) => {
-                      const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
-                      const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
-                      return aShared - bShared;
-                    })
-                    .map((skill, i) => (
-                      <span
-                        key={i}
-                        className="inline-block w-2 h-2 rounded-full"
-                        style={{
-                          backgroundColor: sharedSkills.has(skill.toLowerCase())
-                            ? '#22c55e'
-                            : 'rgba(59,130,246,0.4)',
-                        }}
-                      />
-                    ))}
+        <div className="w-1/2 border-l-[3px] border-l-blue-500">
+          {/* Sticky back-to-pathways bar */}
+          <button
+            type="button"
+            onClick={onBack}
+            className="w-full flex items-center gap-3 px-5 py-2.5 bg-primary/15 hover:bg-primary/25 border-b border-primary/30 transition-colors cursor-pointer text-left"
+          >
+            <div className="flex items-center justify-center size-7 rounded-md bg-primary/20">
+              <ArrowLeftIcon className="size-4 text-primary" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-primary">Back to pathways</div>
+              <div className="text-xs text-primary/60">Return to transition list</div>
+            </div>
+          </button>
+
+          {/* Occupation info — carries the padding that was on the parent */}
+          <div className="px-5 py-4">
+            <div className="flex items-center gap-3 mb-1">
+              <span className="text-xs text-muted-foreground font-mono">
+                {comparisonNodeId}
+              </span>
+            </div>
+            <div className="text-base font-semibold text-foreground leading-snug">
+              {comparison.occupation}
+            </div>
+            {(() => {
+              const sharedCount = comparison.specificSkills.filter((s) =>
+                sharedSkills.has(s.toLowerCase()),
+              ).length;
+              const developCount = comparison.specificSkills.length - sharedCount;
+              const total = comparison.specificSkills.length;
+              if (total === 0) return null;
+              return (
+                <div className="flex items-center gap-1.5 mt-2">
+                  <span className="text-xs text-muted-foreground">Match:</span>
+                  <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1">
+                    {[...comparison.specificSkills]
+                      .sort((a, b) => {
+                        const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                        const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                        return aShared - bShared;
+                      })
+                      .map((skill, i) => (
+                        <span
+                          key={i}
+                          className="inline-block w-2 h-2 rounded-full"
+                          style={{
+                            backgroundColor: sharedSkills.has(skill.toLowerCase())
+                              ? '#22c55e'
+                              : 'rgba(59,130,246,0.4)',
+                          }}
+                        />
+                      ))}
+                  </div>
+                  <span className="text-muted-foreground text-xs">
+                    {sharedCount} specific skills in common, {developCount}{' '}
+                    specific skills to develop
+                  </span>
                 </div>
-                <span className="text-muted-foreground text-xs">
-                  {sharedCount} specific skills in common, {developCount}{' '}
-                  specific skills to develop
-                </span>
-              </div>
-            );
-          })()}
+              );
+            })()}
+          </div>
         </div>
       </div>
 
