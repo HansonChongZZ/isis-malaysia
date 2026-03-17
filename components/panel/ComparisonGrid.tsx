@@ -23,40 +23,20 @@ interface ComparisonGridProps {
 
 function SkillBadge({
   skill,
-  side,
   isShared,
 }: {
   skill: string;
-  side: 'left' | 'right';
   isShared: boolean;
 }) {
-  // Left pane: all green, no ticks
-  if (side === 'left') {
-    return (
-      <Badge
-        variant="secondary"
-        className="text-xs"
-        style={{
-          backgroundColor: 'rgba(34,197,94,0.15)',
-          color: '#16a34a',
-          border: '1px solid rgba(34,197,94,0.3)',
-        }}
-      >
-        {skill}
-      </Badge>
-    );
-  }
-
-  // Right pane: shared = green + tick, non-shared = blue no tick
   if (isShared) {
     return (
       <Badge
         variant="secondary"
         className="text-xs"
         style={{
-          backgroundColor: 'rgba(34,197,94,0.15)',
+          backgroundColor: 'rgba(34,197,94,0.12)',
           color: '#16a34a',
-          border: '1px solid rgba(34,197,94,0.3)',
+          border: '1px solid rgba(34,197,94,0.25)',
         }}
       >
         {skill} ✓
@@ -69,9 +49,9 @@ function SkillBadge({
       variant="secondary"
       className="text-xs"
       style={{
-        backgroundColor: 'rgba(59,130,246,0.15)',
-        color: '#60a5fa',
-        border: '1px solid rgba(59,130,246,0.3)',
+        backgroundColor: 'rgba(59,130,246,0.12)',
+        color: '#3b82f6',
+        border: '1px solid rgba(59,130,246,0.25)',
       }}
     >
       {skill}
@@ -130,99 +110,93 @@ export default function ComparisonGrid({
   const primaryColour = QUARTILE_COLOURS[primary.quartile] ?? '#888';
   const comparisonColour = 'var(--primary)';
 
+  const TARGET_TINT = 'rgba(32,77,57,0.015)';
+
   return (
     <div className="flex-1 min-h-0 overflow-y-auto">
-      {/* Header row */}
-      <div className="flex border-b border-border">
-        <div className="w-1/2 px-5 py-4">
+      {/* Back to pathways bar — full width */}
+      <button
+        type="button"
+        onClick={onBack}
+        className="w-full flex items-center gap-3 px-5 py-2.5 bg-primary/15 hover:bg-primary/25 border-b border-primary/30 transition-colors cursor-pointer text-left"
+      >
+        <div className="flex items-center justify-center size-7 rounded-md bg-primary/20">
+          <ArrowLeftIcon className="size-4 text-primary" />
+        </div>
+        <div>
+          <div className="text-sm font-semibold text-primary">Back to pathways</div>
+          <div className="text-xs text-primary/60">Return to transition list</div>
+        </div>
+      </button>
+
+      {/* Occupation names row */}
+      <div className="flex border-b border-border" style={{ background: '#fafafa' }}>
+        <div className="flex-1 px-5 py-3">
+          <div className="text-[10px] text-muted-foreground mb-0.5">Current role</div>
           <div className="text-xs text-muted-foreground font-mono mb-1">
             {primaryNodeId}
           </div>
-          <div className="text-base font-semibold text-foreground leading-snug">
+          <div className="text-[13px] font-semibold text-foreground leading-snug">
             {primary.occupation}
           </div>
         </div>
-        <div className="w-1/2 border-l-[3px] border-l-blue-500">
-          {/* Sticky back-to-pathways bar */}
-          <button
-            type="button"
-            onClick={onBack}
-            className="w-full flex items-center gap-3 px-5 py-2.5 bg-primary/15 hover:bg-primary/25 border-b border-primary/30 transition-colors cursor-pointer text-left"
-          >
-            <div className="flex items-center justify-center size-7 rounded-md bg-primary/20">
-              <ArrowLeftIcon className="size-4 text-primary" />
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-primary">Back to pathways</div>
-              <div className="text-xs text-primary/60">Return to transition list</div>
-            </div>
-          </button>
-
-          {/* Occupation info — carries the padding that was on the parent */}
-          <div className="px-5 py-4">
-            <div className="flex items-center gap-3 mb-1">
-              <span className="text-xs text-muted-foreground font-mono">
-                {comparisonNodeId}
-              </span>
-            </div>
-            <div className="text-base font-semibold text-foreground leading-snug">
-              {comparison.occupation}
-            </div>
-            {(() => {
-              const sharedCount = comparison.specificSkills.filter((s) =>
-                sharedSkills.has(s.toLowerCase()),
-              ).length;
-              const developCount = comparison.specificSkills.length - sharedCount;
-              const total = comparison.specificSkills.length;
-              if (total === 0) return null;
-              return (
-                <div className="flex items-center gap-1.5 mt-2">
-                  <span className="text-xs text-muted-foreground">Match:</span>
-                  <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1">
-                    {[...comparison.specificSkills]
-                      .sort((a, b) => {
-                        const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
-                        const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
-                        return aShared - bShared;
-                      })
-                      .map((skill, i) => (
-                        <span
-                          key={i}
-                          className="inline-block w-2 h-2 rounded-full"
-                          style={{
-                            backgroundColor: sharedSkills.has(skill.toLowerCase())
-                              ? '#22c55e'
-                              : 'rgba(59,130,246,0.4)',
-                          }}
-                        />
-                      ))}
-                  </div>
-                  <span className="text-muted-foreground text-xs">
-                    {sharedCount} specific skills in common, {developCount}{' '}
-                    specific skills to develop
-                  </span>
-                </div>
-              );
-            })()}
+        <div
+          className="flex-1 px-5 py-3 border-l border-border"
+          style={{ background: TARGET_TINT }}
+        >
+          <div className="text-[10px] text-muted-foreground mb-0.5">Target role</div>
+          <div className="text-xs text-muted-foreground font-mono mb-1">
+            {comparisonNodeId}
           </div>
+          <div className="text-[13px] font-semibold leading-snug" style={{ color: comparisonColour }}>
+            {comparison.occupation}
+          </div>
+          {(() => {
+            const sharedCount = comparison.specificSkills.filter((s) =>
+              sharedSkills.has(s.toLowerCase()),
+            ).length;
+            const developCount = comparison.specificSkills.length - sharedCount;
+            const total = comparison.specificSkills.length;
+            if (total === 0) return null;
+            return (
+              <div className="flex items-center gap-1.5 mt-2">
+                <span className="text-xs text-muted-foreground">Match:</span>
+                <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1">
+                  {[...comparison.specificSkills]
+                    .sort((a, b) => {
+                      const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                      const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                      return aShared - bShared;
+                    })
+                    .map((skill, i) => (
+                      <span
+                        key={i}
+                        className="inline-block w-2 h-2 rounded-full"
+                        style={{
+                          backgroundColor: sharedSkills.has(skill.toLowerCase())
+                            ? '#22c55e'
+                            : 'rgba(59,130,246,0.4)',
+                        }}
+                      />
+                    ))}
+                </div>
+                <span className="text-muted-foreground text-xs">
+                  {sharedCount} shared, {developCount} to develop
+                </span>
+              </div>
+            );
+          })()}
         </div>
       </div>
 
       {/* AI Exposure row */}
       <div className="flex border-b border-border">
-        <div className="w-1/2 px-5 py-4">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-            AI Exposure Index
-          </h3>
-          <div className="flex items-center justify-between mb-1.5">
-            <span
-              className="text-2xl font-bold"
-              style={{ color: primaryColour }}
-            >
-              {(primary.aiExposure * 100).toFixed(1)}%
-            </span>
+        <div className="flex-1 px-5 py-3">
+          <div className="text-[10px] text-muted-foreground mb-1">AI Exposure</div>
+          <div className="text-base font-bold" style={{ color: primaryColour }}>
+            {(primary.aiExposure * 100).toFixed(1)}%
           </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="h-[7px] bg-muted rounded-full overflow-hidden mt-1.5">
             <div
               className="h-full rounded-full transition-all"
               style={{
@@ -232,25 +206,21 @@ export default function ComparisonGrid({
             />
           </div>
         </div>
-        <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-            AI Exposure Index
-          </h3>
-          <div className="flex items-center justify-between mb-1.5">
-            <div className="flex items-center gap-2">
-              <span
-                className="text-2xl font-bold"
-                style={{ color: comparisonColour }}
-              >
-                {(comparison.aiExposure * 100).toFixed(1)}%
-              </span>
-              <span className="text-xs font-medium">
-                {comparisonDeltas.aiExposure < 0 ? '▼' : '▲'}{' '}
-                {Math.abs(comparisonDeltas.aiExposure * 100).toFixed(1)}%
-              </span>
-            </div>
+        <div
+          className="flex-1 px-5 py-3 border-l border-border"
+          style={{ background: TARGET_TINT }}
+        >
+          <div className="text-[10px] text-muted-foreground mb-1">AI Exposure</div>
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-base font-bold" style={{ color: comparisonColour }}>
+              {(comparison.aiExposure * 100).toFixed(1)}%
+            </span>
+            <span className="text-[11px]" style={{ color: comparisonColour }}>
+              {comparisonDeltas.aiExposure < 0 ? '▼' : '▲'}{' '}
+              {Math.abs(comparisonDeltas.aiExposure * 100).toFixed(1)}%
+            </span>
           </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="h-[7px] bg-muted rounded-full overflow-hidden mt-1.5">
             <div
               className="h-full rounded-full transition-all"
               style={{
@@ -264,180 +234,136 @@ export default function ComparisonGrid({
 
       {/* Wage row */}
       <div className="flex border-b border-border">
-        <div className="w-1/2 px-5 py-4">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-            Monthly Wage
-          </h3>
+        <div className="flex-1 px-5 py-3">
+          <div className="text-[10px] text-muted-foreground mb-1">Monthly Wage</div>
           {primary.wage !== null ? (
-            <p className="text-lg font-semibold text-foreground">
+            <div className="text-base font-bold text-foreground">
               MYR {primary.wage.toLocaleString()}
-            </p>
+            </div>
           ) : (
-            <p className="text-sm text-muted-foreground italic">
-              Data not available
-            </p>
+            <div className="text-sm text-muted-foreground italic">Data not available</div>
           )}
         </div>
-        <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-            Monthly Wage
-          </h3>
+        <div
+          className="flex-1 px-5 py-3 border-l border-border"
+          style={{ background: TARGET_TINT }}
+        >
+          <div className="text-[10px] text-muted-foreground mb-1">Monthly Wage</div>
           {comparison.wage !== null ? (
-            <div className="flex items-center gap-2">
-              <p
-                className="text-lg font-semibold"
-                style={{ color: comparisonColour }}
-              >
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-base font-bold" style={{ color: comparisonColour }}>
                 MYR {comparison.wage.toLocaleString()}
-              </p>
+              </span>
               {comparisonDeltas.wage != null && (
-                <span
-                  className="text-xs font-medium"
-                  style={{ color: comparisonColour }}
-                >
+                <span className="text-[11px]" style={{ color: comparisonColour }}>
                   {comparisonDeltas.wage > 0 ? '▲' : '▼'} MYR{' '}
                   {Math.abs(comparisonDeltas.wage).toLocaleString()}
                 </span>
               )}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground italic">
-              Data not available
-            </p>
+            <div className="text-sm text-muted-foreground italic">Data not available</div>
           )}
         </div>
       </div>
 
-      {/* Skills legend + Basic Skills row */}
-      {(primary.basicSkills.length > 0 ||
-        comparison.basicSkills.length > 0) && (
-        <div className="flex border-b border-border">
-          <div className="w-1/2 px-5 py-4">
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Basic Skills
-            </h3>
-            <div className="flex flex-wrap gap-1.5">
-              {primary.basicSkills.map((skill) => (
-                <SkillBadge
-                  key={skill}
-                  skill={skill}
-                  side="left"
-                  isShared={false}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
-            <div className="flex items-center gap-3 mb-3 pb-2 border-b border-border">
-              <span className="flex items-center gap-1.5">
-                <Badge
-                  variant="secondary"
-                  className="text-xs"
-                  style={{
-                    backgroundColor: 'rgba(34,197,94,0.15)',
-                    color: '#16a34a',
-                    border: '1px solid rgba(34,197,94,0.3)',
-                  }}
-                >
-                  ✓
-                </Badge>
-                <span className="text-xs text-muted-foreground">Shared</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Badge
-                  variant="secondary"
-                  className="text-xs"
-                  style={{
-                    backgroundColor: 'rgba(59,130,246,0.15)',
-                    color: '#60a5fa',
-                    border: '1px solid rgba(59,130,246,0.3)',
-                  }}
-                >
-                  &bull;
-                </Badge>
-                <span className="text-xs text-muted-foreground">
-                  To develop
-                </span>
-              </span>
-            </div>
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Basic Skills
-            </h3>
-            <div className="flex flex-wrap gap-1.5">
-              {[...comparison.basicSkills]
-                .sort((a, b) => {
-                  const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
-                  const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
-                  return aShared - bShared;
-                })
-                .map((skill) => (
-                  <SkillBadge
-                    key={skill}
-                    skill={skill}
-                    side="right"
-                    isShared={sharedSkills.has(skill.toLowerCase())}
-                  />
-                ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Specific Skills row */}
-      {(primary.specificSkills.length > 0 ||
+      {/* Skills section — full width, target occupation's skills */}
+      {(comparison.basicSkills.length > 0 ||
         comparison.specificSkills.length > 0) && (
-        <div className="flex border-b border-border">
-          <div className="w-1/2 px-5 py-4">
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Specific Skills
+        <div className="px-5 py-3.5 border-b border-border">
+          <div className="flex items-center gap-3.5 mb-2.5">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              Skills
             </h3>
-            <div className="flex flex-wrap gap-1.5">
-              {primary.specificSkills.map((skill) => (
-                <SkillBadge
-                  key={skill}
-                  skill={skill}
-                  side="left"
-                  isShared={false}
-                />
-              ))}
-            </div>
+            <span className="flex items-center gap-1.5 ml-auto">
+              <Badge
+                variant="secondary"
+                className="text-xs"
+                style={{
+                  backgroundColor: 'rgba(34,197,94,0.12)',
+                  color: '#16a34a',
+                  border: '1px solid rgba(34,197,94,0.25)',
+                }}
+              >
+                ✓
+              </Badge>
+              <span className="text-xs text-muted-foreground">Shared</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Badge
+                variant="secondary"
+                className="text-xs"
+                style={{
+                  backgroundColor: 'rgba(59,130,246,0.12)',
+                  color: '#3b82f6',
+                  border: '1px solid rgba(59,130,246,0.25)',
+                }}
+              >
+                &bull;
+              </Badge>
+              <span className="text-xs text-muted-foreground">To develop</span>
+            </span>
           </div>
-          <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Specific Skills
-            </h3>
-            <div className="flex flex-wrap gap-1.5">
-              {[...comparison.specificSkills]
-                .sort((a, b) => {
-                  const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
-                  const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
-                  return aShared - bShared;
-                })
-                .map((skill) => (
-                  <SkillBadge
-                    key={skill}
-                    skill={skill}
-                    side="right"
-                    isShared={sharedSkills.has(skill.toLowerCase())}
-                  />
-                ))}
+
+          {comparison.basicSkills.length > 0 && (
+            <div className="mb-2">
+              <div className="text-[10px] text-muted-foreground mb-1">Basic</div>
+              <div className="flex flex-wrap gap-1.5">
+                {[...comparison.basicSkills]
+                  .sort((a, b) => {
+                    const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                    const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                    return aShared - bShared;
+                  })
+                  .map((skill) => (
+                    <SkillBadge
+                      key={skill}
+                      skill={skill}
+                      isShared={sharedSkills.has(skill.toLowerCase())}
+                    />
+                  ))}
+              </div>
             </div>
-          </div>
+          )}
+
+          {comparison.specificSkills.length > 0 && (
+            <div>
+              <div className="text-[10px] text-muted-foreground mb-1">Specific</div>
+              <div className="flex flex-wrap gap-1.5">
+                {[...comparison.specificSkills]
+                  .sort((a, b) => {
+                    const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                    const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                    return aShared - bShared;
+                  })
+                  .map((skill) => (
+                    <SkillBadge
+                      key={skill}
+                      skill={skill}
+                      isShared={sharedSkills.has(skill.toLowerCase())}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Tasks row */}
+      {/* Tasks section — side by side */}
       {(primary.tasks.length > 0 || comparison.tasks.length > 0) && (
         <div className="flex">
-          <div className="w-1/2 px-5 py-4">
+          <div className="flex-1 px-4 py-3.5">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Tasks ({primary.tasks.length})
+              Current Tasks ({primary.tasks.length})
             </h3>
             <TaskAccordion tasks={primary.tasks} prefix="primary" />
           </div>
-          <div className="w-1/2 px-5 py-4 border-l-[3px] border-l-blue-500">
+          <div
+            className="flex-1 px-4 py-3.5 border-l border-border"
+            style={{ background: TARGET_TINT }}
+          >
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Tasks ({comparison.tasks.length})
+              Target Tasks ({comparison.tasks.length})
             </h3>
             <TaskAccordion tasks={comparison.tasks} prefix="comparison" />
           </div>
