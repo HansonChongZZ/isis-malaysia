@@ -232,11 +232,13 @@ export default function HomePage() {
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
           setIsPanelOpen(false)
+          setOpenedViaSecondary(false)
         } else {
           setSelectedNodeId(null)
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
           setIsPanelOpen(false)
+          setOpenedViaSecondary(false)
         }
         return
       }
@@ -272,6 +274,7 @@ export default function HomePage() {
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
           setIsPanelOpen(false)
+          setOpenedViaSecondary(false)
         }
         return
       }
@@ -286,11 +289,13 @@ export default function HomePage() {
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setOpenedViaSecondary(false)
       } else if (selectedNodeId) {
         setSelectedNodeId(null)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setOpenedViaSecondary(false)
         setLayoutMode('ring')
       }
       return
