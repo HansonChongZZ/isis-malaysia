@@ -1444,7 +1444,7 @@ export default function OccupationGraph({
                 <div className="mt-2 space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground text-[11px]">
-                      Shared skills
+                      # of specific skills shared
                     </span>
                     <span className="font-medium text-[11px]">
                       {tooltip.skillComparison.shared.length}
@@ -1452,7 +1452,7 @@ export default function OccupationGraph({
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground text-[11px]">
-                      Skills to develop
+                      # of specific skills to develop
                     </span>
                     <span className="font-medium text-[11px]">
                       {tooltip.skillComparison.toDevelop.length}
