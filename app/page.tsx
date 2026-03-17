@@ -163,8 +163,8 @@ export default function HomePage() {
     if (!selectedNodeId) return new Set()
     const set = new Set<string>()
     for (const e of edges) {
+      // Directed: only follow source → target
       if (e.source === selectedNodeId) set.add(e.target)
-      if (e.target === selectedNodeId) set.add(e.source)
     }
     return set
   }, [selectedNodeId, edges])

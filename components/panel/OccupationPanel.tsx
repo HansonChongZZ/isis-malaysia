@@ -52,8 +52,8 @@ export default function OccupationPanel({
     const rows: TransitionRow[] = []
 
     for (const e of edges) {
-      const otherId =
-        e.source === nodeId ? e.target : e.target === nodeId ? e.source : null
+      // Directed: only follow source → target
+      const otherId = e.source === nodeId ? e.target : null
       if (!otherId || seen.has(otherId)) continue
       seen.add(otherId)
       const node = nodeMap.get(otherId)

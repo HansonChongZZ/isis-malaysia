@@ -20,8 +20,8 @@ export function useGraphInteraction({ edges }: UseGraphInteractionProps) {
     for (const e of edges) {
       const src = typeof e.source === "string" ? e.source : (e.source as GraphNode).id
       const tgt = typeof e.target === "string" ? e.target : (e.target as GraphNode).id
+      // Directed: only follow source → target
       if (src === selectedNodeId) set.add(tgt)
-      if (tgt === selectedNodeId) set.add(src)
     }
     return set
   }, [selectedNodeId, edges])
