@@ -378,6 +378,18 @@ export default function OccupationGraph({
       }
     }
 
+    // Compute specific-skills-only counts for the badge
+    const specificA = new Set(detailA.specificSkills.map((s) => s.toLowerCase()));
+    const specificB = new Set(detailB.specificSkills.map((s) => s.toLowerCase()));
+    let sharedSpecificCount = 0;
+    let toDevelopSpecificCount = 0;
+    for (const s of specificA) {
+      if (specificB.has(s)) sharedSpecificCount++;
+    }
+    for (const s of specificB) {
+      if (!specificA.has(s)) toDevelopSpecificCount++;
+    }
+
     return {
       shared,
       onlyA,
@@ -387,6 +399,8 @@ export default function OccupationGraph({
       colourA: nodeColourRef.current,
       colourB: nodeColourRef.current,
       totalUnique: shared.length + onlyA.length + onlyB.length,
+      sharedSpecificCount,
+      toDevelopSpecificCount,
     };
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, occupations]);
 
@@ -1544,8 +1558,9 @@ export default function OccupationGraph({
             onMouseLeave={() => setShowEdgeTooltip(false)}
             onClick={() => onBadgeInteract?.()}
           >
-            <div className="bg-popover text-popover-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap">
-              {pairSkillsComparison.shared.length} shared skills
+            <div className="bg-popover text-popover-foreground text-xs font-medium px-3.5 py-1.5 rounded-xl shadow-md border border-border whitespace-nowrap flex flex-col items-center gap-0.5 leading-snug">
+              <span><span className="text-green-400 font-semibold">{pairSkillsComparison.sharedSpecificCount}</span> specific skills shared</span>
+              <span><span className="text-blue-400 font-semibold">{pairSkillsComparison.toDevelopSpecificCount}</span> specific skills to develop</span>
             </div>
           </div>
         </div>
@@ -1586,6 +1601,8 @@ export default function OccupationGraph({
                   onlyA={pairSkillsComparison.onlyA}
                   onlyB={pairSkillsComparison.onlyB}
                   totalUnique={pairSkillsComparison.totalUnique}
+                  sharedSpecificCount={pairSkillsComparison.sharedSpecificCount}
+                  toDevelopSpecificCount={pairSkillsComparison.toDevelopSpecificCount}
                 />
               </div>
             </div>,

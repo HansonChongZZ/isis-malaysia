@@ -9,6 +9,8 @@ interface EdgeSkillsTooltipProps {
   onlyA: string[];
   onlyB: string[];
   totalUnique: number;
+  sharedSpecificCount: number;
+  toDevelopSpecificCount: number;
 }
 
 export default function EdgeSkillsTooltip({
@@ -20,6 +22,8 @@ export default function EdgeSkillsTooltip({
   onlyA,
   onlyB,
   totalUnique,
+  sharedSpecificCount,
+  toDevelopSpecificCount,
 }: EdgeSkillsTooltipProps) {
   return (
     <div className="w-fit max-w-[640px] min-w-[480px] bg-popover text-popover-foreground rounded-lg shadow-xl border border-border p-4 space-y-3">
@@ -29,7 +33,7 @@ export default function EdgeSkillsTooltip({
           <span style={{ color: colourA }}>{labelA}</span> <span className="text-muted-foreground mx-1">↔</span> <span style={{ color: colourB }}>{labelB}</span>
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">
-          {shared.length} of {totalUnique} skills in common
+          <span className="text-green-400 font-semibold">{sharedSpecificCount}</span> specific skills shared, <span className="text-blue-400 font-semibold">{toDevelopSpecificCount}</span> specific skills to develop
         </p>
       </div>
 
