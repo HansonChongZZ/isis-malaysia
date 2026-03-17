@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useMemo, useRef } from "react"
+import { useCallback, useEffect, useState, useMemo, useRef } from "react"
 import dynamic from "next/dynamic"
 import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
 import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
@@ -9,6 +9,9 @@ import { computeMaxSpanningTree } from "@/lib/mst"
 import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch from '@/components/graph/OccupationSearch'
 import OccupationPanel from "@/components/panel/OccupationPanel"
+import TutorialOverlay from '@/components/tutorial/TutorialOverlay'
+import { useTutorial, type OccupationGraphHandle } from '@/components/tutorial/useTutorial'
+import { TUTORIAL_STEPS } from '@/components/tutorial/tutorialConfig'
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
 const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
@@ -38,6 +41,63 @@ export default function HomePage() {
   const [colourByGroup, setColourByGroup] = useState(false)
   const heroSearchRef = useRef<HTMLDivElement>(null)
   const pendingFocusRef = useRef(false)
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null)
+  const graphHandleRef = useRef<OccupationGraphHandle | null>(null)
+  const graphContainerRef = useRef<HTMLDivElement>(null)
+  const [graphContainerRect, setGraphContainerRect] = useState<DOMRect | null>(null)
+  const [heroSearchRectState, setHeroSearchRectState] = useState<DOMRect | null>(null)
+  const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null)
+  const [badgeInteracted, setBadgeInteracted] = useState(false)
+
+  const allNodeIds = useMemo(() => nodes.map(n => n.id), [nodes])
+
+  const tutorial = useTutorial({
+    selectedNodeId,
+    secondSelectedNodeId,
+    hoveredNodeId,
+    edges,
+    allNodeIds,
+    graphContainerRect,
+    heroSearchRect: heroSearchRectState,
+    graphHandleRef,
+    badgePos,
+    badgeInteracted,
+    isPanelOpen,
+  })
+
+  useEffect(() => {
+    if (!tutorial.isActive) return
+    const measure = () => {
+      if (graphContainerRef.current) {
+        setGraphContainerRect(graphContainerRef.current.getBoundingClientRect())
+      }
+      if (heroSearchRef.current) {
+        setHeroSearchRectState(heroSearchRef.current.getBoundingClientRect())
+      }
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [tutorial.isActive, tutorial.currentStep])
+
+  const handleGraphReady = useCallback((handle: OccupationGraphHandle) => {
+    graphHandleRef.current = handle
+  }, [])
+
+  const handleTutorialSkip = () => {
+    tutorial.skip()
+    setSelectedNodeId(null)
+    setSecondSelectedNodeId(null)
+    setPanelNodeId(null)
+    setIsPanelOpen(false)
+  }
+
+  useEffect(() => {
+    if (tutorial.isActive && viewMode !== 'force') {
+      setViewMode('force')
+      setLayoutMode('ring')
+    }
+  }, [tutorial.isActive, viewMode])
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -315,6 +375,7 @@ export default function HomePage() {
   }
 
   const handleViewModeChange = (mode: ViewMode) => {
+    if (tutorial.isActive) return
     setViewMode(mode)
     if (mode === 'circular') {
       // When switching to circular, restore radial if a node is selected
@@ -372,7 +433,7 @@ export default function HomePage() {
       />
 
       {/* Main graph area */}
-      <div className="flex-1 relative min-h-0">
+      <div ref={graphContainerRef} className="flex-1 relative min-h-0">
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center space-y-3">
@@ -409,6 +470,14 @@ export default function HomePage() {
             layoutMode={layoutMode}
             specificSkillsMap={specificSkillsMap}
             colourByGroup={colourByGroup}
+            onNodeHover={setHoveredNodeId}
+            onReady={handleGraphReady}
+            forceSelectionMode={tutorial.isActive && tutorial.currentStep <= 2 ? 'single' : null}
+            disableInteraction={tutorial.isActive && tutorial.currentStep <= 1}
+            disableClick={tutorial.isActive && tutorial.currentStep <= 2}
+            onBadgePosChange={setBadgePos}
+            onBadgeInteract={() => setBadgeInteracted(true)}
+            disableZoom={tutorial.isActive}
           />
         )}
 
@@ -420,7 +489,7 @@ export default function HomePage() {
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
                 onOccupationSelect={handleSearchSelect}
-                onDismiss={() => setHeroDismissed(true)}
+                onDismiss={tutorial.isActive && tutorial.currentStep === 1 ? undefined : () => setHeroDismissed(true)}
                 hero
               />
             </div>
@@ -432,6 +501,19 @@ export default function HomePage() {
           <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded">
             {nodes.length} occupations · {edges.length.toLocaleString()} skill edges
           </div>
+        )}
+
+        {tutorial.isVisible && tutorial.stepConfig && (
+          <TutorialOverlay
+            isActive={tutorial.isActive}
+            currentStep={tutorial.currentStep}
+            totalSteps={TUTORIAL_STEPS.length}
+            isConfirming={tutorial.isConfirming}
+            prompt={tutorial.stepConfig.prompt}
+            spotlight={tutorial.spotlight}
+            onAdvance={tutorial.advance}
+            onSkip={handleTutorialSkip}
+          />
         )}
       </div>
 

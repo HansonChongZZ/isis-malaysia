@@ -65,6 +65,14 @@ interface OccupationGraphProps {
   layoutMode: LayoutMode;
   specificSkillsMap: Map<string, Set<string>>;
   colourByGroup: boolean;
+  onNodeHover?: (nodeId: string | null) => void;
+  onReady?: (handle: { nodeToScreenCoords: (nodeId: string) => { x: number; y: number } | null }) => void;
+  forceSelectionMode?: 'single' | null;
+  disableInteraction?: boolean; // Disable zoom, pan, click, and hover (pointer-events: none)
+  disableZoom?: boolean; // Disable zoom/pan only (hover and click still work)
+  disableClick?: boolean; // Disable node click only (hover still works)
+  onBadgePosChange?: (pos: { x: number; y: number } | null) => void;
+  onBadgeInteract?: () => void;
 }
 
 export default function OccupationGraph({
@@ -86,6 +94,14 @@ export default function OccupationGraph({
   layoutMode,
   specificSkillsMap,
   colourByGroup,
+  onNodeHover,
+  onReady,
+  forceSelectionMode,
+  disableInteraction,
+  disableZoom,
+  disableClick,
+  onBadgePosChange,
+  onBadgeInteract,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -100,6 +116,7 @@ export default function OccupationGraph({
   const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(
     null,
   );
+  useEffect(() => { onBadgePosChange?.(badgePos) }, [badgePos, onBadgePosChange]);
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
   const tooltipLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [pairLabelPositions, setPairLabelPositions] = useState<{
@@ -140,11 +157,12 @@ export default function OccupationGraph({
     linkDistanceScale: 20,
     linkStrengthDivisor: 7,
   });
-  const selectionMode = !selectedNodeId
+  const derivedSelectionMode = !selectedNodeId
     ? 'none'
     : secondSelectedNodeId
       ? 'pair'
       : 'single';
+  const selectionMode = forceSelectionMode ?? derivedSelectionMode;
   const nodeById = useRef<Map<string, GraphNode>>(new Map());
   const edgeColorRef = useRef('#888');
   const foregroundColorRef = useRef('#000');
@@ -164,6 +182,17 @@ export default function OccupationGraph({
     secondSelectedNodeIdRef.current = secondSelectedNodeId;
     viewModeRef.current = viewMode;
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, viewMode]);
+
+  useEffect(() => {
+    onReady?.({
+      nodeToScreenCoords: (nodeId: string) => {
+        const node = nodeById.current.get(nodeId)
+        if (!node) return null
+        const t = transformRef.current
+        return { x: t.applyX(node.x), y: t.applyY(node.y) }
+      },
+    })
+  }, [onReady])
 
   const simNodes = useMemo<GraphNode[]>(
     () => nodes.map((n) => ({ ...n })),
@@ -1050,6 +1079,17 @@ export default function OccupationGraph({
     };
   }, [dimensions.width, dimensions.height, simNodes, viewMode, layoutMode]);
 
+  // Disable zoom/pan while keeping hover and click functional
+  useEffect(() => {
+    if (!svgRef.current || !zoomRef.current) return
+    const svg = d3.select(svgRef.current)
+    if (disableZoom) {
+      svg.on('.zoom', null)
+    } else {
+      svg.call(zoomRef.current)
+    }
+  }, [disableZoom])
+
   // Auto-zoom to frame selection (single or pair mode)
   useEffect(() => {
     if (!svgRef.current || !zoomRef.current) return;
@@ -1159,6 +1199,11 @@ export default function OccupationGraph({
         .ease(d3.easeCubicInOut)
         .call(zoom.transform, fitTransform);
     }
+    // Re-disable zoom handlers after any zoom transition if disableZoom is active.
+    // D3's zoom.transform re-attaches handlers as a side effect.
+    if (disableZoom) {
+      svg.on('.zoom', null)
+    }
   }, [
     selectionMode,
     selectedNodeId,
@@ -1168,6 +1213,7 @@ export default function OccupationGraph({
     radialPositions,
     dimensions.width,
     dimensions.height,
+    disableZoom,
   ]);
 
   return (
@@ -1186,8 +1232,9 @@ export default function OccupationGraph({
           ref={svgRef}
           width={dimensions.width}
           height={dimensions.height}
-          style={{ position: 'absolute', top: 0, left: 0, cursor: 'grab' }}
+          style={{ position: 'absolute', top: 0, left: 0, cursor: disableInteraction ? 'default' : 'grab', pointerEvents: disableInteraction ? 'none' : undefined }}
           onClick={() => {
+            if (disableClick) return;
             onNodeSelect(null);
           }}
         >
@@ -1310,6 +1357,7 @@ export default function OccupationGraph({
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
+                      if (disableClick) return;
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
                       // In radial mode, clicking outside the neighbourhood deselects
@@ -1327,6 +1375,7 @@ export default function OccupationGraph({
                       if (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) return;
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
+                      onNodeHover?.(node.id);
                       // In radial mode, show skill comparison for neighbour nodes
                       const sc =
                         layoutMode === 'radial' &&
@@ -1343,6 +1392,7 @@ export default function OccupationGraph({
                     onMouseLeave={() => {
                       tooltipLeaveTimer.current = setTimeout(() => {
                         setHoveredNodeId(null);
+                        onNodeHover?.(null);
                         setTooltip(null);
                       }, 150);
                     }}
@@ -1487,8 +1537,9 @@ export default function OccupationGraph({
         >
           <div
             className="cursor-pointer select-none"
-            onMouseEnter={() => setShowEdgeTooltip(true)}
+            onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.() }}
             onMouseLeave={() => setShowEdgeTooltip(false)}
+            onClick={() => onBadgeInteract?.()}
           >
             <div className="bg-popover text-popover-foreground text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-border whitespace-nowrap">
               {pairSkillsComparison.shared.length} shared skills
