@@ -320,8 +320,8 @@ export default function OccupationGraph({
         typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
         typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
+      // Directed: only follow source → target
       if (src === selectedNodeId) set.add(tgt);
-      if (tgt === selectedNodeId) set.add(src);
     }
     return set;
   }, [selectedNodeId, edges]);
@@ -432,8 +432,8 @@ export default function OccupationGraph({
         typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
         typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
+      // Directed: only follow source → target
       if (src === hoveredNodeId) set.add(tgt);
-      if (tgt === hoveredNodeId) set.add(src);
     }
     return set;
   }, [hoveredNodeId, selectedNodeId, edges]);
@@ -445,7 +445,8 @@ export default function OccupationGraph({
         typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
         typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
-      if (src !== hoveredNodeId && tgt !== hoveredNodeId) return false;
+      // Directed: only show edges where hovered node is source
+      if (src !== hoveredNodeId) return false;
       if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt)))
         return false;
       return true;
@@ -735,7 +736,8 @@ export default function OccupationGraph({
         typeof e.source === 'string' ? e.source : (e.source as GraphNode).id;
       const tgt =
         typeof e.target === 'string' ? e.target : (e.target as GraphNode).id;
-      if (src !== selectedNodeId && tgt !== selectedNodeId) return false;
+      // Directed: only show edges where selected node is source
+      if (src !== selectedNodeId) return false;
       if (visibleIds && (!visibleIds.has(src) || !visibleIds.has(tgt)))
         return false;
       return true;
