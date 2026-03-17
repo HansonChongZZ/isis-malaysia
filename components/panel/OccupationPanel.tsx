@@ -22,6 +22,7 @@ interface OccupationPanelProps {
   occupations: Record<string, OccupationDetail>
   isOpen: boolean
   onClose: () => void
+  initialComparisonId: string | null
 }
 
 export default function OccupationPanel({
@@ -32,13 +33,16 @@ export default function OccupationPanel({
   occupations,
   isOpen,
   onClose,
+  initialComparisonId,
 }: OccupationPanelProps) {
   const [comparisonNodeId, setComparisonNodeId] = useState<string | null>(null)
 
   // Reset comparison when primary occupation changes or panel closes
   useEffect(() => {
-    setComparisonNodeId(null)
-  }, [nodeId, isOpen])
+    if (isOpen) {
+      setComparisonNodeId(initialComparisonId)
+    }
+  }, [nodeId, isOpen, initialComparisonId])
 
   // Build transition rows (reused from previous implementation)
   const transitions = useMemo<TransitionRow[]>(() => {

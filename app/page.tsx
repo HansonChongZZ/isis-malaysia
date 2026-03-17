@@ -35,6 +35,7 @@ export default function HomePage() {
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [secondSelectedNodeId, setSecondSelectedNodeId] = useState<string | null>(null)
   const [panelNodeId, setPanelNodeId] = useState<string | null>(null)
+  const [openedViaSecondary, setOpenedViaSecondary] = useState(false)
   const [filterSkills, setFilterSkills] = useState<string[]>([])
   const [layoutMode, setLayoutMode] = useState<LayoutMode>('ring')
   const [viewMode, setViewMode] = useState<ViewMode>('force')
@@ -90,6 +91,7 @@ export default function HomePage() {
     setSecondSelectedNodeId(null)
     setPanelNodeId(null)
     setIsPanelOpen(false)
+    setOpenedViaSecondary(false)
   }
 
   useEffect(() => {
@@ -220,23 +222,31 @@ export default function HomePage() {
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
           setIsPanelOpen(false)
+          setOpenedViaSecondary(false)
         } else {
           setSelectedNodeId(null)
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
           setIsPanelOpen(false)
+          setOpenedViaSecondary(false)
         }
         return
       }
 
       if (secondSelectedNodeId) {
-        if (id === selectedNodeId || id === secondSelectedNodeId) {
+        if (id === selectedNodeId) {
           setPanelNodeId(id)
+          setOpenedViaSecondary(false)
+          setIsPanelOpen(true)
+        } else if (id === secondSelectedNodeId) {
+          setPanelNodeId(selectedNodeId)
+          setOpenedViaSecondary(true)
           setIsPanelOpen(true)
         } else {
           setSelectedNodeId(id)
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
+          setOpenedViaSecondary(false)
           setIsPanelOpen(false)
         }
         return
@@ -254,6 +264,7 @@ export default function HomePage() {
           setSecondSelectedNodeId(null)
           setPanelNodeId(null)
           setIsPanelOpen(false)
+          setOpenedViaSecondary(false)
         }
         return
       }
@@ -268,24 +279,32 @@ export default function HomePage() {
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setOpenedViaSecondary(false)
       } else if (selectedNodeId) {
         setSelectedNodeId(null)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setOpenedViaSecondary(false)
         setLayoutMode('ring')
       }
       return
     }
 
     if (secondSelectedNodeId) {
-      if (id === selectedNodeId || id === secondSelectedNodeId) {
+      if (id === selectedNodeId) {
         setPanelNodeId(id)
+        setOpenedViaSecondary(false)
+        setIsPanelOpen(true)
+      } else if (id === secondSelectedNodeId) {
+        setPanelNodeId(selectedNodeId)
+        setOpenedViaSecondary(true)
         setIsPanelOpen(true)
       } else {
         setSelectedNodeId(id)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
+        setOpenedViaSecondary(false)
         setIsPanelOpen(false)
         setLayoutMode('radial')
       }
@@ -331,6 +350,7 @@ export default function HomePage() {
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
         setIsPanelOpen(false)
+        setOpenedViaSecondary(false)
         setHeroDismissed(false)
         if (viewMode === 'circular') setLayoutMode('ring')
         pendingFocusRef.current = true
@@ -384,6 +404,7 @@ export default function HomePage() {
       setSecondSelectedNodeId(null);
       setPanelNodeId(null);
       setIsPanelOpen(false);
+      setOpenedViaSecondary(false);
       setLayoutMode('ring');
       // Known fragility: hardcoded delay must match animation duration (600ms).
       setTimeout(() => {
@@ -518,7 +539,9 @@ export default function HomePage() {
         onClose={() => {
           setIsPanelOpen(false)
           setPanelNodeId(null)
+          setOpenedViaSecondary(false)
         }}
+        initialComparisonId={openedViaSecondary ? secondSelectedNodeId : null}
       />
     </div>
   )
