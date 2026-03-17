@@ -1,26 +1,37 @@
-'use client';
+# Comparison Layout Redesign Implementation Plan
 
-import { ArrowLeftIcon } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import type { OccupationDetail } from '@/lib/types';
-import { QUARTILE_COLOURS } from '@/lib/constants';
+> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-interface ComparisonGridProps {
-  primary: OccupationDetail;
-  primaryNodeId: string;
-  comparison: OccupationDetail;
-  comparisonNodeId: string;
-  sharedSkills: Set<string>;
-  comparisonDeltas: { aiExposure: number; wage: number | null };
-  onBack: () => void;
-}
+**Goal:** Replace the two-pane row-aligned ComparisonGrid with a unified single-column layout using inline comparison cells, merged skills badges, and side-by-side task columns.
 
+**Architecture:** Single file rewrite of `ComparisonGrid.tsx`. The component keeps the same props interface and sub-components (`SkillBadge`, `TaskAccordion`) but replaces the JSX layout. No new files, no prop changes, no parent component modifications.
+
+**Tech Stack:** Next.js 15, TypeScript, Tailwind CSS v4, Radix UI (Accordion), shadcn/ui (Badge)
+
+**Spec:** `docs/superpowers/specs/2026-03-17-comparison-layout-redesign-design.md`
+
+---
+
+## File Structure
+
+- **Modify:** `components/panel/ComparisonGrid.tsx` — full rewrite of the default export's JSX; `SkillBadge` updated (remove `side` prop, simplify to shared/to-develop only); `TaskAccordion` unchanged
+
+No new files created. No other files modified.
+
+---
+
+### Task 1: Rewrite SkillBadge + ComparisonGrid layout (back bar, names, metrics)
+
+**Files:**
+- Modify: `components/panel/ComparisonGrid.tsx:24-447`
+
+Replace the `SkillBadge` sub-component and the entire main component layout in one step to avoid broken intermediate states. The `SkillBadge` `side` prop is removed (simplified to `isShared` only), and the main layout is rewritten with sections 2-5 (back bar, occupation names, AI exposure, wage). Skills and tasks are left as TODO comments for Tasks 2 and 3.
+
+- [ ] **Step 1: Replace SkillBadge (lines 24-80) and the main component return (lines 133-447)**
+
+Replace lines 24-80 with the simplified SkillBadge:
+
+```tsx
 function SkillBadge({
   skill,
   isShared,
@@ -58,46 +69,11 @@ function SkillBadge({
     </Badge>
   );
 }
+```
 
-function TaskAccordion({
-  tasks,
-  prefix,
-}: {
-  tasks: OccupationDetail['tasks'];
-  prefix: string;
-}) {
-  if (tasks.length === 0) return null;
-  return (
-    <Accordion type="multiple" className="space-y-1">
-      {tasks.map((task, i) => (
-        <AccordionItem
-          key={i}
-          value={`${prefix}-task-${i}`}
-          className="border border-border rounded-md overflow-hidden"
-        >
-          <AccordionTrigger className="px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:no-underline text-left leading-snug data-[state=open]:text-foreground">
-            <span className="pr-2 line-clamp-2">{task.description}</span>
-          </AccordionTrigger>
-          <AccordionContent className="px-3 pb-2 pt-0">
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs text-muted-foreground">AI Score:</span>
-              <div className="flex-1 h-1.5 bg-muted rounded-full">
-                <div
-                  className="h-full rounded-full bg-primary"
-                  style={{ width: `${task.score * 100}%` }}
-                />
-              </div>
-              <span className="text-xs text-primary font-mono">
-                {(task.score * 100).toFixed(0)}%
-              </span>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
-  );
-}
+Then replace the entire return block (lines 133-447) with the new layout:
 
+```tsx
 export default function ComparisonGrid({
   primary,
   primaryNodeId,
@@ -267,6 +243,36 @@ export default function ComparisonGrid({
         </div>
       </div>
 
+      {/* TODO: Skills section (Task 2) */}
+      {/* TODO: Tasks section (Task 3) */}
+    </div>
+  );
+}
+```
+
+- [ ] **Step 2: Verify the app compiles and the top half renders**
+
+Run: `npm run dev` — open the panel, select a transition. Confirm back bar, occupation names, AI exposure, and wage rows render correctly. No TypeScript errors.
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add components/panel/ComparisonGrid.tsx
+git commit -m "feat: rewrite ComparisonGrid layout with simplified SkillBadge"
+```
+
+---
+
+### Task 2: Add unified skills section
+
+**Files:**
+- Modify: `components/panel/ComparisonGrid.tsx` — replace the skills TODO comment
+
+- [ ] **Step 1: Replace the skills TODO with the full-width skills section**
+
+Insert after the wage row closing `</div>` and before the tasks TODO:
+
+```tsx
       {/* Skills section — full width, target occupation's skills */}
       {(comparison.basicSkills.length > 0 ||
         comparison.specificSkills.length > 0) && (
@@ -348,7 +354,31 @@ export default function ComparisonGrid({
           )}
         </div>
       )}
+```
 
+- [ ] **Step 2: Verify skills render correctly**
+
+Run: `npm run dev` — open the panel, select a transition. Confirm skills section shows with legend, Basic/Specific sub-labels, and correct shared (green ✓) / to-develop (blue) badges.
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add components/panel/ComparisonGrid.tsx
+git commit -m "feat: add unified skills section with shared/to-develop badges"
+```
+
+---
+
+### Task 3: Add side-by-side tasks section
+
+**Files:**
+- Modify: `components/panel/ComparisonGrid.tsx` — replace the tasks TODO comment
+
+- [ ] **Step 1: Replace the tasks TODO with side-by-side task columns**
+
+Insert after the skills section and before the closing `</div>`:
+
+```tsx
       {/* Tasks section — side by side */}
       {(primary.tasks.length > 0 || comparison.tasks.length > 0) && (
         <div className="flex">
@@ -369,6 +399,52 @@ export default function ComparisonGrid({
           </div>
         </div>
       )}
-    </div>
-  );
-}
+```
+
+- [ ] **Step 2: Verify tasks render correctly**
+
+Run: `npm run dev` — open the panel, select a transition. Confirm:
+- Tasks show side by side
+- Left column: "Current Tasks (N)" with accordion items
+- Right column: "Target Tasks (N)" with accordion items and green tint
+- Expanding a task shows AI score bar
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add components/panel/ComparisonGrid.tsx
+git commit -m "feat: add side-by-side tasks section to comparison layout"
+```
+
+---
+
+### Task 4: Visual polish and final verification
+
+**Files:**
+- Modify: `components/panel/ComparisonGrid.tsx` (if needed)
+
+- [ ] **Step 1: Full visual review**
+
+Run: `npm run dev` — test the following scenarios:
+1. Select a transition with many skills (verify badges wrap correctly)
+2. Select a transition with no skills (verify skills section hides)
+3. Select a transition with no tasks (verify tasks section hides)
+4. Select a transition where wage is null (verify "Data not available" shows)
+5. Click "Back to pathways" (verify navigation works)
+6. Verify scrolling works when content overflows the dialog
+
+- [ ] **Step 2: Fix any visual issues found**
+
+Adjust spacing, colors, or layout as needed based on the review.
+
+- [ ] **Step 3: Final commit**
+
+```bash
+git add components/panel/ComparisonGrid.tsx
+git commit -m "fix: polish comparison layout spacing and edge cases"
+```
+
+- [ ] **Step 4: Build check**
+
+Run: `npm run build`
+Expected: Clean build, no TypeScript errors, no warnings.
