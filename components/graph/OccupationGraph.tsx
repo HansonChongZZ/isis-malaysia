@@ -119,6 +119,9 @@ export default function OccupationGraph({
   );
   useEffect(() => { onBadgePosChange?.(badgePos) }, [badgePos, onBadgePosChange]);
   const [showEdgeTooltip, setShowEdgeTooltip] = useState(false);
+  const [pinnedEdgeTooltip, setPinnedEdgeTooltip] = useState(false);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const portalTooltipRef = useRef<HTMLDivElement>(null);
   const tooltipLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [pairLabelPositions, setPairLabelPositions] = useState<{
     a: {
@@ -990,7 +993,31 @@ export default function OccupationGraph({
   // Reset edge tooltip on selection change
   useEffect(() => {
     setShowEdgeTooltip(false);
+    setPinnedEdgeTooltip(false);
   }, [selectedNodeId, secondSelectedNodeId]);
+
+  // Reset pinned state when leaving pair mode
+  useEffect(() => {
+    if (selectionMode !== 'pair') {
+      setPinnedEdgeTooltip(false);
+    }
+  }, [selectionMode]);
+
+  // Click-outside listener to dismiss pinned tooltip
+  useEffect(() => {
+    if (!pinnedEdgeTooltip) return;
+    const handler = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        badgeRef.current?.contains(target) ||
+        portalTooltipRef.current?.contains(target)
+      ) return;
+      setPinnedEdgeTooltip(false);
+      setShowEdgeTooltip(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [pinnedEdgeTooltip]);
 
   // Resize observer
   useEffect(() => {
@@ -1626,10 +1653,11 @@ export default function OccupationGraph({
           }}
         >
           <div
+            ref={badgeRef}
             className="cursor-pointer select-none"
             onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.() }}
-            onMouseLeave={() => setShowEdgeTooltip(false)}
-            onClick={() => onBadgeInteract?.()}
+            onMouseLeave={() => { if (!pinnedEdgeTooltip) setShowEdgeTooltip(false); }}
+            onClick={() => { setPinnedEdgeTooltip(true); setShowEdgeTooltip(true); onBadgeInteract?.(); }}
           >
             <div className="bg-popover text-popover-foreground text-xs font-medium px-3.5 py-1.5 rounded-xl shadow-md border border-border whitespace-nowrap flex flex-col items-center gap-0.5 leading-snug">
               <span><span className="text-green-400 font-semibold">{pairSkillsComparison.sharedSpecificCount}</span> specific skills shared</span>
@@ -1650,6 +1678,7 @@ export default function OccupationGraph({
 
           return createPortal(
             <div
+              ref={portalTooltipRef}
               className="fixed z-50"
               style={{
                 left: '50%',
@@ -1662,7 +1691,7 @@ export default function OccupationGraph({
                 maxWidth: '95vw',
               }}
               onMouseEnter={() => setShowEdgeTooltip(true)}
-              onMouseLeave={() => setShowEdgeTooltip(false)}
+              onMouseLeave={() => { if (!pinnedEdgeTooltip) setShowEdgeTooltip(false); }}
             >
               <div className="overflow-y-auto" style={{ maxHeight: 'inherit' }}>
                 <EdgeSkillsTooltip
@@ -1673,6 +1702,7 @@ export default function OccupationGraph({
                   toDevelopSpecific={pairSkillsComparison.toDevelopSpecific}
                   sharedSpecificCount={pairSkillsComparison.sharedSpecificCount}
                   toDevelopSpecificCount={pairSkillsComparison.toDevelopSpecificCount}
+                  pinned={pinnedEdgeTooltip}
                 />
               </div>
             </div>,

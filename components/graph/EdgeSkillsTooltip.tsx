@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge';
+import { Pin } from 'lucide-react';
 
 interface EdgeSkillsTooltipProps {
   labelA: string;
@@ -8,6 +9,7 @@ interface EdgeSkillsTooltipProps {
   toDevelopSpecific: string[];
   sharedSpecificCount: number;
   toDevelopSpecificCount: number;
+  pinned?: boolean;
 }
 
 export default function EdgeSkillsTooltip({
@@ -18,9 +20,14 @@ export default function EdgeSkillsTooltip({
   toDevelopSpecific,
   sharedSpecificCount,
   toDevelopSpecificCount,
+  pinned,
 }: EdgeSkillsTooltipProps) {
   return (
-    <div className="w-fit max-w-[640px] min-w-[480px] bg-popover text-popover-foreground rounded-lg shadow-xl border border-border p-4 space-y-3">
+    <div className="relative w-fit max-w-[640px] min-w-[480px] bg-popover text-popover-foreground rounded-lg shadow-xl border border-border p-4 space-y-3">
+      {pinned && (
+        <Pin size={14} className="absolute top-2 right-2 text-muted-foreground" />
+      )}
+
       {/* Header */}
       <div>
         <p className="font-semibold text-sm leading-tight">
