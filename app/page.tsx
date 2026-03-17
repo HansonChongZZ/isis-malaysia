@@ -7,7 +7,7 @@ import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode
 import { buildSpecificSkillsMap } from "@/lib/skills"
 import { computeMaxSpanningTree } from "@/lib/mst"
 import GraphControls from "@/components/graph/GraphControls"
-import OccupationSearch from '@/components/graph/OccupationSearch'
+import OccupationSearch, { type OccupationSearchHandle } from '@/components/graph/OccupationSearch'
 import OccupationPanel from "@/components/panel/OccupationPanel"
 import TutorialOverlay from '@/components/tutorial/TutorialOverlay'
 import { useTutorial, type OccupationGraphHandle } from '@/components/tutorial/useTutorial'
@@ -41,6 +41,7 @@ export default function HomePage() {
   const [viewMode, setViewMode] = useState<ViewMode>('force')
   const [colourByGroup, setColourByGroup] = useState(false)
   const heroSearchRef = useRef<HTMLDivElement>(null)
+  const occupationSearchRef = useRef<OccupationSearchHandle>(null)
   const pendingFocusRef = useRef(false)
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null)
   const graphHandleRef = useRef<OccupationGraphHandle | null>(null)
@@ -351,6 +352,7 @@ export default function HomePage() {
         if (heroInput) {
           heroInput.focus()
           heroInput.select()
+          occupationSearchRef.current?.openDropdown()
           return
         }
         // Otherwise, reset state to show the hero search
@@ -368,13 +370,14 @@ export default function HomePage() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isPanelOpen, secondSelectedNodeId, viewMode])
 
-  // Focus hero search input after it becomes visible
+  // Focus hero search input and open dropdown after it becomes visible
   useEffect(() => {
     if (!pendingFocusRef.current) return
     pendingFocusRef.current = false
     requestAnimationFrame(() => {
       const input = heroSearchRef.current?.querySelector('input')
       input?.focus()
+      occupationSearchRef.current?.openDropdown()
     })
   })
 
@@ -505,6 +508,7 @@ export default function HomePage() {
           <div className="hidden sm:flex absolute inset-x-0 top-[20%] z-10 justify-center px-4 pointer-events-none">
             <div ref={heroSearchRef} className="w-full max-w-xl pointer-events-auto hero-search-enter">
               <OccupationSearch
+                ref={occupationSearchRef}
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
                 onOccupationSelect={handleSearchSelect}

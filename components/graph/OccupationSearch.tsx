@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Search, X } from 'lucide-react';
 import type { GraphNode } from '@/lib/types';
 import {
@@ -14,6 +14,10 @@ import {
 
 type OccupationOption = { id: string; label: string };
 
+export interface OccupationSearchHandle {
+  openDropdown: () => void;
+}
+
 interface OccupationSearchProps {
   occupations: OccupationOption[];
   selectedOccupation: string | null;
@@ -23,14 +27,14 @@ interface OccupationSearchProps {
   nodes?: GraphNode[];
 }
 
-export default function OccupationSearch({
+const OccupationSearch = forwardRef<OccupationSearchHandle, OccupationSearchProps>(function OccupationSearch({
   occupations,
   selectedOccupation,
   onOccupationSelect,
   hero = false,
   onDismiss,
   nodes,
-}: OccupationSearchProps) {
+}, ref) {
   const selectedOccupationObj = useMemo(() => {
     if (!selectedOccupation) return null;
     return occupations.find((o) => o.id === selectedOccupation) ?? null;
@@ -40,6 +44,10 @@ export default function OccupationSearch({
   const [isMac, setIsMac] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    openDropdown: () => setOpen(true),
+  }));
 
   useEffect(() => {
     setIsMac(/(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent));
@@ -160,4 +168,6 @@ export default function OccupationSearch({
       </ComboboxContent>
     </Combobox>
   );
-}
+});
+
+export default OccupationSearch;
