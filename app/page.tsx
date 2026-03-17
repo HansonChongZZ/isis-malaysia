@@ -343,9 +343,17 @@ export default function HomePage() {
         }
       }
 
-      // Ctrl+F / Cmd+F → open and focus hero search
+      // Ctrl+F / Cmd+F → focus hero search (open it first if needed)
       if (e.key === 'f' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
+        // If hero search is already visible, just focus the input
+        const heroInput = heroSearchRef.current?.querySelector('input')
+        if (heroInput) {
+          heroInput.focus()
+          heroInput.select()
+          return
+        }
+        // Otherwise, reset state to show the hero search
         setSelectedNodeId(null)
         setSecondSelectedNodeId(null)
         setPanelNodeId(null)
