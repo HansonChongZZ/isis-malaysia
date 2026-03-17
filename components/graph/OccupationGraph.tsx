@@ -479,12 +479,12 @@ export default function OccupationGraph({
   const neighbourDistancesRef = useRef<Map<string, SkillComparison> | null>(null);
 
   const neighbourDistances = useMemo(() => {
-    if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds) return null;
+    if (!selectedNodeId || !connectedIds) return null;
     const neighbourIds = simNodes
       .filter((n) => n.id !== selectedNodeId && connectedIds.has(n.id))
       .map((n) => n.id);
     return computeNeighbourDistances(selectedNodeId, neighbourIds, specificSkillsMap);
-  }, [layoutMode, selectedNodeId, connectedIds, simNodes, specificSkillsMap]);
+  }, [selectedNodeId, connectedIds, simNodes, specificSkillsMap]);
 
   const radialPositions = useMemo(() => {
     if (layoutMode !== 'radial' || !selectedNodeId || !connectedIds || !neighbourDistances) return null;
@@ -1378,9 +1378,8 @@ export default function OccupationGraph({
                       const t = transformRef.current;
                       setHoveredNodeId(node.id);
                       onNodeHover?.(node.id);
-                      // In radial mode, show skill comparison for neighbour nodes
+                      // Show skill comparison for neighbour nodes when a node is selected
                       const sc =
-                        layoutMode === 'radial' &&
                         selectedNodeId &&
                         node.id !== selectedNodeId &&
                         neighbourDistancesRef.current?.get(node.id);
