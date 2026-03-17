@@ -1482,7 +1482,8 @@ export default function OccupationGraph({
       {/* Hover tooltip */}
       {tooltip &&
         (() => {
-          const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
+          const isTooltipSelected = tooltip.node.id === selectedNodeId;
+          const tooltipR = getNodeRadius(tooltip.node) * (isTooltipSelected ? 1.6 : 1) * transformRef.current.k;
           const isTooltipIsolate = isolateIds.has(tooltip.node.id);
           return (
             <div
