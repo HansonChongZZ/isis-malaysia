@@ -22,6 +22,7 @@ import {
   NODE_RADIUS_BASE,
   NODE_RADIUS_SCALE,
   NODE_RADIUS_EXPONENT,
+  SELECTED_NODE_SCALE,
 } from '@/lib/constants';
 import EdgeSkillsTooltip from './EdgeSkillsTooltip';
 import TunerPanel from './TunerPanel';
@@ -157,6 +158,7 @@ export default function OccupationGraph({
     linkDistanceScale: 20,
     linkStrengthDivisor: 7,
   });
+  // Bumped in readThemeColors to force re-render so SVG <defs> (gradient stops, aura) pick up new ref values
   const [, setThemeRevision] = useState(0);
   const derivedSelectionMode = !selectedNodeId
     ? 'none'
@@ -1270,7 +1272,9 @@ export default function OccupationGraph({
               <stop offset="100%" stopColor={selectedGradientEndRef.current} />
             </radialGradient>
 
-            {/* Enhanced 2-layer glow for selected node */}
+            {/* Enhanced 2-layer glow for selected node.
+                Color matrix uses a universal green tint (~#33D499) that works
+                in both themes — SVG filters can't reference CSS vars. */}
             <filter
               id="selected-glow"
               x="-200%"
@@ -1312,7 +1316,7 @@ export default function OccupationGraph({
             {selectedNodeId && (() => {
               const selectedNode = simNodes.find(n => n.id === selectedNodeId);
               if (!selectedNode) return null;
-              const auraBaseR = getNodeRadius(selectedNode) * 1.6 * 1.5;
+              const auraBaseR = getNodeRadius(selectedNode) * SELECTED_NODE_SCALE * 1.5;
               return (
                 <circle
                   cx={selectedNode.x}
@@ -1346,7 +1350,7 @@ export default function OccupationGraph({
                     : nodeColourRef.current;
                 const opacity = getNodeOpacity(node);
                 const isSelected = node.id === selectedNodeId;
-                const displayR = isSelected ? r * 1.6 : r;
+                const displayR = isSelected ? r * SELECTED_NODE_SCALE : r;
                 const isHovered = node.id === hoveredNodeId;
                 const isHoveredNeighbour = !!hoveredNeighbourIds?.has(node.id);
                 return isSelected ? (
@@ -1483,7 +1487,7 @@ export default function OccupationGraph({
       {tooltip &&
         (() => {
           const isTooltipSelected = tooltip.node.id === selectedNodeId;
-          const tooltipR = getNodeRadius(tooltip.node) * (isTooltipSelected ? 1.6 : 1) * transformRef.current.k;
+          const tooltipR = getNodeRadius(tooltip.node) * (isTooltipSelected ? SELECTED_NODE_SCALE : 1) * transformRef.current.k;
           const isTooltipIsolate = isolateIds.has(tooltip.node.id);
           return (
             <div
