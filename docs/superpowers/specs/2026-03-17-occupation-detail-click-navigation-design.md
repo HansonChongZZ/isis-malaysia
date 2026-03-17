@@ -25,29 +25,93 @@ This applies to both Force and Circular view modes.
 
 ### Changes
 
+**`page.tsx` — new state:**
+
+Add `openedViaSecondary` boolean state (default `false`).
+
+**`page.tsx` — `handleNodeSelect`:**
+
+In both Force and Circular mode branches, when `secondSelectedNodeId` is set and the user clicks either node (lines 242-253 and 291-303), split the condition:
+
+```tsx
+// Before (both branches):
+if (id === selectedNodeId || id === secondSelectedNodeId) {
+  setPanelNodeId(id)
+  setIsPanelOpen(true)
+}
+
+// After (both branches):
+if (id === selectedNodeId) {
+  setPanelNodeId(id)
+  setOpenedViaSecondary(false)
+  setIsPanelOpen(true)
+} else if (id === secondSelectedNodeId) {
+  setPanelNodeId(selectedNodeId)   // primary, so header + transitions use primary
+  setOpenedViaSecondary(true)
+  setIsPanelOpen(true)
+}
+```
+
+**`page.tsx` — `onClose` handler and all other panel-close paths:**
+
+Reset `openedViaSecondary` to `false` wherever the panel is closed. All close paths:
+- The `onClose` callback passed to OccupationPanel (line ~528)
+- Deselection paths in `handleNodeSelect` (clicking null / clicking outside)
+- Escape key handler (`handleKeyDown`)
+- `handleTutorialSkip` (line ~87, closes panel and clears node IDs)
+- `handleSearchSelect` circular/radial early-return path (line ~397, closes panel)
+
+Reset `openedViaSecondary` in the same state batch as `setIsPanelOpen(false)` to avoid brief prop inconsistency during React batched updates.
+
+**`page.tsx` — isolated-node early-return (line 217-224):**
+
+No changes needed. Isolated nodes clear `secondSelectedNodeId` and open the panel directly — `openedViaSecondary` is irrelevant since there's no second selection.
+
+**`page.tsx` — OccupationPanel call site:**
+
+```tsx
+<OccupationPanel
+  nodeId={panelNodeId}
+  detail={panelDetail}
+  nodes={nodes}
+  edges={edges}
+  occupations={occupations}
+  isOpen={isPanelOpen}
+  onClose={handlePanelClose}
+  initialComparisonId={openedViaSecondary ? secondSelectedNodeId : null}
+/>
+```
+
 **`OccupationPanel.tsx`:**
-- Add `secondNodeId: string | null` prop
-- When `secondNodeId` is provided and `nodeId !== secondNodeId` (i.e., the panel was opened by clicking the secondary node from the graph context), initialize `comparisonNodeId` to `secondNodeId`
-- Update the `useEffect` reset logic: when `nodeId` or `isOpen` changes, set `comparisonNodeId` to `secondNodeId` if provided, otherwise `null`
 
-**`page.tsx`:**
-- Pass `secondSelectedNodeId` to `OccupationPanel` as `secondNodeId`
-- When panel is opened by clicking the secondary node, set `panelNodeId` to `selectedNodeId` (the primary) so the panel header and detail pane show the primary occupation, while `secondNodeId` triggers comparison mode
-- No changes to `handleNodeSelect` click logic beyond ensuring `panelNodeId` is set to the primary node when secondary is clicked
+- Add `initialComparisonId: string | null` prop to interface
+- Update the existing `useEffect` reset (line 39-41):
+  ```tsx
+  useEffect(() => {
+    if (isOpen) {
+      setComparisonNodeId(initialComparisonId)
+    }
+  }, [nodeId, isOpen, initialComparisonId])
+  ```
+  The `isOpen` guard prevents the effect from firing during close transitions or mid-session prop changes.
 
-### Key Detail
+### Back Button Behavior
 
-The distinction is driven by comparing `panelNodeId` with `secondSelectedNodeId` at the `page.tsx` level:
-- If the clicked node is the secondary, set `panelNodeId = selectedNodeId` (primary) and pass `secondNodeId = secondSelectedNodeId` to the panel
-- If the clicked node is the primary, set `panelNodeId = selectedNodeId` and pass `secondNodeId = null`
+When the panel opens in comparison mode (via secondary click) and the user clicks "Back":
+- `comparisonNodeId` is set to `null` by `onBack`, showing the card list view
+- The `useEffect` won't re-trigger as long as its dependencies (`nodeId`, `isOpen`, `initialComparisonId`) remain unchanged. If any dependency changes (e.g., panel close+reopen cycling `isOpen`), the effect will re-fire and restore comparison mode. This is acceptable because a close+reopen is a new panel session. Within a single open session, Back is stable.
+- The user sees the primary occupation's detail + transition cards and can freely browse or click another card to compare
+- This is intentional: after "Back", the user is in the primary occupation's context
 
-This keeps the panel's primary occupation consistent (always the first-selected) while the `secondNodeId` prop controls whether to start in comparison mode.
+### UX Note: Panel Header
+
+When opened via secondary click, the panel header shows the **primary** occupation's name (not the secondary). This is correct because the ComparisonGrid shows both occupations in its own header row, and the panel's transitions are computed from the primary occupation.
 
 ### Files Changed
 
-1. `components/panel/OccupationPanel.tsx` — add `secondNodeId` prop, update state initialization
-2. `app/page.tsx` — pass `secondSelectedNodeId` conditionally, adjust `panelNodeId` assignment
+1. `app/page.tsx` — add `openedViaSecondary` state, split click conditions in both Force/Circular branches, reset flag on all close paths, pass `initialComparisonId` prop
+2. `components/panel/OccupationPanel.tsx` — add `initialComparisonId` prop, update useEffect with `isOpen` guard
 
 ### Estimated Scope
 
-~15 lines of code across 2 files.
+~25 lines of code across 2 files.
