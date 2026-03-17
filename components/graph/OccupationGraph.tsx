@@ -1004,6 +1004,8 @@ export default function OccupationGraph({
   }, [selectionMode]);
 
   // Click-outside listener to dismiss pinned tooltip
+  // Uses capture phase + stopPropagation so the click only unpins,
+  // without triggering canvas interactions (e.g. zoom-out / deselect).
   useEffect(() => {
     if (!pinnedEdgeTooltip) return;
     const handler = (e: MouseEvent) => {
@@ -1012,11 +1014,13 @@ export default function OccupationGraph({
         badgeRef.current?.contains(target) ||
         portalTooltipRef.current?.contains(target)
       ) return;
+      e.stopPropagation();
+      e.preventDefault();
       setPinnedEdgeTooltip(false);
       setShowEdgeTooltip(false);
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener('mousedown', handler, true);
+    return () => document.removeEventListener('mousedown', handler, true);
   }, [pinnedEdgeTooltip]);
 
   // Resize observer
@@ -1657,7 +1661,16 @@ export default function OccupationGraph({
             className="cursor-pointer select-none"
             onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.() }}
             onMouseLeave={() => { if (!pinnedEdgeTooltip) setShowEdgeTooltip(false); }}
-            onClick={() => { setPinnedEdgeTooltip(true); setShowEdgeTooltip(true); onBadgeInteract?.(); }}
+            onClick={() => {
+              if (pinnedEdgeTooltip) {
+                setPinnedEdgeTooltip(false);
+                setShowEdgeTooltip(false);
+              } else {
+                setPinnedEdgeTooltip(true);
+                setShowEdgeTooltip(true);
+                onBadgeInteract?.();
+              }
+            }}
           >
             <div className="bg-popover text-popover-foreground text-xs font-medium px-3.5 py-1.5 rounded-xl shadow-md border border-border whitespace-nowrap flex flex-col items-center gap-0.5 leading-snug">
               <span><span className="text-green-400 font-semibold">{pairSkillsComparison.sharedSpecificCount}</span> specific skills shared</span>
