@@ -510,6 +510,7 @@ export default function HomePage() {
                 onOccupationSelect={handleSearchSelect}
                 onDismiss={tutorial.isActive && tutorial.currentStep === 1 ? undefined : () => setHeroDismissed(true)}
                 hero
+                nodes={nodes}
               />
             </div>
           </div>
