@@ -56,7 +56,7 @@ The existing full-width `DialogHeader` (showing primary occupation name, code, a
 
 - **Left pane (50%)**: `OccupationDetailPane` showing the selected occupation (same content as current left column)
 - **Right pane (50%)**: `TransitionCards` showing connected occupations as cards
-- **Card content**: Occupation name, MASCO code, skill match dots (1-7), AI exposure quartile badge, monthly wage, and top 3 shared skill badges (with "+N more" overflow)
+- **Card content**: Occupation name, MASCO code, skill match dots (1-7), AI exposure quartile badge, median wage, and top 3 shared skill badges (with "+N more" overflow)
 - **Search**: Fuzzy filter by name or code (reuse existing `fuzzyFilter`)
 - **Pagination**: 10/25/50 per page (reuse existing pattern)
 - **Sort**: By shared skills weight (desc) → AI exposure (asc, lower = better) → wage (desc, higher = better) — same as current sort logic

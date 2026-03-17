@@ -108,7 +108,7 @@ All data is pre-processed at build time into optimized JSON files served as stat
 - **Isolated nodes:** Not clickable, do not open a detail panel. Display a tooltip on hover with basic occupation info.
 - **Node sizing:** Toggleable between three metrics:
   - AI Exposure Index (default) — higher exposure = larger node
-  - Median Monthly Wage — higher wage = larger node
+  - Median Wage — higher wage = larger node
   - Number of Workers — more workers = larger node
 - **Node size parameters:** base = 50, scale = 300, exponent = 3. Greater variability in size so that occupations with the highest AI exposure are immediately noticeable.
 - **Attention animation:** The top 10 occupations with the highest number of workers AND an AI exposure index of 100% vibrate subtly every 5 seconds to draw user attention.
@@ -149,7 +149,7 @@ Triggered by clicking a connected (non-isolated) node, or by clicking a tooltip.
 
 - MASCO code, group badge, occupation name
 - AI Exposure Index with progress bar and quartile badge
-- Median monthly wage (MYR)
+- Median wage (MYR)
 - **Skills to develop** (badge list, featured prominently — these are skills the worker would need to acquire for transition targets)
 - Skills in common (badge list)
 - Specific/technical skills (badge list)

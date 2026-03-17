@@ -145,7 +145,7 @@ Right sidebar slides in (400px wide). Graph canvas shrinks or panel overlaps.
 │                                                         │  ████████████░░░░░░  │
 │                                                         │  (progress bar)      │
 │                                                         │                      │
-│                                                         │  MONTHLY WAGE        │
+│                                                         │  MEDIAN WAGE        │
 │                                                         │  MYR 6,094           │
 │                                                         │                      │
 │                                                         │  BASIC SKILLS        │
@@ -196,7 +196,7 @@ Bottom sheet rises up (75vh). Graph partially visible above.
 │  75.0%  [Medium High]                                   │
 │  ████████████░░░░░░░░░░░░░░░░  (progress bar)           │
 │                                                         │
-│  MONTHLY WAGE: MYR 6,094                                │
+│  MEDIAN WAGE: MYR 6,094                                │
 │                                                         │
 │  BASIC SKILLS                                           │
 │  [Active Listening]  [Management]  [...]                │

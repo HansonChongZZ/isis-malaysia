@@ -10,7 +10,7 @@ When a transition is selected in the occupation panel, the `ComparisonGrid` comp
 1. **Header area wastes vertical space** — left pane repeats the occupation title from the dialog header with dead whitespace below, while the right pane is denser (back button + occupation info + skill dots)
 2. **Row heights are unbalanced** — each row stretches to the tallest side, creating whitespace gaps on the shorter side
 3. **Sections feel disconnected** — horizontal border lines between every row create a "stacked cards" look rather than a cohesive comparison
-4. **Repeated section labels** — labels like "AI Exposure Index", "Monthly Wage", "Basic Skills" appear on both sides
+4. **Repeated section labels** — labels like "AI Exposure Index", "Median Wage", "Basic Skills" appear on both sides
 
 ## Solution
 
@@ -42,10 +42,10 @@ Top to bottom within the existing dialog shell:
 - **Right cell:** "AI Exposure" label, value (primary color) + delta indicator (e.g., "▼ 88.9%"), progress bar
 - Right cell has subtle green tint
 
-### 5. Monthly Wage Row
+### 5. Median Wage Row
 - Two-cell flex row, same pattern as AI Exposure
-- **Left cell:** "Monthly Wage" label, value
-- **Right cell:** "Monthly Wage" label, value (primary color) + delta (e.g., "▲ MYR 25,383")
+- **Left cell:** "Median Wage" label, value
+- **Right cell:** "Median Wage" label, value (primary color) + delta (e.g., "▲ MYR 25,383")
 - Right cell has subtle green tint
 
 ### 6. Skills Section (full-width)

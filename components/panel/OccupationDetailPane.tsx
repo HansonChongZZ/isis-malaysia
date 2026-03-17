@@ -101,7 +101,7 @@ export default function OccupationDetailPane({
       {/* Wage */}
       <section>
         <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-          Monthly Wage
+          Median Wage
         </h3>
         {detail.wage !== null ? (
           <div className="flex items-center gap-2">

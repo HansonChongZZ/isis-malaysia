@@ -211,7 +211,7 @@ export default function ComparisonGrid({
       {/* Wage row */}
       <div className="flex border-b border-border">
         <div className="flex-1 px-5 py-3">
-          <div className="text-[10px] text-muted-foreground mb-1">Monthly Wage</div>
+          <div className="text-[10px] text-muted-foreground mb-1">Median Wage</div>
           {primary.wage !== null ? (
             <div className="text-base font-bold text-foreground">
               MYR {primary.wage.toLocaleString()}
@@ -224,7 +224,7 @@ export default function ComparisonGrid({
           className="flex-1 px-5 py-3 border-l border-border"
           style={{ background: TARGET_TINT }}
         >
-          <div className="text-[10px] text-muted-foreground mb-1">Monthly Wage</div>
+          <div className="text-[10px] text-muted-foreground mb-1">Median Wage</div>
           {comparison.wage !== null ? (
             <div className="flex items-baseline gap-1.5">
               <span className="text-base font-bold" style={{ color: comparisonColour }}>
