@@ -391,29 +391,35 @@ export default function OccupationGraph({
       }
     }
 
-    // Compute specific-skills-only counts for the badge
+    // Compute specific-skills-only counts and lists for the badge
     const specificA = new Set(detailA.specificSkills.map((s) => s.toLowerCase()));
     const specificB = new Set(detailB.specificSkills.map((s) => s.toLowerCase()));
     let sharedSpecificCount = 0;
-    let toDevelopSpecificCount = 0;
+    const toDevelopSpecific: string[] = [];
+    const seenToDevelop = new Set<string>();
     for (const s of specificA) {
       if (specificB.has(s)) sharedSpecificCount++;
     }
-    for (const s of specificB) {
-      if (!specificA.has(s)) toDevelopSpecificCount++;
+    for (const skill of detailB.specificSkills) {
+      const lower = skill.toLowerCase();
+      if (!specificA.has(lower) && !seenToDevelop.has(lower)) {
+        toDevelopSpecific.push(skill);
+        seenToDevelop.add(lower);
+      }
     }
 
     return {
       shared,
       onlyA,
       onlyB,
+      toDevelopSpecific,
       labelA: detailA.occupation,
       labelB: detailB.occupation,
       colourA: nodeColourRef.current,
       colourB: nodeColourRef.current,
       totalUnique: shared.length + onlyA.length + onlyB.length,
       sharedSpecificCount,
-      toDevelopSpecificCount,
+      toDevelopSpecificCount: toDevelopSpecific.length,
     };
   }, [selectionMode, selectedNodeId, secondSelectedNodeId, occupations]);
 
@@ -1662,10 +1668,7 @@ export default function OccupationGraph({
                   labelB={pairSkillsComparison.labelB}
                   colourA={pairSkillsComparison.colourA}
                   colourB={pairSkillsComparison.colourB}
-                  shared={pairSkillsComparison.shared}
-                  onlyA={pairSkillsComparison.onlyA}
-                  onlyB={pairSkillsComparison.onlyB}
-                  totalUnique={pairSkillsComparison.totalUnique}
+                  toDevelopSpecific={pairSkillsComparison.toDevelopSpecific}
                   sharedSpecificCount={pairSkillsComparison.sharedSpecificCount}
                   toDevelopSpecificCount={pairSkillsComparison.toDevelopSpecificCount}
                 />

@@ -5,10 +5,7 @@ interface EdgeSkillsTooltipProps {
   labelB: string;
   colourA?: string;
   colourB?: string;
-  shared: string[];
-  onlyA: string[];
-  onlyB: string[];
-  totalUnique: number;
+  toDevelopSpecific: string[];
   sharedSpecificCount: number;
   toDevelopSpecificCount: number;
 }
@@ -18,10 +15,7 @@ export default function EdgeSkillsTooltip({
   labelB,
   colourA,
   colourB,
-  shared,
-  onlyA,
-  onlyB,
-  totalUnique,
+  toDevelopSpecific,
   sharedSpecificCount,
   toDevelopSpecificCount,
 }: EdgeSkillsTooltipProps) {
@@ -30,7 +24,7 @@ export default function EdgeSkillsTooltip({
       {/* Header */}
       <div>
         <p className="font-semibold text-sm leading-tight">
-          <span style={{ color: colourA }}>{labelA}</span> <span className="text-muted-foreground mx-1">↔</span> <span style={{ color: colourB }}>{labelB}</span>
+          <span style={{ color: colourA }}>{labelA}</span> <span className="text-muted-foreground mx-1">→</span> <span style={{ color: colourB }}>{labelB}</span>
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">
           <span className="text-green-400 font-semibold">{sharedSpecificCount}</span> specific skills shared, <span className="text-blue-400 font-semibold">{toDevelopSpecificCount}</span> specific skills to develop
@@ -39,17 +33,17 @@ export default function EdgeSkillsTooltip({
 
       <hr className="border-border" />
 
-      {/* Shared skills */}
-      {shared.length > 0 && (
+      {/* Specific skills to develop */}
+      {toDevelopSpecific.length > 0 && (
         <div>
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
-            Shared Skills
+            Skills to Develop
           </p>
           <div className="flex flex-wrap gap-1">
-            {shared.map((skill) => (
+            {toDevelopSpecific.map((skill) => (
               <Badge
                 key={skill}
-                className="text-xs bg-primary/15 text-primary border-primary/30"
+                className="text-xs bg-blue-500/15 text-blue-400 border-blue-500/30"
               >
                 {skill}
               </Badge>
@@ -58,47 +52,6 @@ export default function EdgeSkillsTooltip({
         </div>
       )}
 
-      {/* Unique skills columns */}
-      {(onlyA.length > 0 || onlyB.length > 0) && (
-        <div className="grid grid-cols-2 gap-3">
-          {onlyA.length > 0 && (
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: colourA }} title={labelA}>
-                Only {labelA}
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {onlyA.map((skill) => (
-                  <Badge
-                    key={skill}
-                    variant="secondary"
-                    className="text-xs opacity-70"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
-          {onlyB.length > 0 && (
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: colourB }} title={labelB}>
-                Only {labelB}
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {onlyB.map((skill) => (
-                  <Badge
-                    key={skill}
-                    variant="secondary"
-                    className="text-xs opacity-70"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }
