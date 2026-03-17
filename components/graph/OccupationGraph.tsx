@@ -1308,6 +1308,25 @@ export default function OccupationGraph({
             </filter>
           </defs>
           <g ref={gRef}>
+            {/* Aura circle behind selected node */}
+            {selectedNodeId && (() => {
+              const selectedNode = simNodes.find(n => n.id === selectedNodeId);
+              if (!selectedNode) return null;
+              const auraBaseR = getNodeRadius(selectedNode) * 1.6 * 1.5;
+              return (
+                <circle
+                  cx={selectedNode.x}
+                  cy={selectedNode.y}
+                  r={auraBaseR}
+                  fill={selectedAuraRef.current}
+                  opacity={0.15}
+                  style={{ pointerEvents: 'none' }}
+                >
+                  <animate attributeName="r" values={`${auraBaseR};${auraBaseR + 4};${auraBaseR}`} dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.15;0.25;0.15" dur="3s" repeatCount="indefinite" />
+                </circle>
+              );
+            })()}
             <g className="nodes">
               {(layoutMode === 'radial' && selectedNodeId && connectedIds
                 ? [...simNodes].sort((a, b) => {
