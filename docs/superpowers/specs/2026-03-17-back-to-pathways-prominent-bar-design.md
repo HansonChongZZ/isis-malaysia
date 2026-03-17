@@ -55,6 +55,7 @@ The ComparisonGrid currently uses a single scrollable container (`overflow-y-aut
 
 ### Interaction
 
+- The bar must be a `<button>` element for accessibility (keyboard focus, screen reader support)
 - Clicking anywhere on the bar triggers `onBack()` (same callback as current link)
 - The `onBack` handler sets `comparisonNodeId` to `null`, returning to the OccupationDetailPane + TransitionCards view
 
@@ -63,7 +64,7 @@ The ComparisonGrid currently uses a single scrollable container (`overflow-y-aut
 ### ComparisonGrid.tsx
 
 1. **Remove** the current inline back button from the right pane header (the `<button>` with `text-xs text-primary` at line ~147-154)
-2. **Add** a new sticky tinted bar as the first child of the right pane's `w-1/2` column in the header row
+2. **Add** a new sticky tinted bar as the first element inside the right pane's `w-1/2` column in the header row. The bar should use its own padding (e.g., `px-5 py-2`) and override the parent's `py-4` by being placed before the padded content block — or the parent padding can be moved to an inner wrapper so the bar spans full width edge-to-edge within the column
 3. No new props needed — reuse existing `onBack` prop
 
 ### No other files affected
