@@ -82,6 +82,10 @@ const OccupationSearch = forwardRef<OccupationSearchHandle, OccupationSearchProp
         <Combobox
           items={occupations}
           itemToStringValue={(occ) => occ.label}
+          filter={(occ, query) => {
+            const q = query.toLowerCase();
+            return occ.label.toLowerCase().includes(q) || occ.id.toLowerCase().includes(q);
+          }}
           value={selectedOccupationObj}
           onValueChange={(occ) => onOccupationSelect(occ?.id ?? null)}
           onInputValueChange={(value) => setInputValue(value)}
@@ -145,6 +149,10 @@ const OccupationSearch = forwardRef<OccupationSearchHandle, OccupationSearchProp
     <Combobox
       items={occupations}
       itemToStringValue={(occ) => occ.label}
+      filter={(occ, query) => {
+        const q = query.toLowerCase();
+        return occ.label.toLowerCase().includes(q) || occ.id.toLowerCase().includes(q);
+      }}
       value={selectedOccupationObj}
       onValueChange={(occ) => onOccupationSelect(occ?.id ?? null)}
     >
