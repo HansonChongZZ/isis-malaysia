@@ -1351,13 +1351,15 @@ export default function OccupationGraph({
                     filter={isSelected ? 'url(#selected-glow)' : undefined}
                     style={{
                       pointerEvents: (visibleIds && !visibleIds.has(node.id)) ? 'none' : 'auto',
-                      cursor: (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
+                      cursor: isIsolate ? 'default'
+                        : (selectedNodeId && !connectedIds?.has(node.id) && node.id !== selectedNodeId) ? 'default'
                         : 'pointer',
                       transition:
                         'fill-opacity 250ms ease, stroke 250ms ease, stroke-width 250ms ease, stroke-opacity 250ms ease, filter 250ms ease',
                     }}
                     onClick={(e) => {
                       if (disableClick) return;
+                      if (isIsolate) return;
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
                       // In radial mode, clicking outside the neighbourhood deselects
@@ -1408,10 +1410,12 @@ export default function OccupationGraph({
       {tooltip &&
         (() => {
           const tooltipR = getNodeRadius(tooltip.node) * transformRef.current.k;
+          const isTooltipIsolate = isolateIds.has(tooltip.node.id);
           return (
             <div
-              className="absolute z-20 bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] cursor-pointer"
+              className={`absolute z-20 bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] ${isTooltipIsolate ? 'cursor-default' : 'cursor-pointer'}`}
               onClick={() => {
+                if (isTooltipIsolate) return;
                 if (tooltipLeaveTimer.current) clearTimeout(tooltipLeaveTimer.current);
                 const id = tooltip.node.id;
                 setTooltip(null);
