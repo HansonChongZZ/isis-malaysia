@@ -18,6 +18,7 @@ interface TutorialOverlayProps {
   cursorAnimProps?: { from: { x: number; y: number }; to: { x: number; y: number }; clickEffect?: boolean; delayMs?: number; lingerMs?: number } | null
   onCursorArrive?: () => void
   onCursorComplete?: () => void
+  isLastStep?: boolean
 }
 
 export default function TutorialOverlay({
@@ -32,6 +33,7 @@ export default function TutorialOverlay({
   cursorAnimProps,
   onCursorArrive,
   onCursorComplete,
+  isLastStep,
 }: TutorialOverlayProps) {
   const [viewport, setViewport] = useState({ w: 0, h: 0 })
   useEffect(() => {
@@ -48,7 +50,7 @@ export default function TutorialOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-50 transition-opacity duration-300"
+      className="fixed inset-0 z-[60] transition-opacity duration-300"
       style={{
         pointerEvents: 'none',
         opacity: isActive ? 1 : 0,
@@ -135,7 +137,7 @@ export default function TutorialOverlay({
                 onClick={onAdvance}
                 className="text-xs font-medium bg-primary text-primary-foreground px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors"
               >
-                Got it, next \u2192
+                {isLastStep ? 'Finish' : 'Got it, next \u2192'}
               </button>
             )}
           </div>
