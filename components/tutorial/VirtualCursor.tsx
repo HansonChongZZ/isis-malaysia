@@ -34,7 +34,7 @@ export default function VirtualCursor({
   to,
   clickEffect = false,
   delayMs = 800,
-  lingerMs = 1400,
+  lingerMs = 2200,
   onArrive,
   onComplete,
 }: VirtualCursorProps) {
