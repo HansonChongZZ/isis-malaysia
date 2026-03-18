@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/accordion';
 import type { OccupationDetail } from '@/lib/types';
 import { QUARTILE_COLOURS } from '@/lib/constants';
+import { formatCompact } from '@/lib/format';
 
 interface ComparisonGridProps {
   primary: OccupationDetail;
@@ -131,7 +132,7 @@ export default function ComparisonGrid({
 
       {/* Occupation names row */}
       <div className="flex border-b border-border" style={{ background: '#fafafa' }}>
-        <div className="flex-1 px-5 py-3">
+        <div className="flex-1 px-3 py-2 md:px-5 md:py-3">
           <div className="text-[10px] text-muted-foreground mb-0.5">Current role</div>
           <div className="text-xs text-muted-foreground font-mono mb-1">
             {primaryNodeId}
@@ -141,7 +142,7 @@ export default function ComparisonGrid({
           </div>
         </div>
         <div
-          className="flex-1 px-5 py-3 border-l border-border"
+          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border"
           style={{ background: TARGET_TINT }}
         >
           <div className="text-[10px] text-muted-foreground mb-0.5">Target role</div>
@@ -151,47 +152,48 @@ export default function ComparisonGrid({
           <div className="text-[13px] font-semibold leading-snug" style={{ color: comparisonColour }}>
             {comparison.occupation}
           </div>
-          {(() => {
-            const sharedCount = comparison.specificSkills.filter((s) =>
-              sharedSkills.has(s.toLowerCase()),
-            ).length;
-            const developCount = comparison.specificSkills.length - sharedCount;
-            const total = comparison.specificSkills.length;
-            if (total === 0) return null;
-            return (
-              <div className="flex items-center gap-1.5 mt-2">
-                <span className="text-xs text-muted-foreground">Match:</span>
-                <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1">
-                  {[...comparison.specificSkills]
-                    .sort((a, b) => {
-                      const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
-                      const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
-                      return aShared - bShared;
-                    })
-                    .map((skill, i) => (
-                      <span
-                        key={i}
-                        className="inline-block w-2 h-2 rounded-full"
-                        style={{
-                          backgroundColor: sharedSkills.has(skill.toLowerCase())
-                            ? '#22c55e'
-                            : 'rgba(59,130,246,0.4)',
-                        }}
-                      />
-                    ))}
-                </div>
-                <span className="text-muted-foreground text-xs">
-                  {sharedCount} shared, {developCount} to develop
-                </span>
-              </div>
-            );
-          })()}
         </div>
       </div>
 
+      {/* Match dots summary bar — full width */}
+      {(() => {
+        const sharedCount = comparison.specificSkills.filter((s) =>
+          sharedSkills.has(s.toLowerCase()),
+        ).length;
+        const developCount = comparison.specificSkills.length - sharedCount;
+        const total = comparison.specificSkills.length;
+        if (total === 0) return null;
+        return (
+          <div className="px-3 py-2 md:px-5 md:py-3 border-b border-border" style={{ background: 'rgba(106,209,156,0.04)' }}>
+            <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1 mb-1.5">
+              {[...comparison.specificSkills]
+                .sort((a, b) => {
+                  const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
+                  const bShared = sharedSkills.has(b.toLowerCase()) ? 0 : 1;
+                  return aShared - bShared;
+                })
+                .map((skill, i) => (
+                  <span
+                    key={i}
+                    className="inline-block w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: sharedSkills.has(skill.toLowerCase())
+                        ? '#22c55e'
+                        : 'rgba(59,130,246,0.4)',
+                    }}
+                  />
+                ))}
+            </div>
+            <span className="text-muted-foreground text-xs">
+              {sharedCount} shared · {developCount} to develop
+            </span>
+          </div>
+        );
+      })()}
+
       {/* AI Exposure row */}
       <div className="flex border-b border-border">
-        <div className="flex-1 px-5 py-3">
+        <div className="flex-1 px-3 py-2 md:px-5 md:py-3">
           <div className="text-[10px] text-muted-foreground mb-1">AI Exposure</div>
           <div className="text-base font-bold" style={{ color: primaryColour }}>
             {(primary.aiExposure * 100).toFixed(1)}%
@@ -207,7 +209,7 @@ export default function ComparisonGrid({
           </div>
         </div>
         <div
-          className="flex-1 px-5 py-3 border-l border-border"
+          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border"
           style={{ background: TARGET_TINT }}
         >
           <div className="text-[10px] text-muted-foreground mb-1">AI Exposure</div>
@@ -234,7 +236,7 @@ export default function ComparisonGrid({
 
       {/* Wage row */}
       <div className="flex border-b border-border">
-        <div className="flex-1 px-5 py-3">
+        <div className="flex-1 px-3 py-2 md:px-5 md:py-3">
           <div className="text-[10px] text-muted-foreground mb-1">Median Wage</div>
           {primary.wage !== null ? (
             <div className="text-base font-bold text-foreground">
@@ -245,7 +247,7 @@ export default function ComparisonGrid({
           )}
         </div>
         <div
-          className="flex-1 px-5 py-3 border-l border-border"
+          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border"
           style={{ background: TARGET_TINT }}
         >
           <div className="text-[10px] text-muted-foreground mb-1">Median Wage</div>
@@ -256,8 +258,8 @@ export default function ComparisonGrid({
               </span>
               {comparisonDeltas.wage != null && (
                 <span className="text-[11px]" style={{ color: comparisonColour }}>
-                  {comparisonDeltas.wage > 0 ? '▲' : '▼'} MYR{' '}
-                  {Math.abs(comparisonDeltas.wage).toLocaleString()}
+                  {comparisonDeltas.wage > 0 ? '▲' : '▼'}{' '}
+                  {formatCompact(Math.abs(comparisonDeltas.wage))}
                 </span>
               )}
             </div>
@@ -270,7 +272,7 @@ export default function ComparisonGrid({
       {/* Skills section — full width, target occupation's skills */}
       {(comparison.basicSkills.length > 0 ||
         comparison.specificSkills.length > 0) && (
-        <div className="px-5 py-3.5 border-b border-border">
+        <div className="px-3 py-2.5 md:px-5 md:py-3.5 border-b border-border">
           <div className="flex items-center gap-3.5 mb-2.5">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Skills
@@ -351,15 +353,15 @@ export default function ComparisonGrid({
 
       {/* Tasks section — side by side */}
       {(primary.tasks.length > 0 || comparison.tasks.length > 0) && (
-        <div className="flex">
-          <div className="flex-1 px-4 py-3.5">
+        <div className="flex flex-col md:flex-row">
+          <div className="flex-1 px-3 py-2.5 md:px-4 md:py-3.5">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
               Current Tasks ({primary.tasks.length})
             </h3>
             <TaskAccordion tasks={primary.tasks} prefix="primary" />
           </div>
           <div
-            className="flex-1 px-4 py-3.5 border-l border-border"
+            className="flex-1 px-3 py-2.5 md:px-4 md:py-3.5 border-l border-border"
             style={{ background: TARGET_TINT }}
           >
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
