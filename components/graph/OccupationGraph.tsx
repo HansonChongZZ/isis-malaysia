@@ -75,6 +75,7 @@ interface OccupationGraphProps {
   onBadgePosChange?: (pos: { x: number; y: number } | null) => void;
   onBadgeInteract?: () => void;
   simulatedHoverId?: string | null;
+  pulseNodeId?: string | null;
 }
 
 export default function OccupationGraph({
@@ -105,6 +106,7 @@ export default function OccupationGraph({
   onBadgePosChange,
   onBadgeInteract,
   simulatedHoverId,
+  pulseNodeId,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -1551,6 +1553,41 @@ export default function OccupationGraph({
                   />
                 );
               })}
+
+              {/* Pulsing ring on target node for click hint */}
+              {pulseNodeId && (() => {
+                const pulseNode = nodeById.current.get(pulseNodeId);
+                if (!pulseNode) return null;
+                const pulseR = getNodeRadius(pulseNode) * (pulseNode.id === selectedNodeId ? SELECTED_NODE_SCALE : 1);
+                return (
+                  <>
+                    <circle
+                      cx={pulseNode.x}
+                      cy={pulseNode.y}
+                      r={pulseR}
+                      fill="none"
+                      stroke="var(--foreground)"
+                      strokeWidth={2}
+                      opacity={0}
+                    >
+                      <animate attributeName="r" from={`${pulseR}`} to={`${pulseR + 16}`} dur="1.5s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.7;0" dur="1.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle
+                      cx={pulseNode.x}
+                      cy={pulseNode.y}
+                      r={pulseR}
+                      fill="none"
+                      stroke="var(--foreground)"
+                      strokeWidth={2}
+                      opacity={0}
+                    >
+                      <animate attributeName="r" from={`${pulseR}`} to={`${pulseR + 16}`} dur="1.5s" begin="0.5s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.7;0" dur="1.5s" begin="0.5s" repeatCount="indefinite" />
+                    </circle>
+                  </>
+                );
+              })()}
             </g>
           </g>
         </svg>

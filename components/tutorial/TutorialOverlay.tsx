@@ -15,7 +15,7 @@ interface TutorialOverlayProps {
   spotlight: SpotlightTarget | null
   onAdvance: () => void
   onSkip: () => void
-  cursorAnimProps?: { from: { x: number; y: number }; to: { x: number; y: number }; delayMs?: number; lingerMs?: number } | null
+  cursorAnimProps?: { from: { x: number; y: number }; to: { x: number; y: number }; clickEffect?: boolean; delayMs?: number; lingerMs?: number } | null
   onCursorArrive?: () => void
   onCursorComplete?: () => void
 }
@@ -147,6 +147,7 @@ export default function TutorialOverlay({
           key={currentStep}
           from={cursorAnimProps.from}
           to={cursorAnimProps.to}
+          clickEffect={cursorAnimProps.clickEffect}
           delayMs={cursorAnimProps.delayMs}
           lingerMs={cursorAnimProps.lingerMs}
           onArrive={onCursorArrive}

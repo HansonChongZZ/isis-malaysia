@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 interface VirtualCursorProps {
   from: { x: number; y: number }
   to: { x: number; y: number }
+  clickEffect?: boolean
   delayMs?: number
   lingerMs?: number
   onArrive: () => void
@@ -31,6 +32,7 @@ function CursorIcon() {
 export default function VirtualCursor({
   from,
   to,
+  clickEffect = false,
   delayMs = 800,
   lingerMs = 1400,
   onArrive,
@@ -105,6 +107,10 @@ export default function VirtualCursor({
   // Position: during fadeIn use `from`, during moving/lingering/fadeOut animate to `to`
   const targetPos = phase === 'fadeIn' ? from : to
 
+  // Click effect: press-down scale during linger
+  const showClickEffect = clickEffect && phase === 'lingering'
+  const scale = showClickEffect ? [1, 0.7, 1] : 1
+
   const cursor = (
     <motion.div
       style={{
@@ -112,17 +118,26 @@ export default function VirtualCursor({
         zIndex: 60,
         pointerEvents: 'none',
         filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.4))',
+        transformOrigin: 'top left',
       }}
-      initial={{ x: from.x, y: from.y, opacity: 0 }}
+      initial={{ x: from.x, y: from.y, opacity: 0, scale: 1 }}
       animate={{
         x: targetPos.x,
         y: targetPos.y,
         opacity,
+        scale,
       }}
       transition={
         phase === 'moving'
-          ? { x: { type: 'spring', damping: 30, stiffness: 60 }, y: { type: 'spring', damping: 30, stiffness: 60 }, opacity: { duration: 0.35 } }
-          : { opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 }, x: { duration: 0 }, y: { duration: 0 } }
+          ? { x: { type: 'spring', damping: 30, stiffness: 60 }, y: { type: 'spring', damping: 30, stiffness: 60 }, opacity: { duration: 0.35 }, scale: { duration: 0 } }
+          : {
+              opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 },
+              x: { duration: 0 },
+              y: { duration: 0 },
+              scale: showClickEffect
+                ? { duration: 0.4, times: [0, 0.4, 1], ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.6 }
+                : { duration: 0 },
+            }
       }
       onAnimationComplete={() => {
         if (phase === 'moving') {

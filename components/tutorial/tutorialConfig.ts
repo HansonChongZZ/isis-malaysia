@@ -15,6 +15,8 @@ export interface CursorAnimation {
   target: 'neighbour' | 'badge' | 'selectedNode'
   /** 'demo' triggers effects on arrive (e.g. simulated hover). 'hint' just points visually. Default: 'demo'. */
   mode?: 'demo' | 'hint'
+  /** Show a press-down click animation when cursor arrives at target. Default: false. */
+  clickEffect?: boolean
   /** Override initial delay before cursor appears (default: 800ms) */
   delayMs?: number
   /** Override linger duration on target (default: 1400ms) */
@@ -97,7 +99,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     prompt: 'Click on "Retail And Wholesale Trade Managers" to compare skills and see transition pathways.',
     completionEvent: 'secondNodeSelected',
     autoAdvance: true,
-    cursorAnimation: { target: 'neighbour', mode: 'hint' },
+    cursorAnimation: { target: 'neighbour', mode: 'hint', clickEffect: true },
     preferredNeighbourId: '1421',
     resolveSpotlight: null,
   },

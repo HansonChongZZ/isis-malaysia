@@ -29,8 +29,9 @@ interface UseTutorialReturn {
   spotlight: SpotlightTarget | null
   advance: () => void
   skip: () => void
-  cursorAnimProps: { from: { x: number; y: number }; to: { x: number; y: number }; delayMs?: number; lingerMs?: number } | null
+  cursorAnimProps: { from: { x: number; y: number }; to: { x: number; y: number }; clickEffect?: boolean; delayMs?: number; lingerMs?: number } | null
   simulatedHoverId: string | null
+  pulseNodeId: string | null
   onCursorArrive: () => void
   onCursorComplete: () => void
 }
@@ -232,6 +233,7 @@ export function useTutorial({
     return {
       from,
       to,
+      clickEffect: stepConfig.cursorAnimation.clickEffect,
       delayMs: stepConfig.cursorAnimation.delayMs,
       lingerMs: stepConfig.cursorAnimation.lingerMs,
     }
@@ -322,10 +324,21 @@ export function useTutorial({
     setSimulatedHoverId(null)
   }, [])
 
+  // Pulse ring on target node when cursor is in hint mode (e.g. step 3 click)
+  const pulseNodeId = useMemo(() => {
+    if (!stepConfig?.cursorAnimation || stepConfig.cursorAnimation.mode !== 'hint') return null
+    if (!cursorAnimProps) return null
+    const { target } = stepConfig.cursorAnimation
+    if (target === 'neighbour') return resolvedNeighbourId
+    if (target === 'selectedNode') return selectedNodeId
+    return null
+  }, [stepConfig, cursorAnimProps, resolvedNeighbourId, selectedNodeId])
+
   return {
     isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip,
     cursorAnimProps,
     simulatedHoverId,
+    pulseNodeId,
     onCursorArrive,
     onCursorComplete,
   }

@@ -511,6 +511,7 @@ export default function HomePage() {
             onBadgeInteract={() => setBadgeInteracted(true)}
             disableZoom={tutorialPhase === 'spotlight' && tutorial.isActive}
             simulatedHoverId={tutorial.simulatedHoverId}
+            pulseNodeId={tutorial.pulseNodeId}
           />
         )}
 
