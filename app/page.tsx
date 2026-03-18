@@ -67,6 +67,15 @@ export default function HomePage() {
     isPanelOpen,
   })
 
+  // Open search dropdown when spotlight starts at the search step
+  useEffect(() => {
+    if (tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.stepConfig?.id === 'search') {
+      requestAnimationFrame(() => {
+        occupationSearchRef.current?.openDropdown()
+      })
+    }
+  }, [tutorialPhase, tutorial.isActive, tutorial.stepConfig?.id])
+
   useEffect(() => {
     if (tutorialPhase !== 'spotlight' || !tutorial.isActive) return
     const measure = () => {
