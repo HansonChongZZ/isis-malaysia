@@ -56,16 +56,16 @@ export default function TutorialOverlay({
         opacity: isActive ? 1 : 0,
       }}
     >
-      {/* SVG dim layer with spotlight cutout */}
-      <svg className="absolute inset-0 w-full h-full">
-        <defs>
-          <filter id={filterId}>
-            <feGaussianBlur stdDeviation="8" />
-          </filter>
-          <mask id={maskId}>
-            <rect width="100%" height="100%" fill="white" />
-            {spotlight && (
-              spotlight.shape === 'circle' ? (
+      {/* SVG dim layer with spotlight cutout — hidden when no spotlight */}
+      {spotlight && (
+        <svg className="absolute inset-0 w-full h-full">
+          <defs>
+            <filter id={filterId}>
+              <feGaussianBlur stdDeviation="8" />
+            </filter>
+            <mask id={maskId}>
+              <rect width="100%" height="100%" fill="white" />
+              {spotlight.shape === 'circle' ? (
                 <circle
                   cx={spotlight.x}
                   cy={spotlight.y}
@@ -85,17 +85,17 @@ export default function TutorialOverlay({
                   filter={`url(#${filterId})`}
                   className="transition-all duration-300 ease-out"
                 />
-              )
-            )}
-          </mask>
-        </defs>
-        <rect
-          width="100%"
-          height="100%"
-          fill="rgba(0,0,0,0.6)"
-          mask={`url(#${maskId})`}
-        />
-      </svg>
+              )}
+            </mask>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            fill="rgba(0,0,0,0.6)"
+            mask={`url(#${maskId})`}
+          />
+        </svg>
+      )}
 
       {/* Tooltip */}
       <div

@@ -95,7 +95,8 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     completionEvent: 'manual',
     cursorAnimation: { target: 'neighbour' },
     preferredNeighbourId: '1421',
-    resolveSpotlight: neighbourhoodSpotlight,
+    resolveSpotlight: null,
+    clearSpotlight: true,
   },
   {
     id: 'click',
