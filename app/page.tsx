@@ -10,8 +10,9 @@ import GraphControls from "@/components/graph/GraphControls"
 import OccupationSearch, { type OccupationSearchHandle } from '@/components/graph/OccupationSearch'
 import OccupationPanel from "@/components/panel/OccupationPanel"
 import TutorialOverlay from '@/components/tutorial/TutorialOverlay'
+import TutorialModal from '@/components/tutorial/TutorialModal'
 import { useTutorial, type OccupationGraphHandle } from '@/components/tutorial/useTutorial'
-import { TUTORIAL_STEPS } from '@/components/tutorial/tutorialConfig'
+import { TUTORIAL_STEPS, STEP_IDX } from '@/components/tutorial/tutorialConfig'
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
 const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
@@ -50,15 +51,16 @@ export default function HomePage() {
   const [heroSearchRectState, setHeroSearchRectState] = useState<DOMRect | null>(null)
   const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null)
   const [badgeInteracted, setBadgeInteracted] = useState(false)
+  const [tutorialPhase, setTutorialPhase] = useState<'modal' | 'spotlight' | 'done'>('modal')
 
   const allNodeIds = useMemo(() => nodes.map(n => n.id), [nodes])
 
   const tutorial = useTutorial({
+    startActive: tutorialPhase === 'spotlight',
     selectedNodeId,
     secondSelectedNodeId,
     hoveredNodeId,
     edges,
-    allNodeIds,
     graphContainerRect,
     heroSearchRect: heroSearchRectState,
     graphHandleRef,
@@ -68,7 +70,7 @@ export default function HomePage() {
   })
 
   useEffect(() => {
-    if (!tutorial.isActive) return
+    if (tutorialPhase !== 'spotlight' || !tutorial.isActive) return
     const measure = () => {
       if (graphContainerRef.current) {
         setGraphContainerRect(graphContainerRef.current.getBoundingClientRect())
@@ -80,7 +82,7 @@ export default function HomePage() {
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
-  }, [tutorial.isActive, tutorial.currentStep])
+  }, [tutorialPhase, tutorial.isActive, tutorial.currentStep])
 
   const handleGraphReady = useCallback((handle: OccupationGraphHandle) => {
     graphHandleRef.current = handle
@@ -88,6 +90,7 @@ export default function HomePage() {
 
   const handleTutorialSkip = () => {
     tutorial.skip()
+    setTutorialPhase('done')
     setSelectedNodeId(null)
     setSecondSelectedNodeId(null)
     setPanelNodeId(null)
@@ -96,11 +99,11 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    if (tutorial.isActive && viewMode !== 'force') {
+    if (tutorialPhase === 'spotlight' && tutorial.isActive && viewMode !== 'force') {
       setViewMode('force')
       setLayoutMode('ring')
     }
-  }, [tutorial.isActive, viewMode])
+  }, [tutorialPhase, tutorial.isActive, viewMode])
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -396,7 +399,7 @@ export default function HomePage() {
   }
 
   const handleViewModeChange = (mode: ViewMode) => {
-    if (tutorial.isActive) return
+    if (tutorialPhase === 'spotlight' && tutorial.isActive) return
     setViewMode(mode)
     if (mode === 'circular') {
       // When switching to circular, restore radial if a node is selected
@@ -494,9 +497,9 @@ export default function HomePage() {
             colourByGroup={colourByGroup}
             onNodeHover={setHoveredNodeId}
             onReady={handleGraphReady}
-            forceSelectionMode={tutorial.isActive && tutorial.currentStep <= 2 ? 'single' : null}
-            disableInteraction={tutorial.isActive && tutorial.currentStep <= 1}
-            disableClick={tutorial.isActive && tutorial.currentStep <= 2}
+            forceSelectionMode={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.hover ? 'single' : null}
+            disableInteraction={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.search}
+            disableClick={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.hover}
             onBadgePosChange={setBadgePos}
             onBadgeInteract={() => setBadgeInteracted(true)}
             disableZoom={tutorial.isActive}
@@ -512,7 +515,7 @@ export default function HomePage() {
                 occupations={occupationList}
                 selectedOccupation={selectedNodeId}
                 onOccupationSelect={handleSearchSelect}
-                onDismiss={tutorial.isActive && tutorial.currentStep === 1 ? undefined : () => setHeroDismissed(true)}
+                onDismiss={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.stepConfig?.id === 'search' ? undefined : () => setHeroDismissed(true)}
                 hero
                 nodes={nodes}
               />
@@ -526,6 +529,12 @@ export default function HomePage() {
             {nodes.length} occupations · {edges.length.toLocaleString()} skill edges
           </div>
         )}
+
+        <TutorialModal
+          open={tutorialPhase === 'modal'}
+          onComplete={() => setTutorialPhase('spotlight')}
+          onSkip={() => setTutorialPhase('done')}
+        />
 
         {tutorial.isVisible && tutorial.stepConfig && (
           <TutorialOverlay
