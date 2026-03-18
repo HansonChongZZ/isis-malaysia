@@ -53,8 +53,6 @@ export default function HomePage() {
   const [badgeInteracted, setBadgeInteracted] = useState(false)
   const [tutorialPhase, setTutorialPhase] = useState<'modal' | 'spotlight' | 'done'>('modal')
 
-  const allNodeIds = useMemo(() => nodes.map(n => n.id), [nodes])
-
   const tutorial = useTutorial({
     startActive: tutorialPhase === 'spotlight',
     selectedNodeId,
