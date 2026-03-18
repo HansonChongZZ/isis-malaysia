@@ -235,7 +235,9 @@ export function useTutorial({
 
   const onCursorArrive = useCallback(() => {
     if (!stepConfig?.cursorAnimation) return
-    const { target } = stepConfig.cursorAnimation
+    const { target, mode } = stepConfig.cursorAnimation
+    // In hint mode, cursor just points — no effects triggered
+    if (mode === 'hint') return
     if (target === 'neighbour' && resolvedNeighbourId) {
       setSimulatedHoverId(resolvedNeighbourId)
     }
@@ -243,10 +245,11 @@ export function useTutorial({
   }, [stepConfig, resolvedNeighbourId])
 
   const onCursorComplete = useCallback(() => {
+    if (stepConfig?.cursorAnimation?.mode === 'hint') return
     // Don't clear simulatedHoverId — hover effect stays while cursor loops.
     // It gets cleared on advance() or skip().
     setIsConfirming(true)
-  }, [])
+  }, [stepConfig])
 
   // Fallback: if step has cursorAnimation but coordinates couldn't resolve,
   // skip the animation and show "Got it, next" immediately

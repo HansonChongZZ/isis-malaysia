@@ -13,9 +13,11 @@ export interface SpotlightTarget {
 export interface CursorAnimation {
   /** Which element the cursor moves to. Resolved to screen coords at runtime. */
   target: 'neighbour' | 'badge' | 'selectedNode'
-  /** Override initial delay before cursor appears (default: 600ms) */
+  /** 'demo' triggers effects on arrive (e.g. simulated hover). 'hint' just points visually. Default: 'demo'. */
+  mode?: 'demo' | 'hint'
+  /** Override initial delay before cursor appears (default: 800ms) */
   delayMs?: number
-  /** Override linger duration on target (default: 1000ms) */
+  /** Override linger duration on target (default: 1400ms) */
   lingerMs?: number
 }
 
@@ -90,9 +92,10 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     id: 'click',
-    prompt: 'Click a connected occupation to compare skills and see transition pathways.',
+    prompt: 'Click on "Sales and Marketing Managers" to compare skills and see transition pathways.',
     completionEvent: 'secondNodeSelected',
     autoAdvance: true,
+    cursorAnimation: { target: 'neighbour', mode: 'hint' },
     resolveSpotlight: null,
   },
   {
