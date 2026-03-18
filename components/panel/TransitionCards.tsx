@@ -1,42 +1,42 @@
-"use client"
+'use client';
 
-import { useMemo, useState, useEffect } from "react"
+import { useMemo, useState, useEffect } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
   getFilteredRowModel,
   type FilterFn,
-} from "@tanstack/react-table"
-import type { OccupationDetail } from "@/lib/types"
-import TransitionCard from "./TransitionCard"
+} from '@tanstack/react-table';
+import type { OccupationDetail } from '@/lib/types';
+import TransitionCard from './TransitionCard';
 
 export type TransitionRow = {
-  id: string
-  label: string
-  weight: number
-  aiExposure: number
-  quartile: string
-  wage: number | null
-}
+  id: string;
+  label: string;
+  weight: number;
+  aiExposure: number;
+  quartile: string;
+  wage: number | null;
+};
 
 interface TransitionCardsProps {
-  transitions: TransitionRow[]
-  occupations: Record<string, OccupationDetail>
-  primarySkills: Set<string>
-  onCardClick: (id: string) => void
+  transitions: TransitionRow[];
+  occupations: Record<string, OccupationDetail>;
+  primarySkills: Set<string>;
+  onCardClick: (id: string) => void;
 }
 
 const fuzzyFilter: FilterFn<TransitionRow> = (
   row,
   _columnId,
-  filterValue: string
+  filterValue: string,
 ) => {
-  const q = filterValue.toLowerCase()
+  const q = filterValue.toLowerCase();
   return (
     row.original.label.toLowerCase().includes(q) ||
     row.original.id.toLowerCase().includes(q)
-  )
-}
+  );
+};
 
 export default function TransitionCards({
   transitions,
@@ -44,12 +44,12 @@ export default function TransitionCards({
   primarySkills,
   onCardClick,
 }: TransitionCardsProps) {
-  const [filterQuery, setFilterQuery] = useState("")
+  const [filterQuery, setFilterQuery] = useState('');
 
   // Reset filter when transitions change (new primary occupation)
   useEffect(() => {
-    setFilterQuery("")
-  }, [transitions])
+    setFilterQuery('');
+  }, [transitions]);
 
   // Compute shared/develop specific skill counts per transition row
   // Compute specific skill preview per transition row, sorted shared-first
@@ -57,48 +57,69 @@ export default function TransitionCards({
     const map = new Map<
       string,
       { preview: string[]; sharedSpecific: number; totalSpecific: number }
-    >()
+    >();
     for (const t of transitions) {
-      const occ = occupations[t.id]
+      const occ = occupations[t.id];
       if (!occ) {
-        map.set(t.id, { preview: [], sharedSpecific: 0, totalSpecific: 0 })
-        continue
+        map.set(t.id, { preview: [], sharedSpecific: 0, totalSpecific: 0 });
+        continue;
       }
       const sharedSpecific = occ.specificSkills.filter((s) =>
-        primarySkills.has(s.toLowerCase())
-      ).length
+        primarySkills.has(s.toLowerCase()),
+      ).length;
       // Sort shared first, then to-develop
       const sorted = [...occ.specificSkills].sort((a, b) => {
-        const aShared = primarySkills.has(a.toLowerCase()) ? 0 : 1
-        const bShared = primarySkills.has(b.toLowerCase()) ? 0 : 1
-        return aShared - bShared
-      })
+        const aShared = primarySkills.has(a.toLowerCase()) ? 0 : 1;
+        const bShared = primarySkills.has(b.toLowerCase()) ? 0 : 1;
+        return aShared - bShared;
+      });
       map.set(t.id, {
         preview: sorted.slice(0, 4),
         sharedSpecific,
         totalSpecific: occ.specificSkills.length,
-      })
+      });
     }
-    return map
-  }, [transitions, occupations, primarySkills])
+    return map;
+  }, [transitions, occupations, primarySkills]);
+
+  // Sort by skills overlap, then AI exposure, then wage
+  const sortedTransitions = useMemo(() => {
+    return [...transitions].sort((a, b) => {
+      const pa = cardPreviews.get(a.id);
+      const pb = cardPreviews.get(b.id);
+      const sharedA = pa?.sharedSpecific ?? 0;
+      const sharedB = pb?.sharedSpecific ?? 0;
+
+      // 1. Skills in common — most to least
+      if (sharedB !== sharedA) return sharedB - sharedA;
+
+      // 2. Skills to develop — least to most
+      const developA = (pa?.totalSpecific ?? 0) - sharedA;
+      const developB = (pb?.totalSpecific ?? 0) - sharedB;
+      if (developA !== developB) return developA - developB;
+
+      // 3. AI exposure — lowest to highest
+      if (a.aiExposure !== b.aiExposure) return a.aiExposure - b.aiExposure;
+
+      // 4. Wage — largest to smallest (nulls last)
+      return (b.wage ?? -Infinity) - (a.wage ?? -Infinity);
+    });
+  }, [transitions, cardPreviews]);
 
   // Minimal column definition (needed for tanstack table filtering/pagination)
-  const columns = useMemo(
-    () => [{ accessorKey: "id" as const }],
-    []
-  )
+  const columns = useMemo(() => [{ accessorKey: 'id' as const }], []);
 
   const table = useReactTable({
-    data: transitions,
+    data: sortedTransitions,
     columns,
     globalFilterFn: fuzzyFilter,
     state: { globalFilter: filterQuery },
     onGlobalFilterChange: setFilterQuery,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-  })
+  });
 
-  const filteredCount = table.getFilteredRowModel().rows.length
+  const filteredCount = table.getFilteredRowModel().rows.length;
 
   return (
     <div className="flex flex-col min-h-0 md:h-full">
@@ -111,9 +132,6 @@ export default function TransitionCards({
             : transitions.length}
           )
         </h3>
-        <p className="text-xs text-muted-foreground">
-          Sorted by shared skills · AI risk · wage
-        </p>
         <input
           type="text"
           value={filterQuery}
@@ -127,8 +145,8 @@ export default function TransitionCards({
       <div className="flex-1 min-h-0 md:overflow-y-auto px-5 pb-3 space-y-2">
         {table.getFilteredRowModel().rows.length ? (
           table.getFilteredRowModel().rows.map((row) => {
-            const t = row.original
-            const preview = cardPreviews.get(t.id)
+            const t = row.original;
+            const preview = cardPreviews.get(t.id);
             return (
               <TransitionCard
                 key={t.id}
@@ -142,17 +160,16 @@ export default function TransitionCards({
                 primarySkills={primarySkills}
                 onClick={() => onCardClick(t.id)}
               />
-            )
+            );
           })
         ) : (
           <div className="text-center text-muted-foreground py-8 text-sm">
             {filterQuery
-              ? "No occupations match your search."
-              : "No connected occupations found."}
+              ? 'No occupations match your search.'
+              : 'No connected occupations found.'}
           </div>
         )}
       </div>
-
     </div>
-  )
+  );
 }

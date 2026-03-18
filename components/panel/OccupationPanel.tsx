@@ -68,11 +68,6 @@ export default function OccupationPanel({
       })
     }
 
-    rows.sort((a, b) => {
-      if (b.weight !== a.weight) return b.weight - a.weight
-      if (a.aiExposure !== b.aiExposure) return a.aiExposure - b.aiExposure
-      return (b.wage ?? -Infinity) - (a.wage ?? -Infinity)
-    })
     return rows
   }, [nodeId, nodes, edges])
 
