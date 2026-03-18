@@ -1,5 +1,5 @@
-import { Badge } from '@/components/ui/badge';
 import { Pin } from 'lucide-react';
+import SkillBadgePopover from '@/components/SkillBadgePopover';
 
 interface EdgeSkillsTooltipProps {
   labelA: string;
@@ -48,12 +48,12 @@ export default function EdgeSkillsTooltip({
           </p>
           <div className="flex flex-wrap gap-1">
             {toDevelopSpecific.map((skill) => (
-              <Badge
+              <SkillBadgePopover
                 key={skill}
-                className="text-xs bg-blue-500/15 text-blue-400 border-blue-500/30"
-              >
-                {skill}
-              </Badge>
+                skill={skill}
+                type="specific"
+                variant="to-develop"
+              />
             ))}
           </div>
         </div>
