@@ -138,16 +138,12 @@ export default function OccupationGraph({
   const [lastHoveredElement, setLastHoveredElement] = useState<'badge' | 'labelA' | 'labelB'>('badge');
   const [pairLabelPositions, setPairLabelPositions] = useState<{
     a: {
-      x: number;
-      y: number;
       label: string;
       aiExposure: number;
       mirroredLeft: number;
       mirroredTop: number;
     };
     b: {
-      x: number;
-      y: number;
       label: string;
       aiExposure: number;
       mirroredLeft: number;
@@ -1032,8 +1028,8 @@ export default function OccupationGraph({
 
       setBadgePos(adjustedBadge);
       setPairLabelPositions({
-        a: { ...screenA, label: nodeA.label, aiExposure: nodeA.aiExposure, mirroredLeft: mirroredA.left, mirroredTop: mirroredA.top },
-        b: { ...screenB, label: nodeB.label, aiExposure: nodeB.aiExposure, mirroredLeft: mirroredB.left, mirroredTop: mirroredB.top },
+        a: { label: nodeA.label, aiExposure: nodeA.aiExposure, mirroredLeft: mirroredA.left, mirroredTop: mirroredA.top },
+        b: { label: nodeB.label, aiExposure: nodeB.aiExposure, mirroredLeft: mirroredB.left, mirroredTop: mirroredB.top },
       });
 
       const overlap = checkBoundingBoxOverlap([
@@ -1045,6 +1041,12 @@ export default function OccupationGraph({
     },
     [],
   );
+
+  // Stable ref so zoom handler always calls the latest updatePairPositions
+  const updatePairPositionsRef = useRef(updatePairPositions);
+  useEffect(() => {
+    updatePairPositionsRef.current = updatePairPositions;
+  }, [updatePairPositions]);
 
   // Update badge + label positions when entering/leaving pair mode
   useEffect(() => {
@@ -1182,7 +1184,7 @@ export default function OccupationGraph({
           const nodeA = nodeById.current.get(selectedNodeIdRef.current);
           const nodeB = nodeById.current.get(secondSelectedNodeIdRef.current);
           if (nodeA && nodeB) {
-            updatePairPositions(nodeA, nodeB, event.transform);
+            updatePairPositionsRef.current(nodeA, nodeB, event.transform);
           }
         }
       });
@@ -1665,12 +1667,10 @@ export default function OccupationGraph({
                 if (id) onNodeSelect(id);
               }}
               onMouseEnter={() => {
+                // lastHoveredElement state stays — last-touched wins
                 if (hasOverlap) {
                   setLastHoveredElement(i === 0 ? 'labelA' : 'labelB');
                 }
-              }}
-              onMouseLeave={() => {
-                // lastHoveredElement state stays — last-touched wins
               }}
               style={{
                 left: pos.mirroredLeft,
@@ -1682,7 +1682,7 @@ export default function OccupationGraph({
                     : undefined,
                 opacity: hasOverlap && lastHoveredElement !== (i === 0 ? 'labelA' : 'labelB') ? 0.75 : 1,
                 zIndex: hasOverlap && lastHoveredElement === (i === 0 ? 'labelA' : 'labelB') ? 30 : 20,
-                transition: 'opacity 150ms ease, z-index 150ms ease',
+                transition: 'opacity 150ms ease',
               }}
             >
               <p className="font-semibold leading-tight">{pos.label}</p>
@@ -1716,7 +1716,7 @@ export default function OccupationGraph({
             transform: 'translate(-50%, -50%)',
             opacity: hasOverlap && lastHoveredElement !== 'badge' ? 0.75 : 1,
             zIndex: hasOverlap && lastHoveredElement === 'badge' ? 30 : 20,
-            transition: 'opacity 150ms ease, z-index 150ms ease',
+            transition: 'opacity 150ms ease',
           }}
         >
           <div
