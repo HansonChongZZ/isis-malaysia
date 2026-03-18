@@ -94,6 +94,10 @@ export function useTutorial({
 
     if (neighbours.length === 0) return null
 
+    // If the current step specifies a preferred neighbour and it's in the list, use it
+    const preferred = stepConfig?.preferredNeighbourId
+    if (preferred && neighbours.some(n => n.id === preferred)) return preferred
+
     const maxWeight = Math.max(...neighbours.map(n => n.weight))
     const topNeighbours = neighbours.filter(n => n.weight === maxWeight)
 
@@ -114,7 +118,7 @@ export function useTutorial({
       }
     }
     return closest.id
-  }, [selectedNodeId, edges, getNodeScreenCoords])
+  }, [selectedNodeId, edges, getNodeScreenCoords, stepConfig])
 
   const lockedNeighbourRef = useRef<string | null>(null)
   useEffect(() => {

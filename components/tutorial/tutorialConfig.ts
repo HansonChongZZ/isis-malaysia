@@ -28,6 +28,7 @@ export interface TutorialStep {
   autoAdvance?: boolean // Skip confirmation, advance immediately on completion
   resolveSpotlight: ((context: SpotlightContext) => SpotlightTarget | null) | null // null = keep previous spotlight
   cursorAnimation?: CursorAnimation
+  preferredNeighbourId?: string // Force a specific neighbour for cursor/spotlight targeting
 }
 
 export interface SpotlightContext {
@@ -85,17 +86,19 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     id: 'hover',
-    prompt: 'Watch how hovering reveals connections between occupations.',
+    prompt: 'Watch how hovering over "Retail And Wholesale Trade Managers" reveals connections.',
     completionEvent: 'manual',
     cursorAnimation: { target: 'neighbour' },
+    preferredNeighbourId: '1421',
     resolveSpotlight: neighbourhoodSpotlight,
   },
   {
     id: 'click',
-    prompt: 'Click on "Sales and Marketing Managers" to compare skills and see transition pathways.',
+    prompt: 'Click on "Retail And Wholesale Trade Managers" to compare skills and see transition pathways.',
     completionEvent: 'secondNodeSelected',
     autoAdvance: true,
     cursorAnimation: { target: 'neighbour', mode: 'hint' },
+    preferredNeighbourId: '1421',
     resolveSpotlight: null,
   },
   {
