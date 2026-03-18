@@ -243,7 +243,8 @@ export function useTutorial({
   }, [stepConfig, resolvedNeighbourId])
 
   const onCursorComplete = useCallback(() => {
-    setSimulatedHoverId(null)
+    // Don't clear simulatedHoverId — hover effect stays while cursor loops.
+    // It gets cleared on advance() or skip().
     setIsConfirming(true)
   }, [])
 
@@ -300,6 +301,7 @@ export function useTutorial({
 
   const advance = useCallback(() => {
     setIsConfirming(false)
+    setSimulatedHoverId(null)
     if (currentStep < TUTORIAL_STEPS.length - 1) {
       setCurrentStep(prev => prev + 1)
     } else {

@@ -31,13 +31,14 @@ function CursorIcon() {
 export default function VirtualCursor({
   from,
   to,
-  delayMs = 600,
-  lingerMs = 1000,
+  delayMs = 800,
+  lingerMs = 1400,
   onArrive,
   onComplete,
 }: VirtualCursorProps) {
-  const [phase, setPhase] = useState<'waiting' | 'fadeIn' | 'moving' | 'lingering' | 'fadeOut' | 'done'>('waiting')
+  const [phase, setPhase] = useState<'waiting' | 'fadeIn' | 'moving' | 'lingering' | 'fadeOut'>('waiting')
   const [mounted, setMounted] = useState(false)
+  const hasFiredRef = useRef(false)
 
   const [prefersReducedMotion] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -48,12 +49,12 @@ export default function VirtualCursor({
     setMounted(true)
   }, [])
 
-  // Phase state machine
+  // Phase state machine — loops: fadeOut → waiting → fadeIn → moving → lingering → fadeOut → ...
+  // onArrive/onComplete only fire on the first cycle
   useEffect(() => {
     if (!mounted) return
 
     if (prefersReducedMotion) {
-      // Skip animation: go straight to arrive → linger → complete
       const timer = setTimeout(() => {
         onArrive()
         innerTimerRef.current = setTimeout(() => {
@@ -67,30 +68,37 @@ export default function VirtualCursor({
     }
 
     if (phase === 'waiting') {
-      const timer = setTimeout(() => setPhase('fadeIn'), delayMs)
+      // Shorter pause between loops, full delay on first appearance
+      const delay = hasFiredRef.current ? 600 : delayMs
+      const timer = setTimeout(() => setPhase('fadeIn'), delay)
       return () => clearTimeout(timer)
     }
     if (phase === 'fadeIn') {
-      // Fade-in duration: 200ms, then start moving
-      const timer = setTimeout(() => setPhase('moving'), 200)
+      const timer = setTimeout(() => setPhase('moving'), 350)
       return () => clearTimeout(timer)
     }
     // 'moving' phase is handled by onAnimationComplete on the motion.div
     if (phase === 'lingering') {
-      onArrive()
+      if (!hasFiredRef.current) {
+        onArrive()
+      }
       const timer = setTimeout(() => setPhase('fadeOut'), lingerMs)
       return () => clearTimeout(timer)
     }
     if (phase === 'fadeOut') {
       const timer = setTimeout(() => {
-        setPhase('done')
-        onComplete()
-      }, 300)
+        if (!hasFiredRef.current) {
+          hasFiredRef.current = true
+          onComplete()
+        }
+        // Loop back to waiting
+        setPhase('waiting')
+      }, 400)
       return () => clearTimeout(timer)
     }
   }, [phase, mounted, delayMs, lingerMs, prefersReducedMotion, onArrive, onComplete])
 
-  if (!mounted || phase === 'done' || phase === 'waiting' || prefersReducedMotion) return null
+  if (!mounted || phase === 'waiting' || prefersReducedMotion) return null
 
   const opacity = phase === 'fadeIn' || phase === 'moving' || phase === 'lingering' ? 1 : 0
 
@@ -113,8 +121,8 @@ export default function VirtualCursor({
       }}
       transition={
         phase === 'moving'
-          ? { x: { type: 'spring', damping: 25, stiffness: 120 }, y: { type: 'spring', damping: 25, stiffness: 120 }, opacity: { duration: 0.2 } }
-          : { opacity: { duration: phase === 'fadeOut' ? 0.3 : 0.2 }, x: { duration: 0 }, y: { duration: 0 } }
+          ? { x: { type: 'spring', damping: 30, stiffness: 60 }, y: { type: 'spring', damping: 30, stiffness: 60 }, opacity: { duration: 0.35 } }
+          : { opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 }, x: { duration: 0 }, y: { duration: 0 } }
       }
       onAnimationComplete={() => {
         if (phase === 'moving') {
