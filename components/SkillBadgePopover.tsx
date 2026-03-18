@@ -100,13 +100,14 @@ export default function SkillBadgePopover({
   const pool = type === 'basic' ? basicSkills : specificSkills;
   const info = pool[skill];
   const style = BADGE_STYLES[variant];
-  const isOpen = openSkill === skill;
+  const skillKey = `${type}:${skill}`;
+  const isOpen = openSkill === skillKey;
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
-      setOpenSkill(open ? skill : null);
+      setOpenSkill(open ? skillKey : null);
     },
-    [skill, setOpenSkill],
+    [skillKey, setOpenSkill],
   );
 
   /* No data → plain badge (current behaviour) */
