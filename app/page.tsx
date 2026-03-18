@@ -500,7 +500,7 @@ export default function HomePage() {
             disableClick={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.hover}
             onBadgePosChange={setBadgePos}
             onBadgeInteract={() => setBadgeInteracted(true)}
-            disableZoom={tutorial.isActive}
+            disableZoom={tutorialPhase === 'spotlight' && tutorial.isActive}
           />
         )}
 
