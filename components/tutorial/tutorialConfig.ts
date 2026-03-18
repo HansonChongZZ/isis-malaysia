@@ -59,11 +59,14 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     autoAdvance: true,
     resolveSpotlight: ({ heroSearchRect }) => {
       if (!heroSearchRect) return null
+      // Extend downward to cover the dropdown list (max-h-96 = 384px + gap)
+      const dropdownHeight = 400
+      const totalHeight = heroSearchRect.height + dropdownHeight
       return {
         x: heroSearchRect.left + heroSearchRect.width / 2,
-        y: heroSearchRect.top + heroSearchRect.height / 2,
+        y: heroSearchRect.top + totalHeight / 2,
         width: heroSearchRect.width + 16,
-        height: heroSearchRect.height + 16,
+        height: totalHeight + 16,
         shape: 'rect',
       }
     },
