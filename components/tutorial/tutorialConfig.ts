@@ -112,9 +112,11 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     id: 'detail',
-    prompt: 'Click on one of the occupation nodes for further details.',
+    prompt: 'Click on "Retail And Wholesale Trade Managers" to see further details.',
     completionEvent: 'panelOpened',
     autoAdvance: true,
+    cursorAnimation: { target: 'neighbour', mode: 'hint', clickEffect: true },
+    preferredNeighbourId: '1421',
     resolveSpotlight: null,
   },
 ]
