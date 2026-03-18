@@ -52,6 +52,7 @@ export default function HomePage() {
   const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null)
   const [badgeInteracted, setBadgeInteracted] = useState(false)
   const [tutorialPhase, setTutorialPhase] = useState<'modal' | 'spotlight' | 'done'>('modal')
+  const [isComparing, setIsComparing] = useState(false)
 
   const tutorial = useTutorial({
     startActive: tutorialPhase === 'spotlight',
@@ -65,6 +66,7 @@ export default function HomePage() {
     badgePos,
     badgeInteracted,
     isPanelOpen,
+    isComparing,
   })
 
   // Open search dropdown when spotlight starts at the search step
@@ -103,6 +105,9 @@ export default function HomePage() {
     setPanelNodeId(null)
     setIsPanelOpen(false)
     setOpenedViaSecondary(false)
+    setIsComparing(false)
+    setViewMode('force')
+    setLayoutMode('ring')
   }
 
   useEffect(() => {
@@ -111,6 +116,21 @@ export default function HomePage() {
       setLayoutMode('ring')
     }
   }, [tutorialPhase, tutorial.isActive, viewMode])
+
+  // Detect tutorial completion (reached last step and became inactive)
+  useEffect(() => {
+    if (tutorialPhase === 'spotlight' && !tutorial.isActive && tutorial.currentStep === TUTORIAL_STEPS.length - 1) {
+      setTutorialPhase('done')
+      setSelectedNodeId(null)
+      setSecondSelectedNodeId(null)
+      setPanelNodeId(null)
+      setIsPanelOpen(false)
+      setOpenedViaSecondary(false)
+      setIsComparing(false)
+      setViewMode('force')
+      setLayoutMode('ring')
+    }
+  }, [tutorialPhase, tutorial.isActive, tutorial.currentStep])
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -557,6 +577,7 @@ export default function HomePage() {
             cursorAnimProps={tutorial.cursorAnimProps}
             onCursorArrive={tutorial.onCursorArrive}
             onCursorComplete={tutorial.onCursorComplete}
+            isLastStep={tutorial.currentStep === TUTORIAL_STEPS.length - 1}
           />
         )}
       </div>
@@ -573,8 +594,10 @@ export default function HomePage() {
           setIsPanelOpen(false)
           setPanelNodeId(null)
           setOpenedViaSecondary(false)
+          setIsComparing(false)
         }}
         initialComparisonId={openedViaSecondary ? secondSelectedNodeId : null}
+        onComparisonChange={setIsComparing}
       />
     </div>
   )
