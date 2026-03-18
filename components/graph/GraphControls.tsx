@@ -99,8 +99,8 @@ export default function GraphControls({
     <div className="relative z-20 flex flex-wrap gap-2 px-4 py-2.5 bg-card/60 dark:bg-card/80 backdrop-blur-lg border-b border-border shrink-0">
       {/* Occupation search — full row on mobile, constrained on desktop */}
       <div className={cn(
-        "flex-1 min-w-0 w-full sm:w-auto sm:max-w-sm",
-        hideSearchOnDesktop && "sm:hidden"
+        "flex-1 min-w-0 w-full md:w-auto md:max-w-sm",
+        hideSearchOnDesktop && "md:hidden"
       )}>
         <OccupationSearch
           occupations={occupations}
@@ -113,7 +113,7 @@ export default function GraphControls({
       {onShowHeroSearch && !selectedOccupation && (
         <button
           onClick={onShowHeroSearch}
-          className="hidden sm:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md border border-border hover:bg-muted/50 transition-colors"
+          className="hidden md:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground px-3 py-1.5 rounded-md border border-border hover:bg-muted/50 transition-colors"
           aria-label="Open search"
         >
           <Search className="w-4 h-4" />
@@ -122,9 +122,9 @@ export default function GraphControls({
       )}
 
       {/* Filter row — wraps below search on mobile */}
-      <div className="flex gap-2 flex-1 flex-wrap sm:flex-nowrap items-center min-w-0">
+      <div className="flex gap-2 flex-1 flex-wrap md:flex-nowrap items-center min-w-0">
         {/* Skill filter */}
-        <div className="min-w-0 w-full sm:w-auto sm:max-w-64">
+        <div className="min-w-0 w-full md:w-auto md:max-w-64">
           <Combobox
             items={sortedSkills}
             multiple
