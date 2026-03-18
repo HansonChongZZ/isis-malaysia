@@ -100,6 +100,16 @@ export default function VirtualCursor({
     }
   }, [phase, mounted, delayMs, lingerMs, prefersReducedMotion, onArrive, onComplete])
 
+  // Delay click animation until cursor has visibly settled on target
+  const [clickActive, setClickActive] = useState(false)
+  useEffect(() => {
+    if (clickEffect && phase === 'lingering') {
+      const timer = setTimeout(() => setClickActive(true), 300)
+      return () => clearTimeout(timer)
+    }
+    setClickActive(false)
+  }, [clickEffect, phase])
+
   if (!mounted || phase === 'waiting' || prefersReducedMotion) return null
 
   const opacity = phase === 'fadeIn' || phase === 'moving' || phase === 'lingering' ? 1 : 0
@@ -107,9 +117,7 @@ export default function VirtualCursor({
   // Position: during fadeIn use `from`, during moving/lingering/fadeOut animate to `to`
   const targetPos = phase === 'fadeIn' ? from : to
 
-  // Click effect: press-down scale during linger
-  const showClickEffect = clickEffect && phase === 'lingering'
-  const scale = showClickEffect ? [1, 0.7, 1] : 1
+  const scale = clickActive ? [1, 0.7, 1] : 1
 
   const cursor = (
     <motion.div
@@ -134,7 +142,7 @@ export default function VirtualCursor({
               opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 },
               x: { duration: 0 },
               y: { duration: 0 },
-              scale: showClickEffect
+              scale: clickActive
                 ? { duration: 0.4, times: [0, 0.4, 1], ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.6 }
                 : { duration: 0 },
             }
