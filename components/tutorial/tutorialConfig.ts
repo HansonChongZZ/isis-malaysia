@@ -1,4 +1,4 @@
-export type CompletionEvent = 'manual' | 'nodeSelected' | 'nodeHovered' | 'secondNodeSelected' | 'badgeInteracted' | 'panelOpened'
+export type CompletionEvent = 'manual' | 'nodeSelected' | 'secondNodeSelected' | 'badgeInteracted' | 'panelOpened'
 
 export type SpotlightShape = 'circle' | 'rect'
 
@@ -10,12 +10,22 @@ export interface SpotlightTarget {
   shape: SpotlightShape
 }
 
+export interface CursorAnimation {
+  /** Which element the cursor moves to. Resolved to screen coords at runtime. */
+  target: 'neighbour' | 'badge' | 'selectedNode'
+  /** Override initial delay before cursor appears (default: 600ms) */
+  delayMs?: number
+  /** Override linger duration on target (default: 1000ms) */
+  lingerMs?: number
+}
+
 export interface TutorialStep {
   id: string
   prompt: string
   completionEvent: CompletionEvent
   autoAdvance?: boolean // Skip confirmation, advance immediately on completion
   resolveSpotlight: ((context: SpotlightContext) => SpotlightTarget | null) | null // null = keep previous spotlight
+  cursorAnimation?: CursorAnimation
 }
 
 export interface SpotlightContext {
@@ -73,8 +83,9 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     id: 'hover',
-    prompt: 'Hover over connected nodes to see how they relate.',
-    completionEvent: 'nodeHovered',
+    prompt: 'Watch how hovering reveals connections between occupations.',
+    completionEvent: 'manual',
+    cursorAnimation: { target: 'neighbour' },
     resolveSpotlight: neighbourhoodSpotlight,
   },
   {
