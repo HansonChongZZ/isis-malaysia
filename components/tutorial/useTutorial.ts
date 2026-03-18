@@ -29,6 +29,10 @@ interface UseTutorialReturn {
   spotlight: SpotlightTarget | null
   advance: () => void
   skip: () => void
+  cursorAnimProps: { from: { x: number; y: number }; to: { x: number; y: number }; delayMs?: number; lingerMs?: number } | null
+  simulatedHoverId: string | null
+  onCursorArrive: () => void
+  onCursorComplete: () => void
 }
 
 export function useTutorial({
@@ -48,6 +52,7 @@ export function useTutorial({
   const [isActive, setIsActive] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isConfirming, setIsConfirming] = useState(false)
+  const [simulatedHoverId, setSimulatedHoverId] = useState<string | null>(null)
 
   useEffect(() => {
     if (startActive) {
@@ -165,6 +170,97 @@ export function useTutorial({
     return result
   }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
 
+  const cursorAnimProps = useMemo(() => {
+    if (!stepConfig?.cursorAnimation || !spotlightReady || !spotlight) return null
+
+    // Resolve target coordinates
+    let to: { x: number; y: number } | null = null
+    const { target } = stepConfig.cursorAnimation
+
+    if (target === 'neighbour' && resolvedNeighbourId) {
+      to = getNodeScreenCoords(resolvedNeighbourId)
+    } else if (target === 'badge') {
+      const ctx: SpotlightContext = {
+        graphContainerRect,
+        heroSearchRect,
+        nodeToScreenCoords: getNodeScreenCoords,
+        selectedNodeId,
+        neighbourNodeId: resolvedNeighbourId,
+        neighbourIds: allNeighbourIds,
+        badgeScreenPos: badgePos && graphContainerRect
+          ? { x: badgePos.x + graphContainerRect.left, y: badgePos.y + graphContainerRect.top }
+          : null,
+      }
+      to = ctx.badgeScreenPos
+    } else if (target === 'selectedNode' && selectedNodeId) {
+      to = getNodeScreenCoords(selectedNodeId)
+    }
+
+    if (!to) return null // Fallback: skip cursor animation
+
+    // Compute `from` on the opposite side of the spotlight edge
+    const angle = Math.atan2(to.y - spotlight.y, to.x - spotlight.x)
+    const oppositeAngle = angle + Math.PI
+    let from: { x: number; y: number }
+
+    if (spotlight.shape === 'circle') {
+      const r = spotlight.width / 2
+      from = {
+        x: spotlight.x + r * Math.cos(oppositeAngle),
+        y: spotlight.y + r * Math.sin(oppositeAngle),
+      }
+    } else {
+      // Rect spotlight: find intersection of ray from center at oppositeAngle with rect boundary
+      const hw = spotlight.width / 2
+      const hh = spotlight.height / 2
+      const dx = Math.cos(oppositeAngle)
+      const dy = Math.sin(oppositeAngle)
+      // Scale factor to reach the rect edge
+      const sx = dx !== 0 ? Math.abs(hw / dx) : Infinity
+      const sy = dy !== 0 ? Math.abs(hh / dy) : Infinity
+      const s = Math.min(sx, sy)
+      from = {
+        x: spotlight.x + dx * s,
+        y: spotlight.y + dy * s,
+      }
+    }
+
+    return {
+      from,
+      to,
+      delayMs: stepConfig.cursorAnimation.delayMs,
+      lingerMs: stepConfig.cursorAnimation.lingerMs,
+    }
+  }, [stepConfig, spotlightReady, spotlight, resolvedNeighbourId, getNodeScreenCoords, graphContainerRect, heroSearchRect, selectedNodeId, allNeighbourIds, badgePos])
+
+  const onCursorArrive = useCallback(() => {
+    if (!stepConfig?.cursorAnimation) return
+    const { target } = stepConfig.cursorAnimation
+    if (target === 'neighbour' && resolvedNeighbourId) {
+      setSimulatedHoverId(resolvedNeighbourId)
+    }
+    // Future: handle other targets (badge, selectedNode) here
+  }, [stepConfig, resolvedNeighbourId])
+
+  const onCursorComplete = useCallback(() => {
+    setSimulatedHoverId(null)
+    setIsConfirming(true)
+  }, [])
+
+  // Fallback: if step has cursorAnimation but coordinates couldn't resolve,
+  // skip the animation and show "Got it, next" immediately
+  useEffect(() => {
+    if (
+      stepConfig?.cursorAnimation &&
+      stepConfig.completionEvent === 'manual' &&
+      spotlightReady &&
+      !cursorAnimProps &&
+      !isConfirming
+    ) {
+      setIsConfirming(true)
+    }
+  }, [stepConfig, spotlightReady, cursorAnimProps, isConfirming])
+
   // Detect completion events
   useEffect(() => {
     if (!isActive || isConfirming) return
@@ -172,15 +268,6 @@ export function useTutorial({
     let triggered = false
     if (event === 'nodeSelected' && selectedNodeId) {
       triggered = true
-    } else if (event === 'nodeHovered' && hoveredNodeId && resolvedNeighbourId) {
-      const neighbourIds = new Set(
-        edges
-          .filter(e => e.source === selectedNodeId || e.target === selectedNodeId)
-          .map(e => (e.source === selectedNodeId ? e.target : e.source))
-      )
-      if (neighbourIds.has(hoveredNodeId)) {
-        triggered = true
-      }
     } else if (event === 'secondNodeSelected' && secondSelectedNodeId) {
       triggered = true
     } else if (event === 'badgeInteracted' && badgeInteracted) {
@@ -225,5 +312,11 @@ export function useTutorial({
     setIsConfirming(false)
   }, [])
 
-  return { isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip }
+  return {
+    isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip,
+    cursorAnimProps,
+    simulatedHoverId,
+    onCursorArrive,
+    onCursorComplete,
+  }
 }
