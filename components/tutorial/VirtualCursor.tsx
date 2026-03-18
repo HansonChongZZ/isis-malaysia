@@ -106,19 +106,14 @@ export default function VirtualCursor({
     }
   }, [phase, mounted, delayMs, lingerMs, prefersReducedMotion, onArrive, onComplete])
 
-  // Track whether cursor has reached near the target
-  const nearTargetRef = useRef(false)
-
-  // Only activate click animation once cursor is in lingering phase AND near target
+  // Activate click animation after a short settle delay in lingering phase
   useEffect(() => {
-    if (clickEffect && phase === 'lingering' && nearTargetRef.current) {
-      setClickActive(true)
-    } else {
-      setClickActive(false)
+    if (clickEffect && phase === 'lingering') {
+      // Small delay to ensure spring has fully settled visually
+      const timer = setTimeout(() => setClickActive(true), 100)
+      return () => clearTimeout(timer)
     }
-    if (phase === 'waiting' || phase === 'fadeIn') {
-      nearTargetRef.current = false
-    }
+    setClickActive(false)
   }, [clickEffect, phase])
 
   if (!mounted || phase === 'waiting' || prefersReducedMotion) return null
@@ -145,15 +140,6 @@ export default function VirtualCursor({
           ? { x: { type: 'spring', damping: 30, stiffness: 60 }, y: { type: 'spring', damping: 30, stiffness: 60 }, opacity: { duration: 0.35 } }
           : { opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 }, x: { duration: 0 }, y: { duration: 0 } }
       }
-      onUpdate={(latest) => {
-        if (phase === 'moving' && clickEffect && !nearTargetRef.current) {
-          const dx = (latest.x as number) - to.x
-          const dy = (latest.y as number) - to.y
-          if (Math.abs(dx) < 5 && Math.abs(dy) < 5) {
-            nearTargetRef.current = true
-          }
-        }
-      }}
     >
       {/* Click scale is a separate element with CSS animation —
           completely decoupled from the position spring */}
