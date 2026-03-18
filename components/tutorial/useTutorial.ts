@@ -205,9 +205,7 @@ export function useTutorial({
       }
     }
 
-    // Graph-based targets require spotlight for `from` computation
-    if (!spotlight) return null
-
+    // Resolve graph-based targets
     if (target === 'neighbour' && resolvedNeighbourId) {
       to = getNodeScreenCoords(resolvedNeighbourId)
     } else if (target === 'badge') {
@@ -229,30 +227,36 @@ export function useTutorial({
 
     if (!to) return null // Fallback: skip cursor animation
 
-    // Compute `from` on the opposite side of the spotlight edge
-    const angle = Math.atan2(to.y - spotlight.y, to.x - spotlight.x)
-    const oppositeAngle = angle + Math.PI
     let from: { x: number; y: number }
 
-    if (spotlight.shape === 'circle') {
-      const r = spotlight.width / 2
-      from = {
-        x: spotlight.x + r * Math.cos(oppositeAngle),
-        y: spotlight.y + r * Math.sin(oppositeAngle),
+    if (spotlight) {
+      // Compute `from` on the opposite side of the spotlight edge
+      const angle = Math.atan2(to.y - spotlight.y, to.x - spotlight.x)
+      const oppositeAngle = angle + Math.PI
+
+      if (spotlight.shape === 'circle') {
+        const r = spotlight.width / 2
+        from = {
+          x: spotlight.x + r * Math.cos(oppositeAngle),
+          y: spotlight.y + r * Math.sin(oppositeAngle),
+        }
+      } else {
+        // Rect spotlight: find intersection of ray from center at oppositeAngle with rect boundary
+        const hw = spotlight.width / 2
+        const hh = spotlight.height / 2
+        const dx = Math.cos(oppositeAngle)
+        const dy = Math.sin(oppositeAngle)
+        const sx = dx !== 0 ? Math.abs(hw / dx) : Infinity
+        const sy = dy !== 0 ? Math.abs(hh / dy) : Infinity
+        const s = Math.min(sx, sy)
+        from = {
+          x: spotlight.x + dx * s,
+          y: spotlight.y + dy * s,
+        }
       }
     } else {
-      // Rect spotlight: find intersection of ray from center at oppositeAngle with rect boundary
-      const hw = spotlight.width / 2
-      const hh = spotlight.height / 2
-      const dx = Math.cos(oppositeAngle)
-      const dy = Math.sin(oppositeAngle)
-      const sx = dx !== 0 ? Math.abs(hw / dx) : Infinity
-      const sy = dy !== 0 ? Math.abs(hh / dy) : Infinity
-      const s = Math.min(sx, sy)
-      from = {
-        x: spotlight.x + dx * s,
-        y: spotlight.y + dy * s,
-      }
+      // No spotlight — use fixed offset from target
+      from = { x: to.x + 80, y: to.y - 90 }
     }
 
     return {
