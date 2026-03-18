@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, useEffect, useId } from 'react'
+import dynamic from 'next/dynamic'
 import { type SpotlightTarget } from './tutorialConfig'
+
+const VirtualCursor = dynamic(() => import('./VirtualCursor'), { ssr: false })
 
 interface TutorialOverlayProps {
   isActive: boolean
@@ -12,6 +15,9 @@ interface TutorialOverlayProps {
   spotlight: SpotlightTarget | null
   onAdvance: () => void
   onSkip: () => void
+  cursorAnimProps?: { from: { x: number; y: number }; to: { x: number; y: number }; delayMs?: number; lingerMs?: number } | null
+  onCursorArrive?: () => void
+  onCursorComplete?: () => void
 }
 
 export default function TutorialOverlay({
@@ -23,6 +29,9 @@ export default function TutorialOverlay({
   spotlight,
   onAdvance,
   onSkip,
+  cursorAnimProps,
+  onCursorArrive,
+  onCursorComplete,
 }: TutorialOverlayProps) {
   const [viewport, setViewport] = useState({ w: 0, h: 0 })
   useEffect(() => {
@@ -132,6 +141,18 @@ export default function TutorialOverlay({
           </div>
         </div>
       </div>
+
+      {cursorAnimProps && onCursorArrive && onCursorComplete && (
+        <VirtualCursor
+          key={currentStep}
+          from={cursorAnimProps.from}
+          to={cursorAnimProps.to}
+          delayMs={cursorAnimProps.delayMs}
+          lingerMs={cursorAnimProps.lingerMs}
+          onArrive={onCursorArrive}
+          onComplete={onCursorComplete}
+        />
+      )}
     </div>
   )
 }
