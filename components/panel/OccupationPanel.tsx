@@ -135,7 +135,7 @@ export default function OccupationPanel({
       }}
     >
       <DialogContent
-        className="bg-card border-border text-foreground sm:max-w-6xl h-[90vh] overflow-hidden p-0 flex flex-col gap-0"
+        className="bg-card border-border text-foreground max-w-full md:max-w-6xl h-[90dvh] overflow-hidden p-0 flex flex-col gap-0"
         showCloseButton={false}
       >
         {detail && nodeId && (
@@ -178,14 +178,14 @@ export default function OccupationPanel({
                 </div>
               </div>
             ) : (
-              <div className="flex flex-1 min-h-0">
+              <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-y-auto md:overflow-hidden">
                 {/* Left pane — primary occupation details */}
-                <div className="w-1/2 border-r border-border min-h-0 overflow-hidden">
+                <div className="w-full md:w-1/2 md:border-r border-border min-h-0 md:overflow-hidden">
                   <OccupationDetailPane detail={detail} />
                 </div>
 
                 {/* Right pane — transition cards */}
-                <div className="w-1/2 flex flex-col min-h-0">
+                <div className="w-full md:w-1/2 flex flex-col min-h-0">
                   <TransitionCards
                     transitions={transitions}
                     occupations={occupations}
