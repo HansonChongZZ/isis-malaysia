@@ -119,6 +119,7 @@ export default function ComparisonGrid({
       <button
         type="button"
         onClick={onBack}
+        data-tutorial-target="back-to-pathways"
         className="w-full flex items-center gap-3 px-5 py-2.5 bg-primary/15 hover:bg-primary/25 border-b border-primary/30 transition-colors cursor-pointer text-left"
       >
         <div className="flex items-center justify-center size-7 rounded-md bg-primary/20">

@@ -23,6 +23,7 @@ interface OccupationPanelProps {
   isOpen: boolean
   onClose: () => void
   initialComparisonId: string | null
+  onComparisonChange?: (isComparing: boolean) => void
 }
 
 export default function OccupationPanel({
@@ -34,6 +35,7 @@ export default function OccupationPanel({
   isOpen,
   onClose,
   initialComparisonId,
+  onComparisonChange,
 }: OccupationPanelProps) {
   const [comparisonNodeId, setComparisonNodeId] = useState<string | null>(null)
 
@@ -122,6 +124,10 @@ export default function OccupationPanel({
 
   const isComparing = comparisonNodeId !== null && comparisonDetail !== null
 
+  useEffect(() => {
+    onComparisonChange?.(isComparing)
+  }, [isComparing, onComparisonChange])
+
   return (
     <Dialog
       open={isOpen && !!nodeId && !!detail}
@@ -148,7 +154,10 @@ export default function OccupationPanel({
                     {detail.occupation}
                   </DialogTitle>
                 </div>
-                <DialogClose className="shrink-0 rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors mt-0.5">
+                <DialogClose
+                  data-tutorial-target="panel-close"
+                  className="shrink-0 rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors mt-0.5"
+                >
                   <XIcon className="size-4" />
                   <span className="sr-only">Close</span>
                 </DialogClose>
