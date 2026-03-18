@@ -1,0 +1,16 @@
+{
+  "Financial Analysis": {
+    "description": "Analysing financial data, trends, and metrics to support business decisions and assess financial health.",
+    "resources": [
+      { "title": "Financial Analysis Foundations (LinkedIn Learning)", "url": "https://www.linkedin.com/learning/financial-analysis-foundations" }
+    ]
+  },
+  "Contract Drafting": {
+    "description": "Preparing and reviewing legal contracts, ensuring terms are clear, enforceable, and aligned with organisational requirements.",
+    "resources": []
+  },
+  "Data Analysis": {
+    "description": "Inspecting, cleansing, transforming, and modelling data to discover useful information and support decision-making.",
+    "resources": []
+  }
+}
