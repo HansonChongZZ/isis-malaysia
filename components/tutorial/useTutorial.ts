@@ -343,12 +343,12 @@ export function useTutorial({
     }
   }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen, isComparing])
 
-  // Guard: if panel closes during modal-dependent steps (compare, backToPathways),
+  // Guard: if panel closes during modal-dependent steps (compare, backToPathways, pathways),
   // skip ahead to the "explore" step to avoid stranded prompts
   useEffect(() => {
     if (!isActive) return
     const stepId = stepConfig?.id
-    if ((stepId === 'compare' || stepId === 'backToPathways') && !isPanelOpen) {
+    if ((stepId === 'compare' || stepId === 'backToPathways' || stepId === 'pathways') && !isPanelOpen) {
       const exploreIdx = STEP_IDX.explore
       if (exploreIdx !== undefined) {
         setCurrentStep(exploreIdx)

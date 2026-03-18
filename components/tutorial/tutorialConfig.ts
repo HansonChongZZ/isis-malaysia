@@ -137,6 +137,12 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     cursorAnimation: { target: 'domElement', targetSelector: '[data-tutorial-target="back-to-pathways"]', mode: 'hint', clickEffect: true },
   },
   {
+    id: 'pathways',
+    prompt: 'Browse transition pathways — each card shows skill overlap, AI exposure, and wages for occupations you could move into.',
+    completionEvent: 'manual',
+    resolveSpotlight: null,
+  },
+  {
     id: 'closePanel',
     prompt: 'Close this panel to return to the full graph.',
     completionEvent: 'panelClosed',
