@@ -121,12 +121,12 @@ export default function TutorialOverlay({
             >
               Skip tutorial
             </button>
-            {(currentStep === 0 || isConfirming) && (
+            {isConfirming && (
               <button
                 onClick={onAdvance}
                 className="text-xs font-medium bg-primary text-primary-foreground px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors"
               >
-                {currentStep === 0 ? 'Next \u2192' : 'Got it, next \u2192'}
+                Got it, next \u2192
               </button>
             )}
           </div>
