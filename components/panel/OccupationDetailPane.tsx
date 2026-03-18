@@ -44,7 +44,7 @@ export default function OccupationDetailPane({
   const quartileColour = QUARTILE_COLOURS[detail.quartile] ?? '#888';
 
   return (
-    <div className="h-full overflow-y-auto px-5 pb-5 pt-3 space-y-6">
+    <div className="md:h-full md:overflow-y-auto px-5 pb-5 pt-3 space-y-6">
       {/* Optional header slot (used by comparison pane for back button + name) */}
       {header}
 
