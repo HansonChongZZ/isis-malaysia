@@ -44,12 +44,53 @@ export default function OccupationDetailPane({
   const quartileColour = QUARTILE_COLOURS[detail.quartile] ?? '#888';
 
   return (
-    <div className="h-full overflow-y-auto px-5 pb-5 pt-3 space-y-6">
+    <div className="md:h-full md:overflow-y-auto px-5 pb-5 pt-3 space-y-6">
       {/* Optional header slot (used by comparison pane for back button + name) */}
       {header}
 
+      {/* Mobile compact summary: AI + Wage side-by-side */}
+      <div className="flex md:hidden items-start justify-between gap-4 mb-4">
+        <div className="flex-1">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+            AI Exposure
+          </h3>
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-bold" style={{ color: quartileColour }}>
+              {(detail.aiExposure * 100).toFixed(1)}%
+            </span>
+            <Badge
+              className="text-xs"
+              style={{
+                backgroundColor: `color-mix(in srgb, ${quartileColour} 20%, transparent)`,
+                color: quartileColour,
+                border: `1px solid color-mix(in srgb, ${quartileColour} 40%, transparent)`,
+              }}
+            >
+              {detail.quartile}
+            </Badge>
+          </div>
+          <div className="h-2 bg-muted rounded-full overflow-hidden mt-1.5">
+            <div
+              className="h-full rounded-full transition-all"
+              style={{
+                width: `${detail.aiExposure * 100}%`,
+                backgroundColor: quartileColour,
+              }}
+            />
+          </div>
+        </div>
+        <div className="text-right">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+            Median Wage
+          </h3>
+          <p className="text-lg font-semibold text-foreground">
+            {detail.wage !== null ? `MYR ${detail.wage.toLocaleString()}` : '—'}
+          </p>
+        </div>
+      </div>
+
       {/* AI Exposure */}
-      <section>
+      <section className="hidden md:block">
         <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
           AI Exposure Index
         </h3>
@@ -99,7 +140,7 @@ export default function OccupationDetailPane({
       </section>
 
       {/* Wage */}
-      <section>
+      <section className="hidden md:block">
         <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
           Median Wage
         </h3>

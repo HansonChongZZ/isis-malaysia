@@ -101,7 +101,7 @@ export default function TransitionCards({
   const filteredCount = table.getFilteredRowModel().rows.length
 
   return (
-    <div className="flex flex-col min-h-0 h-full">
+    <div className="flex flex-col min-h-0 md:h-full">
       {/* Header + search */}
       <div className="px-5 pt-3 pb-3 flex-shrink-0 space-y-2">
         <h3 className="text-sm font-semibold text-foreground">
@@ -124,7 +124,7 @@ export default function TransitionCards({
       </div>
 
       {/* Card grid */}
-      <div className="flex-1 min-h-0 overflow-y-auto px-5 pb-3 space-y-2">
+      <div className="flex-1 min-h-0 md:overflow-y-auto px-5 pb-3 space-y-2">
         {table.getFilteredRowModel().rows.length ? (
           table.getFilteredRowModel().rows.map((row) => {
             const t = row.original
