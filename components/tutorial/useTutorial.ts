@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
-import { TUTORIAL_STEPS, type SpotlightContext, type SpotlightTarget } from './tutorialConfig'
+import { TUTORIAL_STEPS, STEP_IDX, type SpotlightContext, type SpotlightTarget } from './tutorialConfig'
 import type { GraphEdge } from '@/lib/types'
 
 export interface OccupationGraphHandle {
@@ -11,7 +11,7 @@ interface UseTutorialProps {
   secondSelectedNodeId: string | null
   hoveredNodeId: string | null
   edges: GraphEdge[]
-  allNodeIds: string[]
+  startActive?: boolean
   graphContainerRect: DOMRect | null
   heroSearchRect: DOMRect | null
   graphHandleRef: React.RefObject<OccupationGraphHandle | null>
@@ -36,7 +36,7 @@ export function useTutorial({
   secondSelectedNodeId,
   hoveredNodeId,
   edges,
-  allNodeIds,
+  startActive,
   graphContainerRect,
   heroSearchRect,
   graphHandleRef,
@@ -45,9 +45,16 @@ export function useTutorial({
   isPanelOpen,
 }: UseTutorialProps): UseTutorialReturn {
   const [currentStep, setCurrentStep] = useState(0)
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isConfirming, setIsConfirming] = useState(false)
+
+  useEffect(() => {
+    if (startActive) {
+      setIsActive(true)
+      setIsVisible(true)
+    }
+  }, [startActive])
 
   const stepConfig = isActive ? TUTORIAL_STEPS[currentStep] ?? null : null
 
@@ -106,10 +113,10 @@ export function useTutorial({
 
   const lockedNeighbourRef = useRef<string | null>(null)
   useEffect(() => {
-    if (currentStep >= 2 && neighbourNodeId && !lockedNeighbourRef.current) {
+    if (currentStep > STEP_IDX.search && neighbourNodeId && !lockedNeighbourRef.current) {
       lockedNeighbourRef.current = neighbourNodeId
     }
-    if (currentStep < 2) {
+    if (currentStep <= STEP_IDX.search) {
       lockedNeighbourRef.current = null
     }
   }, [currentStep, neighbourNodeId])
@@ -128,7 +135,8 @@ export function useTutorial({
       // Steps that trigger zoom animations (~500ms in OccupationGraph):
       // Step 2→3: selecting a node zooms to neighbourhood
       // Step 3→4: clicking second node zooms to pair view
-      if ((prevStep === 1 && currentStep === 2) || (prevStep === 3 && currentStep === 4)) {
+      if ((prevStep === STEP_IDX.search && currentStep === STEP_IDX.hover) ||
+          (prevStep === STEP_IDX.click && currentStep === STEP_IDX.badge)) {
         setSpotlightReady(false)
         const timer = setTimeout(() => setSpotlightReady(true), 600)
         return () => clearTimeout(timer)
@@ -148,7 +156,6 @@ export function useTutorial({
       selectedNodeId,
       neighbourNodeId: resolvedNeighbourId,
       neighbourIds: allNeighbourIds,
-      allNodeIds,
       badgeScreenPos: badgePos && graphContainerRect
         ? { x: badgePos.x + graphContainerRect.left, y: badgePos.y + graphContainerRect.top }
         : null,
