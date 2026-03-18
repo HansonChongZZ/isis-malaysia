@@ -41,6 +41,7 @@ export default function VirtualCursor({
   const [phase, setPhase] = useState<'waiting' | 'fadeIn' | 'moving' | 'lingering' | 'fadeOut'>('waiting')
   const [mounted, setMounted] = useState(false)
   const hasFiredRef = useRef(false)
+  const [clickActive, setClickActive] = useState(false)
 
   const [prefersReducedMotion] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -52,7 +53,6 @@ export default function VirtualCursor({
   }, [])
 
   // Phase state machine — loops: fadeOut → waiting → fadeIn → moving → lingering → fadeOut → ...
-  // onArrive/onComplete only fire on the first cycle
   useEffect(() => {
     if (!mounted) return
 
@@ -70,7 +70,6 @@ export default function VirtualCursor({
     }
 
     if (phase === 'waiting') {
-      // Shorter pause between loops, full delay on first appearance
       const delay = hasFiredRef.current ? 600 : delayMs
       const timer = setTimeout(() => setPhase('fadeIn'), delay)
       return () => clearTimeout(timer)
@@ -79,12 +78,21 @@ export default function VirtualCursor({
       const timer = setTimeout(() => setPhase('moving'), 350)
       return () => clearTimeout(timer)
     }
-    // 'moving' phase is handled by onAnimationComplete on the motion.div
+    // 'moving' → 'lingering' is driven by a timer matching the spring duration,
+    // NOT by onAnimationComplete (which is unreliable with mixed properties)
+    if (phase === 'moving') {
+      // Spring with damping=30, stiffness=60 settles in ~800ms
+      const timer = setTimeout(() => setPhase('lingering'), 900)
+      return () => clearTimeout(timer)
+    }
     if (phase === 'lingering') {
       if (!hasFiredRef.current) {
         onArrive()
       }
-      const timer = setTimeout(() => setPhase('fadeOut'), lingerMs)
+      const timer = setTimeout(() => {
+        setClickActive(false)
+        setPhase('fadeOut')
+      }, lingerMs)
       return () => clearTimeout(timer)
     }
     if (phase === 'fadeOut') {
@@ -93,18 +101,16 @@ export default function VirtualCursor({
           hasFiredRef.current = true
           onComplete()
         }
-        // Loop back to waiting
         setPhase('waiting')
       }, 400)
       return () => clearTimeout(timer)
     }
   }, [phase, mounted, delayMs, lingerMs, prefersReducedMotion, onArrive, onComplete])
 
-  // Delay click animation until cursor has visibly settled on target
-  const [clickActive, setClickActive] = useState(false)
+  // Delay click animation until after cursor has settled on target
   useEffect(() => {
     if (clickEffect && phase === 'lingering') {
-      const timer = setTimeout(() => setClickActive(true), 300)
+      const timer = setTimeout(() => setClickActive(true), 200)
       return () => clearTimeout(timer)
     }
     setClickActive(false)
@@ -113,11 +119,7 @@ export default function VirtualCursor({
   if (!mounted || phase === 'waiting' || prefersReducedMotion) return null
 
   const opacity = phase === 'fadeIn' || phase === 'moving' || phase === 'lingering' ? 1 : 0
-
-  // Position: during fadeIn use `from`, during moving/lingering/fadeOut animate to `to`
   const targetPos = phase === 'fadeIn' ? from : to
-
-  const scale = clickActive ? [1, 0.7, 1] : 1
 
   const cursor = (
     <motion.div
@@ -126,34 +128,35 @@ export default function VirtualCursor({
         zIndex: 60,
         pointerEvents: 'none',
         filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.4))',
-        transformOrigin: 'top left',
       }}
-      initial={{ x: from.x, y: from.y, opacity: 0, scale: 1 }}
+      initial={{ x: from.x, y: from.y, opacity: 0 }}
       animate={{
         x: targetPos.x,
         y: targetPos.y,
         opacity,
-        scale,
       }}
       transition={
         phase === 'moving'
-          ? { x: { type: 'spring', damping: 30, stiffness: 60 }, y: { type: 'spring', damping: 30, stiffness: 60 }, opacity: { duration: 0.35 }, scale: { duration: 0 } }
-          : {
-              opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 },
-              x: { duration: 0 },
-              y: { duration: 0 },
-              scale: clickActive
-                ? { duration: 0.4, times: [0, 0.4, 1], ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.6 }
-                : { duration: 0 },
-            }
+          ? { x: { type: 'spring', damping: 30, stiffness: 60 }, y: { type: 'spring', damping: 30, stiffness: 60 }, opacity: { duration: 0.35 } }
+          : { opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 }, x: { duration: 0 }, y: { duration: 0 } }
       }
-      onAnimationComplete={() => {
-        if (phase === 'moving') {
-          setPhase('lingering')
-        }
-      }}
     >
-      <CursorIcon />
+      {/* Click scale is a separate element with CSS animation —
+          completely decoupled from the position spring */}
+      <div
+        style={{
+          transformOrigin: 'top left',
+          animation: clickActive ? 'cursorClick 0.5s ease-in-out infinite' : 'none',
+        }}
+      >
+        <CursorIcon />
+      </div>
+      <style>{`
+        @keyframes cursorClick {
+          0%, 100% { transform: scale(1); }
+          40% { transform: scale(0.7); }
+        }
+      `}</style>
     </motion.div>
   )
 
