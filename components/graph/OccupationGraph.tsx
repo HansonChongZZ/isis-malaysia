@@ -14,7 +14,16 @@ import type {
   LayoutMode,
   ViewMode,
 } from '@/lib/types';
-import { computeRingPositions, computeRadialPositions } from '@/lib/layout';
+import {
+  computeRingPositions,
+  computeRadialPositions,
+  computeMirroredPosition,
+  computeBadgeOffset,
+  checkBoundingBoxOverlap,
+  labelBounds,
+  badgeBounds,
+  LABEL_WIDTH,
+} from '@/lib/layout';
 import type { LayoutPosition } from '@/lib/layout';
 import { computeNeighbourDistances } from '@/lib/skills';
 import type { SkillComparison } from '@/lib/skills';
@@ -125,18 +134,24 @@ export default function OccupationGraph({
   const badgeRef = useRef<HTMLDivElement>(null);
   const portalTooltipRef = useRef<HTMLDivElement>(null);
   const tooltipLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [hasOverlap, setHasOverlap] = useState(false);
+  const [lastHoveredElement, setLastHoveredElement] = useState<'badge' | 'labelA' | 'labelB'>('badge');
   const [pairLabelPositions, setPairLabelPositions] = useState<{
     a: {
       x: number;
       y: number;
       label: string;
       aiExposure: number;
+      mirroredLeft: number;
+      mirroredTop: number;
     };
     b: {
       x: number;
       y: number;
       label: string;
       aiExposure: number;
+      mirroredLeft: number;
+      mirroredTop: number;
     };
   } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
@@ -993,36 +1008,58 @@ export default function OccupationGraph({
     drawEdges();
   }, [drawEdges]);
 
+  const updatePairPositions = useCallback(
+    (
+      nodeA: { x: number; y: number; label: string; aiExposure: number },
+      nodeB: { x: number; y: number; label: string; aiExposure: number },
+      t: d3.ZoomTransform,
+    ) => {
+      const screenA = { x: t.applyX(nodeA.x), y: t.applyY(nodeA.y) };
+      const screenB = { x: t.applyX(nodeB.x), y: t.applyY(nodeB.y) };
+
+      const radiusA =
+        (NODE_RADIUS_BASE + Math.pow(nodeA.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * t.k;
+      const radiusB =
+        (NODE_RADIUS_BASE + Math.pow(nodeB.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * t.k;
+
+      const mirroredA = computeMirroredPosition(screenA, screenB, screenA, radiusA);
+      const mirroredB = computeMirroredPosition(screenA, screenB, screenB, radiusB);
+
+      const mx = (screenA.x + screenB.x) / 2;
+      const my = (screenA.y + screenB.y) / 2;
+      const rawBadge = { x: mx, y: my };
+      const adjustedBadge = computeBadgeOffset(rawBadge, mirroredA, mirroredB, screenA, screenB);
+
+      setBadgePos(adjustedBadge);
+      setPairLabelPositions({
+        a: { ...screenA, label: nodeA.label, aiExposure: nodeA.aiExposure, mirroredLeft: mirroredA.left, mirroredTop: mirroredA.top },
+        b: { ...screenB, label: nodeB.label, aiExposure: nodeB.aiExposure, mirroredLeft: mirroredB.left, mirroredTop: mirroredB.top },
+      });
+
+      const overlap = checkBoundingBoxOverlap([
+        labelBounds(mirroredA),
+        labelBounds(mirroredB),
+        badgeBounds(adjustedBadge.x, adjustedBadge.y),
+      ]);
+      setHasOverlap(overlap);
+    },
+    [],
+  );
+
   // Update badge + label positions when entering/leaving pair mode
   useEffect(() => {
     if (selectionMode === 'pair' && selectedNodeId && secondSelectedNodeId) {
       const nodeA = nodeById.current.get(selectedNodeId);
       const nodeB = nodeById.current.get(secondSelectedNodeId);
       if (nodeA && nodeB) {
-        const mx = (nodeA.x + nodeB.x) / 2;
-        const my = (nodeA.y + nodeB.y) / 2;
-        const t = transformRef.current;
-        setBadgePos({ x: t.applyX(mx), y: t.applyY(my) });
-        setPairLabelPositions({
-          a: {
-            x: t.applyX(nodeA.x),
-            y: t.applyY(nodeA.y),
-            label: nodeA.label,
-            aiExposure: nodeA.aiExposure,
-          },
-          b: {
-            x: t.applyX(nodeB.x),
-            y: t.applyY(nodeB.y),
-            label: nodeB.label,
-            aiExposure: nodeB.aiExposure,
-          },
-        });
+        updatePairPositions(nodeA, nodeB, transformRef.current);
       }
     } else {
       setBadgePos(null);
       setPairLabelPositions(null);
+      setHasOverlap(false);
     }
-  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, updatePairPositions]);
 
   // Reset edge tooltip on selection change
   useEffect(() => {
@@ -1144,26 +1181,7 @@ export default function OccupationGraph({
           const nodeA = nodeById.current.get(selectedNodeIdRef.current);
           const nodeB = nodeById.current.get(secondSelectedNodeIdRef.current);
           if (nodeA && nodeB) {
-            const mx = (nodeA.x + nodeB.x) / 2;
-            const my = (nodeA.y + nodeB.y) / 2;
-            setBadgePos({
-              x: event.transform.applyX(mx),
-              y: event.transform.applyY(my),
-            });
-            setPairLabelPositions({
-              a: {
-                x: event.transform.applyX(nodeA.x),
-                y: event.transform.applyY(nodeA.y),
-                label: nodeA.label,
-                aiExposure: nodeA.aiExposure,
-              },
-              b: {
-                x: event.transform.applyX(nodeB.x),
-                y: event.transform.applyY(nodeB.y),
-                label: nodeB.label,
-                aiExposure: nodeB.aiExposure,
-              },
-            });
+            updatePairPositions(nodeA, nodeB, event.transform);
           }
         }
       });
