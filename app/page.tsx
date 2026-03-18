@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState, useMemo, useRef } from "react"
 import dynamic from "next/dynamic"
-import { loadNodes, loadEdges, loadOccupations } from "@/lib/data"
-import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode } from "@/lib/types"
+import { loadNodes, loadEdges, loadOccupations, loadBasicSkills, loadSpecificSkills } from "@/lib/data"
+import type { GraphNode, GraphEdge, OccupationDetail, NodeSizeMetric, LayoutMode, ViewMode, SkillInfo } from "@/lib/types"
+import { SkillPopoverProvider } from "@/components/SkillBadgePopover"
 import { buildSpecificSkillsMap } from "@/lib/skills"
 import { computeMaxSpanningTree } from "@/lib/mst"
 import GraphControls from "@/components/graph/GraphControls"
@@ -52,6 +53,9 @@ export default function HomePage() {
   const [badgePos, setBadgePos] = useState<{ x: number; y: number } | null>(null)
   const [badgeInteracted, setBadgeInteracted] = useState(false)
   const [tutorialPhase, setTutorialPhase] = useState<'modal' | 'spotlight' | 'done'>('modal')
+  const [isComparing, setIsComparing] = useState(false)
+  const [basicSkills, setBasicSkills] = useState<Record<string, SkillInfo>>({})
+  const [specificSkills, setSpecificSkills] = useState<Record<string, SkillInfo>>({})
 
   const tutorial = useTutorial({
     startActive: tutorialPhase === 'spotlight',
@@ -65,6 +69,7 @@ export default function HomePage() {
     badgePos,
     badgeInteracted,
     isPanelOpen,
+    isComparing,
   })
 
   // Open search dropdown when spotlight starts at the search step
@@ -103,6 +108,9 @@ export default function HomePage() {
     setPanelNodeId(null)
     setIsPanelOpen(false)
     setOpenedViaSecondary(false)
+    setIsComparing(false)
+    setViewMode('force')
+    setLayoutMode('ring')
   }
 
   useEffect(() => {
@@ -111,6 +119,21 @@ export default function HomePage() {
       setLayoutMode('ring')
     }
   }, [tutorialPhase, tutorial.isActive, viewMode])
+
+  // Detect tutorial completion (reached last step and became inactive)
+  useEffect(() => {
+    if (tutorialPhase === 'spotlight' && !tutorial.isActive && tutorial.currentStep === TUTORIAL_STEPS.length - 1) {
+      setTutorialPhase('done')
+      setSelectedNodeId(null)
+      setSecondSelectedNodeId(null)
+      setPanelNodeId(null)
+      setIsPanelOpen(false)
+      setOpenedViaSecondary(false)
+      setIsComparing(false)
+      setViewMode('force')
+      setLayoutMode('ring')
+    }
+  }, [tutorialPhase, tutorial.isActive, tutorial.currentStep])
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -134,11 +157,13 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    Promise.all([loadNodes(), loadEdges(), loadOccupations()])
-      .then(([n, e, o]) => {
+    Promise.all([loadNodes(), loadEdges(), loadOccupations(), loadBasicSkills(), loadSpecificSkills()])
+      .then(([n, e, o, bs, ss]) => {
         setNodes(n)
         setEdges(e)
         setOccupations(o)
+        setBasicSkills(bs)
+        setSpecificSkills(ss)
         setLoading(false)
       })
       .catch((err) => {
@@ -438,6 +463,7 @@ export default function HomePage() {
   };
 
   return (
+    <SkillPopoverProvider basicSkills={basicSkills} specificSkills={specificSkills}>
     <div className="flex flex-col flex-1 min-h-0 bg-background text-foreground overflow-hidden">
       {/* Graph controls */}
       <GraphControls
@@ -506,10 +532,19 @@ export default function HomePage() {
             onReady={handleGraphReady}
             forceSelectionMode={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.hover ? 'single' : null}
             disableInteraction={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.search}
-            disableClick={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.hover}
+            disableClick={tutorialPhase === 'spotlight' && tutorial.isActive && (
+              tutorial.currentStep <= STEP_IDX.hover || tutorial.stepConfig?.id === 'badge'
+            )}
+            allowedClickNodeId={
+              tutorialPhase === 'spotlight' && tutorial.isActive &&
+              (tutorial.stepConfig?.id === 'click' || tutorial.stepConfig?.id === 'detail')
+                ? tutorial.stepConfig?.preferredNeighbourId ?? null
+                : null
+            }
             onBadgePosChange={setBadgePos}
             onBadgeInteract={() => setBadgeInteracted(true)}
             disableZoom={tutorialPhase === 'spotlight' && tutorial.isActive}
+            simulatedHoverId={tutorial.simulatedHoverId}
           />
         )}
 
@@ -553,6 +588,10 @@ export default function HomePage() {
             spotlight={tutorial.spotlight}
             onAdvance={tutorial.advance}
             onSkip={handleTutorialSkip}
+            cursorAnimProps={tutorial.cursorAnimProps}
+            onCursorArrive={tutorial.onCursorArrive}
+            onCursorComplete={tutorial.onCursorComplete}
+            isLastStep={tutorial.currentStep === TUTORIAL_STEPS.length - 1}
           />
         )}
       </div>
@@ -569,9 +608,16 @@ export default function HomePage() {
           setIsPanelOpen(false)
           setPanelNodeId(null)
           setOpenedViaSecondary(false)
+          setIsComparing(false)
         }}
         initialComparisonId={openedViaSecondary ? secondSelectedNodeId : null}
+        onComparisonChange={setIsComparing}
+        preventInteractOutside={
+          tutorialPhase === 'spotlight' && tutorial.isActive &&
+          ['compare', 'backToPathways', 'pathways', 'closePanel'].includes(tutorial.stepConfig?.id ?? '')
+        }
       />
     </div>
+    </SkillPopoverProvider>
   )
 }

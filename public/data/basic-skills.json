@@ -1,0 +1,16 @@
+{
+  "Critical Thinking": {
+    "description": "Using logic and reasoning to identify the strengths and weaknesses of alternative solutions, conclusions, or approaches to problems.",
+    "resources": [
+      { "title": "Critical Thinking & Problem Solving (Coursera)", "url": "https://www.coursera.org/learn/critical-thinking-problem-solving" }
+    ]
+  },
+  "Active Listening": {
+    "description": "Giving full attention to what other people are saying, taking time to understand the points being made, asking questions as appropriate.",
+    "resources": []
+  },
+  "Complex Problem Solving": {
+    "description": "Identifying complex problems and reviewing related information to develop and evaluate options and implement solutions.",
+    "resources": []
+  }
+}

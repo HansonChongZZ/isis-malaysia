@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/accordion';
 import type { OccupationDetail } from '@/lib/types';
 import { QUARTILE_COLOURS } from '@/lib/constants';
+import SkillBadgePopover from '@/components/SkillBadgePopover';
 
 
 interface OccupationDetailPaneProps {
@@ -18,22 +19,6 @@ interface OccupationDetailPaneProps {
     wage: number | null;
   };
   header?: React.ReactNode;
-}
-
-function SkillBadge({ skill }: { skill: string }) {
-  return (
-    <Badge
-      variant="secondary"
-      className="text-xs"
-      style={{
-        backgroundColor: 'rgba(34,197,94,0.15)',
-        color: '#16a34a',
-        border: '1px solid rgba(34,197,94,0.3)',
-      }}
-    >
-      {skill}
-    </Badge>
-  );
 }
 
 export default function OccupationDetailPane({
@@ -176,7 +161,7 @@ export default function OccupationDetailPane({
           </h3>
           <div className="flex flex-wrap gap-1.5">
             {detail.basicSkills.map((skill) => (
-              <SkillBadge key={skill} skill={skill} />
+              <SkillBadgePopover key={skill} skill={skill} type="basic" />
             ))}
           </div>
         </section>
@@ -190,7 +175,7 @@ export default function OccupationDetailPane({
           </h3>
           <div className="flex flex-wrap gap-1.5">
             {detail.specificSkills.map((skill) => (
-              <SkillBadge key={skill} skill={skill} />
+              <SkillBadgePopover key={skill} skill={skill} type="specific" />
             ))}
           </div>
         </section>

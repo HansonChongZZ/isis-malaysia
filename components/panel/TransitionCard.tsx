@@ -2,6 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { QUARTILE_COLOURS } from '@/lib/constants';
+import SkillBadgePopover from '@/components/SkillBadgePopover';
 
 interface TransitionCardProps {
   id: string;
@@ -103,26 +104,14 @@ export default function TransitionCard({
           {skillsPreview.map((skill) => {
             const isShared = primarySkills.has(skill.toLowerCase());
             return (
-              <span
+              <SkillBadgePopover
                 key={skill}
-                className="text-[10px] px-1.5 py-0.5 rounded"
-                style={
-                  isShared
-                    ? {
-                        backgroundColor: 'rgba(34,197,94,0.15)',
-                        color: '#16a34a',
-                        border: '1px solid rgba(34,197,94,0.25)',
-                      }
-                    : {
-                        backgroundColor: 'rgba(59,130,246,0.15)',
-                        color: '#60a5fa',
-                        border: '1px solid rgba(59,130,246,0.25)',
-                      }
-                }
-              >
-                {skill}
-                {isShared ? ' \u2713' : ''}
-              </span>
+                skill={skill}
+                type="specific"
+                variant={isShared ? 'shared' : 'to-develop'}
+                suffix={isShared ? ' \u2713' : undefined}
+                className="text-[10px]"
+              />
             );
           })}
           {remaining > 0 && (

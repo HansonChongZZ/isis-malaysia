@@ -11,6 +11,7 @@ import {
 import type { OccupationDetail } from '@/lib/types';
 import { QUARTILE_COLOURS } from '@/lib/constants';
 import { formatCompact } from '@/lib/format';
+import SkillBadgePopover from '@/components/SkillBadgePopover';
 
 interface ComparisonGridProps {
   primary: OccupationDetail;
@@ -20,44 +21,6 @@ interface ComparisonGridProps {
   sharedSkills: Set<string>;
   comparisonDeltas: { aiExposure: number; wage: number | null };
   onBack: () => void;
-}
-
-function SkillBadge({
-  skill,
-  isShared,
-}: {
-  skill: string;
-  isShared: boolean;
-}) {
-  if (isShared) {
-    return (
-      <Badge
-        variant="secondary"
-        className="text-xs"
-        style={{
-          backgroundColor: 'rgba(34,197,94,0.12)',
-          color: '#16a34a',
-          border: '1px solid rgba(34,197,94,0.25)',
-        }}
-      >
-        {skill} ✓
-      </Badge>
-    );
-  }
-
-  return (
-    <Badge
-      variant="secondary"
-      className="text-xs"
-      style={{
-        backgroundColor: 'rgba(59,130,246,0.12)',
-        color: '#3b82f6',
-        border: '1px solid rgba(59,130,246,0.25)',
-      }}
-    >
-      {skill}
-    </Badge>
-  );
 }
 
 function TaskAccordion({
@@ -119,6 +82,7 @@ export default function ComparisonGrid({
       <button
         type="button"
         onClick={onBack}
+        data-tutorial-target="back-to-pathways"
         className="w-full flex items-center gap-3 px-5 py-2.5 bg-primary/15 hover:bg-primary/25 border-b border-primary/30 transition-colors cursor-pointer text-left"
       >
         <div className="flex items-center justify-center size-7 rounded-md bg-primary/20">
@@ -297,7 +261,7 @@ export default function ComparisonGrid({
                 className="text-xs"
                 style={{
                   backgroundColor: 'rgba(59,130,246,0.12)',
-                  color: '#3b82f6',
+                  color: '#60a5fa',
                   border: '1px solid rgba(59,130,246,0.25)',
                 }}
               >
@@ -318,10 +282,12 @@ export default function ComparisonGrid({
                     return aShared - bShared;
                   })
                   .map((skill) => (
-                    <SkillBadge
+                    <SkillBadgePopover
                       key={skill}
                       skill={skill}
-                      isShared={sharedSkills.has(skill.toLowerCase())}
+                      type="basic"
+                      variant={sharedSkills.has(skill.toLowerCase()) ? 'shared' : 'to-develop'}
+                      suffix={sharedSkills.has(skill.toLowerCase()) ? ' ✓' : undefined}
                     />
                   ))}
               </div>
@@ -339,10 +305,12 @@ export default function ComparisonGrid({
                     return aShared - bShared;
                   })
                   .map((skill) => (
-                    <SkillBadge
+                    <SkillBadgePopover
                       key={skill}
                       skill={skill}
-                      isShared={sharedSkills.has(skill.toLowerCase())}
+                      type="specific"
+                      variant={sharedSkills.has(skill.toLowerCase()) ? 'shared' : 'to-develop'}
+                      suffix={sharedSkills.has(skill.toLowerCase()) ? ' ✓' : undefined}
                     />
                   ))}
               </div>

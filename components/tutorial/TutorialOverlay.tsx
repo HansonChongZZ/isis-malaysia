@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, useEffect, useId } from 'react'
+import dynamic from 'next/dynamic'
 import { type SpotlightTarget } from './tutorialConfig'
+
+const VirtualCursor = dynamic(() => import('./VirtualCursor'), { ssr: false })
 
 interface TutorialOverlayProps {
   isActive: boolean
@@ -12,6 +15,10 @@ interface TutorialOverlayProps {
   spotlight: SpotlightTarget | null
   onAdvance: () => void
   onSkip: () => void
+  cursorAnimProps?: { from: { x: number; y: number }; to: { x: number; y: number }; clickEffect?: boolean; delayMs?: number; lingerMs?: number } | null
+  onCursorArrive?: () => void
+  onCursorComplete?: () => void
+  isLastStep?: boolean
 }
 
 export default function TutorialOverlay({
@@ -23,6 +30,10 @@ export default function TutorialOverlay({
   spotlight,
   onAdvance,
   onSkip,
+  cursorAnimProps,
+  onCursorArrive,
+  onCursorComplete,
+  isLastStep,
 }: TutorialOverlayProps) {
   const [viewport, setViewport] = useState({ w: 0, h: 0 })
   useEffect(() => {
@@ -39,22 +50,22 @@ export default function TutorialOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-50 transition-opacity duration-300"
+      className="fixed inset-0 z-[60] transition-opacity duration-300"
       style={{
         pointerEvents: 'none',
         opacity: isActive ? 1 : 0,
       }}
     >
-      {/* SVG dim layer with spotlight cutout */}
-      <svg className="absolute inset-0 w-full h-full">
-        <defs>
-          <filter id={filterId}>
-            <feGaussianBlur stdDeviation="8" />
-          </filter>
-          <mask id={maskId}>
-            <rect width="100%" height="100%" fill="white" />
-            {spotlight && (
-              spotlight.shape === 'circle' ? (
+      {/* SVG dim layer with spotlight cutout — hidden when no spotlight */}
+      {spotlight && (
+        <svg className="absolute inset-0 w-full h-full">
+          <defs>
+            <filter id={filterId}>
+              <feGaussianBlur stdDeviation="8" />
+            </filter>
+            <mask id={maskId}>
+              <rect width="100%" height="100%" fill="white" />
+              {spotlight.shape === 'circle' ? (
                 <circle
                   cx={spotlight.x}
                   cy={spotlight.y}
@@ -74,17 +85,17 @@ export default function TutorialOverlay({
                   filter={`url(#${filterId})`}
                   className="transition-all duration-300 ease-out"
                 />
-              )
-            )}
-          </mask>
-        </defs>
-        <rect
-          width="100%"
-          height="100%"
-          fill="rgba(0,0,0,0.6)"
-          mask={`url(#${maskId})`}
-        />
-      </svg>
+              )}
+            </mask>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            fill="rgba(0,0,0,0.6)"
+            mask={`url(#${maskId})`}
+          />
+        </svg>
+      )}
 
       {/* Tooltip */}
       <div
@@ -126,12 +137,25 @@ export default function TutorialOverlay({
                 onClick={onAdvance}
                 className="text-xs font-medium bg-primary text-primary-foreground px-3 py-1.5 rounded-md hover:bg-primary/90 transition-colors"
               >
-                Got it, next \u2192
+                {isLastStep ? 'Finish' : 'Got it, next \u2192'}
               </button>
             )}
           </div>
         </div>
       </div>
+
+      {cursorAnimProps && onCursorArrive && onCursorComplete && (
+        <VirtualCursor
+          key={currentStep}
+          from={cursorAnimProps.from}
+          to={cursorAnimProps.to}
+          clickEffect={cursorAnimProps.clickEffect}
+          delayMs={cursorAnimProps.delayMs}
+          lingerMs={cursorAnimProps.lingerMs}
+          onArrive={onCursorArrive}
+          onComplete={onCursorComplete}
+        />
+      )}
     </div>
   )
 }
@@ -142,7 +166,7 @@ function computeTooltipPosition(
   vh: number,
 ): React.CSSProperties {
   if (!spotlight || vw === 0) {
-    return { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+    return { left: 16, bottom: 16 }
   }
 
   const pad = 16

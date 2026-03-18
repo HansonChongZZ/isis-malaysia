@@ -57,3 +57,16 @@ export interface ForceLayoutParams {
 
 export type LayoutMode = 'ring' | 'radial';
 export type ViewMode = 'force' | 'circular';
+
+export const SkillResourceSchema = z.object({
+  title: z.string(),
+  url: z.string().url(),
+})
+
+export const SkillInfoSchema = z.object({
+  description: z.string(),
+  resources: z.array(SkillResourceSchema),
+})
+
+export type SkillResource = z.infer<typeof SkillResourceSchema>
+export type SkillInfo = z.infer<typeof SkillInfoSchema>

@@ -14,7 +14,16 @@ import type {
   LayoutMode,
   ViewMode,
 } from '@/lib/types';
-import { computeRingPositions, computeRadialPositions } from '@/lib/layout';
+import {
+  computeRingPositions,
+  computeRadialPositions,
+  computeMirroredPosition,
+  computeBadgeOffset,
+  checkBoundingBoxOverlap,
+  labelBounds,
+  badgeBounds,
+  LABEL_WIDTH,
+} from '@/lib/layout';
 import type { LayoutPosition } from '@/lib/layout';
 import { computeNeighbourDistances } from '@/lib/skills';
 import type { SkillComparison } from '@/lib/skills';
@@ -72,8 +81,10 @@ interface OccupationGraphProps {
   disableInteraction?: boolean; // Disable zoom, pan, click, and hover (pointer-events: none)
   disableZoom?: boolean; // Disable zoom/pan only (hover and click still work)
   disableClick?: boolean; // Disable node click only (hover still works)
+  allowedClickNodeId?: string | null; // When set, only this node can be clicked (others are ignored)
   onBadgePosChange?: (pos: { x: number; y: number } | null) => void;
   onBadgeInteract?: () => void;
+  simulatedHoverId?: string | null;
 }
 
 export default function OccupationGraph({
@@ -101,8 +112,10 @@ export default function OccupationGraph({
   disableInteraction,
   disableZoom,
   disableClick,
+  allowedClickNodeId,
   onBadgePosChange,
   onBadgeInteract,
+  simulatedHoverId,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -123,18 +136,20 @@ export default function OccupationGraph({
   const badgeRef = useRef<HTMLDivElement>(null);
   const portalTooltipRef = useRef<HTMLDivElement>(null);
   const tooltipLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [hasOverlap, setHasOverlap] = useState(false);
+  const [lastHoveredElement, setLastHoveredElement] = useState<'badge' | 'labelA' | 'labelB'>('badge');
   const [pairLabelPositions, setPairLabelPositions] = useState<{
     a: {
-      x: number;
-      y: number;
       label: string;
       aiExposure: number;
+      mirroredLeft: number;
+      mirroredTop: number;
     };
     b: {
-      x: number;
-      y: number;
       label: string;
       aiExposure: number;
+      mirroredLeft: number;
+      mirroredTop: number;
     };
   } | null>(null);
   const selectedNodeId = selectedNodeIdProp;
@@ -544,6 +559,38 @@ export default function OccupationGraph({
 
   // Keep ref in sync for canvas drawEdges callback
   useEffect(() => { neighbourDistancesRef.current = neighbourDistances; }, [neighbourDistances]);
+
+  // Simulated hover from tutorial virtual cursor
+  useEffect(() => {
+    if (!simulatedHoverId) return
+
+    // nodeById is a ref (Map<string, GraphNode>) populated during layout — use it for node lookup
+    const node = nodeById.current.get(simulatedHoverId)
+    if (!node) return
+
+    setHoveredNodeId(simulatedHoverId)
+    onNodeHover?.(simulatedHoverId)
+
+    const t = transformRef.current
+    const sc =
+      selectedNodeId &&
+      simulatedHoverId !== selectedNodeId &&
+      neighbourDistancesRef.current?.get(simulatedHoverId)
+    setTooltip({
+      x: t.applyX(node.x),
+      y: t.applyY(node.y),
+      node,
+      skillComparison: sc || undefined,
+    })
+
+    return () => {
+      setHoveredNodeId(null)
+      onNodeHover?.(null)
+      setTooltip(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- imperative effect driven by tutorial;
+    // onNodeHover is a stable setState, selectedNodeId is read from ref-like state at effect time
+  }, [simulatedHoverId, selectedNodeId, onNodeHover])
 
   // --- Animation refs (Task 8) ---
   const animatingRef = useRef(false);
@@ -959,41 +1006,70 @@ export default function OccupationGraph({
     drawEdges();
   }, [drawEdges]);
 
+  const updatePairPositions = useCallback(
+    (
+      nodeA: { x: number; y: number; label: string; aiExposure: number },
+      nodeB: { x: number; y: number; label: string; aiExposure: number },
+      t: d3.ZoomTransform,
+    ) => {
+      const screenA = { x: t.applyX(nodeA.x), y: t.applyY(nodeA.y) };
+      const screenB = { x: t.applyX(nodeB.x), y: t.applyY(nodeB.y) };
+
+      const radiusA =
+        (NODE_RADIUS_BASE + Math.pow(nodeA.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * t.k;
+      const radiusB =
+        (NODE_RADIUS_BASE + Math.pow(nodeB.aiExposure, NODE_RADIUS_EXPONENT) * NODE_RADIUS_SCALE) * t.k;
+
+      const mirroredA = computeMirroredPosition(screenA, screenB, screenA, radiusA);
+      const mirroredB = computeMirroredPosition(screenA, screenB, screenB, radiusB);
+
+      const mx = (screenA.x + screenB.x) / 2;
+      const my = (screenA.y + screenB.y) / 2;
+      const rawBadge = { x: mx, y: my };
+      const adjustedBadge = computeBadgeOffset(rawBadge, mirroredA, mirroredB, screenA, screenB);
+
+      setBadgePos(adjustedBadge);
+      setPairLabelPositions({
+        a: { label: nodeA.label, aiExposure: nodeA.aiExposure, mirroredLeft: mirroredA.left, mirroredTop: mirroredA.top },
+        b: { label: nodeB.label, aiExposure: nodeB.aiExposure, mirroredLeft: mirroredB.left, mirroredTop: mirroredB.top },
+      });
+
+      const overlap = checkBoundingBoxOverlap([
+        labelBounds(mirroredA),
+        labelBounds(mirroredB),
+        badgeBounds(adjustedBadge.x, adjustedBadge.y),
+      ]);
+      setHasOverlap(overlap);
+    },
+    [],
+  );
+
+  // Stable ref so zoom handler always calls the latest updatePairPositions
+  const updatePairPositionsRef = useRef(updatePairPositions);
+  useEffect(() => {
+    updatePairPositionsRef.current = updatePairPositions;
+  }, [updatePairPositions]);
+
   // Update badge + label positions when entering/leaving pair mode
   useEffect(() => {
     if (selectionMode === 'pair' && selectedNodeId && secondSelectedNodeId) {
       const nodeA = nodeById.current.get(selectedNodeId);
       const nodeB = nodeById.current.get(secondSelectedNodeId);
       if (nodeA && nodeB) {
-        const mx = (nodeA.x + nodeB.x) / 2;
-        const my = (nodeA.y + nodeB.y) / 2;
-        const t = transformRef.current;
-        setBadgePos({ x: t.applyX(mx), y: t.applyY(my) });
-        setPairLabelPositions({
-          a: {
-            x: t.applyX(nodeA.x),
-            y: t.applyY(nodeA.y),
-            label: nodeA.label,
-            aiExposure: nodeA.aiExposure,
-          },
-          b: {
-            x: t.applyX(nodeB.x),
-            y: t.applyY(nodeB.y),
-            label: nodeB.label,
-            aiExposure: nodeB.aiExposure,
-          },
-        });
+        updatePairPositions(nodeA, nodeB, transformRef.current);
       }
     } else {
       setBadgePos(null);
       setPairLabelPositions(null);
+      setHasOverlap(false);
     }
-  }, [selectionMode, selectedNodeId, secondSelectedNodeId]);
+  }, [selectionMode, selectedNodeId, secondSelectedNodeId, updatePairPositions]);
 
   // Reset edge tooltip on selection change
   useEffect(() => {
     setShowEdgeTooltip(false);
     setPinnedEdgeTooltip(false);
+    setLastHoveredElement('badge'); // reset to badge-on-top default
   }, [selectedNodeId, secondSelectedNodeId]);
 
   // Reset pinned state when leaving pair mode
@@ -1110,26 +1186,7 @@ export default function OccupationGraph({
           const nodeA = nodeById.current.get(selectedNodeIdRef.current);
           const nodeB = nodeById.current.get(secondSelectedNodeIdRef.current);
           if (nodeA && nodeB) {
-            const mx = (nodeA.x + nodeB.x) / 2;
-            const my = (nodeA.y + nodeB.y) / 2;
-            setBadgePos({
-              x: event.transform.applyX(mx),
-              y: event.transform.applyY(my),
-            });
-            setPairLabelPositions({
-              a: {
-                x: event.transform.applyX(nodeA.x),
-                y: event.transform.applyY(nodeA.y),
-                label: nodeA.label,
-                aiExposure: nodeA.aiExposure,
-              },
-              b: {
-                x: event.transform.applyX(nodeB.x),
-                y: event.transform.applyY(nodeB.y),
-                label: nodeB.label,
-                aiExposure: nodeB.aiExposure,
-              },
-            });
+            updatePairPositionsRef.current(nodeA, nodeB, event.transform);
           }
         }
       });
@@ -1300,7 +1357,7 @@ export default function OccupationGraph({
           height={dimensions.height}
           style={{ position: 'absolute', top: 0, left: 0, cursor: disableInteraction ? 'default' : 'grab', pointerEvents: disableInteraction ? 'none' : undefined }}
           onClick={() => {
-            if (disableClick) return;
+            if (disableClick || allowedClickNodeId) return;
             onNodeSelect(null);
           }}
         >
@@ -1414,6 +1471,7 @@ export default function OccupationGraph({
                     }}
                     onClick={(e) => {
                       if (disableClick) return;
+                      if (allowedClickNodeId && node.id !== allowedClickNodeId) return;
                       e.stopPropagation();
                       onNodeSelect(node.id);
                     }}
@@ -1476,6 +1534,7 @@ export default function OccupationGraph({
                     }}
                     onClick={(e) => {
                       if (disableClick) return;
+                      if (allowedClickNodeId && node.id !== allowedClickNodeId) return;
                       if (isIsolate) return;
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
@@ -1517,6 +1576,7 @@ export default function OccupationGraph({
                   />
                 );
               })}
+
             </g>
           </g>
         </svg>
@@ -1602,27 +1662,31 @@ export default function OccupationGraph({
       {/* Pair mode node labels — float independently when tooltip closed */}
       {pairLabelPositions &&
         [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => {
-          const pairR =
-            (NODE_RADIUS_BASE +
-              Math.pow(pos.aiExposure, NODE_RADIUS_EXPONENT) *
-                NODE_RADIUS_SCALE) *
-            transformRef.current.k;
           return (
             <div
               key={i}
-              className="absolute z-20 bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border cursor-pointer"
+              className="absolute bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border cursor-pointer"
               onClick={() => {
                 const id = i === 0 ? selectedNodeId : secondSelectedNodeId;
                 if (id) onNodeSelect(id);
               }}
+              onMouseEnter={() => {
+                // lastHoveredElement state stays — last-touched wins
+                if (hasOverlap) {
+                  setLastHoveredElement(i === 0 ? 'labelA' : 'labelB');
+                }
+              }}
               style={{
-                left: pos.x + pairR + 6,
-                top: pos.y - 10,
+                left: pos.mirroredLeft,
+                top: pos.mirroredTop,
                 borderColor: nodeColourRef.current,
                 transform:
-                  pos.x > (dimensions.width ?? 0) - 240
+                  pos.mirroredLeft + LABEL_WIDTH > (dimensions.width ?? 0)
                     ? 'translateX(-110%)'
                     : undefined,
+                opacity: hasOverlap && lastHoveredElement !== (i === 0 ? 'labelA' : 'labelB') ? 0.75 : 1,
+                zIndex: hasOverlap && lastHoveredElement === (i === 0 ? 'labelA' : 'labelB') ? 30 : 20,
+                transition: 'opacity 150ms ease',
               }}
             >
               <p className="font-semibold leading-tight">{pos.label}</p>
@@ -1649,17 +1713,20 @@ export default function OccupationGraph({
       {/* Edge skills badge (always visible in pair mode) */}
       {badgePos && pairSkillsComparison && (
         <div
-          className="absolute z-20"
+          className="absolute"
           style={{
             left: badgePos.x,
             top: badgePos.y,
             transform: 'translate(-50%, -50%)',
+            opacity: hasOverlap && lastHoveredElement !== 'badge' ? 0.75 : 1,
+            zIndex: hasOverlap && lastHoveredElement === 'badge' ? 30 : 20,
+            transition: 'opacity 150ms ease',
           }}
         >
           <div
             ref={badgeRef}
             className="cursor-pointer select-none"
-            onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.() }}
+            onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.(); if (hasOverlap) { setLastHoveredElement('badge'); } }}
             onMouseLeave={() => { if (!pinnedEdgeTooltip) setShowEdgeTooltip(false); }}
             onClick={() => {
               if (pinnedEdgeTooltip) {

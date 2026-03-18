@@ -18,6 +18,7 @@ interface UseTutorialProps {
   badgePos: { x: number; y: number } | null
   badgeInteracted: boolean
   isPanelOpen: boolean
+  isComparing: boolean
 }
 
 interface UseTutorialReturn {
@@ -29,6 +30,10 @@ interface UseTutorialReturn {
   spotlight: SpotlightTarget | null
   advance: () => void
   skip: () => void
+  cursorAnimProps: { from: { x: number; y: number }; to: { x: number; y: number }; clickEffect?: boolean; delayMs?: number; lingerMs?: number } | null
+  simulatedHoverId: string | null
+  onCursorArrive: () => void
+  onCursorComplete: () => void
 }
 
 export function useTutorial({
@@ -43,11 +48,13 @@ export function useTutorial({
   badgePos,
   badgeInteracted,
   isPanelOpen,
+  isComparing,
 }: UseTutorialProps): UseTutorialReturn {
   const [currentStep, setCurrentStep] = useState(0)
   const [isActive, setIsActive] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isConfirming, setIsConfirming] = useState(false)
+  const [simulatedHoverId, setSimulatedHoverId] = useState<string | null>(null)
 
   useEffect(() => {
     if (startActive) {
@@ -89,6 +96,10 @@ export function useTutorial({
 
     if (neighbours.length === 0) return null
 
+    // If the current step specifies a preferred neighbour and it's in the list, use it
+    const preferred = stepConfig?.preferredNeighbourId
+    if (preferred && neighbours.some(n => n.id === preferred)) return preferred
+
     const maxWeight = Math.max(...neighbours.map(n => n.weight))
     const topNeighbours = neighbours.filter(n => n.weight === maxWeight)
 
@@ -109,7 +120,7 @@ export function useTutorial({
       }
     }
     return closest.id
-  }, [selectedNodeId, edges, getNodeScreenCoords])
+  }, [selectedNodeId, edges, getNodeScreenCoords, stepConfig])
 
   const lockedNeighbourRef = useRef<string | null>(null)
   useEffect(() => {
@@ -147,6 +158,11 @@ export function useTutorial({
   const prevSpotlightRef = useRef<SpotlightTarget | null>(null)
   const spotlight = useMemo(() => {
     if (!stepConfig || !spotlightReady) return prevSpotlightRef.current
+    // Clear spotlight when step requests it (e.g. final "happy exploring" step)
+    if (stepConfig.clearSpotlight) {
+      prevSpotlightRef.current = null
+      return null
+    }
     // null resolveSpotlight = keep previous spotlight
     if (!stepConfig.resolveSpotlight) return prevSpotlightRef.current
     const context: SpotlightContext = {
@@ -165,6 +181,137 @@ export function useTutorial({
     return result
   }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
 
+  const cursorAnimProps = useMemo(() => {
+    if (!stepConfig?.cursorAnimation || !spotlightReady) return null
+
+    // Resolve target coordinates
+    let to: { x: number; y: number } | null = null
+    const { target } = stepConfig.cursorAnimation
+
+    if (target === 'domElement' && stepConfig.cursorAnimation.targetSelector) {
+      // DOM element targeting — separate code path from graph-based targets
+      const el = document.querySelector(stepConfig.cursorAnimation.targetSelector)
+      if (!el) return null
+      const rect = el.getBoundingClientRect()
+      to = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+      // Fixed offset: cursor enters from 120px above-right of target
+      const from = { x: to.x + 80, y: to.y - 90 }
+      return {
+        from,
+        to,
+        clickEffect: stepConfig.cursorAnimation.clickEffect,
+        delayMs: stepConfig.cursorAnimation.delayMs,
+        lingerMs: stepConfig.cursorAnimation.lingerMs,
+      }
+    }
+
+    // Resolve graph-based targets
+    if (target === 'neighbour' && resolvedNeighbourId) {
+      to = getNodeScreenCoords(resolvedNeighbourId)
+    } else if (target === 'badge') {
+      const ctx: SpotlightContext = {
+        graphContainerRect,
+        heroSearchRect,
+        nodeToScreenCoords: getNodeScreenCoords,
+        selectedNodeId,
+        neighbourNodeId: resolvedNeighbourId,
+        neighbourIds: allNeighbourIds,
+        badgeScreenPos: badgePos && graphContainerRect
+          ? { x: badgePos.x + graphContainerRect.left, y: badgePos.y + graphContainerRect.top }
+          : null,
+      }
+      to = ctx.badgeScreenPos
+    } else if (target === 'selectedNode' && selectedNodeId) {
+      to = getNodeScreenCoords(selectedNodeId)
+    }
+
+    if (!to) return null // Fallback: skip cursor animation
+
+    let from: { x: number; y: number }
+
+    if (spotlight) {
+      // Compute `from` on the opposite side of the spotlight edge
+      const angle = Math.atan2(to.y - spotlight.y, to.x - spotlight.x)
+      const oppositeAngle = angle + Math.PI
+
+      if (spotlight.shape === 'circle') {
+        const r = spotlight.width / 2
+        from = {
+          x: spotlight.x + r * Math.cos(oppositeAngle),
+          y: spotlight.y + r * Math.sin(oppositeAngle),
+        }
+      } else {
+        // Rect spotlight: find intersection of ray from center at oppositeAngle with rect boundary
+        const hw = spotlight.width / 2
+        const hh = spotlight.height / 2
+        const dx = Math.cos(oppositeAngle)
+        const dy = Math.sin(oppositeAngle)
+        const sx = dx !== 0 ? Math.abs(hw / dx) : Infinity
+        const sy = dy !== 0 ? Math.abs(hh / dy) : Infinity
+        const s = Math.min(sx, sy)
+        from = {
+          x: spotlight.x + dx * s,
+          y: spotlight.y + dy * s,
+        }
+      }
+    } else {
+      // No spotlight — use fixed offset from target
+      from = { x: to.x + 80, y: to.y - 90 }
+    }
+
+    return {
+      from,
+      to,
+      clickEffect: stepConfig.cursorAnimation.clickEffect,
+      delayMs: stepConfig.cursorAnimation.delayMs,
+      lingerMs: stepConfig.cursorAnimation.lingerMs,
+    }
+  }, [stepConfig, spotlightReady, spotlight, resolvedNeighbourId, getNodeScreenCoords, graphContainerRect, heroSearchRect, selectedNodeId, allNeighbourIds, badgePos])
+
+  const onCursorArrive = useCallback(() => {
+    if (!stepConfig?.cursorAnimation) return
+    const { target, mode } = stepConfig.cursorAnimation
+    // In hint mode, cursor just points — no effects triggered
+    if (mode === 'hint') return
+    if (target === 'neighbour' && resolvedNeighbourId) {
+      setSimulatedHoverId(resolvedNeighbourId)
+    }
+    // Future: handle other targets (badge, selectedNode) here
+  }, [stepConfig, resolvedNeighbourId])
+
+  const onCursorComplete = useCallback(() => {
+    if (stepConfig?.cursorAnimation?.mode === 'hint') return
+    // Don't clear simulatedHoverId — hover effect stays while cursor loops.
+    // It gets cleared on advance() or skip().
+    setIsConfirming(true)
+  }, [stepConfig])
+
+  // Fallback: if step has cursorAnimation but coordinates couldn't resolve,
+  // skip the animation and show "Got it, next" immediately
+  useEffect(() => {
+    if (
+      stepConfig?.cursorAnimation &&
+      stepConfig.completionEvent === 'manual' &&
+      spotlightReady &&
+      !cursorAnimProps &&
+      !isConfirming
+    ) {
+      setIsConfirming(true)
+    }
+  }, [stepConfig, spotlightReady, cursorAnimProps, isConfirming])
+
+  // Immediate confirm for manual steps with no cursor animation (e.g. "compare", "explore")
+  useEffect(() => {
+    if (
+      stepConfig &&
+      stepConfig.completionEvent === 'manual' &&
+      !stepConfig.cursorAnimation &&
+      !isConfirming
+    ) {
+      setIsConfirming(true)
+    }
+  }, [stepConfig, isConfirming])
+
   // Detect completion events
   useEffect(() => {
     if (!isActive || isConfirming) return
@@ -172,20 +319,16 @@ export function useTutorial({
     let triggered = false
     if (event === 'nodeSelected' && selectedNodeId) {
       triggered = true
-    } else if (event === 'nodeHovered' && hoveredNodeId && resolvedNeighbourId) {
-      const neighbourIds = new Set(
-        edges
-          .filter(e => e.source === selectedNodeId || e.target === selectedNodeId)
-          .map(e => (e.source === selectedNodeId ? e.target : e.source))
-      )
-      if (neighbourIds.has(hoveredNodeId)) {
-        triggered = true
-      }
     } else if (event === 'secondNodeSelected' && secondSelectedNodeId) {
       triggered = true
     } else if (event === 'badgeInteracted' && badgeInteracted) {
       triggered = true
     } else if (event === 'panelOpened' && isPanelOpen) {
+      triggered = true
+    } else if (event === 'backToPathways' && !isComparing && isPanelOpen) {
+      // Guard: only trigger if panel is still open — if panel closed, the panel-closed guard handles it
+      triggered = true
+    } else if (event === 'panelClosed' && !isPanelOpen) {
       triggered = true
     }
 
@@ -202,7 +345,21 @@ export function useTutorial({
         setIsConfirming(true)
       }
     }
-  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen])
+  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen, isComparing])
+
+  // Guard: if panel closes during modal-dependent steps (compare, backToPathways, pathways),
+  // skip ahead to the "explore" step to avoid stranded prompts
+  useEffect(() => {
+    if (!isActive) return
+    const stepId = stepConfig?.id
+    if ((stepId === 'compare' || stepId === 'backToPathways' || stepId === 'pathways') && !isPanelOpen) {
+      const exploreIdx = STEP_IDX.explore
+      if (exploreIdx !== undefined) {
+        setCurrentStep(exploreIdx)
+        setIsConfirming(false)
+      }
+    }
+  }, [isActive, stepConfig, isPanelOpen])
 
   useEffect(() => {
     if (!isActive && isVisible) {
@@ -213,6 +370,7 @@ export function useTutorial({
 
   const advance = useCallback(() => {
     setIsConfirming(false)
+    setSimulatedHoverId(null)
     if (currentStep < TUTORIAL_STEPS.length - 1) {
       setCurrentStep(prev => prev + 1)
     } else {
@@ -223,7 +381,14 @@ export function useTutorial({
   const skip = useCallback(() => {
     setIsActive(false)
     setIsConfirming(false)
+    setSimulatedHoverId(null)
   }, [])
 
-  return { isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip }
+  return {
+    isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip,
+    cursorAnimProps,
+    simulatedHoverId,
+    onCursorArrive,
+    onCursorComplete,
+  }
 }

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { NodeSchema, EdgeSchema, OccupationDetailSchema, type GraphNode, type GraphEdge, type OccupationDetail } from "./types"
+import { NodeSchema, EdgeSchema, OccupationDetailSchema, SkillInfoSchema, type GraphNode, type GraphEdge, type OccupationDetail, type SkillInfo } from "./types"
 
 export async function loadNodes(): Promise<GraphNode[]> {
   const res = await fetch("/data/nodes.json")
@@ -20,4 +20,18 @@ export async function loadOccupations(): Promise<Record<string, OccupationDetail
   if (!res.ok) throw new Error("Failed to load occupations.json")
   const raw = await res.json()
   return z.record(z.string(), OccupationDetailSchema).parse(raw)
+}
+
+export async function loadBasicSkills(): Promise<Record<string, SkillInfo>> {
+  const res = await fetch("/data/basic-skills.json")
+  if (!res.ok) throw new Error("Failed to load basic-skills.json")
+  const raw = await res.json()
+  return z.record(z.string(), SkillInfoSchema).parse(raw)
+}
+
+export async function loadSpecificSkills(): Promise<Record<string, SkillInfo>> {
+  const res = await fetch("/data/specific-skills.json")
+  if (!res.ok) throw new Error("Failed to load specific-skills.json")
+  const raw = await res.json()
+  return z.record(z.string(), SkillInfoSchema).parse(raw)
 }

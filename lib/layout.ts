@@ -102,3 +102,158 @@ export function computeRadialPositions(
 
   return positions;
 }
+
+/** Estimated label dimensions for overlap detection */
+export const LABEL_WIDTH = 220;
+export const LABEL_HEIGHT = 70;
+export const BADGE_WIDTH = 200;
+export const BADGE_HEIGHT = 50;
+export const GAP = 6;
+
+export interface MirroredPosition {
+  left: number;
+  top: number;
+}
+
+/**
+ * Compute label position on the outward side of a node, away from the other node.
+ * Falls back to right-side placement if nodes overlap (distance < 1px).
+ */
+export function computeMirroredPosition(
+  nodeAScreen: { x: number; y: number },
+  nodeBScreen: { x: number; y: number },
+  targetScreen: { x: number; y: number },
+  radius: number,
+): MirroredPosition {
+  const mx = (nodeAScreen.x + nodeBScreen.x) / 2;
+  const my = (nodeAScreen.y + nodeBScreen.y) / 2;
+  const dx = targetScreen.x - mx;
+  const dy = targetScreen.y - my;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  // Degenerate case: nodes at same position
+  if (dist < 1) {
+    return {
+      left: targetScreen.x + radius + GAP,
+      top: targetScreen.y - 10,
+    };
+  }
+
+  const angleDeg = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+  if (angleDeg >= -45 && angleDeg < 45) {
+    // Right
+    return { left: targetScreen.x + radius + GAP, top: targetScreen.y - 10 };
+  } else if (angleDeg >= 45 && angleDeg < 135) {
+    // Bottom
+    return { left: targetScreen.x - LABEL_WIDTH / 2, top: targetScreen.y + radius + GAP };
+  } else if (angleDeg >= -135 && angleDeg < -45) {
+    // Top
+    return { left: targetScreen.x - LABEL_WIDTH / 2, top: targetScreen.y - radius - LABEL_HEIGHT - GAP };
+  } else {
+    // Left
+    return { left: targetScreen.x - radius - LABEL_WIDTH - GAP, top: targetScreen.y - 10 };
+  }
+}
+
+interface BoundingBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+function rectsIntersect(a: BoundingBox, b: BoundingBox): boolean {
+  return (
+    a.x < b.x + b.width &&
+    a.x + a.width > b.x &&
+    a.y < b.y + b.height &&
+    a.y + a.height > b.y
+  );
+}
+
+/**
+ * Check if any pair of bounding boxes in the array overlap.
+ * Uses conservative estimated sizes (no DOM measurement).
+ */
+export function checkBoundingBoxOverlap(
+  elements: BoundingBox[],
+): boolean {
+  for (let i = 0; i < elements.length; i++) {
+    for (let j = i + 1; j < elements.length; j++) {
+      if (rectsIntersect(elements[i], elements[j])) return true;
+    }
+  }
+  return false;
+}
+
+/** Build bounding box for a label at a mirrored position */
+export function labelBounds(pos: MirroredPosition): BoundingBox {
+  return { x: pos.left, y: pos.top, width: LABEL_WIDTH, height: LABEL_HEIGHT };
+}
+
+/** Build bounding box for the badge at its center position */
+export function badgeBounds(centerX: number, centerY: number): BoundingBox {
+  return {
+    x: centerX - BADGE_WIDTH / 2,
+    y: centerY - BADGE_HEIGHT / 2,
+    width: BADGE_WIDTH,
+    height: BADGE_HEIGHT,
+  };
+}
+
+/**
+ * If the badge overlaps a label, shift it perpendicular to the edge line
+ * toward the side that does not contain a label center.
+ * Returns the adjusted badge center position.
+ */
+export function computeBadgeOffset(
+  badgeCenter: { x: number; y: number },
+  labelAPos: MirroredPosition,
+  labelBPos: MirroredPosition,
+  nodeAScreen: { x: number; y: number },
+  nodeBScreen: { x: number; y: number },
+): { x: number; y: number } {
+  const badge = badgeBounds(badgeCenter.x, badgeCenter.y);
+  const labelA = labelBounds(labelAPos);
+  const labelB = labelBounds(labelBPos);
+
+  const overlapsA = rectsIntersect(badge, labelA);
+  const overlapsB = rectsIntersect(badge, labelB);
+
+  if (!overlapsA && !overlapsB) return badgeCenter;
+
+  // Perpendicular to the edge line
+  const edgeDx = nodeBScreen.x - nodeAScreen.x;
+  const edgeDy = nodeBScreen.y - nodeAScreen.y;
+  const edgeLen = Math.sqrt(edgeDx * edgeDx + edgeDy * edgeDy);
+
+  if (edgeLen < 1) return badgeCenter;
+
+  // Perpendicular unit vector (rotate edge 90 degrees)
+  let perpX = -edgeDy / edgeLen;
+  let perpY = edgeDx / edgeLen;
+
+  // Determine which side of the edge line the label centers are on
+  // using the cross product sign
+  const labelCenterAx = labelAPos.left + LABEL_WIDTH / 2;
+  const labelCenterAy = labelAPos.top + LABEL_HEIGHT / 2;
+  const labelCenterBx = labelBPos.left + LABEL_WIDTH / 2;
+  const labelCenterBy = labelBPos.top + LABEL_HEIGHT / 2;
+
+  const crossA = (labelCenterAx - badgeCenter.x) * perpY - (labelCenterAy - badgeCenter.y) * perpX;
+  const crossB = (labelCenterBx - badgeCenter.x) * perpY - (labelCenterBy - badgeCenter.y) * perpX;
+
+  // Shift toward the side without labels (negative cross = flip direction)
+  const avgCross = (crossA + crossB) / 2;
+  if (avgCross > 0) {
+    perpX = -perpX;
+    perpY = -perpY;
+  }
+
+  const offset = BADGE_HEIGHT / 2 + LABEL_HEIGHT / 2 + 8;
+  return {
+    x: badgeCenter.x + perpX * offset,
+    y: badgeCenter.y + perpY * offset,
+  };
+}
