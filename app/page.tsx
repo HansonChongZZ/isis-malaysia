@@ -532,7 +532,15 @@ export default function HomePage() {
             onReady={handleGraphReady}
             forceSelectionMode={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.hover ? 'single' : null}
             disableInteraction={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.search}
-            disableClick={tutorialPhase === 'spotlight' && tutorial.isActive && tutorial.currentStep <= STEP_IDX.hover}
+            disableClick={tutorialPhase === 'spotlight' && tutorial.isActive && (
+              tutorial.currentStep <= STEP_IDX.hover || tutorial.stepConfig?.id === 'badge'
+            )}
+            allowedClickNodeId={
+              tutorialPhase === 'spotlight' && tutorial.isActive &&
+              (tutorial.stepConfig?.id === 'click' || tutorial.stepConfig?.id === 'detail')
+                ? tutorial.stepConfig?.preferredNeighbourId ?? null
+                : null
+            }
             onBadgePosChange={setBadgePos}
             onBadgeInteract={() => setBadgeInteracted(true)}
             disableZoom={tutorialPhase === 'spotlight' && tutorial.isActive}
