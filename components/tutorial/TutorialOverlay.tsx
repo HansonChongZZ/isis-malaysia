@@ -166,7 +166,7 @@ function computeTooltipPosition(
   vh: number,
 ): React.CSSProperties {
   if (!spotlight || vw === 0) {
-    return { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+    return { left: 16, bottom: 16 }
   }
 
   const pad = 16
