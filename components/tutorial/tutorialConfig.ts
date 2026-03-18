@@ -25,7 +25,6 @@ export interface SpotlightContext {
   selectedNodeId: string | null
   neighbourNodeId: string | null
   neighbourIds: string[]
-  allNodeIds: string[]
   badgeScreenPos: { x: number; y: number } | null
 }
 
@@ -53,36 +52,6 @@ function neighbourhoodSpotlight({ nodeToScreenCoords, selectedNodeId, neighbourI
 }
 
 export const TUTORIAL_STEPS: TutorialStep[] = [
-  {
-    id: 'orient',
-    prompt: 'Each circle is a Malaysian occupation. Lines connect jobs that share skills. Bigger circles = higher AI exposure.',
-    completionEvent: 'manual',
-    resolveSpotlight: ({ nodeToScreenCoords, allNodeIds, graphContainerRect }) => {
-      if (!nodeToScreenCoords || allNodeIds.length === 0 || !graphContainerRect) return null
-
-      const points: { x: number; y: number }[] = []
-      for (const id of allNodeIds) {
-        const pos = nodeToScreenCoords(id)
-        if (pos) points.push(pos)
-      }
-      if (points.length === 0) {
-        // Fallback: centre of graph container
-        const size = Math.min(graphContainerRect.width, graphContainerRect.height) * 0.6
-        return {
-          x: graphContainerRect.left + graphContainerRect.width / 2,
-          y: graphContainerRect.top + graphContainerRect.height / 2,
-          width: size, height: size, shape: 'circle',
-        }
-      }
-
-      const cx = points.reduce((s, p) => s + p.x, 0) / points.length
-      const cy = points.reduce((s, p) => s + p.y, 0) / points.length
-      const maxDist = Math.max(...points.map(p => Math.hypot(p.x - cx, p.y - cy)))
-      const diameter = (maxDist + 50) * 2
-
-      return { x: cx, y: cy, width: diameter, height: diameter, shape: 'circle' }
-    },
-  },
   {
     id: 'search',
     prompt: 'Search for any occupation — try typing a job title (e.g. "Pharmacists").',
@@ -127,3 +96,8 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     resolveSpotlight: null,
   },
 ]
+
+// Step index lookup (computed once, avoids hardcoded indices)
+export const STEP_IDX = Object.fromEntries(
+  TUTORIAL_STEPS.map((s, i) => [s.id, i])
+) as Record<string, number>
