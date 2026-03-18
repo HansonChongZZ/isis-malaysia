@@ -1065,6 +1065,7 @@ export default function OccupationGraph({
   useEffect(() => {
     setShowEdgeTooltip(false);
     setPinnedEdgeTooltip(false);
+    setLastHoveredElement('badge'); // reset to badge-on-top default
   }, [selectedNodeId, secondSelectedNodeId]);
 
   // Reset pinned state when leaving pair mode
