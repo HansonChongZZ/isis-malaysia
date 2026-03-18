@@ -18,6 +18,7 @@ interface UseTutorialProps {
   badgePos: { x: number; y: number } | null
   badgeInteracted: boolean
   isPanelOpen: boolean
+  isComparing: boolean
 }
 
 interface UseTutorialReturn {
@@ -47,6 +48,7 @@ export function useTutorial({
   badgePos,
   badgeInteracted,
   isPanelOpen,
+  isComparing,
 }: UseTutorialProps): UseTutorialReturn {
   const [currentStep, setCurrentStep] = useState(0)
   const [isActive, setIsActive] = useState(false)
@@ -156,6 +158,11 @@ export function useTutorial({
   const prevSpotlightRef = useRef<SpotlightTarget | null>(null)
   const spotlight = useMemo(() => {
     if (!stepConfig || !spotlightReady) return prevSpotlightRef.current
+    // Clear spotlight when step requests it (e.g. final "happy exploring" step)
+    if (stepConfig.clearSpotlight) {
+      prevSpotlightRef.current = null
+      return null
+    }
     // null resolveSpotlight = keep previous spotlight
     if (!stepConfig.resolveSpotlight) return prevSpotlightRef.current
     const context: SpotlightContext = {
@@ -175,11 +182,31 @@ export function useTutorial({
   }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
 
   const cursorAnimProps = useMemo(() => {
-    if (!stepConfig?.cursorAnimation || !spotlightReady || !spotlight) return null
+    if (!stepConfig?.cursorAnimation || !spotlightReady) return null
 
     // Resolve target coordinates
     let to: { x: number; y: number } | null = null
     const { target } = stepConfig.cursorAnimation
+
+    if (target === 'domElement' && stepConfig.cursorAnimation.targetSelector) {
+      // DOM element targeting — separate code path from graph-based targets
+      const el = document.querySelector(stepConfig.cursorAnimation.targetSelector)
+      if (!el) return null
+      const rect = el.getBoundingClientRect()
+      to = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+      // Fixed offset: cursor enters from 120px above-right of target
+      const from = { x: to.x + 80, y: to.y - 90 }
+      return {
+        from,
+        to,
+        clickEffect: stepConfig.cursorAnimation.clickEffect,
+        delayMs: stepConfig.cursorAnimation.delayMs,
+        lingerMs: stepConfig.cursorAnimation.lingerMs,
+      }
+    }
+
+    // Graph-based targets require spotlight for `from` computation
+    if (!spotlight) return null
 
     if (target === 'neighbour' && resolvedNeighbourId) {
       to = getNodeScreenCoords(resolvedNeighbourId)
@@ -219,7 +246,6 @@ export function useTutorial({
       const hh = spotlight.height / 2
       const dx = Math.cos(oppositeAngle)
       const dy = Math.sin(oppositeAngle)
-      // Scale factor to reach the rect edge
       const sx = dx !== 0 ? Math.abs(hw / dx) : Infinity
       const sy = dy !== 0 ? Math.abs(hh / dy) : Infinity
       const s = Math.min(sx, sy)
@@ -270,6 +296,18 @@ export function useTutorial({
     }
   }, [stepConfig, spotlightReady, cursorAnimProps, isConfirming])
 
+  // Immediate confirm for manual steps with no cursor animation (e.g. "compare", "explore")
+  useEffect(() => {
+    if (
+      stepConfig &&
+      stepConfig.completionEvent === 'manual' &&
+      !stepConfig.cursorAnimation &&
+      !isConfirming
+    ) {
+      setIsConfirming(true)
+    }
+  }, [stepConfig, isConfirming])
+
   // Detect completion events
   useEffect(() => {
     if (!isActive || isConfirming) return
@@ -282,6 +320,11 @@ export function useTutorial({
     } else if (event === 'badgeInteracted' && badgeInteracted) {
       triggered = true
     } else if (event === 'panelOpened' && isPanelOpen) {
+      triggered = true
+    } else if (event === 'backToPathways' && !isComparing && isPanelOpen) {
+      // Guard: only trigger if panel is still open — if panel closed, the panel-closed guard handles it
+      triggered = true
+    } else if (event === 'panelClosed' && !isPanelOpen) {
       triggered = true
     }
 
@@ -298,7 +341,21 @@ export function useTutorial({
         setIsConfirming(true)
       }
     }
-  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen])
+  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen, isComparing])
+
+  // Guard: if panel closes during modal-dependent steps (compare, backToPathways),
+  // skip ahead to the "explore" step to avoid stranded prompts
+  useEffect(() => {
+    if (!isActive) return
+    const stepId = stepConfig?.id
+    if ((stepId === 'compare' || stepId === 'backToPathways') && !isPanelOpen) {
+      const exploreIdx = STEP_IDX.explore
+      if (exploreIdx !== undefined) {
+        setCurrentStep(exploreIdx)
+        setIsConfirming(false)
+      }
+    }
+  }, [isActive, stepConfig, isPanelOpen])
 
   useEffect(() => {
     if (!isActive && isVisible) {
