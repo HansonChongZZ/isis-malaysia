@@ -14,6 +14,7 @@ import TutorialOverlay from '@/components/tutorial/TutorialOverlay'
 import TutorialModal from '@/components/tutorial/TutorialModal'
 import { useTutorial, type OccupationGraphHandle } from '@/components/tutorial/useTutorial'
 import { TUTORIAL_STEPS, STEP_IDX } from '@/components/tutorial/tutorialConfig'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
 const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph"), {
@@ -26,6 +27,7 @@ const OccupationGraph = dynamic(() => import("@/components/graph/OccupationGraph
 })
 
 export default function HomePage() {
+  const isMobile = useIsMobile()
   const [nodes, setNodes] = useState<GraphNode[]>([])
   const [edges, setEdges] = useState<GraphEdge[]>([])
   const [occupations, setOccupations] = useState<Record<string, OccupationDetail>>({})
@@ -57,8 +59,10 @@ export default function HomePage() {
   const [basicSkills, setBasicSkills] = useState<Record<string, SkillInfo>>({})
   const [specificSkills, setSpecificSkills] = useState<Record<string, SkillInfo>>({})
 
+  const showTutorial = !isMobile
+
   const tutorial = useTutorial({
-    startActive: tutorialPhase === 'spotlight',
+    startActive: showTutorial && tutorialPhase === 'spotlight',
     selectedNodeId,
     secondSelectedNodeId,
     hoveredNodeId,
@@ -572,13 +576,15 @@ export default function HomePage() {
           </div>
         )}
 
-        <TutorialModal
-          open={tutorialPhase === 'modal'}
-          onComplete={() => setTutorialPhase('spotlight')}
-          onSkip={() => setTutorialPhase('done')}
-        />
+        {showTutorial && (
+          <TutorialModal
+            open={tutorialPhase === 'modal'}
+            onComplete={() => setTutorialPhase('spotlight')}
+            onSkip={() => setTutorialPhase('done')}
+          />
+        )}
 
-        {tutorial.isVisible && tutorial.stepConfig && (
+        {showTutorial && tutorial.isVisible && tutorial.stepConfig && (
           <TutorialOverlay
             isActive={tutorial.isActive}
             currentStep={tutorial.currentStep}
