@@ -156,9 +156,40 @@ export default function VirtualCursor({
           0%, 100% { transform: scale(1); }
           40% { transform: scale(0.7); }
         }
+        @keyframes pulseRing {
+          0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+          100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+        }
       `}</style>
     </motion.div>
   )
 
-  return createPortal(cursor, document.body)
+  const pulseRings = clickActive && (
+    <div
+      style={{
+        position: 'fixed',
+        left: to.x,
+        top: to.y,
+        zIndex: 59,
+        pointerEvents: 'none',
+      }}
+    >
+      <div style={{
+        width: 24, height: 24, borderRadius: '50%',
+        border: '2px solid currentColor',
+        position: 'absolute', left: 0, top: 0,
+        transform: 'translate(-50%, -50%)',
+        animation: 'pulseRing 1s ease-out infinite',
+      }} />
+      <div style={{
+        width: 24, height: 24, borderRadius: '50%',
+        border: '2px solid currentColor',
+        position: 'absolute', left: 0, top: 0,
+        transform: 'translate(-50%, -50%)',
+        animation: 'pulseRing 1s ease-out 0.4s infinite',
+      }} />
+    </div>
+  )
+
+  return createPortal(<>{cursor}{pulseRings}</>, document.body)
 }

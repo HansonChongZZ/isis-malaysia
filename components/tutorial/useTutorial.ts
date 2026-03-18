@@ -31,7 +31,6 @@ interface UseTutorialReturn {
   skip: () => void
   cursorAnimProps: { from: { x: number; y: number }; to: { x: number; y: number }; clickEffect?: boolean; delayMs?: number; lingerMs?: number } | null
   simulatedHoverId: string | null
-  pulseNodeId: string | null
   onCursorArrive: () => void
   onCursorComplete: () => void
 }
@@ -324,21 +323,10 @@ export function useTutorial({
     setSimulatedHoverId(null)
   }, [])
 
-  // Pulse ring on target node when cursor is in hint mode (e.g. step 3 click)
-  const pulseNodeId = useMemo(() => {
-    if (!stepConfig?.cursorAnimation || stepConfig.cursorAnimation.mode !== 'hint') return null
-    if (!cursorAnimProps) return null
-    const { target } = stepConfig.cursorAnimation
-    if (target === 'neighbour') return resolvedNeighbourId
-    if (target === 'selectedNode') return selectedNodeId
-    return null
-  }, [stepConfig, cursorAnimProps, resolvedNeighbourId, selectedNodeId])
-
   return {
     isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip,
     cursorAnimProps,
     simulatedHoverId,
-    pulseNodeId,
     onCursorArrive,
     onCursorComplete,
   }
