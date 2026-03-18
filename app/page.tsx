@@ -510,6 +510,7 @@ export default function HomePage() {
             onBadgePosChange={setBadgePos}
             onBadgeInteract={() => setBadgeInteracted(true)}
             disableZoom={tutorialPhase === 'spotlight' && tutorial.isActive}
+            simulatedHoverId={tutorial.simulatedHoverId}
           />
         )}
 
@@ -553,6 +554,9 @@ export default function HomePage() {
             spotlight={tutorial.spotlight}
             onAdvance={tutorial.advance}
             onSkip={handleTutorialSkip}
+            cursorAnimProps={tutorial.cursorAnimProps}
+            onCursorArrive={tutorial.onCursorArrive}
+            onCursorComplete={tutorial.onCursorComplete}
           />
         )}
       </div>
