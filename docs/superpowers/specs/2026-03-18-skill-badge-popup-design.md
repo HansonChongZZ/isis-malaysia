@@ -121,6 +121,13 @@ Data is fetched once at app level and passed down via context or props alongside
 | Edit | `components/graph/EdgeSkillsTooltip.tsx` | Replace skill badges with `SkillBadgePopover` |
 | Edit | `app/page.tsx` or `app/layout.tsx` | Wrap with `SkillPopoverProvider` |
 
+## Implementation Notes
+
+- **TransitionCard nesting:** `TransitionCard` renders as a `<button>`. The popover trigger must use `asChild` with a `<span>` (not a nested `<button>`) and call `e.stopPropagation()` to prevent the card's click handler from firing.
+- **Skill type in TransitionCard/EdgeSkillsTooltip:** These components only display specific skills. Hardcode `type="specific"` — no need to pass type dynamically.
+- **Blue color normalization:** Use `#60a5fa` for to-develop text and `rgba(59,130,246,0.15)` for to-develop background consistently across all locations (ComparisonGrid currently uses `#3b82f6` — update to match).
+- **Zod validation:** Add `SkillResourceSchema` and `SkillInfoSchema` to `lib/types.ts` and validate JSON on fetch, matching existing patterns in `lib/data.ts`.
+
 ## Out of Scope
 
 - No admin UI for editing skill JSON — files are edited manually
