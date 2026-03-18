@@ -78,11 +78,10 @@ export default function VirtualCursor({
       const timer = setTimeout(() => setPhase('moving'), 350)
       return () => clearTimeout(timer)
     }
-    // 'moving' → 'lingering' is driven by a timer matching the spring duration,
-    // NOT by onAnimationComplete (which is unreliable with mixed properties)
+    // 'moving' → 'lingering' is driven by a generous timer that overshoots
+    // the spring duration to ensure visual settlement before phase change
     if (phase === 'moving') {
-      // Spring with damping=30, stiffness=60 settles in ~800ms
-      const timer = setTimeout(() => setPhase('lingering'), 900)
+      const timer = setTimeout(() => setPhase('lingering'), 1200)
       return () => clearTimeout(timer)
     }
     if (phase === 'lingering') {
@@ -107,13 +106,19 @@ export default function VirtualCursor({
     }
   }, [phase, mounted, delayMs, lingerMs, prefersReducedMotion, onArrive, onComplete])
 
-  // Delay click animation until after cursor has settled on target
+  // Track whether cursor has reached near the target
+  const nearTargetRef = useRef(false)
+
+  // Only activate click animation once cursor is in lingering phase AND near target
   useEffect(() => {
-    if (clickEffect && phase === 'lingering') {
-      const timer = setTimeout(() => setClickActive(true), 200)
-      return () => clearTimeout(timer)
+    if (clickEffect && phase === 'lingering' && nearTargetRef.current) {
+      setClickActive(true)
+    } else {
+      setClickActive(false)
     }
-    setClickActive(false)
+    if (phase === 'waiting' || phase === 'fadeIn') {
+      nearTargetRef.current = false
+    }
   }, [clickEffect, phase])
 
   if (!mounted || phase === 'waiting' || prefersReducedMotion) return null
@@ -140,6 +145,15 @@ export default function VirtualCursor({
           ? { x: { type: 'spring', damping: 30, stiffness: 60 }, y: { type: 'spring', damping: 30, stiffness: 60 }, opacity: { duration: 0.35 } }
           : { opacity: { duration: phase === 'fadeOut' ? 0.4 : 0.35 }, x: { duration: 0 }, y: { duration: 0 } }
       }
+      onUpdate={(latest) => {
+        if (phase === 'moving' && clickEffect && !nearTargetRef.current) {
+          const dx = (latest.x as number) - to.x
+          const dy = (latest.y as number) - to.y
+          if (Math.abs(dx) < 5 && Math.abs(dy) < 5) {
+            nearTargetRef.current = true
+          }
+        }
+      }}
     >
       {/* Click scale is a separate element with CSS animation —
           completely decoupled from the position spring */}
