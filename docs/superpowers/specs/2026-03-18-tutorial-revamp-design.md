@@ -22,9 +22,9 @@ Enhance the tutorial flow by adding a popup modal as an introductory phase befor
 
 ## Component Changes
 
-### Revive from old commit (50cf488)
+### Revive from git history (pre-deletion state at `5160e3c~1`)
 
-- **`TutorialModal.tsx`** — Dialog with step navigation, dot indicators, keyboard nav (left/right arrows). Final step's "Next" button triggers handoff to spotlight.
+- **`TutorialModal.tsx`** — Dialog with step navigation, dot indicators, keyboard nav (left/right arrows). Final step's "Next" button triggers handoff to spotlight. Closing/skipping the modal skips the entire tutorial (`tutorialPhase` → `'done'`).
 - **`NodeSizingDemo.tsx`** — D3 animation: circles start uniform, then scale by AI exposure with a Low/High axis label.
 
 ### Create new (simplified)
@@ -34,8 +34,8 @@ Enhance the tutorial flow by adding a popup modal as an introductory phase befor
 ### Modify existing
 
 - **`tutorialConfig.ts`** — Remove the `orient` step (index 0). `TUTORIAL_STEPS` starts at `search`. Step count goes from 6 to 5.
-- **`useTutorial.ts`** — Tutorial no longer auto-starts on page load. It starts when `isActive` is set to `true` externally (after modal finishes). Adjust step count references.
-- **`TutorialOverlay.tsx`** — Progress dots update from 6 to 5 (derived from `TUTORIAL_STEPS.length`, so this should be automatic).
+- **`useTutorial.ts`** — Accept a `startActive?: boolean` parameter (default `false`). Tutorial activates when page sets it to `true` after modal finishes. Replace hardcoded step index checks with step-ID-based lookups (e.g., `stepConfig.id === 'search'`) to avoid off-by-one errors after removing the orient step.
+- **`TutorialOverlay.tsx`** — Progress dots update from 6 to 5 (derived from `TUTORIAL_STEPS.length`, so automatic). Fix "Next" button visibility logic on step 0 — after removing orient, `search` becomes step 0 and auto-advances (should not show a manual "Next" button).
 - **`app/page.tsx`** — Mount `TutorialModal`. Manage `tutorialPhase: 'modal' | 'spotlight' | 'done'`. Starts as `'modal'`. Modal completion triggers `'spotlight'`. Spotlight completion triggers `'done'`.
 
 ### Revive data file
@@ -53,10 +53,15 @@ The modal's final "Next" click calls a callback that transitions phase from `'mo
 
 ## Approach
 
-**Approach A (selected):** Reuse the old `TutorialModal` component and `NodeSizingDemo` from commit `50cf488`. Simplify `NodeRepresentationDemo` to remove MASCO-specific content. Wire modal → spotlight handoff via shared state in `page.tsx`.
+**Approach A (selected):** Reuse the old `TutorialModal` component and `NodeSizingDemo` from pre-deletion state (`5160e3c~1`). Simplify `NodeRepresentationDemo` to remove MASCO-specific content. Wire modal → spotlight handoff via shared state in `page.tsx`.
+
+## Notes
+
+- Tutorial shows on every page visit (no localStorage persistence). This is intentional.
+- Modal skip/dismiss (X button or "Skip") skips the entire tutorial — both modal and spotlight phases.
 
 ## Out of Scope
 
-- Tutorial persistence (replay on every visit)
+- Tutorial persistence across visits
 - Mobile-specific flows
 - Analytics tracking
