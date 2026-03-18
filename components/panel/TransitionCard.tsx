@@ -3,6 +3,7 @@
 import { Badge } from '@/components/ui/badge';
 import { QUARTILE_COLOURS } from '@/lib/constants';
 import SkillBadgePopover from '@/components/SkillBadgePopover';
+import { ArrowRight } from 'lucide-react';
 
 interface TransitionCardProps {
   id: string;
@@ -98,9 +99,9 @@ export default function TransitionCard({
         </div>
       </div>
 
-      {/* Bottom row: skills preview (shared first, then to develop) */}
-      {skillsPreview.length > 0 && (
-        <div className="flex flex-wrap gap-1">
+      {/* Bottom row: skills preview + explore details arrow */}
+      <div className="flex justify-between items-end gap-2">
+        <div className="flex flex-wrap gap-1 min-w-0">
           {skillsPreview.map((skill) => {
             const isShared = primarySkills.has(skill.toLowerCase());
             return (
@@ -109,7 +110,7 @@ export default function TransitionCard({
                 skill={skill}
                 type="specific"
                 variant={isShared ? 'shared' : 'to-develop'}
-                suffix={isShared ? ' \u2713' : undefined}
+                suffix={isShared ? ' ✓' : undefined}
                 className="text-[10px]"
               />
             );
@@ -127,7 +128,11 @@ export default function TransitionCard({
             </span>
           )}
         </div>
-      )}
+        <span className="text-xs text-muted-foreground whitespace-nowrap shrink-0 inline-flex items-center gap-1">
+          Explore details
+          <ArrowRight size={14} />
+        </span>
+      </div>
     </button>
   );
 }
