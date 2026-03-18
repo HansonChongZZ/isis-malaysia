@@ -121,7 +121,14 @@ export default function TutorialModal({
           </div>
 
           {/* Navigation buttons */}
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onSkip}
+              className="text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors mr-1"
+            >
+              Skip tutorial
+            </button>
             <Button
               variant="outline"
               size="sm"
