@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 
@@ -39,10 +39,10 @@ export default function VirtualCursor({
   const [phase, setPhase] = useState<'waiting' | 'fadeIn' | 'moving' | 'lingering' | 'fadeOut' | 'done'>('waiting')
   const [mounted, setMounted] = useState(false)
 
-  // Check reduced motion preference
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const [prefersReducedMotion] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+  const innerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -56,11 +56,14 @@ export default function VirtualCursor({
       // Skip animation: go straight to arrive → linger → complete
       const timer = setTimeout(() => {
         onArrive()
-        setTimeout(() => {
+        innerTimerRef.current = setTimeout(() => {
           onComplete()
         }, lingerMs)
       }, delayMs)
-      return () => clearTimeout(timer)
+      return () => {
+        clearTimeout(timer)
+        if (innerTimerRef.current) clearTimeout(innerTimerRef.current)
+      }
     }
 
     if (phase === 'waiting') {

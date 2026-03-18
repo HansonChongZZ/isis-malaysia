@@ -310,6 +310,7 @@ export function useTutorial({
   const skip = useCallback(() => {
     setIsActive(false)
     setIsConfirming(false)
+    setSimulatedHoverId(null)
   }, [])
 
   return {
