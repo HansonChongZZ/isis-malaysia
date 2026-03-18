@@ -148,21 +148,23 @@ function computeTooltipPosition(
   const pad = 16
   const tooltipWidth = 300
   const tooltipHeight = 160
-  const r = spotlight.shape === 'circle' ? spotlight.width / 2 : 0
+  // For circles, use radius. For rects, use half-dimensions so tooltip clears the edges.
+  const rx = spotlight.shape === 'circle' ? spotlight.width / 2 : spotlight.width / 2
+  const ry = spotlight.shape === 'circle' ? spotlight.width / 2 : spotlight.height / 2
 
   // Find which side of the spotlight has the most space
-  const spaceRight = vw - (spotlight.x + r)
-  const spaceLeft = spotlight.x - r
-  const spaceBottom = vh - (spotlight.y + r)
+  const spaceRight = vw - (spotlight.x + rx)
+  const spaceLeft = spotlight.x - rx
+  const spaceBottom = vh - (spotlight.y + ry)
   const style: React.CSSProperties = {}
 
   // Horizontal: place on the side with more room
   if (spaceRight >= tooltipWidth + pad) {
     // Right of spotlight edge
-    style.left = spotlight.x + r + pad
+    style.left = spotlight.x + rx + pad
   } else if (spaceLeft >= tooltipWidth + pad) {
     // Left of spotlight edge
-    style.right = vw - (spotlight.x - r - pad)
+    style.right = vw - (spotlight.x - rx - pad)
   } else {
     // Not enough horizontal space — centre horizontally, will go above/below
     style.left = Math.max(pad, Math.min(spotlight.x - tooltipWidth / 2, vw - tooltipWidth - pad))
@@ -174,9 +176,9 @@ function computeTooltipPosition(
     const centredTop = spotlight.y - tooltipHeight / 2
     style.top = Math.max(pad, Math.min(centredTop, vh - tooltipHeight - pad))
   } else if (spaceBottom >= tooltipHeight + pad) {
-    style.top = spotlight.y + r + pad
+    style.top = spotlight.y + ry + pad
   } else {
-    style.bottom = vh - (spotlight.y - r - pad)
+    style.bottom = vh - (spotlight.y - ry - pad)
   }
 
   return style
