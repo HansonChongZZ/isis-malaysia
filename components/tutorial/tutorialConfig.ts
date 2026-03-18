@@ -1,4 +1,4 @@
-export type CompletionEvent = 'manual' | 'nodeSelected' | 'secondNodeSelected' | 'badgeInteracted' | 'panelOpened'
+export type CompletionEvent = 'manual' | 'nodeSelected' | 'secondNodeSelected' | 'badgeInteracted' | 'panelOpened' | 'backToPathways' | 'panelClosed'
 
 export type SpotlightShape = 'circle' | 'rect'
 
@@ -12,7 +12,9 @@ export interface SpotlightTarget {
 
 export interface CursorAnimation {
   /** Which element the cursor moves to. Resolved to screen coords at runtime. */
-  target: 'neighbour' | 'badge' | 'selectedNode'
+  target: 'neighbour' | 'badge' | 'selectedNode' | 'domElement'
+  /** CSS selector for the target element. Used when target === 'domElement'. */
+  targetSelector?: string
   /** 'demo' triggers effects on arrive (e.g. simulated hover). 'hint' just points visually. Default: 'demo'. */
   mode?: 'demo' | 'hint'
   /** Show a press-down click animation when cursor arrives at target. Default: false. */
@@ -31,6 +33,7 @@ export interface TutorialStep {
   resolveSpotlight: ((context: SpotlightContext) => SpotlightTarget | null) | null // null = keep previous spotlight
   cursorAnimation?: CursorAnimation
   preferredNeighbourId?: string // Force a specific neighbour for cursor/spotlight targeting
+  clearSpotlight?: boolean // When true, clears prevSpotlightRef on entry (tooltip centers on screen)
 }
 
 export interface SpotlightContext {
@@ -118,6 +121,35 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     cursorAnimation: { target: 'neighbour', mode: 'hint', clickEffect: true },
     preferredNeighbourId: '1421',
     resolveSpotlight: null,
+  },
+  {
+    id: 'compare',
+    prompt: 'This view compares AI exposure, median wages, and skills between the two occupations — shared skills and skills to develop.',
+    completionEvent: 'manual',
+    resolveSpotlight: null,
+  },
+  {
+    id: 'backToPathways',
+    prompt: 'Click "Back to pathways" to see other occupations you could transition to.',
+    completionEvent: 'backToPathways',
+    autoAdvance: true,
+    resolveSpotlight: null,
+    cursorAnimation: { target: 'domElement', targetSelector: '[data-tutorial-target="back-to-pathways"]', mode: 'hint', clickEffect: true },
+  },
+  {
+    id: 'closePanel',
+    prompt: 'Close this panel to return to the full graph.',
+    completionEvent: 'panelClosed',
+    autoAdvance: true,
+    resolveSpotlight: null,
+    cursorAnimation: { target: 'domElement', targetSelector: '[data-tutorial-target="panel-close"]', mode: 'hint', clickEffect: true },
+  },
+  {
+    id: 'explore',
+    prompt: "You're all set — happy exploring!",
+    completionEvent: 'manual',
+    resolveSpotlight: null,
+    clearSpotlight: true,
   },
 ]
 
