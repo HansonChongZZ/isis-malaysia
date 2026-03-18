@@ -54,7 +54,7 @@ function neighbourhoodSpotlight({ nodeToScreenCoords, selectedNodeId, neighbourI
 export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     id: 'search',
-    prompt: 'Search for any occupation — try typing a job title (e.g. "Pharmacists").',
+    prompt: 'Select an occupation to explore — try "Commercial Sales Representatives" at the top of the list.',
     completionEvent: 'nodeSelected',
     autoAdvance: true,
     resolveSpotlight: ({ heroSearchRect }) => {
