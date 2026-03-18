@@ -74,6 +74,7 @@ interface OccupationGraphProps {
   disableClick?: boolean; // Disable node click only (hover still works)
   onBadgePosChange?: (pos: { x: number; y: number } | null) => void;
   onBadgeInteract?: () => void;
+  simulatedHoverId?: string | null;
 }
 
 export default function OccupationGraph({
@@ -103,6 +104,7 @@ export default function OccupationGraph({
   disableClick,
   onBadgePosChange,
   onBadgeInteract,
+  simulatedHoverId,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -544,6 +546,38 @@ export default function OccupationGraph({
 
   // Keep ref in sync for canvas drawEdges callback
   useEffect(() => { neighbourDistancesRef.current = neighbourDistances; }, [neighbourDistances]);
+
+  // Simulated hover from tutorial virtual cursor
+  useEffect(() => {
+    if (!simulatedHoverId) return
+
+    // nodeById is a ref (Map<string, GraphNode>) populated during layout — use it for node lookup
+    const node = nodeById.current.get(simulatedHoverId)
+    if (!node) return
+
+    setHoveredNodeId(simulatedHoverId)
+    onNodeHover?.(simulatedHoverId)
+
+    const t = transformRef.current
+    const sc =
+      selectedNodeId &&
+      simulatedHoverId !== selectedNodeId &&
+      neighbourDistancesRef.current?.get(simulatedHoverId)
+    setTooltip({
+      x: t.applyX(node.x),
+      y: t.applyY(node.y),
+      node,
+      skillComparison: sc || undefined,
+    })
+
+    return () => {
+      setHoveredNodeId(null)
+      onNodeHover?.(null)
+      setTooltip(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- imperative effect driven by tutorial;
+    // onNodeHover is a stable setState, selectedNodeId is read from ref-like state at effect time
+  }, [simulatedHoverId, selectedNodeId, onNodeHover])
 
   // --- Animation refs (Task 8) ---
   const animatingRef = useRef(false);
