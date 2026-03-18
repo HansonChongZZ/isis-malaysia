@@ -1655,27 +1655,33 @@ export default function OccupationGraph({
       {/* Pair mode node labels — float independently when tooltip closed */}
       {pairLabelPositions &&
         [pairLabelPositions.a, pairLabelPositions.b].map((pos, i) => {
-          const pairR =
-            (NODE_RADIUS_BASE +
-              Math.pow(pos.aiExposure, NODE_RADIUS_EXPONENT) *
-                NODE_RADIUS_SCALE) *
-            transformRef.current.k;
           return (
             <div
               key={i}
-              className="absolute z-20 bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border cursor-pointer"
+              className="absolute bg-popover text-popover-foreground text-xs rounded-md px-3 py-2 shadow-lg max-w-[220px] border cursor-pointer"
               onClick={() => {
                 const id = i === 0 ? selectedNodeId : secondSelectedNodeId;
                 if (id) onNodeSelect(id);
               }}
+              onMouseEnter={() => {
+                if (hasOverlap) {
+                  setLastHoveredElement(i === 0 ? 'labelA' : 'labelB');
+                }
+              }}
+              onMouseLeave={() => {
+                // lastHoveredElement state stays — last-touched wins
+              }}
               style={{
-                left: pos.x + pairR + 6,
-                top: pos.y - 10,
+                left: pos.mirroredLeft,
+                top: pos.mirroredTop,
                 borderColor: nodeColourRef.current,
                 transform:
-                  pos.x > (dimensions.width ?? 0) - 240
+                  pos.mirroredLeft + LABEL_WIDTH > (dimensions.width ?? 0)
                     ? 'translateX(-110%)'
                     : undefined,
+                opacity: hasOverlap && lastHoveredElement !== (i === 0 ? 'labelA' : 'labelB') ? 0.75 : 1,
+                zIndex: hasOverlap && lastHoveredElement === (i === 0 ? 'labelA' : 'labelB') ? 30 : 20,
+                transition: 'opacity 150ms ease, z-index 150ms ease',
               }}
             >
               <p className="font-semibold leading-tight">{pos.label}</p>
@@ -1702,17 +1708,20 @@ export default function OccupationGraph({
       {/* Edge skills badge (always visible in pair mode) */}
       {badgePos && pairSkillsComparison && (
         <div
-          className="absolute z-20"
+          className="absolute"
           style={{
             left: badgePos.x,
             top: badgePos.y,
             transform: 'translate(-50%, -50%)',
+            opacity: hasOverlap && lastHoveredElement !== 'badge' ? 0.75 : 1,
+            zIndex: hasOverlap && lastHoveredElement === 'badge' ? 30 : 20,
+            transition: 'opacity 150ms ease, z-index 150ms ease',
           }}
         >
           <div
             ref={badgeRef}
             className="cursor-pointer select-none"
-            onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.() }}
+            onMouseEnter={() => { setShowEdgeTooltip(true); onBadgeInteract?.(); if (hasOverlap) { setLastHoveredElement('badge'); } }}
             onMouseLeave={() => { if (!pinnedEdgeTooltip) setShowEdgeTooltip(false); }}
             onClick={() => {
               if (pinnedEdgeTooltip) {
