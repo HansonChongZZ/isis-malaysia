@@ -24,6 +24,7 @@ interface OccupationPanelProps {
   onClose: () => void
   initialComparisonId: string | null
   onComparisonChange?: (isComparing: boolean) => void
+  preventInteractOutside?: boolean
 }
 
 export default function OccupationPanel({
@@ -36,6 +37,7 @@ export default function OccupationPanel({
   onClose,
   initialComparisonId,
   onComparisonChange,
+  preventInteractOutside,
 }: OccupationPanelProps) {
   const [comparisonNodeId, setComparisonNodeId] = useState<string | null>(null)
 
@@ -138,6 +140,8 @@ export default function OccupationPanel({
       <DialogContent
         className="bg-card border-border text-foreground max-w-full md:max-w-6xl h-[90dvh] overflow-hidden p-0 flex flex-col gap-0"
         showCloseButton={false}
+        onInteractOutside={preventInteractOutside ? (e) => e.preventDefault() : undefined}
+        onEscapeKeyDown={preventInteractOutside ? (e) => e.preventDefault() : undefined}
       >
         {detail && nodeId && (
           <>

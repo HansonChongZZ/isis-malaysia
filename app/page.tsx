@@ -598,6 +598,10 @@ export default function HomePage() {
         }}
         initialComparisonId={openedViaSecondary ? secondSelectedNodeId : null}
         onComparisonChange={setIsComparing}
+        preventInteractOutside={
+          tutorialPhase === 'spotlight' && tutorial.isActive &&
+          ['compare', 'backToPathways', 'pathways', 'closePanel'].includes(tutorial.stepConfig?.id ?? '')
+        }
       />
     </div>
   )
