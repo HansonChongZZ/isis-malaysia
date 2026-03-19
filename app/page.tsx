@@ -34,6 +34,8 @@ import {
 } from '@/components/tutorial/useTutorial';
 import { TUTORIAL_STEPS, STEP_IDX } from '@/components/tutorial/tutorialConfig';
 import { useIsMobile } from '@/hooks/useIsMobile';
+import ThemeToggle from '@/components/ThemeToggle';
+import { Settings2 } from 'lucide-react';
 
 // Dynamic import to avoid SSR issues with D3 and ResizeObserver
 const OccupationGraph = dynamic(
@@ -91,6 +93,7 @@ export default function HomePage() {
   const [isComparing, setIsComparing] = useState(false);
   const [attributionOpen, setAttributionOpen] = useState(false);
   const [attributionHover, setAttributionHover] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const attributionRef = useRef<HTMLDivElement>(null);
   const [basicSkills, setBasicSkills] = useState<Record<string, SkillInfo>>({});
   const [specificSkills, setSpecificSkills] = useState<
@@ -561,6 +564,33 @@ export default function HomePage() {
       specificSkills={specificSkills}
     >
       <div className="flex flex-col flex-1 min-h-0 bg-background text-foreground overflow-hidden">
+        {/* Header */}
+        <header className="flex items-center justify-between gap-3 px-3 py-2 sm:px-4 sm:py-3 bg-card/60 dark:bg-card/80 backdrop-blur-lg border-b border-border shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shrink-0">
+              IS
+            </div>
+            <div>
+              <h1 className="text-sm font-semibold text-foreground leading-tight">
+                Malaysia Occupational Space
+              </h1>
+              <p className="text-xs text-muted-foreground leading-tight">
+                ISIS Malaysia · MASCO Research
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setSettingsOpen(o => !o)}
+              className="sm:hidden p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              aria-label="Visualisation settings"
+            >
+              <Settings2 className="w-4 h-4" />
+            </button>
+            <ThemeToggle />
+          </div>
+        </header>
+
         {/* Graph controls */}
         <GraphControls
           occupations={occupationList}
@@ -591,6 +621,9 @@ export default function HomePage() {
           onRestartTutorial={
             showTutorial ? () => setTutorialPhase('modal') : undefined
           }
+          settingsOpen={settingsOpen}
+          onSettingsToggle={() => setSettingsOpen(o => !o)}
+          onSettingsClose={() => setSettingsOpen(false)}
         />
 
         {/* Main graph area */}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import type { NodeSizeMetric, ViewMode } from '@/lib/types';
 import { CircleHelp, Search, Settings2, X } from 'lucide-react';
 import {
@@ -42,6 +42,9 @@ interface GraphControlsProps {
   colourByGroup: boolean;
   onColourByGroupChange: (value: boolean) => void;
   onRestartTutorial?: () => void;
+  settingsOpen: boolean;
+  onSettingsToggle: () => void;
+  onSettingsClose: () => void;
 }
 
 export default function GraphControls({
@@ -67,8 +70,10 @@ export default function GraphControls({
   colourByGroup,
   onColourByGroupChange,
   onRestartTutorial,
+  settingsOpen,
+  onSettingsToggle,
+  onSettingsClose,
 }: GraphControlsProps) {
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
   const chipsRef = useRef<HTMLDivElement>(null);
 
@@ -76,11 +81,11 @@ export default function GraphControls({
     if (!settingsOpen) return;
     const handleClick = (e: MouseEvent) => {
       if (settingsRef.current && !settingsRef.current.contains(e.target as Node)) {
-        setSettingsOpen(false);
+        onSettingsClose();
       }
     };
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSettingsOpen(false);
+      if (e.key === 'Escape') onSettingsClose();
     };
     document.addEventListener('mousedown', handleClick);
     document.addEventListener('keydown', handleKeyDown);
@@ -194,8 +199,8 @@ export default function GraphControls({
         {/* Visualisation Settings */}
         <div className={cn("relative shrink-0", !onRestartTutorial && "ml-auto")} ref={settingsRef}>
           <button
-            onClick={() => setSettingsOpen((o) => !o)}
-            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            onClick={onSettingsToggle}
+            className="hidden sm:block p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             aria-label="Visualisation settings"
           >
             <Settings2 className="w-4 h-4" />
@@ -207,7 +212,7 @@ export default function GraphControls({
               <div className="flex items-center justify-between px-4 py-2.5 border-b border-border">
                 <span className="text-sm font-semibold">Visualisation Settings</span>
                 <button
-                  onClick={() => setSettingsOpen(false)}
+                  onClick={() => onSettingsToggle()}
                   className="text-muted-foreground hover:text-foreground"
                   aria-label="Close"
                 >
