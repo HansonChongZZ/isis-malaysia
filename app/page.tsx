@@ -56,6 +56,8 @@ export default function HomePage() {
   const [badgeInteracted, setBadgeInteracted] = useState(false)
   const [tutorialPhase, setTutorialPhase] = useState<'modal' | 'spotlight' | 'done'>('modal')
   const [isComparing, setIsComparing] = useState(false)
+  const [attributionOpen, setAttributionOpen] = useState(false)
+  const [attributionHover, setAttributionHover] = useState(false)
   const [basicSkills, setBasicSkills] = useState<Record<string, SkillInfo>>({})
   const [specificSkills, setSpecificSkills] = useState<Record<string, SkillInfo>>({})
 
@@ -570,10 +572,31 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Node count badge */}
+        {/* Attribution badge */}
         {!loading && !error && (
-          <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded max-w-sm leading-relaxed">
-            Malaysian Network Explorer visualises occupations and maps how they are connected through shared skills. Occupation titles are based on the Malaysian Standard Classification of Occupations (MASCO) 2020 at the 4‑digit level. This explorer is developed as part of the research project &ldquo;Skill Pathways for Technology-Induced Employment Transitions&rdquo;, funded by the Centre for Responsible Technology (CERT). Platform development was supported by Shortcut Asia.
+          <div
+            className={`absolute bottom-4 left-4 text-xs text-muted-foreground px-2 py-1 rounded leading-relaxed z-10 cursor-pointer group whitespace-nowrap transition-colors duration-200 hover:bg-card/70 ${attributionOpen ? 'bg-card/70' : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-expanded={attributionOpen}
+            onClick={() => setAttributionOpen(prev => !prev)}
+            onMouseEnter={() => setAttributionHover(true)}
+            onMouseLeave={() => setAttributionHover(false)}
+            onFocus={() => setAttributionHover(true)}
+            onBlur={() => setAttributionHover(false)}
+          >
+            <p>© 2026 CERT · Institute of Strategic &amp; International Studies (ISIS) Malaysia</p>
+            <div
+              className="overflow-hidden transition-all duration-300 ease-in-out whitespace-normal max-w-sm"
+              style={{
+                maxHeight: attributionOpen || attributionHover ? '12rem' : '0',
+                opacity: attributionOpen || attributionHover ? 1 : 0,
+              }}
+            >
+              <p className="mt-1">
+                Malaysian Network Explorer visualises occupations and maps how they are connected through shared skills. Occupation titles are based on the Malaysian Standard Classification of Occupations (MASCO) 2020 at the 4&#x2011;digit level. This explorer is developed as part of the research project {'\u201C'}Skill Pathways for Technology-Induced Employment Transitions{'\u201D'}, funded by the Centre for Responsible Technology (CERT). Platform development was supported by Shortcut Asia.
+              </p>
+            </div>
           </div>
         )}
 
