@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter_Tight, Funnel_Display, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 import ThemeProvider from '@/components/ThemeProvider';
+import { Analytics } from '@vercel/analytics/next';
 
 const fontSans = Inter_Tight({ subsets: ['latin'], variable: '--font-sans' });
 const fontSerif = Funnel_Display({
@@ -31,9 +32,8 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} font-sans antialiased bg-background text-foreground flex flex-col h-dvh overflow-hidden`}
       >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

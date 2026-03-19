@@ -19,6 +19,7 @@ interface UseTutorialProps {
   badgeInteracted: boolean
   isPanelOpen: boolean
   isComparing: boolean
+  onComplete?: () => void
 }
 
 interface UseTutorialReturn {
@@ -49,6 +50,7 @@ export function useTutorial({
   badgeInteracted,
   isPanelOpen,
   isComparing,
+  onComplete,
 }: UseTutorialProps): UseTutorialReturn {
   const [currentStep, setCurrentStep] = useState(0)
   const [isActive, setIsActive] = useState(false)
@@ -155,16 +157,12 @@ export function useTutorial({
     }
   }, [currentStep])
 
-  const prevSpotlightRef = useRef<SpotlightTarget | null>(null)
+  const [prevSpotlight, setPrevSpotlight] = useState<SpotlightTarget | null>(null)
   const spotlight = useMemo(() => {
-    if (!stepConfig || !spotlightReady) return prevSpotlightRef.current
-    // Clear spotlight when step requests it (e.g. final "happy exploring" step)
-    if (stepConfig.clearSpotlight) {
-      prevSpotlightRef.current = null
-      return null
-    }
+    if (!stepConfig || !spotlightReady) return prevSpotlight
+    if (stepConfig.clearSpotlight) return null
     // null resolveSpotlight = keep previous spotlight
-    if (!stepConfig.resolveSpotlight) return prevSpotlightRef.current
+    if (!stepConfig.resolveSpotlight) return prevSpotlight
     const context: SpotlightContext = {
       graphContainerRect,
       heroSearchRect,
@@ -176,10 +174,16 @@ export function useTutorial({
         ? { x: badgePos.x + graphContainerRect.left, y: badgePos.y + graphContainerRect.top }
         : null,
     }
-    const result = stepConfig.resolveSpotlight(context)
-    if (result) prevSpotlightRef.current = result
-    return result
-  }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
+    return stepConfig.resolveSpotlight(context)
+  }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos, prevSpotlight])
+
+  useEffect(() => {
+    if (stepConfig?.clearSpotlight) {
+      setPrevSpotlight(null)
+    } else if (spotlight) {
+      setPrevSpotlight(spotlight)
+    }
+  }, [spotlight, stepConfig])
 
   const cursorAnimProps = useMemo(() => {
     if (!stepConfig?.cursorAnimation || !spotlightReady) return null
@@ -375,14 +379,16 @@ export function useTutorial({
       setCurrentStep(prev => prev + 1)
     } else {
       setIsActive(false)
+      onComplete?.()
     }
-  }, [currentStep])
+  }, [currentStep, onComplete])
 
   const skip = useCallback(() => {
     setIsActive(false)
     setIsConfirming(false)
     setSimulatedHoverId(null)
-  }, [])
+    onComplete?.()
+  }, [onComplete])
 
   return {
     isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip,

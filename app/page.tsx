@@ -102,6 +102,18 @@ export default function HomePage() {
 
   const showTutorial = !isMobile;
 
+  const handleTutorialComplete = useCallback(() => {
+    setTutorialPhase('done');
+    setSelectedNodeId(null);
+    setSecondSelectedNodeId(null);
+    setPanelNodeId(null);
+    setIsPanelOpen(false);
+    setOpenedViaSecondary(false);
+    setIsComparing(false);
+    setViewMode('force');
+    setLayoutMode('ring');
+  }, []);
+
   const tutorial = useTutorial({
     startActive: showTutorial && tutorialPhase === 'spotlight',
     selectedNodeId,
@@ -115,6 +127,7 @@ export default function HomePage() {
     badgeInteracted,
     isPanelOpen,
     isComparing,
+    onComplete: handleTutorialComplete,
   });
 
   // Open search dropdown when spotlight starts at the search step
@@ -171,46 +184,7 @@ export default function HomePage() {
 
   const handleTutorialSkip = () => {
     tutorial.skip();
-    setTutorialPhase('done');
-    setSelectedNodeId(null);
-    setSecondSelectedNodeId(null);
-    setPanelNodeId(null);
-    setIsPanelOpen(false);
-    setOpenedViaSecondary(false);
-    setIsComparing(false);
-    setViewMode('force');
-    setLayoutMode('ring');
   };
-
-  useEffect(() => {
-    if (
-      tutorialPhase === 'spotlight' &&
-      tutorial.isActive &&
-      viewMode !== 'force'
-    ) {
-      setViewMode('force');
-      setLayoutMode('ring');
-    }
-  }, [tutorialPhase, tutorial.isActive, viewMode]);
-
-  // Detect tutorial completion (reached last step and became inactive)
-  useEffect(() => {
-    if (
-      tutorialPhase === 'spotlight' &&
-      !tutorial.isActive &&
-      tutorial.currentStep === TUTORIAL_STEPS.length - 1
-    ) {
-      setTutorialPhase('done');
-      setSelectedNodeId(null);
-      setSecondSelectedNodeId(null);
-      setPanelNodeId(null);
-      setIsPanelOpen(false);
-      setOpenedViaSecondary(false);
-      setIsComparing(false);
-      setViewMode('force');
-      setLayoutMode('ring');
-    }
-  }, [tutorialPhase, tutorial.isActive, tutorial.currentStep]);
 
   // Per-view-mode settings
   type ModeSettings = {
@@ -770,7 +744,11 @@ export default function HomePage() {
           {showTutorial && (
             <TutorialModal
               open={tutorialPhase === 'modal'}
-              onComplete={() => setTutorialPhase('spotlight')}
+              onComplete={() => {
+                setTutorialPhase('spotlight');
+                setViewMode('force');
+                setLayoutMode('ring');
+              }}
               onSkip={() => setTutorialPhase('done')}
             />
           )}
