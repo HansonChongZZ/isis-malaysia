@@ -10,6 +10,7 @@ import {
 import type { OccupationDetail } from '@/lib/types';
 import { QUARTILE_COLOURS } from '@/lib/constants';
 import SkillBadgePopover from '@/components/SkillBadgePopover';
+import InfoTooltip from '@/components/InfoTooltip';
 
 
 interface OccupationDetailPaneProps {
@@ -36,8 +37,11 @@ export default function OccupationDetailPane({
       {/* Mobile compact summary: AI + Wage side-by-side */}
       <div className="flex md:hidden items-start justify-between gap-4 mb-4">
         <div className="flex-1">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1">
             AI Exposure
+            <InfoTooltip>
+              The AI Exposure Index is developed by Cheng, Chong, Jasmin, and Dornan (2025). It measures the potential for job tasks to be automated by generative AI.
+            </InfoTooltip>
           </h3>
           <div className="flex items-center gap-2">
             <span className="text-2xl font-bold" style={{ color: quartileColour }}>
@@ -65,8 +69,11 @@ export default function OccupationDetailPane({
           </div>
         </div>
         <div className="text-right">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center justify-end gap-1">
             Median Wage
+            <InfoTooltip>
+              Median wage data is sourced from the Labour Force Survey (LFS) 2021.
+            </InfoTooltip>
           </h3>
           <p className="text-lg font-semibold text-foreground">
             {detail.wage !== null ? `MYR ${detail.wage.toLocaleString()}` : '—'}
@@ -76,8 +83,11 @@ export default function OccupationDetailPane({
 
       {/* AI Exposure */}
       <section className="hidden md:block">
-        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
           AI Exposure Index
+          <InfoTooltip>
+            The AI Exposure Index is developed by Cheng, Chong, Jasmin, and Dornan (2025). It measures the potential for job tasks to be automated by generative AI by comparing current generative-AI capabilities with the task content of occupations. Please refer to the full paper for methodological details.
+          </InfoTooltip>
         </h3>
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
@@ -126,8 +136,11 @@ export default function OccupationDetailPane({
 
       {/* Wage */}
       <section className="hidden md:block">
-        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
           Median Wage
+          <InfoTooltip>
+            Median wage data is sourced from the Labour Force Survey (LFS) 2021.
+          </InfoTooltip>
         </h3>
         {detail.wage !== null ? (
           <div className="flex items-center gap-2">
@@ -184,8 +197,11 @@ export default function OccupationDetailPane({
       {/* Tasks */}
       {detail.tasks.length > 0 && (
         <section>
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
             Tasks ({detail.tasks.length})
+            <InfoTooltip>
+              Task lists for each occupation are obtained from the Malaysian Standard Classification of Occupations (MASCO) 2020.
+            </InfoTooltip>
           </h3>
           <Accordion type="multiple" className="space-y-1">
             {detail.tasks.map((task, i) => (

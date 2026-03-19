@@ -572,8 +572,8 @@ export default function HomePage() {
 
         {/* Node count badge */}
         {!loading && !error && (
-          <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded">
-            {nodes.length} occupations · {edges.length.toLocaleString()} skill edges
+          <div className="absolute bottom-4 left-4 text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded max-w-sm leading-relaxed">
+            Malaysian Network Explorer visualises occupations and maps how they are connected through shared skills. Occupation titles are based on the Malaysian Standard Classification of Occupations (MASCO) 2020 at the 4‑digit level. This explorer is developed as part of the research project &ldquo;Skill Pathways for Technology-Induced Employment Transitions&rdquo;, funded by the Centre for Responsible Technology (CERT). Platform development was supported by Shortcut Asia.
           </div>
         )}
 
