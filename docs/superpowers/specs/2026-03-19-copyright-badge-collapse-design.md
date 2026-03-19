@@ -12,7 +12,7 @@ A single-line badge at `bottom-4 left-4` showing:
 
 > © 2026 CERT · Institute of Strategic & International Studies (ISIS) Malaysia
 
-Styled consistently with the existing badge: `text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded`.
+Styled: `text-xs text-muted-foreground bg-card/70 px-2 py-1 rounded max-w-sm leading-relaxed cursor-pointer`.
 
 ### Expanded State
 
@@ -20,10 +20,14 @@ On hover (desktop) or tap (mobile), the full attribution paragraph smoothly reve
 
 > Malaysian Network Explorer visualises occupations and maps how they are connected through shared skills. Occupation titles are based on the Malaysian Standard Classification of Occupations (MASCO) 2020 at the 4‑digit level. This explorer is developed as part of the research project "Skill Pathways for Technology-Induced Employment Transitions", funded by the Centre for Responsible Technology (CERT). Platform development was supported by Shortcut Asia.
 
+Use Unicode curly quotes (`` " " ``) for the project title, not HTML entities.
+
 ### Interaction
 
 - **Desktop:** `onMouseEnter` expands, `onMouseLeave` collapses.
-- **Mobile:** `onClick` toggles a boolean state (`expanded`). Both coexist — hover takes precedence on desktop, tap works on touch devices.
+- **Mobile:** `onClick` toggles a boolean state (`expanded`).
+- **Hybrid devices:** The element is visible if *either* hover or tap-toggle is active. `onMouseLeave` only clears the hover state, not the tap-toggle state. This prevents a mouse-leave from collapsing a deliberately tapped-open badge.
+- **Accessibility:** The outer container should be a `<button>` or have `role="button"`, `tabIndex={0}`, and `aria-expanded`. `onFocus`/`onBlur` should mirror hover behavior for keyboard users.
 
 ### Animation
 
@@ -35,13 +39,17 @@ CSS `max-height` + `opacity` transition on the expandable region:
 
 ### Structure
 
+Preserve the existing `{!loading && !error && (...)}` conditional wrapper.
+
 ```
-<div>  (outer container, absolute bottom-4 left-4, max-w-sm)
-  <p>© 2026 CERT · ISIS Malaysia</p>              ← always visible
-  <div>  (expandable region, max-height transition)
-    <p>Malaysian Network Explorer visualises...</p> ← full copy
+{!loading && !error && (
+  <div>  (outer container, absolute bottom-4 left-4, max-w-sm, z-10)
+    <p>© 2026 CERT · ISIS Malaysia</p>              ← always visible
+    <div>  (expandable region, max-height transition)
+      <p>Malaysian Network Explorer visualises...</p> ← full copy
+    </div>
   </div>
-</div>
+)}
 ```
 
 ### Approach
@@ -50,4 +58,4 @@ CSS-only expand with a small `useState` for mobile tap-toggle. No new dependenci
 
 ## File Changes
 
-- `app/page.tsx` — replace the current static badge div (lines ~573-578) with the new expandable component inline.
+- `app/page.tsx` — replace the current attribution badge (currently labelled `{/* Node count badge */}`, lines ~573-578) with the new expandable component inline. Update the comment to `{/* Attribution badge */}`.
