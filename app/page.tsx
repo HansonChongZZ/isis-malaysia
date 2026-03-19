@@ -492,6 +492,7 @@ export default function HomePage() {
         onShowHeroSearch={heroDismissed ? () => setHeroDismissed(false) : undefined}
         colourByGroup={colourByGroup}
         onColourByGroupChange={setColourByGroup}
+        onRestartTutorial={showTutorial ? () => setTutorialPhase('modal') : undefined}
       />
 
       {/* Main graph area */}

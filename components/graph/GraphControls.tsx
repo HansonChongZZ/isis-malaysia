@@ -2,7 +2,7 @@
 
 import { useState, useRef, useMemo, useEffect } from 'react';
 import type { NodeSizeMetric, ViewMode } from '@/lib/types';
-import { Search, Settings2, X } from 'lucide-react';
+import { CircleHelp, Search, Settings2, X } from 'lucide-react';
 import {
   Combobox,
   ComboboxChip,
@@ -41,6 +41,7 @@ interface GraphControlsProps {
   onShowHeroSearch?: () => void;
   colourByGroup: boolean;
   onColourByGroupChange: (value: boolean) => void;
+  onRestartTutorial?: () => void;
 }
 
 export default function GraphControls({
@@ -65,6 +66,7 @@ export default function GraphControls({
   onShowHeroSearch,
   colourByGroup,
   onColourByGroupChange,
+  onRestartTutorial,
 }: GraphControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
@@ -178,8 +180,19 @@ export default function GraphControls({
           </button>
         )}
 
+        {/* Restart Tutorial */}
+        {onRestartTutorial && (
+          <button
+            onClick={onRestartTutorial}
+            className="ml-auto p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors shrink-0"
+            aria-label="Restart tutorial"
+          >
+            <CircleHelp className="w-4 h-4" />
+          </button>
+        )}
+
         {/* Visualisation Settings */}
-        <div className="relative ml-auto shrink-0" ref={settingsRef}>
+        <div className={cn("relative shrink-0", !onRestartTutorial && "ml-auto")} ref={settingsRef}>
           <button
             onClick={() => setSettingsOpen((o) => !o)}
             className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
