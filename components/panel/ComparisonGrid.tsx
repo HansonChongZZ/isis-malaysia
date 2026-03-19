@@ -75,7 +75,6 @@ export default function ComparisonGrid({
   const primaryColour = QUARTILE_COLOURS[primary.quartile] ?? '#888';
   const comparisonColour = 'var(--primary)';
 
-  const TARGET_TINT = 'rgba(32,77,57,0.015)';
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto">
@@ -96,7 +95,7 @@ export default function ComparisonGrid({
       </button>
 
       {/* Occupation names row */}
-      <div className="flex border-b border-border" style={{ background: '#fafafa' }}>
+      <div className="flex border-b border-border bg-muted/40">
         <div className="flex-1 px-3 py-2 md:px-5 md:py-3">
           <div className="text-[10px] text-muted-foreground mb-0.5">Current role</div>
           <div className="text-xs text-muted-foreground font-mono mb-1">
@@ -107,8 +106,7 @@ export default function ComparisonGrid({
           </div>
         </div>
         <div
-          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border"
-          style={{ background: TARGET_TINT }}
+          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3"
         >
           <div className="text-[10px] text-muted-foreground mb-0.5">Target role</div>
           <div className="text-xs text-muted-foreground font-mono mb-1">
@@ -179,8 +177,7 @@ export default function ComparisonGrid({
           </div>
         </div>
         <div
-          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border"
-          style={{ background: TARGET_TINT }}
+          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3"
         >
           <div className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
             AI Exposure
@@ -227,8 +224,7 @@ export default function ComparisonGrid({
           )}
         </div>
         <div
-          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border"
-          style={{ background: TARGET_TINT }}
+          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3"
         >
           <div className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
             Median Wage
@@ -353,8 +349,7 @@ export default function ComparisonGrid({
             <TaskAccordion tasks={primary.tasks} prefix="primary" />
           </div>
           <div
-            className="flex-1 px-3 py-2.5 md:px-4 md:py-3.5 border-l border-border"
-            style={{ background: TARGET_TINT }}
+            className="flex-1 px-3 py-2.5 md:px-4 md:py-3.5 border-l border-border bg-primary/3"
           >
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
               Target Tasks ({comparison.tasks.length})
