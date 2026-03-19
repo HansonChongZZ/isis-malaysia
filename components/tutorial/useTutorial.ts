@@ -157,12 +157,24 @@ export function useTutorial({
     }
   }, [currentStep])
 
-  const [prevSpotlight, setPrevSpotlight] = useState<SpotlightTarget | null>(null)
-  const spotlight = useMemo(() => {
-    if (!stepConfig || !spotlightReady) return prevSpotlight
-    if (stepConfig.clearSpotlight) return null
+  const prevSpotlightRef = useRef<SpotlightTarget | null>(null)
+  const [spotlight, setSpotlight] = useState<SpotlightTarget | null>(null)
+
+  useEffect(() => {
+    if (!stepConfig || !spotlightReady) {
+      setSpotlight(prevSpotlightRef.current)
+      return
+    }
+    if (stepConfig.clearSpotlight) {
+      prevSpotlightRef.current = null
+      setSpotlight(null)
+      return
+    }
     // null resolveSpotlight = keep previous spotlight
-    if (!stepConfig.resolveSpotlight) return prevSpotlight
+    if (!stepConfig.resolveSpotlight) {
+      setSpotlight(prevSpotlightRef.current)
+      return
+    }
     const context: SpotlightContext = {
       graphContainerRect,
       heroSearchRect,
@@ -174,16 +186,10 @@ export function useTutorial({
         ? { x: badgePos.x + graphContainerRect.left, y: badgePos.y + graphContainerRect.top }
         : null,
     }
-    return stepConfig.resolveSpotlight(context)
-  }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos, prevSpotlight])
-
-  useEffect(() => {
-    if (stepConfig?.clearSpotlight) {
-      setPrevSpotlight(null)
-    } else if (spotlight) {
-      setPrevSpotlight(spotlight)
-    }
-  }, [spotlight, stepConfig])
+    const result = stepConfig.resolveSpotlight(context)
+    if (result) prevSpotlightRef.current = result
+    setSpotlight(result)
+  }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
 
   const cursorAnimProps = useMemo(() => {
     if (!stepConfig?.cursorAnimation || !spotlightReady) return null
