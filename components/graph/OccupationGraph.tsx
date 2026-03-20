@@ -84,6 +84,7 @@ interface OccupationGraphProps {
   allowedClickNodeIds?: Set<string> | null; // When set, only these nodes can be clicked (others are ignored)
   onBadgePosChange?: (pos: { x: number; y: number } | null) => void;
   onBadgeInteract?: () => void;
+  onZoomChange?: () => void;
   simulatedHoverId?: string | null;
 }
 
@@ -115,6 +116,7 @@ export default function OccupationGraph({
   allowedClickNodeIds,
   onBadgePosChange,
   onBadgeInteract,
+  onZoomChange,
   simulatedHoverId,
 }: OccupationGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -195,6 +197,8 @@ export default function OccupationGraph({
   const selectedAuraRef = useRef('#10B981');
   const canvasGridRef = useRef('#C8E8D8');
   const graphCenterRef = useRef({ cx: 0, cy: 0, radius: 1 });
+  const onZoomChangeRef = useRef(onZoomChange);
+  onZoomChangeRef.current = onZoomChange;
 
   const selectionModeRef = useRef(selectionMode);
   const selectedNodeIdRef = useRef(selectedNodeId);
@@ -1177,6 +1181,7 @@ export default function OccupationGraph({
         g.attr('transform', event.transform.toString());
         setTooltip((prev) => (prev === null ? prev : null));
         drawEdgesRef.current();
+        onZoomChangeRef.current?.();
 
         if (
           selectionModeRef.current === 'pair' &&

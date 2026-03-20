@@ -28,6 +28,7 @@ interface UseTutorialProps {
   isPanelOpen: boolean
   isComparing: boolean
   cardClicked: boolean
+  zoomTick: number
   onComplete?: () => void
 }
 
@@ -63,6 +64,7 @@ export function useTutorial({
   isPanelOpen,
   isComparing,
   cardClicked,
+  zoomTick,
   onComplete,
 }: UseTutorialProps): UseTutorialReturn {
   const [currentStepId, setCurrentStepId] = useState('search')
@@ -392,7 +394,8 @@ export function useTutorial({
       lingerMs: stepConfig.cursorAnimation.lingerMs,
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps -- scrollTick forces recompute of DOM-element cursor targets on scroll
-  }, [stepConfig, spotlightReady, spotlight, resolvedNeighbourId, getNodeScreenCoords, graphContainerRect, heroSearchRect, selectedNodeId, allNeighbourIds, badgePos, scrollTick])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- scrollTick/zoomTick force recompute of cursor targets on scroll/zoom
+  }, [stepConfig, spotlightReady, spotlight, resolvedNeighbourId, getNodeScreenCoords, graphContainerRect, heroSearchRect, selectedNodeId, allNeighbourIds, badgePos, scrollTick, zoomTick])
 
   const onCursorArrive = useCallback(() => {
     if (!stepConfig?.cursorAnimation) return

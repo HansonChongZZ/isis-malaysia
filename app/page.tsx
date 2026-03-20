@@ -87,6 +87,7 @@ export default function HomePage() {
     null,
   );
   const [badgeInteracted, setBadgeInteracted] = useState(false);
+  const [zoomTick, setZoomTick] = useState(0);
   const [tutorialPhase, setTutorialPhase] = useState<
     'modal' | 'spotlight' | 'done'
   >('modal');
@@ -130,6 +131,7 @@ export default function HomePage() {
     isPanelOpen,
     isComparing,
     cardClicked,
+    zoomTick,
     onComplete: handleTutorialComplete,
   });
 
@@ -654,28 +656,13 @@ export default function HomePage() {
                   ? 'single'
                   : null
               }
-              disableInteraction={
-                tutorialPhase === 'spotlight' &&
-                tutorial.isActive &&
-                tutorial.currentStepId === 'search'
-              }
-              disableClick={
-                tutorialPhase === 'spotlight' &&
-                tutorial.isActive &&
-                (tutorial.currentStepId === 'search' ||
-                  tutorial.currentStepId === 'hover' ||
-                  tutorial.stepConfig?.id === 'badge')
-              }
-              allowedClickNodeIds={
-                tutorialPhase === 'spotlight' &&
-                tutorial.isActive &&
-                tutorial.stepConfig?.id === 'click'
-                  ? firstNodeNeighbours
-                  : null
-              }
+              disableInteraction={false}
+              disableClick={false}
+              allowedClickNodeIds={null}
               onBadgePosChange={setBadgePos}
               onBadgeInteract={() => setBadgeInteracted(true)}
-              disableZoom={tutorialPhase === 'spotlight' && tutorial.isActive}
+              onZoomChange={() => setZoomTick(t => t + 1)}
+              disableZoom={false}
               simulatedHoverId={tutorial.simulatedHoverId}
             />
           )}
