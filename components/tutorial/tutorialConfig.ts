@@ -55,7 +55,6 @@ export interface TutorialStep {
     | ((context: SpotlightContext) => SpotlightTarget | null)
     | null;
   cursorAnimation?: CursorAnimation;
-  preferredNeighbourId?: string;
   clearSpotlight?: boolean;
   tooltipAnchor?: TooltipAnchor;
 }
@@ -99,7 +98,6 @@ export const STEP_REGISTRY: Record<string, TutorialStep> = {
       'Notice that your selected occupation and its connections are highlighted in the explorer. Hover over the nodes to reveal the occupation names.',
     completionEvent: 'manual',
     cursorAnimation: { target: 'neighbour' },
-    preferredNeighbourId: '1421',
     resolveSpotlight: null,
     clearSpotlight: true,
   },
@@ -110,7 +108,6 @@ export const STEP_REGISTRY: Record<string, TutorialStep> = {
     completionEvent: 'secondNodeSelected',
     autoAdvance: true,
     cursorAnimation: { target: 'neighbour', mode: 'hint', clickEffect: true },
-    preferredNeighbourId: '1421',
     resolveSpotlight: null,
   },
   badge: {

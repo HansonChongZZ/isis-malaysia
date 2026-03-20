@@ -146,9 +146,6 @@ export function useTutorial({
 
     if (neighbours.length === 0) return null
 
-    const preferred = stepConfig?.preferredNeighbourId
-    if (preferred && neighbours.some(n => n.id === preferred)) return preferred
-
     const maxWeight = Math.max(...neighbours.map(n => n.weight))
     const topNeighbours = neighbours.filter(n => n.weight === maxWeight)
 

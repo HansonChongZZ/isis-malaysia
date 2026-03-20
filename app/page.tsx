@@ -666,11 +666,11 @@ export default function HomePage() {
                   tutorial.currentStepId === 'hover' ||
                   tutorial.stepConfig?.id === 'badge')
               }
-              allowedClickNodeId={
+              allowedClickNodeIds={
                 tutorialPhase === 'spotlight' &&
                 tutorial.isActive &&
                 tutorial.stepConfig?.id === 'click'
-                  ? (tutorial.stepConfig?.preferredNeighbourId ?? null)
+                  ? firstNodeNeighbours
                   : null
               }
               onBadgePosChange={setBadgePos}

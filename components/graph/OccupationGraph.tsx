@@ -81,7 +81,7 @@ interface OccupationGraphProps {
   disableInteraction?: boolean; // Disable zoom, pan, click, and hover (pointer-events: none)
   disableZoom?: boolean; // Disable zoom/pan only (hover and click still work)
   disableClick?: boolean; // Disable node click only (hover still works)
-  allowedClickNodeId?: string | null; // When set, only this node can be clicked (others are ignored)
+  allowedClickNodeIds?: Set<string> | null; // When set, only these nodes can be clicked (others are ignored)
   onBadgePosChange?: (pos: { x: number; y: number } | null) => void;
   onBadgeInteract?: () => void;
   simulatedHoverId?: string | null;
@@ -112,7 +112,7 @@ export default function OccupationGraph({
   disableInteraction,
   disableZoom,
   disableClick,
-  allowedClickNodeId,
+  allowedClickNodeIds,
   onBadgePosChange,
   onBadgeInteract,
   simulatedHoverId,
@@ -1357,7 +1357,7 @@ export default function OccupationGraph({
           height={dimensions.height}
           style={{ position: 'absolute', top: 0, left: 0, cursor: disableInteraction ? 'default' : 'grab', pointerEvents: disableInteraction ? 'none' : undefined }}
           onClick={() => {
-            if (disableClick || allowedClickNodeId) return;
+            if (disableClick || allowedClickNodeIds) return;
             onNodeSelect(null);
           }}
         >
@@ -1471,7 +1471,7 @@ export default function OccupationGraph({
                     }}
                     onClick={(e) => {
                       if (disableClick) return;
-                      if (allowedClickNodeId && node.id !== allowedClickNodeId) return;
+                      if (allowedClickNodeIds && !allowedClickNodeIds.has(node.id)) return;
                       e.stopPropagation();
                       onNodeSelect(node.id);
                     }}
@@ -1534,7 +1534,7 @@ export default function OccupationGraph({
                     }}
                     onClick={(e) => {
                       if (disableClick) return;
-                      if (allowedClickNodeId && node.id !== allowedClickNodeId) return;
+                      if (allowedClickNodeIds && !allowedClickNodeIds.has(node.id)) return;
                       if (isIsolate) return;
                       if (visibleIds && !visibleIds.has(node.id)) return;
                       e.stopPropagation();
