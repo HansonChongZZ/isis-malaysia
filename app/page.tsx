@@ -598,7 +598,17 @@ export default function HomePage() {
           colourByGroup={colourByGroup}
           onColourByGroupChange={setColourByGroup}
           onRestartTutorial={
-            showTutorial ? () => setTutorialPhase('modal') : undefined
+            showTutorial ? () => {
+              setTutorialPhase('modal')
+              setBadgeInteracted(false)
+              setCardClicked(false)
+              setSelectedNodeId(null)
+              setSecondSelectedNodeId(null)
+              setPanelNodeId(null)
+              setIsPanelOpen(false)
+              setOpenedViaSecondary(false)
+              setIsComparing(false)
+            } : undefined
           }
           settingsOpen={settingsOpen}
           onSettingsToggle={() => setSettingsOpen(o => !o)}

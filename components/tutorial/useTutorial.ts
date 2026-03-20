@@ -78,6 +78,10 @@ export function useTutorial({
 
   useEffect(() => {
     if (startActive) {
+      setCurrentStepId('search')
+      setIsConfirming(false)
+      setSimulatedHoverId(null)
+      lockedPathRef.current = null
       setIsActive(true)
       setIsVisible(true)
     }
