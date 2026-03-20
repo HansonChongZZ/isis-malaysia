@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -9,31 +9,31 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import type { ModalStep } from './tutorialSteps'
-import NodeRepresentationDemo from './steps/NodeRepresentationDemo'
-import NodeSizingDemo from './steps/NodeSizingDemo'
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import type { ModalStep } from './tutorialSteps';
+import NodeRepresentationDemo from './steps/NodeRepresentationDemo';
+import NodeSizingDemo from './steps/NodeSizingDemo';
 
 const STEPS: ModalStep[] = [
   {
-    title: 'Each circle is an occupation',
+    title: 'What are nodes?',
     description:
-      'Every node represents one of 456 Malaysian occupations.',
+      'Every node represents one of 456 Malaysian occupations." to "Each node represents an occupation in Malaysia taken from the Malaysian Standard Classification of Occupations (MASCO) 2020.',
     component: NodeRepresentationDemo,
   },
   {
-    title: 'Size shows AI exposure',
+    title: 'Size of nodes',
     description:
-      'Larger circles indicate higher AI exposure. The bigger the circle, the more exposed that occupation is to AI.',
+      'The larger the node, the higher the AI exposure, as measured using the AI exposure index developed by Cheng, Chong, Dornan and Jasmin (2025)',
     component: NodeSizingDemo,
   },
-]
+];
 
 interface TutorialModalProps {
-  open: boolean
-  onComplete: () => void
-  onSkip: () => void
+  open: boolean;
+  onComplete: () => void;
+  onSkip: () => void;
 }
 
 export default function TutorialModal({
@@ -41,48 +41,50 @@ export default function TutorialModal({
   onComplete,
   onSkip,
 }: TutorialModalProps) {
-  const [currentStep, setCurrentStep] = useState(0)
-  const step = STEPS[currentStep]
-  const StepComponent = step.component
-  const isLast = currentStep === STEPS.length - 1
+  const [currentStep, setCurrentStep] = useState(0);
+  const step = STEPS[currentStep];
+  const StepComponent = step.component;
+  const isLast = currentStep === STEPS.length - 1;
 
   // Reset to first step when opening
   useEffect(() => {
-    if (open) setCurrentStep(0)
-  }, [open])
+    if (open) setCurrentStep(0);
+  }, [open]);
 
   const goBack = useCallback(() => {
-    setCurrentStep(s => Math.max(0, s - 1))
-  }, [])
+    setCurrentStep((s) => Math.max(0, s - 1));
+  }, []);
 
   const goNext = useCallback(() => {
     if (isLast) {
-      onComplete()
+      onComplete();
     } else {
-      setCurrentStep(s => s + 1)
+      setCurrentStep((s) => s + 1);
     }
-  }, [isLast, onComplete])
+  }, [isLast, onComplete]);
 
   // Keyboard navigation
   useEffect(() => {
-    if (!open) return
+    if (!open) return;
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') goBack()
-      if (e.key === 'ArrowRight') goNext()
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [open, goBack, goNext])
+      if (e.key === 'ArrowLeft') goBack();
+      if (e.key === 'ArrowRight') goNext();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [open, goBack, goNext]);
 
   return (
-    <Dialog open={open} onOpenChange={(o) => { if (!o) onSkip() }}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        if (!o) onSkip();
+      }}
+    >
       <DialogContent className="sm:max-w-xl" showCloseButton={true}>
         <DialogHeader className="px-6 pt-6 pb-0">
           <div className="flex items-center justify-between">
             <DialogTitle>{step.title}</DialogTitle>
-            <span className="text-xs text-muted-foreground shrink-0 ml-2">
-              Step {currentStep + 1} of {STEPS.length}
-            </span>
           </div>
           <DialogDescription className="sr-only">
             Tutorial step {currentStep + 1}: {step.title}
@@ -102,7 +104,11 @@ export default function TutorialModal({
         {/* Footer with dots and nav */}
         <DialogFooter className="px-6 pb-6 pt-2 flex-row items-center justify-between sm:justify-between">
           {/* Dot indicators */}
-          <div className="flex gap-1.5" role="tablist" aria-label="Tutorial steps">
+          <div
+            className="flex gap-1.5"
+            role="tablist"
+            aria-label="Tutorial steps"
+          >
             {STEPS.map((_, i) => (
               <button
                 key={i}
@@ -157,5 +163,5 @@ export default function TutorialModal({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

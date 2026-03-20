@@ -75,7 +75,6 @@ export default function ComparisonGrid({
   const primaryColour = QUARTILE_COLOURS[primary.quartile] ?? '#888';
   const comparisonColour = 'var(--primary)';
 
-
   return (
     <div className="flex-1 min-h-0 overflow-y-auto">
       {/* Back to pathways bar — full width */}
@@ -89,15 +88,21 @@ export default function ComparisonGrid({
           <ArrowLeftIcon className="size-4 text-primary" />
         </div>
         <div>
-          <div className="text-sm font-semibold text-primary">Back to pathways</div>
-          <div className="text-xs text-primary/60">Return to transition list</div>
+          <div className="text-sm font-semibold text-primary">
+            Back to pathways
+          </div>
+          <div className="text-xs text-primary/60">
+            Return to transition list
+          </div>
         </div>
       </button>
 
       {/* Occupation names row */}
       <div className="flex border-b border-border bg-muted/40">
         <div className="flex-1 px-3 py-2 md:px-5 md:py-3">
-          <div className="text-[10px] text-muted-foreground mb-0.5">Current role</div>
+          <div className="text-[10px] text-muted-foreground mb-0.5">
+            Current role
+          </div>
           <div className="text-xs text-muted-foreground font-mono mb-1">
             {primaryNodeId}
           </div>
@@ -105,14 +110,17 @@ export default function ComparisonGrid({
             {primary.occupation}
           </div>
         </div>
-        <div
-          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3"
-        >
-          <div className="text-[10px] text-muted-foreground mb-0.5">Target role</div>
+        <div className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3">
+          <div className="text-[10px] text-muted-foreground mb-0.5">
+            Target role
+          </div>
           <div className="text-xs text-muted-foreground font-mono mb-1">
             {comparisonNodeId}
           </div>
-          <div className="text-[13px] font-semibold leading-snug" style={{ color: comparisonColour }}>
+          <div
+            className="text-[13px] font-semibold leading-snug"
+            style={{ color: comparisonColour }}
+          >
             {comparison.occupation}
           </div>
         </div>
@@ -127,8 +135,11 @@ export default function ComparisonGrid({
         const total = comparison.specificSkills.length;
         if (total === 0) return null;
         return (
-          <div className="px-3 py-2 md:px-5 md:py-3 border-b border-border" style={{ background: 'rgba(106,209,156,0.04)' }}>
-            <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1 mb-1.5">
+          <div
+            className="px-3 py-2 md:px-5 md:py-3 border-b border-border"
+            style={{ background: 'rgba(106,209,156,0.04)' }}
+          >
+            <div className="flex flex-wrap gap-[3px] bg-muted rounded px-1.5 py-1 mb-1.5 w-fit">
               {[...comparison.specificSkills]
                 .sort((a, b) => {
                   const aShared = sharedSkills.has(a.toLowerCase()) ? 0 : 1;
@@ -160,7 +171,11 @@ export default function ComparisonGrid({
           <div className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
             AI Exposure
             <InfoTooltip>
-              The AI Exposure Index is developed by Cheng, Chong, Jasmin, and Dornan (2025). It measures the potential for job tasks to be automated by generative AI by comparing current generative-AI capabilities with the task content of occupations. Please refer to the full paper for methodological details.
+              The AI Exposure Index is developed by Cheng, Chong, Jasmin, and
+              Dornan (2025). It measures the potential for job tasks to be
+              automated by generative AI by comparing current generative-AI
+              capabilities with the task content of occupations. Please refer to
+              the full paper for methodological details.
             </InfoTooltip>
           </div>
           <div className="text-base font-bold" style={{ color: primaryColour }}>
@@ -176,17 +191,22 @@ export default function ComparisonGrid({
             />
           </div>
         </div>
-        <div
-          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3"
-        >
+        <div className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3">
           <div className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
             AI Exposure
             <InfoTooltip>
-              The AI Exposure Index is developed by Cheng, Chong, Jasmin, and Dornan (2025). It measures the potential for job tasks to be automated by generative AI by comparing current generative-AI capabilities with the task content of occupations. Please refer to the full paper for methodological details.
+              The AI Exposure Index is developed by Cheng, Chong, Jasmin, and
+              Dornan (2025). It measures the potential for job tasks to be
+              automated by generative AI by comparing current generative-AI
+              capabilities with the task content of occupations. Please refer to
+              the full paper for methodological details.
             </InfoTooltip>
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-base font-bold" style={{ color: comparisonColour }}>
+            <span
+              className="text-base font-bold"
+              style={{ color: comparisonColour }}
+            >
               {(comparison.aiExposure * 100).toFixed(1)}%
             </span>
             <span className="text-[11px]" style={{ color: comparisonColour }}>
@@ -212,7 +232,8 @@ export default function ComparisonGrid({
           <div className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
             Median Wage
             <InfoTooltip>
-              Median wage data is sourced from the Labour Force Survey (LFS) 2021.
+              Median wage data is sourced from the Labour Force Survey (LFS)
+              2021.
             </InfoTooltip>
           </div>
           {primary.wage !== null ? (
@@ -220,32 +241,41 @@ export default function ComparisonGrid({
               MYR {primary.wage.toLocaleString()}
             </div>
           ) : (
-            <div className="text-sm text-muted-foreground italic">Data not available</div>
+            <div className="text-sm text-muted-foreground italic">
+              Data not available
+            </div>
           )}
         </div>
-        <div
-          className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3"
-        >
+        <div className="flex-1 px-3 py-2 md:px-5 md:py-3 border-l border-border bg-primary/3">
           <div className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
             Median Wage
             <InfoTooltip>
-              Median wage data is sourced from the Labour Force Survey (LFS) 2021.
+              Median wage data is sourced from the Labour Force Survey (LFS)
+              2021.
             </InfoTooltip>
           </div>
           {comparison.wage !== null ? (
             <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-bold" style={{ color: comparisonColour }}>
+              <span
+                className="text-base font-bold"
+                style={{ color: comparisonColour }}
+              >
                 MYR {comparison.wage.toLocaleString()}
               </span>
               {comparisonDeltas.wage != null && (
-                <span className="text-[11px]" style={{ color: comparisonColour }}>
+                <span
+                  className="text-[11px]"
+                  style={{ color: comparisonColour }}
+                >
                   {comparisonDeltas.wage > 0 ? '▲' : '▼'}{' '}
                   {formatCompact(Math.abs(comparisonDeltas.wage))}
                 </span>
               )}
             </div>
           ) : (
-            <div className="text-sm text-muted-foreground italic">Data not available</div>
+            <div className="text-sm text-muted-foreground italic">
+              Data not available
+            </div>
           )}
         </div>
       </div>
@@ -290,7 +320,9 @@ export default function ComparisonGrid({
 
           {comparison.basicSkills.length > 0 && (
             <div className="mb-2">
-              <div className="text-[10px] text-muted-foreground mb-1">Basic</div>
+              <div className="text-[10px] text-muted-foreground mb-1">
+                Basic
+              </div>
               <div className="flex flex-wrap gap-1.5">
                 {[...comparison.basicSkills]
                   .sort((a, b) => {
@@ -303,8 +335,14 @@ export default function ComparisonGrid({
                       key={skill}
                       skill={skill}
                       type="basic"
-                      variant={sharedSkills.has(skill.toLowerCase()) ? 'shared' : 'to-develop'}
-                      suffix={sharedSkills.has(skill.toLowerCase()) ? ' ✓' : undefined}
+                      variant={
+                        sharedSkills.has(skill.toLowerCase())
+                          ? 'shared'
+                          : 'to-develop'
+                      }
+                      suffix={
+                        sharedSkills.has(skill.toLowerCase()) ? ' ✓' : undefined
+                      }
                     />
                   ))}
               </div>
@@ -313,7 +351,9 @@ export default function ComparisonGrid({
 
           {comparison.specificSkills.length > 0 && (
             <div>
-              <div className="text-[10px] text-muted-foreground mb-1">Specific</div>
+              <div className="text-[10px] text-muted-foreground mb-1">
+                Specific
+              </div>
               <div className="flex flex-wrap gap-1.5">
                 {[...comparison.specificSkills]
                   .sort((a, b) => {
@@ -326,8 +366,14 @@ export default function ComparisonGrid({
                       key={skill}
                       skill={skill}
                       type="specific"
-                      variant={sharedSkills.has(skill.toLowerCase()) ? 'shared' : 'to-develop'}
-                      suffix={sharedSkills.has(skill.toLowerCase()) ? ' ✓' : undefined}
+                      variant={
+                        sharedSkills.has(skill.toLowerCase())
+                          ? 'shared'
+                          : 'to-develop'
+                      }
+                      suffix={
+                        sharedSkills.has(skill.toLowerCase()) ? ' ✓' : undefined
+                      }
                     />
                   ))}
               </div>
@@ -341,20 +387,20 @@ export default function ComparisonGrid({
         <div className="flex flex-col md:flex-row">
           <div className="flex-1 px-3 py-2.5 md:px-4 md:py-3.5">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
-              Current Tasks ({primary.tasks.length})
+              Tasks ({primary.tasks.length})
               <InfoTooltip>
-                Task lists for each occupation are obtained from the Malaysian Standard Classification of Occupations (MASCO) 2020.
+                Task lists for each occupation are obtained from the Malaysian
+                Standard Classification of Occupations (MASCO) 2020.
               </InfoTooltip>
             </h3>
             <TaskAccordion tasks={primary.tasks} prefix="primary" />
           </div>
-          <div
-            className="flex-1 px-3 py-2.5 md:px-4 md:py-3.5 border-l border-border bg-primary/3"
-          >
+          <div className="flex-1 px-3 py-2.5 md:px-4 md:py-3.5 border-l border-border bg-primary/3">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1">
-              Target Tasks ({comparison.tasks.length})
+              Tasks ({comparison.tasks.length})
               <InfoTooltip>
-                Task lists for each occupation are obtained from the Malaysian Standard Classification of Occupations (MASCO) 2020.
+                Task lists for each occupation are obtained from the Malaysian
+                Standard Classification of Occupations (MASCO) 2020.
               </InfoTooltip>
             </h3>
             <TaskAccordion tasks={comparison.tasks} prefix="comparison" />
