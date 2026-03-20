@@ -24,6 +24,7 @@ interface OccupationPanelProps {
   onClose: () => void
   initialComparisonId: string | null
   onComparisonChange?: (isComparing: boolean) => void
+  onCardClick?: (id: string) => void
   preventInteractOutside?: boolean
 }
 
@@ -37,6 +38,7 @@ export default function OccupationPanel({
   onClose,
   initialComparisonId,
   onComparisonChange,
+  onCardClick,
   preventInteractOutside,
 }: OccupationPanelProps) {
   const [comparisonNodeId, setComparisonNodeId] = useState<string | null>(null)
@@ -193,12 +195,15 @@ export default function OccupationPanel({
                 </div>
 
                 {/* Right pane — transition cards */}
-                <div className="w-full md:w-1/2 flex flex-col md:min-h-0">
+                <div className="w-full md:w-1/2 flex flex-col md:min-h-0" data-tutorial-target="pathways-list">
                   <TransitionCards
                     transitions={transitions}
                     occupations={occupations}
                     primarySkills={primarySkills}
-                    onCardClick={(id) => setComparisonNodeId(id)}
+                    onCardClick={(id) => {
+                      setComparisonNodeId(id)
+                      onCardClick?.(id)
+                    }}
                   />
                 </div>
               </div>

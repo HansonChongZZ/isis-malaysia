@@ -1,5 +1,13 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
-import { TUTORIAL_STEPS, STEP_IDX, type SpotlightContext, type SpotlightTarget } from './tutorialConfig'
+import {
+  STEP_REGISTRY,
+  CONNECTED_PATH,
+  PANEL_DEPENDENT_STEPS,
+  getNextStepId,
+  resolveActivePath,
+  type SpotlightContext,
+  type SpotlightTarget,
+} from './tutorialConfig'
 import type { GraphEdge } from '@/lib/types'
 
 export interface OccupationGraphHandle {
@@ -19,15 +27,18 @@ interface UseTutorialProps {
   badgeInteracted: boolean
   isPanelOpen: boolean
   isComparing: boolean
+  cardClicked: boolean
   onComplete?: () => void
 }
 
 interface UseTutorialReturn {
   isActive: boolean
   isVisible: boolean
-  currentStep: number
+  currentStepId: string
+  currentStepIndex: number
+  totalSteps: number
   isConfirming: boolean
-  stepConfig: typeof TUTORIAL_STEPS[number] | null
+  stepConfig: typeof STEP_REGISTRY[string] | null
   spotlight: SpotlightTarget | null
   advance: () => void
   skip: () => void
@@ -35,6 +46,7 @@ interface UseTutorialReturn {
   simulatedHoverId: string | null
   onCursorArrive: () => void
   onCursorComplete: () => void
+  tooltipPosition: { left: number; top: number } | null
 }
 
 export function useTutorial({
@@ -50,13 +62,17 @@ export function useTutorial({
   badgeInteracted,
   isPanelOpen,
   isComparing,
+  cardClicked,
   onComplete,
 }: UseTutorialProps): UseTutorialReturn {
-  const [currentStep, setCurrentStep] = useState(0)
+  const [currentStepId, setCurrentStepId] = useState('search')
   const [isActive, setIsActive] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [isConfirming, setIsConfirming] = useState(false)
   const [simulatedHoverId, setSimulatedHoverId] = useState<string | null>(null)
+
+  // Lock the path after the fork point
+  const lockedPathRef = useRef<readonly string[] | null>(null)
 
   useEffect(() => {
     if (startActive) {
@@ -65,11 +81,43 @@ export function useTutorial({
     }
   }, [startActive])
 
-  const stepConfig = isActive ? TUTORIAL_STEPS[currentStep] ?? null : null
+  const stepConfig = isActive ? STEP_REGISTRY[currentStepId] ?? null : null
 
-  // nodeToScreenCoords returns positions relative to the graph SVG container.
-  // The overlay is position:fixed (viewport-relative), so we add the container's
-  // viewport offset to convert from container-local to viewport coordinates.
+  // Resolve active path — use locked path after fork, otherwise compute
+  const activePath = useMemo(() => {
+    if (lockedPathRef.current) return lockedPathRef.current
+    return resolveActivePath(currentStepId, isComparing)
+  }, [currentStepId, isComparing])
+
+  const currentStepIndex = activePath.indexOf(currentStepId)
+  const totalSteps = activePath.length
+
+  // Lock path when we advance past the fork point
+  useEffect(() => {
+    if (currentStepId === 'occupationClick') {
+      // About to fork — don't lock yet
+      lockedPathRef.current = null
+    } else if (
+      currentStepId !== 'search' &&
+      currentStepId !== 'hover' &&
+      currentStepId !== 'click' &&
+      currentStepId !== 'badge' &&
+      currentStepId !== 'occupationClick' &&
+      !lockedPathRef.current
+    ) {
+      // Past the fork — lock the path
+      lockedPathRef.current = resolveActivePath(currentStepId, isComparing)
+    }
+  }, [currentStepId, isComparing])
+
+  // Reset path lock when tutorial restarts
+  useEffect(() => {
+    if (currentStepId === 'search') {
+      lockedPathRef.current = null
+    }
+  }, [currentStepId])
+
+  // nodeToScreenCoords with viewport offset
   const getNodeScreenCoords = useCallback((nodeId: string) => {
     const pos = graphHandleRef.current?.nodeToScreenCoords(nodeId)
     if (!pos || !graphContainerRect) return null
@@ -98,7 +146,6 @@ export function useTutorial({
 
     if (neighbours.length === 0) return null
 
-    // If the current step specifies a preferred neighbour and it's in the list, use it
     const preferred = stepConfig?.preferredNeighbourId
     if (preferred && neighbours.some(n => n.id === preferred)) return preferred
 
@@ -126,36 +173,31 @@ export function useTutorial({
 
   const lockedNeighbourRef = useRef<string | null>(null)
   useEffect(() => {
-    if (currentStep > STEP_IDX.search && neighbourNodeId && !lockedNeighbourRef.current) {
+    if (currentStepId !== 'search' && neighbourNodeId && !lockedNeighbourRef.current) {
       lockedNeighbourRef.current = neighbourNodeId
     }
-    if (currentStep <= STEP_IDX.search) {
+    if (currentStepId === 'search') {
       lockedNeighbourRef.current = null
     }
-  }, [currentStep, neighbourNodeId])
+  }, [currentStepId, neighbourNodeId])
 
   const resolvedNeighbourId = lockedNeighbourRef.current ?? neighbourNodeId
 
-  // Delay spotlight after steps that trigger graph zoom animations.
-  // When step 2 auto-advances to step 3, the graph zooms to the selected node
-  // (500ms animation). We wait for it to settle before computing spotlight positions.
+  // Delay spotlight after steps that trigger graph zoom animations
   const [spotlightReady, setSpotlightReady] = useState(true)
-  const prevStepRef = useRef(currentStep)
+  const prevStepRef = useRef(currentStepId)
   useEffect(() => {
-    if (prevStepRef.current !== currentStep) {
+    if (prevStepRef.current !== currentStepId) {
       const prevStep = prevStepRef.current
-      prevStepRef.current = currentStep
-      // Steps that trigger zoom animations (~500ms in OccupationGraph):
-      // Step 2→3: selecting a node zooms to neighbourhood
-      // Step 3→4: clicking second node zooms to pair view
-      if ((prevStep === STEP_IDX.search && currentStep === STEP_IDX.hover) ||
-          (prevStep === STEP_IDX.click && currentStep === STEP_IDX.badge)) {
+      prevStepRef.current = currentStepId
+      if ((prevStep === 'search' && currentStepId === 'hover') ||
+          (prevStep === 'click' && currentStepId === 'badge')) {
         setSpotlightReady(false)
         const timer = setTimeout(() => setSpotlightReady(true), 600)
         return () => clearTimeout(timer)
       }
     }
-  }, [currentStep])
+  }, [currentStepId])
 
   const prevSpotlightRef = useRef<SpotlightTarget | null>(null)
   const [spotlight, setSpotlight] = useState<SpotlightTarget | null>(null)
@@ -170,7 +212,6 @@ export function useTutorial({
       setSpotlight(null)
       return
     }
-    // null resolveSpotlight = keep previous spotlight
     if (!stepConfig.resolveSpotlight) {
       setSpotlight(prevSpotlightRef.current)
       return
@@ -191,20 +232,91 @@ export function useTutorial({
     setSpotlight(result)
   }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
 
+  // ─── Tooltip Anchor Resolution ──────────────────────────────────────────────
+
+  const [tooltipPosition, setTooltipPosition] = useState<{ left: number; top: number } | null>(null)
+
+  useEffect(() => {
+    if (!stepConfig?.tooltipAnchor) {
+      setTooltipPosition(null)
+      return
+    }
+
+    const resolve = () => {
+      const el = document.querySelector(stepConfig.tooltipAnchor!.selector)
+      if (!el) {
+        setTooltipPosition(null)
+        return
+      }
+      const rect = el.getBoundingClientRect()
+      const { position, offsetX = 16, offsetY = 0 } = stepConfig.tooltipAnchor!
+      const tooltipWidth = 300
+
+      let left: number
+      let top: number
+
+      switch (position) {
+        case 'right':
+          left = rect.right + offsetX
+          top = rect.top + rect.height / 2 - 80 + offsetY // roughly center on element
+          break
+        case 'left':
+          left = rect.left - tooltipWidth - offsetX
+          top = rect.top + rect.height / 2 - 80 + offsetY
+          break
+        case 'top-left':
+          left = rect.left - tooltipWidth - offsetX
+          top = rect.top + offsetY
+          break
+        case 'top-right':
+          left = rect.right + offsetX
+          top = rect.top + offsetY
+          break
+      }
+
+      // Clamp to viewport
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+      left = Math.max(16, Math.min(left, vw - tooltipWidth - 16))
+      top = Math.max(16, Math.min(top, vh - 160 - 16))
+
+      setTooltipPosition({ left, top })
+    }
+
+    // Delay initial resolve by one frame to let the DOM settle after state changes
+    const raf = requestAnimationFrame(() => {
+      resolve()
+    })
+
+    // Re-resolve on scroll within the panel container
+    const scrollContainer = document.querySelector('[data-tutorial-scroll-container]')
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', resolve, { passive: true })
+    }
+    window.addEventListener('resize', resolve)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', resolve)
+      }
+      window.removeEventListener('resize', resolve)
+    }
+  }, [stepConfig, isPanelOpen, isComparing])
+
+  // ─── Cursor Animation ──────────────────────────────────────────────────────
+
   const cursorAnimProps = useMemo(() => {
     if (!stepConfig?.cursorAnimation || !spotlightReady) return null
 
-    // Resolve target coordinates
     let to: { x: number; y: number } | null = null
     const { target } = stepConfig.cursorAnimation
 
     if (target === 'domElement' && stepConfig.cursorAnimation.targetSelector) {
-      // DOM element targeting — separate code path from graph-based targets
       const el = document.querySelector(stepConfig.cursorAnimation.targetSelector)
       if (!el) return null
       const rect = el.getBoundingClientRect()
       to = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
-      // Fixed offset: cursor enters from 120px above-right of target
       const from = { x: to.x + 80, y: to.y - 90 }
       return {
         from,
@@ -215,7 +327,6 @@ export function useTutorial({
       }
     }
 
-    // Resolve graph-based targets
     if (target === 'neighbour' && resolvedNeighbourId) {
       to = getNodeScreenCoords(resolvedNeighbourId)
     } else if (target === 'badge') {
@@ -235,12 +346,11 @@ export function useTutorial({
       to = getNodeScreenCoords(selectedNodeId)
     }
 
-    if (!to) return null // Fallback: skip cursor animation
+    if (!to) return null
 
     let from: { x: number; y: number }
 
     if (spotlight) {
-      // Compute `from` on the opposite side of the spotlight edge
       const angle = Math.atan2(to.y - spotlight.y, to.x - spotlight.x)
       const oppositeAngle = angle + Math.PI
 
@@ -251,7 +361,6 @@ export function useTutorial({
           y: spotlight.y + r * Math.sin(oppositeAngle),
         }
       } else {
-        // Rect spotlight: find intersection of ray from center at oppositeAngle with rect boundary
         const hw = spotlight.width / 2
         const hh = spotlight.height / 2
         const dx = Math.cos(oppositeAngle)
@@ -265,7 +374,6 @@ export function useTutorial({
         }
       }
     } else {
-      // No spotlight — use fixed offset from target
       from = { x: to.x + 80, y: to.y - 90 }
     }
 
@@ -281,23 +389,18 @@ export function useTutorial({
   const onCursorArrive = useCallback(() => {
     if (!stepConfig?.cursorAnimation) return
     const { target, mode } = stepConfig.cursorAnimation
-    // In hint mode, cursor just points — no effects triggered
     if (mode === 'hint') return
     if (target === 'neighbour' && resolvedNeighbourId) {
       setSimulatedHoverId(resolvedNeighbourId)
     }
-    // Future: handle other targets (badge, selectedNode) here
   }, [stepConfig, resolvedNeighbourId])
 
   const onCursorComplete = useCallback(() => {
     if (stepConfig?.cursorAnimation?.mode === 'hint') return
-    // Don't clear simulatedHoverId — hover effect stays while cursor loops.
-    // It gets cleared on advance() or skip().
     setIsConfirming(true)
   }, [stepConfig])
 
-  // Fallback: if step has cursorAnimation but coordinates couldn't resolve,
-  // skip the animation and show "Got it, next" immediately
+  // Fallback: if step has cursorAnimation but coordinates couldn't resolve
   useEffect(() => {
     if (
       stepConfig?.cursorAnimation &&
@@ -310,7 +413,7 @@ export function useTutorial({
     }
   }, [stepConfig, spotlightReady, cursorAnimProps, isConfirming])
 
-  // Immediate confirm for manual steps with no cursor animation (e.g. "compare", "explore")
+  // Immediate confirm for manual steps with no cursor animation
   useEffect(() => {
     if (
       stepConfig &&
@@ -322,7 +425,8 @@ export function useTutorial({
     }
   }, [stepConfig, isConfirming])
 
-  // Detect completion events
+  // ─── Completion Event Detection ────────────────────────────────────────────
+
   useEffect(() => {
     if (!isActive || isConfirming) return
     const event = stepConfig?.completionEvent
@@ -336,18 +440,19 @@ export function useTutorial({
     } else if (event === 'panelOpened' && isPanelOpen) {
       triggered = true
     } else if (event === 'backToPathways' && !isComparing && isPanelOpen) {
-      // Guard: only trigger if panel is still open — if panel closed, the panel-closed guard handles it
       triggered = true
     } else if (event === 'panelClosed' && !isPanelOpen) {
+      triggered = true
+    } else if (event === 'cardClicked' && cardClicked) {
       triggered = true
     }
 
     if (triggered) {
       if (stepConfig?.autoAdvance) {
-        // Auto-advance: skip confirmation, go straight to next step
         setIsConfirming(false)
-        if (currentStep < TUTORIAL_STEPS.length - 1) {
-          setCurrentStep(prev => prev + 1)
+        const nextId = getNextStepId(currentStepId, { isComparing })
+        if (nextId) {
+          setCurrentStepId(nextId)
         } else {
           setIsActive(false)
         }
@@ -355,21 +460,30 @@ export function useTutorial({
         setIsConfirming(true)
       }
     }
-  }, [isActive, isConfirming, stepConfig, currentStep, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen, isComparing])
+  }, [isActive, isConfirming, stepConfig, currentStepId, selectedNodeId, secondSelectedNodeId, hoveredNodeId, resolvedNeighbourId, edges, badgeInteracted, isPanelOpen, isComparing, cardClicked])
 
-  // Guard: if panel closes during modal-dependent steps (compare, backToPathways, pathways),
-  // skip ahead to the "explore" step to avoid stranded prompts
+  // Fork resolution: when panel opens at occupationClick, defer advancement
+  // by one frame so isComparing has time to settle from OccupationPanel.
+  // If isComparing changes (connected node path), the effect re-fires and
+  // cancels the stale rAF, scheduling a new one with the correct value.
+  useEffect(() => {
+    if (currentStepId !== 'occupationClick' || !isPanelOpen || !isActive) return
+    const raf = requestAnimationFrame(() => {
+      setIsConfirming(false)
+      const nextId = getNextStepId('occupationClick', { isComparing })
+      if (nextId) setCurrentStepId(nextId)
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [currentStepId, isPanelOpen, isActive, isComparing])
+
+  // Guard: if panel closes during panel-dependent steps, jump to explore
   useEffect(() => {
     if (!isActive) return
-    const stepId = stepConfig?.id
-    if ((stepId === 'compare' || stepId === 'backToPathways' || stepId === 'pathways') && !isPanelOpen) {
-      const exploreIdx = STEP_IDX.explore
-      if (exploreIdx !== undefined) {
-        setCurrentStep(exploreIdx)
-        setIsConfirming(false)
-      }
+    if (PANEL_DEPENDENT_STEPS.has(currentStepId) && !isPanelOpen) {
+      setCurrentStepId('explore')
+      setIsConfirming(false)
     }
-  }, [isActive, stepConfig, isPanelOpen])
+  }, [isActive, currentStepId, isPanelOpen])
 
   useEffect(() => {
     if (!isActive && isVisible) {
@@ -381,26 +495,30 @@ export function useTutorial({
   const advance = useCallback(() => {
     setIsConfirming(false)
     setSimulatedHoverId(null)
-    if (currentStep < TUTORIAL_STEPS.length - 1) {
-      setCurrentStep(prev => prev + 1)
+    const nextId = getNextStepId(currentStepId, { isComparing })
+    if (nextId) {
+      setCurrentStepId(nextId)
     } else {
       setIsActive(false)
       onComplete?.()
     }
-  }, [currentStep, onComplete])
+  }, [currentStepId, isComparing, onComplete])
 
   const skip = useCallback(() => {
     setIsActive(false)
     setIsConfirming(false)
     setSimulatedHoverId(null)
+    lockedPathRef.current = null
     onComplete?.()
   }, [onComplete])
 
   return {
-    isActive, isVisible, currentStep, isConfirming, stepConfig, spotlight, advance, skip,
+    isActive, isVisible, currentStepId, currentStepIndex, totalSteps,
+    isConfirming, stepConfig, spotlight, advance, skip,
     cursorAnimProps,
     simulatedHoverId,
     onCursorArrive,
     onCursorComplete,
+    tooltipPosition,
   }
 }

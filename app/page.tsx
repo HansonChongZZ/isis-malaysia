@@ -32,7 +32,7 @@ import {
   useTutorial,
   type OccupationGraphHandle,
 } from '@/components/tutorial/useTutorial';
-import { TUTORIAL_STEPS, STEP_IDX } from '@/components/tutorial/tutorialConfig';
+import { STEP_REGISTRY, PREVENT_INTERACT_STEPS } from '@/components/tutorial/tutorialConfig';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import ThemeToggle from '@/components/ThemeToggle';
 import { Settings2 } from 'lucide-react';
@@ -91,6 +91,7 @@ export default function HomePage() {
     'modal' | 'spotlight' | 'done'
   >('modal');
   const [isComparing, setIsComparing] = useState(false);
+  const [cardClicked, setCardClicked] = useState(false);
   const [attributionOpen, setAttributionOpen] = useState(false);
   const [attributionHover, setAttributionHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -110,6 +111,7 @@ export default function HomePage() {
     setIsPanelOpen(false);
     setOpenedViaSecondary(false);
     setIsComparing(false);
+    setCardClicked(false);
     setViewMode('force');
     setLayoutMode('ring');
   }, []);
@@ -127,6 +129,7 @@ export default function HomePage() {
     badgeInteracted,
     isPanelOpen,
     isComparing,
+    cardClicked,
     onComplete: handleTutorialComplete,
   });
 
@@ -176,7 +179,7 @@ export default function HomePage() {
     measure();
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
-  }, [tutorialPhase, tutorial.isActive, tutorial.currentStep]);
+  }, [tutorialPhase, tutorial.isActive, tutorial.currentStepId]);
 
   const handleGraphReady = useCallback((handle: OccupationGraphHandle) => {
     graphHandleRef.current = handle;
@@ -647,26 +650,26 @@ export default function HomePage() {
               forceSelectionMode={
                 tutorialPhase === 'spotlight' &&
                 tutorial.isActive &&
-                tutorial.currentStep <= STEP_IDX.hover
+                (tutorial.currentStepId === 'search' || tutorial.currentStepId === 'hover')
                   ? 'single'
                   : null
               }
               disableInteraction={
                 tutorialPhase === 'spotlight' &&
                 tutorial.isActive &&
-                tutorial.currentStep <= STEP_IDX.search
+                tutorial.currentStepId === 'search'
               }
               disableClick={
                 tutorialPhase === 'spotlight' &&
                 tutorial.isActive &&
-                (tutorial.currentStep <= STEP_IDX.hover ||
+                (tutorial.currentStepId === 'search' ||
+                  tutorial.currentStepId === 'hover' ||
                   tutorial.stepConfig?.id === 'badge')
               }
               allowedClickNodeId={
                 tutorialPhase === 'spotlight' &&
                 tutorial.isActive &&
-                (tutorial.stepConfig?.id === 'click' ||
-                  tutorial.stepConfig?.id === 'detail')
+                tutorial.stepConfig?.id === 'click'
                   ? (tutorial.stepConfig?.preferredNeighbourId ?? null)
                   : null
               }
@@ -756,8 +759,8 @@ export default function HomePage() {
           {showTutorial && tutorial.isVisible && tutorial.stepConfig && (
             <TutorialOverlay
               isActive={tutorial.isActive}
-              currentStep={tutorial.currentStep}
-              totalSteps={TUTORIAL_STEPS.length}
+              currentStepIndex={tutorial.currentStepIndex}
+              totalSteps={tutorial.totalSteps}
               isConfirming={tutorial.isConfirming}
               prompt={tutorial.stepConfig.prompt}
               spotlight={tutorial.spotlight}
@@ -766,7 +769,8 @@ export default function HomePage() {
               cursorAnimProps={tutorial.cursorAnimProps}
               onCursorArrive={tutorial.onCursorArrive}
               onCursorComplete={tutorial.onCursorComplete}
-              isLastStep={tutorial.currentStep === TUTORIAL_STEPS.length - 1}
+              isLastStep={tutorial.currentStepIndex === tutorial.totalSteps - 1}
+              tooltipPosition={tutorial.tooltipPosition}
             />
           )}
         </div>
@@ -787,12 +791,11 @@ export default function HomePage() {
           }}
           initialComparisonId={openedViaSecondary ? secondSelectedNodeId : null}
           onComparisonChange={setIsComparing}
+          onCardClick={() => setCardClicked(true)}
           preventInteractOutside={
             tutorialPhase === 'spotlight' &&
             tutorial.isActive &&
-            ['compare', 'backToPathways', 'pathways', 'closePanel'].includes(
-              tutorial.stepConfig?.id ?? '',
-            )
+            PREVENT_INTERACT_STEPS.has(tutorial.stepConfig?.id ?? '')
           }
         />
       </div>

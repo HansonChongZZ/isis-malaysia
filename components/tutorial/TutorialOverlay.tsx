@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useId } from 'react'
+import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { type SpotlightTarget } from './tutorialConfig'
 
@@ -8,7 +9,7 @@ const VirtualCursor = dynamic(() => import('./VirtualCursor'), { ssr: false })
 
 interface TutorialOverlayProps {
   isActive: boolean
-  currentStep: number
+  currentStepIndex: number
   totalSteps: number
   isConfirming: boolean
   prompt: string
@@ -19,11 +20,13 @@ interface TutorialOverlayProps {
   onCursorArrive?: () => void
   onCursorComplete?: () => void
   isLastStep?: boolean
+  /** Resolved tooltip position from anchor system — takes priority over spotlight-based positioning */
+  tooltipPosition?: { left: number; top: number } | null
 }
 
 export default function TutorialOverlay({
   isActive,
-  currentStep,
+  currentStepIndex,
   totalSteps,
   isConfirming,
   prompt,
@@ -34,6 +37,7 @@ export default function TutorialOverlay({
   onCursorArrive,
   onCursorComplete,
   isLastStep,
+  tooltipPosition,
 }: TutorialOverlayProps) {
   const [viewport, setViewport] = useState({ w: 0, h: 0 })
   useEffect(() => {
@@ -46,7 +50,11 @@ export default function TutorialOverlay({
   const id = useId()
   const maskId = `spotlight-mask-${id}`
   const filterId = `spotlight-blur-${id}`
-  const tooltipStyle = computeTooltipPosition(spotlight, viewport.w, viewport.h)
+
+  // Use anchor-based position if provided, otherwise compute from spotlight
+  const tooltipStyle = tooltipPosition
+    ? tooltipPosition
+    : computeTooltipPosition(spotlight, viewport.w, viewport.h)
 
   return (
     <div
@@ -97,13 +105,17 @@ export default function TutorialOverlay({
         </svg>
       )}
 
-      {/* Tooltip */}
-      <div
-        className="absolute transition-all duration-300 ease-out"
+      {/* Tooltip with spring animation */}
+      <motion.div
+        className="absolute"
+        animate={tooltipStyle}
+        transition={{
+          type: 'spring',
+          damping: 25,
+          stiffness: 200,
+        }}
         style={{
-          ...tooltipStyle,
           pointerEvents: 'auto',
-          transitionDelay: '50ms',
         }}
       >
         <div className="bg-card border border-border rounded-xl shadow-lg p-4 max-w-[280px]">
@@ -113,7 +125,7 @@ export default function TutorialOverlay({
               <div
                 key={i}
                 className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                  i === currentStep ? 'bg-primary' : 'bg-muted-foreground/30'
+                  i === currentStepIndex ? 'bg-primary' : 'bg-muted-foreground/30'
                 }`}
               />
             ))}
@@ -142,11 +154,11 @@ export default function TutorialOverlay({
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {cursorAnimProps && onCursorArrive && onCursorComplete && (
         <VirtualCursor
-          key={currentStep}
+          key={currentStepIndex}
           from={cursorAnimProps.from}
           to={cursorAnimProps.to}
           clickEffect={cursorAnimProps.clickEffect}
@@ -160,50 +172,52 @@ export default function TutorialOverlay({
   )
 }
 
+/**
+ * Compute tooltip position from spotlight. Always returns { left, top }
+ * for consistent spring animation interpolation.
+ */
 function computeTooltipPosition(
   spotlight: SpotlightTarget | null,
   vw: number,
   vh: number,
-): React.CSSProperties {
+): { left: number; top: number } {
+  const tooltipWidth = 300
+  const tooltipHeight = 160
+
   if (!spotlight || vw === 0) {
-    return { left: 16, bottom: 16 }
+    return { left: 16, top: Math.max(16, vh - tooltipHeight - 16) }
   }
 
   const pad = 16
-  const tooltipWidth = 300
-  const tooltipHeight = 160
-  // For circles, use radius. For rects, use half-dimensions so tooltip clears the edges.
   const rx = spotlight.shape === 'circle' ? spotlight.width / 2 : spotlight.width / 2
   const ry = spotlight.shape === 'circle' ? spotlight.width / 2 : spotlight.height / 2
 
-  // Find which side of the spotlight has the most space
   const spaceRight = vw - (spotlight.x + rx)
   const spaceLeft = spotlight.x - rx
   const spaceBottom = vh - (spotlight.y + ry)
-  const style: React.CSSProperties = {}
 
-  // Horizontal: place on the side with more room
+  let left: number
+  let top: number
+
+  // Horizontal placement
   if (spaceRight >= tooltipWidth + pad) {
-    // Right of spotlight edge
-    style.left = spotlight.x + rx + pad
+    left = spotlight.x + rx + pad
   } else if (spaceLeft >= tooltipWidth + pad) {
-    // Left of spotlight edge
-    style.right = vw - (spotlight.x - rx - pad)
+    left = spotlight.x - rx - pad - tooltipWidth
   } else {
-    // Not enough horizontal space — centre horizontally, will go above/below
-    style.left = Math.max(pad, Math.min(spotlight.x - tooltipWidth / 2, vw - tooltipWidth - pad))
+    left = Math.max(pad, Math.min(spotlight.x - tooltipWidth / 2, vw - tooltipWidth - pad))
   }
 
-  // Vertical: centre on spotlight, clamped to viewport
-  if (style.left !== undefined || style.right !== undefined) {
-    // Tooltip is beside the spotlight — vertically centre on spotlight
+  // Vertical placement
+  const isHorizontal = spaceRight >= tooltipWidth + pad || spaceLeft >= tooltipWidth + pad
+  if (isHorizontal) {
     const centredTop = spotlight.y - tooltipHeight / 2
-    style.top = Math.max(pad, Math.min(centredTop, vh - tooltipHeight - pad))
+    top = Math.max(pad, Math.min(centredTop, vh - tooltipHeight - pad))
   } else if (spaceBottom >= tooltipHeight + pad) {
-    style.top = spotlight.y + ry + pad
+    top = spotlight.y + ry + pad
   } else {
-    style.bottom = vh - (spotlight.y - ry - pad)
+    top = Math.max(pad, spotlight.y - ry - pad - tooltipHeight)
   }
 
-  return style
+  return { left, top }
 }

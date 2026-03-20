@@ -76,7 +76,7 @@ export default function ComparisonGrid({
   const comparisonColour = 'var(--primary)';
 
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto">
+    <div className="flex-1 min-h-0 overflow-y-auto" data-tutorial-scroll-container>
       {/* Back to pathways bar — full width */}
       <button
         type="button"
@@ -166,7 +166,7 @@ export default function ComparisonGrid({
       })()}
 
       {/* AI Exposure row */}
-      <div className="flex border-b border-border">
+      <div className="flex border-b border-border" data-tutorial-target="ai-exposure-row">
         <div className="flex-1 px-3 py-2 md:px-5 md:py-3">
           <div className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
             AI Exposure
@@ -283,7 +283,7 @@ export default function ComparisonGrid({
       {/* Skills section — full width, target occupation's skills */}
       {(comparison.basicSkills.length > 0 ||
         comparison.specificSkills.length > 0) && (
-        <div className="px-3 py-2.5 md:px-5 md:py-3.5 border-b border-border">
+        <div className="px-3 py-2.5 md:px-5 md:py-3.5 border-b border-border" data-tutorial-target="skills-section">
           <div className="flex items-center gap-3.5 mb-2.5">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Skills

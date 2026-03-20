@@ -17,7 +17,7 @@ export const QUARTILE_COLOURS: Record<string, string> = {
 // The power exponent compresses low values and amplifies high values,
 // making top-exposure/wage/worker nodes visually jump out.
 export const NODE_RADIUS_BASE = 50;
-export const NODE_RADIUS_SCALE = 300;
+export const NODE_RADIUS_SCALE = 400;
 export const NODE_RADIUS_EXPONENT = 3;
 export const NODE_RADIUS_COLLIDE_PADDING = 250.5;
 
