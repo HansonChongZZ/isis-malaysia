@@ -146,26 +146,11 @@ export function useTutorial({
 
     if (neighbours.length === 0) return null
 
-    const maxWeight = Math.max(...neighbours.map(n => n.weight))
-    const topNeighbours = neighbours.filter(n => n.weight === maxWeight)
-
-    if (topNeighbours.length === 1) return topNeighbours[0].id
-
-    const selectedPos = getNodeScreenCoords(selectedNodeId)
-    if (!selectedPos) return topNeighbours[0].id
-
-    let closest = topNeighbours[0]
-    let closestDist = Infinity
-    for (const n of topNeighbours) {
-      const pos = getNodeScreenCoords(n.id)
-      if (!pos) continue
-      const dist = Math.hypot(pos.x - selectedPos.x, pos.y - selectedPos.y)
-      if (dist < closestDist) {
-        closestDist = dist
-        closest = n
-      }
-    }
-    return closest.id
+    // Pick a medium-weight neighbour (not the closest) so the cursor
+    // animation has visible travel distance for the tutorial demo.
+    const sorted = [...neighbours].sort((a, b) => b.weight - a.weight)
+    const medianIdx = Math.floor(sorted.length / 2)
+    return sorted[medianIdx].id
   }, [selectedNodeId, edges, getNodeScreenCoords, stepConfig])
 
   const lockedNeighbourRef = useRef<string | null>(null)
@@ -228,6 +213,20 @@ export function useTutorial({
     if (result) prevSpotlightRef.current = result
     setSpotlight(result)
   }, [stepConfig, spotlightReady, graphContainerRect, heroSearchRect, getNodeScreenCoords, selectedNodeId, resolvedNeighbourId, allNeighbourIds, badgePos])
+
+  // Scroll panel container to top when entering steps that target elements
+  // at the top of the scrollable area (e.g. "Back to pathways" button).
+  // This ensures both tooltip anchor and cursor animation resolve correctly.
+  useEffect(() => {
+    if (!stepConfig?.cursorAnimation?.targetSelector) return
+    const scrollContainer = document.querySelector('[data-tutorial-scroll-container]')
+    if (scrollContainer) {
+      const target = scrollContainer.querySelector(stepConfig.cursorAnimation.targetSelector)
+      if (target) {
+        target.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      }
+    }
+  }, [stepConfig])
 
   // ─── Tooltip Anchor Resolution ──────────────────────────────────────────────
 
@@ -302,6 +301,17 @@ export function useTutorial({
   }, [stepConfig, isPanelOpen, isComparing])
 
   // ─── Cursor Animation ──────────────────────────────────────────────────────
+
+  // Track scroll position so DOM-element cursor targets recompute on scroll
+  const [scrollTick, setScrollTick] = useState(0)
+  useEffect(() => {
+    if (!stepConfig?.cursorAnimation?.targetSelector) return
+    const scrollContainer = document.querySelector('[data-tutorial-scroll-container]')
+    if (!scrollContainer) return
+    const onScroll = () => setScrollTick(t => t + 1)
+    scrollContainer.addEventListener('scroll', onScroll, { passive: true })
+    return () => scrollContainer.removeEventListener('scroll', onScroll)
+  }, [stepConfig])
 
   const cursorAnimProps = useMemo(() => {
     if (!stepConfig?.cursorAnimation || !spotlightReady) return null
@@ -381,7 +391,8 @@ export function useTutorial({
       delayMs: stepConfig.cursorAnimation.delayMs,
       lingerMs: stepConfig.cursorAnimation.lingerMs,
     }
-  }, [stepConfig, spotlightReady, spotlight, resolvedNeighbourId, getNodeScreenCoords, graphContainerRect, heroSearchRect, selectedNodeId, allNeighbourIds, badgePos])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- scrollTick forces recompute of DOM-element cursor targets on scroll
+  }, [stepConfig, spotlightReady, spotlight, resolvedNeighbourId, getNodeScreenCoords, graphContainerRect, heroSearchRect, selectedNodeId, allNeighbourIds, badgePos, scrollTick])
 
   const onCursorArrive = useCallback(() => {
     if (!stepConfig?.cursorAnimation) return

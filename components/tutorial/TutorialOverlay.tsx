@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect, useId } from 'react'
+import { useState, useEffect, useId, useRef } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import confetti from 'canvas-confetti'
 import { type SpotlightTarget } from './tutorialConfig'
 
 const VirtualCursor = dynamic(() => import('./VirtualCursor'), { ssr: false })
@@ -55,6 +56,26 @@ export default function TutorialOverlay({
   const tooltipStyle = tooltipPosition
     ? tooltipPosition
     : computeTooltipPosition(spotlight, viewport.w, viewport.h)
+
+  // Fire confetti from bottom-left on the final step
+  const confettiFired = useRef(false)
+  useEffect(() => {
+    if (isLastStep && isConfirming && !confettiFired.current) {
+      confettiFired.current = true
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { x: 0.1, y: 1 },
+        angle: 60,
+        startVelocity: 45,
+        gravity: 0.8,
+        ticks: 200,
+      })
+    }
+    if (!isLastStep) {
+      confettiFired.current = false
+    }
+  }, [isLastStep, isConfirming])
 
   return (
     <div
