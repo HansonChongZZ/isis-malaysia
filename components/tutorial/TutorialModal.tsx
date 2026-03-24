@@ -19,7 +19,7 @@ const STEPS: ModalStep[] = [
   {
     title: 'What are nodes?',
     description:
-      'Every node represents one of 456 Malaysian occupations." to "Each node represents an occupation in Malaysia taken from the Malaysian Standard Classification of Occupations (MASCO) 2020.',
+      'Each node represents an occupation in Malaysia taken from the Malaysian Standard Classification of Occupations (MASCO) 2020.',
     component: NodeRepresentationDemo,
   },
   {
