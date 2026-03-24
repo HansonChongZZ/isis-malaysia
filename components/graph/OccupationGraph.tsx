@@ -1795,24 +1795,22 @@ export default function OccupationGraph({
           );
         })()}
 
-      {process.env.NODE_ENV !== 'production' && (
-        <TunerPanel
-          key={viewMode}
-          viewMode={viewMode}
-          nodes={simNodes}
-          edges={edges}
-          mstEdges={mstEdges}
-          onSizingChange={setTunerSizing}
-          onPositionsChange={setTunerPositions}
-          onCircularLayoutChange={setCircularLayout}
-          onForceLayoutChange={setForceLayout}
-          showMstEdges={showMstEdges}
-          onShowMstEdgesChange={setShowMstEdges}
-          initialSizing={tunerSizing ?? undefined}
-          initialCircularLayout={circularLayout}
-          initialForceLayout={forceLayout}
-        />
-      )}
+      <TunerPanel
+        key={viewMode}
+        viewMode={viewMode}
+        nodes={simNodes}
+        edges={edges}
+        mstEdges={mstEdges}
+        onSizingChange={setTunerSizing}
+        onPositionsChange={setTunerPositions}
+        onCircularLayoutChange={setCircularLayout}
+        onForceLayoutChange={setForceLayout}
+        showMstEdges={showMstEdges}
+        onShowMstEdgesChange={setShowMstEdges}
+        initialSizing={tunerSizing ?? undefined}
+        initialCircularLayout={circularLayout}
+        initialForceLayout={forceLayout}
+      />
     </div>
   );
 }
